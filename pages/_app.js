@@ -1,22 +1,19 @@
 import "@/styles/globals.css";
 import Head from "next/head";
-import OurServices from "@/components/OurServices";
+import { CartProvider } from "@/context/CartContext";
 
 export default function App({ Component, pageProps }) {
   return (
-    <>
+    <CartProvider>
       <Head>
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
         />
       </Head>
-      <div className="relative min-h-screen flex flex-col">
+      <div className="relative min-h-screen flex flex-col font-sans text-gray-900">
         <Component {...pageProps} />
-        <div className="mt-10">
-          <OurServices />
-        </div>
       </div>
-    </>
+    </CartProvider>
   );
 }
