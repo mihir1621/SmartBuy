@@ -120,14 +120,14 @@ export default function ProductDetail() {
                                     <motion.button
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => addToCart(product)}
-                                        className="flex-1 bg-yellow-400 text-gray-900 font-bold py-4 rounded-xl hover:bg-yellow-500 transition-colors shadow-sm flex items-center justify-center gap-2"
+                                        className="flex-1 bg-gray-900 text-white font-bold py-4 rounded-xl hover:bg-gray-800 transition-colors shadow-sm flex items-center justify-center gap-2"
                                     >
                                         <ShoppingCart className="w-5 h-5" />
                                         Add to Cart
                                     </motion.button>
                                     <motion.button
                                         whileTap={{ scale: 0.95 }}
-                                        className="flex-1 bg-orange-500 text-white font-bold py-4 rounded-xl hover:bg-orange-600 transition-colors shadow-sm"
+                                        className="flex-1 bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-colors shadow-sm"
                                     >
                                         Buy Now
                                     </motion.button>
