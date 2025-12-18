@@ -94,14 +94,52 @@ export default function Home() {
 
         {/* Product Grid */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 pt-6">
-          <motion.div
-            layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </motion.div>
+          {selectedCategory === "All" && !searchQuery ? (
+            <div className="space-y-12">
+              {categories
+                .filter((category) => category !== "All")
+                .map((category) => {
+                  const categoryProducts = filteredProducts.filter(
+                    (p) => p.category === category
+                  );
+
+                  if (categoryProducts.length === 0) return null;
+
+                  return (
+                    <div key={category} className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h2 className="text-2xl font-bold text-gray-900">
+                          {category}
+                        </h2>
+                        <button
+                          onClick={() => setSelectedCategory(category)}
+                          className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                        >
+                          View all
+                        </button>
+                      </div>
+                      <motion.div
+                        layout
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+                      >
+                        {categoryProducts.slice(0, 4).map((product) => (
+                          <ProductCard key={product.id} product={product} />
+                        ))}
+                      </motion.div>
+                    </div>
+                  );
+                })}
+            </div>
+          ) : (
+            <motion.div
+              layout
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            >
+              {filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </motion.div>
+          )}
 
           {filteredProducts.length === 0 && (
             <div className="text-center py-20 bg-white rounded-xl border border-gray-100 mt-6">

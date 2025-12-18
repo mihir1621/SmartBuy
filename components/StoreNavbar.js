@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ShoppingBag, Search, Menu, X, User } from 'lucide-react';
+import { ShoppingBag, Search, Menu, X, User, Camera } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -8,6 +8,37 @@ export default function StoreNavbar({ onSearch }) {
     const { setIsCartOpen, cartCount } = useCart();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const fileInputRef = useRef(null);
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            // Smart Simulation: effective guessing based on filename
+            const name = file.name.toLowerCase();
+            let detectedTerm = "Fashion"; // Default fallback
+
+            if (name.includes('shoe') || name.includes('sneaker') || name.includes('boot')) detectedTerm = "Shoes";
+            else if (name.includes('watch') || name.includes('time')) detectedTerm = "Watch";
+            else if (name.includes('phone') || name.includes('mobile') || name.includes('iphone')) detectedTerm = "Mobiles";
+            else if (name.includes('laptop') || name.includes('macbook') || name.includes('computer')) detectedTerm = "Laptop";
+            else if (name.includes('bag') || name.includes('purse')) detectedTerm = "Bag";
+            else if (name.includes('dre') || name.includes('saree') || name.includes('kurta')) detectedTerm = "Dress";
+            else if (name.includes('headphone') || name.includes('speaker') || name.includes('audio')) detectedTerm = "Audio";
+
+            setTimeout(() => {
+                // Automatically trigger search without popup
+                if (onSearch) {
+                    setSearchQuery(detectedTerm);
+                    onSearch(detectedTerm);
+                }
+
+                // Reset file input to allow re-uploading the same file
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = "";
+                }
+            }, 300);
+        }
+    };
 
     const handleSearch = (e) => {
         const query = e.target.value;
@@ -37,11 +68,27 @@ export default function StoreNavbar({ onSearch }) {
                                 value={searchQuery}
                                 onChange={handleSearch}
                                 placeholder="Search for products, brands and more..."
-                                className="w-full pl-4 pr-10 py-2.5 bg-gray-100 border-transparent focus:bg-white focus:border-gray-300 focus:ring-2 focus:ring-blue-500 rounded-lg transition-all outline-none text-sm"
+                                className="w-full pl-4 pr-24 py-2.5 bg-gray-100 border-transparent focus:bg-white focus:border-gray-300 focus:ring-2 focus:ring-blue-500 rounded-lg transition-all outline-none text-sm"
                             />
-                            <button className="absolute right-0 top-0 h-full px-3 text-gray-500 hover:text-blue-600 transition-colors">
-                                <Search className="w-5 h-5" />
-                            </button>
+                            <div className="absolute right-0 top-0 h-full flex items-center pr-2 gap-1">
+                                <button
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
+                                    title="Search by Image"
+                                >
+                                    <Camera className="w-5 h-5" />
+                                </button>
+                                <button className="p-2 text-gray-500 hover:text-blue-600 transition-colors">
+                                    <Search className="w-5 h-5" />
+                                </button>
+                            </div>
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                className="hidden"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                            />
                         </div>
                     </div>
 
@@ -53,10 +100,10 @@ export default function StoreNavbar({ onSearch }) {
                         </button>
 
                         {/* Account */}
-                        <button className="hidden sm:flex items-center gap-2 p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
+                        <Link href="/login" className="hidden sm:flex items-center gap-2 p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
                             <User className="w-5 h-5" />
                             <span className="text-sm font-medium hidden lg:block">Account</span>
-                        </button>
+                        </Link>
 
                         {/* Cart */}
                         <motion.button
@@ -105,6 +152,7 @@ export default function StoreNavbar({ onSearch }) {
                             <Link href="#" className="block px-3 py-3 text-base font-medium text-gray-600 rounded-md hover:bg-gray-50">Deals</Link>
                             <Link href="#" className="block px-3 py-3 text-base font-medium text-gray-600 rounded-md hover:bg-gray-50">Categories</Link>
                             <Link href="#" className="block px-3 py-3 text-base font-medium text-gray-600 rounded-md hover:bg-gray-50">Orders</Link>
+                            <Link href="/login" className="block px-3 py-3 text-base font-medium text-blue-600 rounded-md hover:bg-gray-50">Sign In</Link>
                         </div>
                     </motion.div>
                 )}
