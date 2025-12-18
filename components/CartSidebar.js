@@ -2,9 +2,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 export default function CartSidebar() {
     const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, cartTotal } = useCart();
+    const router = useRouter();
 
     return (
         <AnimatePresence>
@@ -133,7 +135,13 @@ export default function CartSidebar() {
                                     </div>
                                 </div>
 
-                                <button className="w-full bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-gray-800 transition-all active:scale-95 shadow-lg shadow-gray-200">
+                                <button
+                                    onClick={() => {
+                                        setIsCartOpen(false);
+                                        router.push('/checkout');
+                                    }}
+                                    className="w-full bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-gray-800 transition-all active:scale-95 shadow-lg shadow-gray-200"
+                                >
                                     Checkout
                                 </button>
                             </div>

@@ -5,6 +5,8 @@ import StoreNavbar from "@/components/StoreNavbar";
 import ProductCard from "@/components/ProductCard";
 import CartSidebar from "@/components/CartSidebar";
 import FilterSidebar from "@/components/FilterSidebar";
+import Footer from "@/components/Footer";
+import HeroSection from "@/components/HeroSection";
 import { products } from "@/data/products";
 import { useProductSystem } from "@/hooks/useProductSystem";
 import { Filter, SlidersHorizontal, ChevronDown } from "lucide-react";
@@ -48,27 +50,7 @@ export default function Home() {
       <CartSidebar />
 
       <main>
-        {/* Hero Section */}
-        <section className="relative bg-gray-900 text-white overflow-hidden">
-          <div className="absolute inset-0 opacity-40">
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&q=80&w=1600')] bg-cover bg-center" />
-          </div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="max-w-2xl"
-            >
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 leading-tight">
-                Big Savings on<br />
-                <span className="text-yellow-400">Top Brands</span>
-              </h1>
-              <p className="text-lg text-gray-200 mb-6">
-                Free delivery on your first order.
-              </p>
-            </motion.div>
-          </div>
-        </section>
+
 
         {/* Category Pills (Top Level Filter) */}
         <section className="sticky top-16 z-20 bg-white border-b border-gray-100 shadow-sm">
@@ -220,6 +202,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
