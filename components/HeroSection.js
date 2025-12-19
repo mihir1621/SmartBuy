@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import Image from "next/image";
+import ImageWithFallback from "./ImageWithFallback";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -58,7 +58,7 @@ export default function HeroSection() {
                         className={`flex-none w-full h-[300px] md:h-[400px] snap-center snap-always relative overflow-hidden`}
                     >
                         <div className="absolute inset-0 z-0">
-                            <Image src={slide.image} alt={slide.title} fill className="object-cover brightness-75" priority={slide.id === 1} />
+                            <ImageWithFallback src={slide.image} alt={slide.title} fill className="object-cover brightness-75" priority={slide.id === 1} />
                         </div>
 
                         <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/60 to-transparent flex items-center">

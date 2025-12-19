@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import Image from "next/image";
+import ImageWithFallback from "./ImageWithFallback";
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
 
@@ -25,7 +25,7 @@ export default function RecentlyViewed({ products }) {
                             <Link href={`/product/${product.id}`} key={product.id} className="flex-none w-[160px] md:w-[200px] snap-start group">
                                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden h-full flex flex-col hover:shadow-md transition-shadow">
                                     <div className="relative w-full h-32 md:h-40 bg-gray-100">
-                                        <Image
+                                        <ImageWithFallback
                                             src={product.image}
                                             alt={product.name}
                                             fill

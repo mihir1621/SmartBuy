@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
+import ImageWithFallback from '@/components/ImageWithFallback';
 import { useRouter } from 'next/router';
 import { useCart } from '@/context/CartContext';
 import { motion } from 'framer-motion';
@@ -144,7 +144,7 @@ export default function Checkout() {
                                 {cart.map((item) => (
                                     <div key={item.id} className="flex gap-3">
                                         <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden relative flex-shrink-0">
-                                            <Image src={item.image} alt={item.name} fill className="object-cover" />
+                                            <ImageWithFallback src={item.image} alt={item.name} fill className="object-cover" />
                                         </div>
                                         <div className="flex-1">
                                             <h3 className="text-sm font-medium text-gray-900 line-clamp-1">{item.name}</h3>
