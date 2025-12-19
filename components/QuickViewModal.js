@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { X, Star, Check, ShoppingCart, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import ImageWithFallback from "./ImageWithFallback";
+import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import Link from "next/link";
@@ -42,7 +42,7 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
 
                     {/* Image Side */}
                     <div className="md:w-1/2 relative h-64 md:h-auto bg-gray-100">
-                        <ImageWithFallback src={product.image} alt={product.name} fill className="object-cover" />
+                        <Image src={product.image} alt={product.name} fill className="object-cover" />
                     </div>
 
                     {/* Content Side */}

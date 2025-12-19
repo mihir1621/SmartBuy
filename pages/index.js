@@ -30,6 +30,7 @@ export default function Home() {
     sortOption,
     setSortOption,
     availableBrands,
+    availableGenders,
     globalMaxPrice
   } = useProductSystem(products);
 
@@ -75,45 +76,50 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="lg:grid lg:grid-cols-4 lg:gap-8">
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:block lg:col-span-1 sticky top-32 h-fit">
-              <FilterSidebar
-                selectedCategory={selectedCategory}
-                brands={availableBrands}
-                selectedBrands={selectedBrands}
-                setSelectedBrands={setSelectedBrands}
-                priceRange={priceRange}
-                setPriceRange={setPriceRange}
-                globalMaxPrice={globalMaxPrice}
-                selectedGender={selectedGender}
-                setSelectedGender={setSelectedGender}
-                minRating={minRating}
-                setMinRating={setMinRating}
-                clearAll={() => {
-                  setSelectedBrands([]);
-                  setPriceRange([0, globalMaxPrice]);
-                  setSelectedGender("All");
-                  setMinRating(0);
-                  setSelectedCategory("All");
-                }}
-              />
-            </aside>
+            {searchQuery && (
+              <aside className="hidden lg:block lg:col-span-1 sticky top-32 h-fit">
+                <FilterSidebar
+                  selectedCategory={selectedCategory}
+                  brands={availableBrands}
+                  availableGenders={availableGenders}
+                  selectedBrands={selectedBrands}
+                  setSelectedBrands={setSelectedBrands}
+                  priceRange={priceRange}
+                  setPriceRange={setPriceRange}
+                  globalMaxPrice={globalMaxPrice}
+                  selectedGender={selectedGender}
+                  setSelectedGender={setSelectedGender}
+                  minRating={minRating}
+                  setMinRating={setMinRating}
+                  clearAll={() => {
+                    setSelectedBrands([]);
+                    setPriceRange([0, globalMaxPrice]);
+                    setSelectedGender("All");
+                    setMinRating(0);
+                    setSelectedCategory("All");
+                  }}
+                />
+              </aside>
+            )}
 
             {/* Mobile Filter Toggle */}
-            <div className="lg:hidden mb-4 flex justify-between items-center">
-              <button
-                onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-                className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg text-sm font-medium shadow-sm"
-              >
-                <Filter className="w-4 h-4" /> Filters
-              </button>
-              <span className="text-sm text-gray-500">
-                {filteredProducts.length} Results
-              </span>
-            </div>
+            {searchQuery && (
+              <div className="lg:hidden mb-4 flex justify-between items-center">
+                <button
+                  onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+                  className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg text-sm font-medium shadow-sm"
+                >
+                  <Filter className="w-4 h-4" /> Filters
+                </button>
+                <span className="text-sm text-gray-500">
+                  {filteredProducts.length} Results
+                </span>
+              </div>
+            )}
 
             {/* Mobile Filter Dropdown */}
             <AnimatePresence>
-              {isMobileFilterOpen && (
+              {searchQuery && isMobileFilterOpen && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
@@ -123,6 +129,7 @@ export default function Home() {
                   <FilterSidebar
                     selectedCategory={selectedCategory}
                     brands={availableBrands}
+                    availableGenders={availableGenders}
                     selectedBrands={selectedBrands}
                     setSelectedBrands={setSelectedBrands}
                     priceRange={priceRange}
@@ -144,7 +151,7 @@ export default function Home() {
             </AnimatePresence>
 
             {/* Product Grid Area */}
-            <div className="lg:col-span-3">
+            <div className={searchQuery ? "lg:col-span-3" : "lg:col-span-4"}>
               {/* Sorting Bar */}
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-bold text-gray-900">

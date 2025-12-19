@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ImageWithFallback from './ImageWithFallback';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Star, Heart, Eye } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
@@ -27,7 +27,7 @@ export default function ProductCard({ product }) {
                 </Link>
 
                 <div className="relative h-64 w-full overflow-hidden bg-gray-100">
-                    <ImageWithFallback
+                    <Image
                         src={product.image}
                         alt={product.name}
                         fill

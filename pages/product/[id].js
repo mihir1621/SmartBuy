@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import ImageWithFallback from '@/components/ImageWithFallback';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import { Star, ShoppingCart, Truck, ShieldCheck, RotateCcw, Heart } from 'lucide-react';
@@ -61,7 +61,7 @@ export default function ProductDetail() {
                         {/* Image Gallery */}
                         <div className="space-y-4">
                             <div className="relative aspect-square bg-gray-100 rounded-xl overflow-hidden group">
-                                <ImageWithFallback
+                                <Image
                                     src={product.images ? product.images[selectedImage] : product.image}
                                     alt={product.name}
                                     fill
@@ -84,7 +84,7 @@ export default function ProductDetail() {
                                         className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 flex-shrink-0 transition-all ${selectedImage === idx ? 'border-gray-900 ring-2 ring-gray-200' : 'border-transparent opacity-70 hover:opacity-100'
                                             }`}
                                     >
-                                        <ImageWithFallback src={img} alt={`Thumbnail ${idx + 1}`} fill className="object-cover" />
+                                        <Image src={img} alt={`Thumbnail ${idx + 1}`} fill className="object-cover" />
                                     </button>
                                 ))}
                             </div>

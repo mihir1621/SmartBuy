@@ -10,10 +10,10 @@ export function useProductSystem(initialProducts) {
     const [minRating, setMinRating] = useState(0);
     const [sortOption, setSortOption] = useState("popularity"); // popularity, price-asc, price-desc, newest, rating
 
-    const filteredProducts = useMemo(() => {
+    // 1. Base Products (Search + Category only) - Used for determining available filters
+    const baseProducts = useMemo(() => {
         let result = [...initialProducts];
 
-        // 1. Search Logic (Weighted)
         if (searchQuery) {
             const query = searchQuery.toLowerCase();
             result = result.filter(p => {
@@ -22,30 +22,36 @@ export function useProductSystem(initialProducts) {
             });
         }
 
-        // 2. Category Filter
         if (selectedCategory !== "All") {
             result = result.filter(p => p.category === selectedCategory);
         }
 
-        // 3. Brand Filter
+        return result;
+    }, [initialProducts, searchQuery, selectedCategory]);
+
+    // 2. Final Filtered Products (Apply remaining filters to base)
+    const filteredProducts = useMemo(() => {
+        let result = [...baseProducts];
+
+        // Brand Filter
         if (selectedBrands.length > 0) {
             result = result.filter(p => selectedBrands.includes(p.brand));
         }
 
-        // 4. Gender Filter
+        // Gender Filter
         if (selectedGender !== "All") {
             result = result.filter(p => p.gender === selectedGender || p.gender === "Unisex");
         }
 
-        // 5. Price Filter
+        // Price Filter
         result = result.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1]);
 
-        // 6. Rating Filter
+        // Rating Filter
         if (minRating > 0) {
             result = result.filter(p => p.rating >= minRating);
         }
 
-        // 7. Sorting
+        // Sorting
         result.sort((a, b) => {
             switch (sortOption) {
                 case "price-asc":
@@ -63,22 +69,29 @@ export function useProductSystem(initialProducts) {
         });
 
         return result;
-    }, [initialProducts, searchQuery, selectedCategory, selectedBrands, selectedGender, priceRange, minRating, sortOption]);
+    }, [baseProducts, selectedBrands, selectedGender, priceRange, minRating, sortOption]);
 
-    // Derived Lists for UI
+    // Derived Lists for UI (Smart Filters based on baseProducts)
     const brands = useMemo(() => {
         const availableBrands = new Set();
-        // Only show brands relevant to current category to be smart
-        const sourceData = selectedCategory === "All" ? initialProducts : initialProducts.filter(p => p.category === selectedCategory);
-        sourceData.forEach(p => {
+        baseProducts.forEach(p => {
             if (p.brand) availableBrands.add(p.brand);
         });
         return [...availableBrands].sort();
-    }, [initialProducts, selectedCategory]);
+    }, [baseProducts]);
+
+    const availableGenders = useMemo(() => {
+        const genders = new Set();
+        baseProducts.forEach(p => {
+            if (p.gender) genders.add(p.gender);
+        });
+        return [...genders];
+    }, [baseProducts]);
 
     const maxPrice = useMemo(() => {
-        return Math.max(...initialProducts.map(p => p.price)) + 100;
-    }, [initialProducts]);
+        if (baseProducts.length === 0) return 10000;
+        return Math.max(...baseProducts.map(p => p.price));
+    }, [baseProducts]);
 
     return {
         products: filteredProducts,
@@ -97,6 +110,7 @@ export function useProductSystem(initialProducts) {
         sortOption,
         setSortOption,
         availableBrands: brands,
+        availableGenders,
         globalMaxPrice: maxPrice
     };
 }

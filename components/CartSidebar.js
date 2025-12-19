@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
-import ImageWithFallback from './ImageWithFallback';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 export default function CartSidebar() {
@@ -72,7 +72,7 @@ export default function CartSidebar() {
                                         className="flex gap-4 bg-gray-50/50 p-3 rounded-xl border border-gray-100"
                                     >
                                         <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-white">
-                                            <ImageWithFallback
+                                            <Image
                                                 src={item.image}
                                                 alt={item.name}
                                                 fill

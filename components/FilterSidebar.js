@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 export default function FilterSidebar({
     selectedCategory,
     brands,
+    availableGenders = [],
     selectedBrands,
     setSelectedBrands,
     priceRange,
@@ -24,6 +25,14 @@ export default function FilterSidebar({
         }
     };
 
+    // Filter standard genders to only show relevant ones
+    const displayedGenders = ['All', 'Men', 'Women', 'Boys', 'Girls', 'Unisex'].filter(g =>
+        g === 'All' || availableGenders.includes(g)
+    );
+
+    const showGenderFilter = availableGenders.length > 0;
+    const showBrandFilter = brands.length > 1;
+
     return (
         <div className="space-y-8">
             {/* Header */}
@@ -37,26 +46,28 @@ export default function FilterSidebar({
                 </button>
             </div>
 
-            {/* Gender Filter */}
-            <div>
-                <h4 className="font-semibold text-gray-900 mb-3">Gender</h4>
-                <div className="space-y-2">
-                    {['All', 'Men', 'Women', 'Boys', 'Girls', 'Unisex'].map((gender) => (
-                        <label key={gender} className="flex items-center gap-2 cursor-pointer">
-                            <input
-                                type="radio"
-                                name="gender"
-                                checked={selectedGender === gender}
-                                onChange={() => setSelectedGender(gender)}
-                                className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                            />
-                            <span className="text-gray-700 text-sm">{gender}</span>
-                        </label>
-                    ))}
+            {/* Gender Filter - Smart Render */}
+            {showGenderFilter && (
+                <div>
+                    <h4 className="font-semibold text-gray-900 mb-3">Gender</h4>
+                    <div className="space-y-2">
+                        {displayedGenders.map((gender) => (
+                            <label key={gender} className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    checked={selectedGender === gender}
+                                    onChange={() => setSelectedGender(gender)}
+                                    className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                />
+                                <span className="text-gray-700 text-sm">{gender}</span>
+                            </label>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
 
-            {/* Price Filter */}
+            {/* Price Filter - Always Relevant */}
             <div>
                 <h4 className="font-semibold text-gray-900 mb-3">Price Range</h4>
                 <div className="flex items-center gap-2 mb-4">
@@ -73,28 +84,27 @@ export default function FilterSidebar({
                 </div>
             </div>
 
-            {/* Brand Filter */}
-            <div>
-                <h4 className="font-semibold text-gray-900 mb-3">Brands</h4>
-                <div className="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
-                    {brands.map((brand) => (
-                        <label key={brand} className="flex items-center gap-2 cursor-pointer">
-                            <input
-                                type="checkbox"
-                                checked={selectedBrands.includes(brand)}
-                                onChange={() => handleBrandChange(brand)}
-                                className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-                            />
-                            <span className="text-gray-700 text-sm truncate">{brand}</span>
-                        </label>
-                    ))}
-                    {brands.length === 0 && (
-                        <p className="text-xs text-gray-400">No brands available for this category.</p>
-                    )}
+            {/* Brand Filter - Smart Render */}
+            {showBrandFilter && (
+                <div>
+                    <h4 className="font-semibold text-gray-900 mb-3">Brands</h4>
+                    <div className="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                        {brands.map((brand) => (
+                            <label key={brand} className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={selectedBrands.includes(brand)}
+                                    onChange={() => handleBrandChange(brand)}
+                                    className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                                />
+                                <span className="text-gray-700 text-sm truncate">{brand}</span>
+                            </label>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
 
-            {/* Rating Filter */}
+            {/* Rating Filter - Always Relevant */}
             <div>
                 <h4 className="font-semibold text-gray-900 mb-3">Rating</h4>
                 <div className="space-y-1">

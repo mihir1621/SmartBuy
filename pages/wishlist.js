@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import ImageWithFallback from '@/components/ImageWithFallback';
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, Trash2, Heart } from 'lucide-react';
@@ -62,7 +62,7 @@ export default function Wishlist() {
                                     className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col group relative"
                                 >
                                     <div className="relative aspect-[4/5] bg-gray-100 overflow-hidden">
-                                        <ImageWithFallback
+                                        <Image
                                             src={product.image}
                                             alt={product.name}
                                             fill
