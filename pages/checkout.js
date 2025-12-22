@@ -149,7 +149,7 @@ export default function Checkout() {
                                         <div className="flex-1">
                                             <h3 className="text-sm font-medium text-gray-900 line-clamp-1">{item.name}</h3>
                                             <p className="text-xs text-gray-500 mb-1">Qty: {item.quantity}</p>
-                                            <p className="text-sm font-bold text-gray-900">${(item.price * item.quantity).toFixed(2)}</p>
+                                            <p className="text-sm font-bold text-gray-900">₹{(item.price * item.quantity).toFixed(2)}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -158,7 +158,7 @@ export default function Checkout() {
                             <div className="space-y-3 py-6 border-t border-gray-100">
                                 <div className="flex justify-between text-gray-500 text-sm">
                                     <span>Subtotal</span>
-                                    <span>${cartTotal.toFixed(2)}</span>
+                                    <span>₹{cartTotal.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-gray-500 text-sm">
                                     <span>Shipping</span>
@@ -166,11 +166,11 @@ export default function Checkout() {
                                 </div>
                                 <div className="flex justify-between text-gray-500 text-sm">
                                     <span>Tax (5%)</span>
-                                    <span>${(cartTotal * 0.05).toFixed(2)}</span>
+                                    <span>₹{(cartTotal * 0.05).toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-gray-900 font-bold text-lg pt-3 border-t border-gray-100">
                                     <span>Total</span>
-                                    <span>${(cartTotal * 1.05).toFixed(2)}</span>
+                                    <span>₹{(cartTotal * 1.05).toFixed(2)}</span>
                                 </div>
                             </div>
 

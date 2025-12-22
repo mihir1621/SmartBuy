@@ -71,7 +71,7 @@ export default function FilterSidebar({
             <div>
                 <h4 className="font-semibold text-gray-900 mb-3">Price Range</h4>
                 <div className="flex items-center gap-2 mb-4">
-                    <span className="text-sm font-medium text-gray-700">${priceRange[0]}</span>
+                    <span className="text-sm font-medium text-gray-700">₹{priceRange[0]}</span>
                     <input
                         type="range"
                         min="0"
@@ -80,7 +80,7 @@ export default function FilterSidebar({
                         onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
                         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-gray-900"
                     />
-                    <span className="text-sm font-medium text-gray-700">${priceRange[1]}</span>
+                    <span className="text-sm font-medium text-gray-700">₹{priceRange[1]}</span>
                 </div>
             </div>
 

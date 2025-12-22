@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/router";
 import StoreNavbar from "@/components/StoreNavbar";
 import ProductCard from "@/components/ProductCard";
 import CartSidebar from "@/components/CartSidebar";
@@ -35,9 +36,19 @@ export default function Home() {
   } = useProductSystem(products);
 
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const router = useRouter();
 
   // Categories list for the top pill navigation
   const categories = ["All", ...new Set(products.map((p) => p.category))];
+
+  // Sync category with URL query
+  useEffect(() => {
+    if (router.query.category) {
+      setSelectedCategory(router.query.category);
+    } else {
+      setSelectedCategory("All");
+    }
+  }, [router.query.category, setSelectedCategory]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -46,37 +57,23 @@ export default function Home() {
         <meta name="description" content="Shop the best brands in Fashion, Electronics, Home & More." />
       </Head>
 
-      {/* Navbar propagates search query updates to our system */}
-      <StoreNavbar onSearch={setSearchQuery} />
+      {/* Navbar propagates search and filter updates to our system */}
+      <StoreNavbar
+        onSearch={setSearchQuery}
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
       <CartSidebar />
 
       <main>
 
 
-        {/* Category Pills (Top Level Filter) */}
-        <section className="sticky top-16 z-20 bg-white border-b border-gray-100 shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <div className="flex items-center gap-3 overflow-x-auto no-scrollbar">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all ${selectedCategory === category
-                    ? "bg-gray-900 text-white"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                    }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="lg:grid lg:grid-cols-4 lg:gap-8">
             {/* Desktop Sidebar */}
-            {searchQuery && (
+            {(searchQuery || selectedCategory !== "All") && (
               <aside className="hidden lg:block lg:col-span-1 sticky top-32 h-fit">
                 <FilterSidebar
                   selectedCategory={selectedCategory}
@@ -103,7 +100,7 @@ export default function Home() {
             )}
 
             {/* Mobile Filter Toggle */}
-            {searchQuery && (
+            {(searchQuery || selectedCategory !== "All") && (
               <div className="lg:hidden mb-4 flex justify-between items-center">
                 <button
                   onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
@@ -119,7 +116,7 @@ export default function Home() {
 
             {/* Mobile Filter Dropdown */}
             <AnimatePresence>
-              {searchQuery && isMobileFilterOpen && (
+              {(searchQuery || selectedCategory !== "All") && isMobileFilterOpen && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
@@ -151,7 +148,7 @@ export default function Home() {
             </AnimatePresence>
 
             {/* Product Grid Area */}
-            <div className={searchQuery ? "lg:col-span-3" : "lg:col-span-4"}>
+            <div className={(searchQuery || selectedCategory !== "All") ? "lg:col-span-3" : "lg:col-span-4"}>
               {/* Sorting Bar */}
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-bold text-gray-900">

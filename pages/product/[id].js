@@ -121,8 +121,8 @@ export default function ProductDetail() {
                                 </div>
 
                                 <div className="flex items-baseline gap-4">
-                                    <span className="text-4xl font-bold text-gray-900">${product.price}</span>
-                                    <span className="text-lg text-gray-400 line-through decoration-gray-400">${(product.price * 1.2).toFixed(0)}</span>
+                                    <span className="text-4xl font-bold text-gray-900">₹{product.price}</span>
+                                    <span className="text-lg text-gray-400 line-through decoration-gray-400">₹{(product.price * 1.2).toFixed(0)}</span>
                                     <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-bold">-20%</span>
                                 </div>
                             </div>

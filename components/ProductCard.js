@@ -73,7 +73,7 @@ export default function ProductCard({ product }) {
                     <p className="text-gray-500 text-sm mb-4 line-clamp-2">{product.description}</p>
 
                     <div className="flex items-center justify-between mt-auto">
-                        <span className="text-xl font-bold text-gray-900">${product.price}</span>
+                        <span className="text-xl font-bold text-gray-900">₹{product.price}</span>
 
                         <motion.button
                             whileTap={{ scale: 0.95 }}

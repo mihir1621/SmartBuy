@@ -37,7 +37,7 @@ export default function RecentlyViewed({ products }) {
                                             {product.name}
                                         </h3>
                                         <p className="text-xs text-gray-500 mb-2">{product.category}</p>
-                                        <span className="text-sm font-bold text-gray-900 mt-auto">${product.price}</span>
+                                        <span className="text-sm font-bold text-gray-900 mt-auto">₹{product.price}</span>
                                     </div>
                                 </div>
                             </Link>

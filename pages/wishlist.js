@@ -87,8 +87,8 @@ export default function Wishlist() {
                                             </h3>
                                         </Link>
                                         <div className="flex items-center gap-2 mb-4">
-                                            <span className="text-xl font-bold text-gray-900">${product.price}</span>
-                                            <span className="text-sm text-gray-400 line-through">${(product.price * 1.2).toFixed(0)}</span>
+                                            <span className="text-xl font-bold text-gray-900">₹{product.price}</span>
+                                            <span className="text-sm text-gray-400 line-through">₹{(product.price * 1.2).toFixed(0)}</span>
                                         </div>
 
                                         <button

@@ -102,7 +102,7 @@ export default function CartSidebar() {
                                                         <Plus className="w-3 h-3" />
                                                     </button>
                                                 </div>
-                                                <span className="font-bold text-gray-900 text-sm">${(item.price * item.quantity).toFixed(2)}</span>
+                                                <span className="font-bold text-gray-900 text-sm">₹{(item.price * item.quantity).toFixed(2)}</span>
                                             </div>
                                         </div>
 
@@ -123,7 +123,7 @@ export default function CartSidebar() {
                                 <div className="space-y-3 mb-5">
                                     <div className="flex justify-between text-gray-500 text-sm">
                                         <span>Subtotal</span>
-                                        <span>${cartTotal.toFixed(2)}</span>
+                                        <span>₹{cartTotal.toFixed(2)}</span>
                                     </div>
                                     <div className="flex justify-between text-gray-500 text-sm">
                                         <span>Shipping</span>
@@ -131,7 +131,7 @@ export default function CartSidebar() {
                                     </div>
                                     <div className="flex justify-between text-gray-900 font-bold text-lg pt-3 border-t border-gray-50">
                                         <span>Total</span>
-                                        <span>${cartTotal.toFixed(2)}</span>
+                                        <span>₹{cartTotal.toFixed(2)}</span>
                                     </div>
                                 </div>
 

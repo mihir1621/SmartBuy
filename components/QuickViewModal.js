@@ -59,7 +59,7 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
                             <span className="text-gray-500 text-sm">{product.reviews} reviews</span>
                         </div>
 
-                        <div className="text-3xl font-bold text-gray-900 mb-6">${product.price}</div>
+                        <div className="text-3xl font-bold text-gray-900 mb-6">₹{product.price}</div>
 
                         <p className="text-gray-600 leading-relaxed mb-6">
                             {product.description}

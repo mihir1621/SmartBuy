@@ -5,7 +5,7 @@ export function useProductSystem(initialProducts) {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [selectedBrands, setSelectedBrands] = useState([]);
-    const [priceRange, setPriceRange] = useState([0, 5000]);
+    const [priceRange, setPriceRange] = useState([0, 1000000]);
     const [selectedGender, setSelectedGender] = useState("All");
     const [minRating, setMinRating] = useState(0);
     const [sortOption, setSortOption] = useState("popularity"); // popularity, price-asc, price-desc, newest, rating
