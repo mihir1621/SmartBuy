@@ -11,6 +11,10 @@ export const products = [
         reviews: 2150,
         brand: "Apple",
         image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=800&q=80",
+        images: [
+            "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=800&q=80",
+            "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800&q=80" // Side view
+        ],
         description: "Supercharged by M2 chip. The world's thinnest 15-inch laptop.",
         inStock: true,
         isNew: true
@@ -26,6 +30,10 @@ export const products = [
         reviews: 1200,
         brand: "Dell",
         image: "https://images.unsplash.com/photo-1593642632823-8f78536788c6?w=800&q=80",
+        images: [
+            "https://images.unsplash.com/photo-1593642632823-8f78536788c6?w=800&q=80",
+            "https://images.unsplash.com/photo-1542393545-facac42e67ea?w=800&q=80"
+        ],
         description: "Premium ultrabook with InfinityEdge display and high performance.",
         inStock: true
     },
@@ -154,6 +162,10 @@ export const products = [
         reviews: 1250,
         brand: "Apple",
         image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800&q=80",
+        images: [
+            "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800&q=80",
+            "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=800&q=80" // In hand
+        ],
         description: "The ultimate iPhone with Titanium design and A17 Pro chip.",
         inStock: true,
         isNew: true
@@ -169,6 +181,10 @@ export const products = [
         reviews: 950,
         brand: "Apple",
         image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800&q=80",
+        images: [
+            "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800&q=80",
+            "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800&q=80"
+        ],
         description: "Compact titanium powerhouse with Pro camera system.",
         inStock: true
     },

@@ -26,7 +26,7 @@ export default function ProductCard({ product }) {
                     <span className="sr-only">View {product.name}</span>
                 </Link>
 
-                <div className="relative h-64 w-full overflow-hidden bg-gray-100">
+                <div className="relative h-48 w-full overflow-hidden bg-gray-100">
                     <Image
                         src={product.image}
                         alt={product.name}
@@ -35,7 +35,7 @@ export default function ProductCard({ product }) {
                     />
 
                     {/* Overlay Elements */}
-                    <div className="absolute top-3 right-3 flex flex-col gap-2 z-20">
+                    <div className="absolute top-2 right-2 flex flex-col gap-1.5 z-20">
                         <button
                             onClick={(e) => {
                                 e.preventDefault();
@@ -45,7 +45,7 @@ export default function ProductCard({ product }) {
                             className="bg-white/90 backdrop-blur-sm p-1.5 rounded-full hover:scale-110 transition-transform shadow-sm flex items-center justify-center"
                             title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
                         >
-                            <Heart className={`w-4 h-4 ${isWishlisted ? 'text-red-500 fill-red-500' : 'text-gray-400'}`} />
+                            <Heart className={`w-3.5 h-3.5 ${isWishlisted ? 'text-red-500 fill-red-500' : 'text-gray-400'}`} />
                         </button>
 
                         <button
@@ -57,23 +57,23 @@ export default function ProductCard({ product }) {
                             className="bg-white/90 backdrop-blur-sm p-1.5 rounded-full hover:scale-110 transition-transform shadow-sm flex items-center justify-center text-gray-700 hover:text-blue-600"
                             title="Quick View"
                         >
-                            <Eye className="w-4 h-4" />
+                            <Eye className="w-3.5 h-3.5" />
                         </button>
 
-                        <div className="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full flex items-center gap-1 shadow-sm mt-1">
+                        <div className="bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm mt-0.5">
                             <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-                            <span className="text-xs font-bold text-gray-700">{product.rating}</span>
+                            <span className="text-[10px] font-bold text-gray-700">{product.rating}</span>
                         </div>
                     </div>
                 </div>
 
-                <div className="p-5">
-                    <div className="text-xs font-medium text-blue-500 mb-1 uppercase tracking-wider">{product.category}</div>
-                    <h3 className="text-lg font-bold text-gray-800 mb-2 truncate">{product.name}</h3>
-                    <p className="text-gray-500 text-sm mb-4 line-clamp-2">{product.description}</p>
+                <div className="p-3">
+                    <div className="text-[10px] font-medium text-blue-500 mb-0.5 uppercase tracking-wider">{product.category}</div>
+                    <h3 className="text-sm font-bold text-gray-800 mb-1 truncate">{product.name}</h3>
+                    <p className="text-gray-500 text-xs mb-3 line-clamp-2">{product.description}</p>
 
                     <div className="flex items-center justify-between mt-auto">
-                        <span className="text-xl font-bold text-gray-900">₹{product.price}</span>
+                        <span className="text-base font-bold text-gray-900">₹{product.price}</span>
 
                         <motion.button
                             whileTap={{ scale: 0.95 }}
@@ -82,10 +82,10 @@ export default function ProductCard({ product }) {
                                 e.stopPropagation();
                                 addToCart(product);
                             }}
-                            className="bg-gray-900 text-white p-2.5 rounded-full hover:bg-gray-800 transition-colors shadow-md flex items-center justify-center relative z-20"
+                            className="bg-gray-900 text-white p-2 rounded-full hover:bg-gray-800 transition-colors shadow-md flex items-center justify-center relative z-20"
                             aria-label="Add to cart"
                         >
-                            <ShoppingCart className="w-5 h-5" />
+                            <ShoppingCart className="w-4 h-4" />
                         </motion.button>
                     </div>
                 </div>

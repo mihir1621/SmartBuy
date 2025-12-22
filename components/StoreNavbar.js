@@ -387,7 +387,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                             placeholder="Enter city..."
                                             value={locationSearch}
                                             onChange={(e) => setLocationSearch(e.target.value)}
-                                            className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-100 rounded-lg focus:bg-white focus:ring-1 focus:ring-blue-500 transition-all text-sm outline-none"
+                                            className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-100 rounded-lg focus:bg-white focus:ring-1 focus:ring-blue-500 transition-all text-sm outline-none placeholder-gray-600"
                                         />
                                     </div>
 

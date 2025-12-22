@@ -11,6 +11,7 @@ import HeroSection from "@/components/HeroSection";
 import { products } from "@/data/products";
 import { useProductSystem } from "@/hooks/useProductSystem";
 import { Filter, SlidersHorizontal, ChevronDown } from "lucide-react";
+import BannerCarousel from "@/components/BannerCarousel";
 
 export default function Home() {
   // Initialize the Advanced Product System
@@ -66,10 +67,10 @@ export default function Home() {
       />
       <CartSidebar />
 
+      {/* Promotional Banner Carousel */}
+      <BannerCarousel />
+
       <main>
-
-
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="lg:grid lg:grid-cols-4 lg:gap-8">
             {/* Desktop Sidebar */}
@@ -177,7 +178,7 @@ export default function Home() {
               {filteredProducts.length > 0 ? (
                 <motion.div
                   layout
-                  className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
                 >
                   {filteredProducts.map((product) => (
                     <ProductCard key={product.id} product={product} />
