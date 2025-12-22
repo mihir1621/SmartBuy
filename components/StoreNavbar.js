@@ -46,7 +46,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
         { name: "Home", icon: HomeIcon },
         { name: "Electronics", icon: Cpu },
         { name: "Tablets", icon: Tablet },
-        { name: "Wearables", icon: Watch },
+        { name: "Watch", icon: Watch },
         { name: "Accessories", icon: ShoppingBag },
     ];
 
@@ -278,6 +278,28 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                             </div>
 
                             <div className="flex-1 overflow-y-auto py-4">
+                                {/* Mobile Location Selector */}
+                                <div className="px-4 mb-6">
+                                    <div
+                                        onClick={() => {
+                                            setIsSidebarOpen(false);
+                                            setShowLocationModal(true);
+                                        }}
+                                        className="bg-blue-50 border border-blue-100 p-3 rounded-xl flex items-center justify-between cursor-pointer active:scale-98 transition-transform"
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                                <MapPin className="w-4 h-4 text-blue-600" />
+                                            </div>
+                                            <div>
+                                                <p className="text-[10px] text-blue-600 font-bold uppercase tracking-wider mb-0.5">Deliver to</p>
+                                                <p className="text-sm font-bold text-gray-900 leading-none">{location?.city || "Select Location"}</p>
+                                            </div>
+                                        </div>
+                                        <ChevronRight className="w-4 h-4 text-blue-400" />
+                                    </div>
+                                </div>
+
                                 <div className="px-4 mb-4">
                                     <h3 className="text-gray-400 font-bold text-[10px] uppercase tracking-widest mb-3 px-2">Top Categories</h3>
                                     <div className="grid gap-0.5">

@@ -26,7 +26,7 @@ export default function FilterSidebar({
     };
 
     // Filter standard genders to only show relevant ones
-    const displayedGenders = ['All', 'Men', 'Women', 'Boys', 'Girls', 'Unisex'].filter(g =>
+    const displayedGenders = ['All', 'Men', 'Women', 'Kids', 'Boys', 'Girls', 'Unisex'].filter(g =>
         g === 'All' || availableGenders.includes(g)
     );
 

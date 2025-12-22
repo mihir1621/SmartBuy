@@ -39,8 +39,15 @@ export function useProductSystem(initialProducts) {
         }
 
         // Gender Filter
+        // Gender Filter
         if (selectedGender !== "All") {
-            result = result.filter(p => p.gender === selectedGender || p.gender === "Unisex");
+            if (["Men", "Women"].includes(selectedGender)) {
+                // For Men and Women, include Unisex items (typically Smartwatches)
+                result = result.filter(p => p.gender === selectedGender || p.gender === "Unisex");
+            } else {
+                // For Kids, Unisex, and others, use strict filtering to avoid mixing adult items
+                result = result.filter(p => p.gender === selectedGender);
+            }
         }
 
         // Price Filter
