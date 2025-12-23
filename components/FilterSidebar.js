@@ -37,10 +37,10 @@ export default function FilterSidebar({
         <div className="space-y-8">
             {/* Header */}
             <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-gray-900">Filters</h3>
+                <h3 className="text-lg font-bold text-white">Filters</h3>
                 <button
                     onClick={clearAll}
-                    className="text-sm text-blue-600 font-medium hover:underline"
+                    className="text-sm text-blue-400 font-medium hover:underline"
                 >
                     Clear All
                 </button>
@@ -49,7 +49,7 @@ export default function FilterSidebar({
             {/* Gender Filter - Smart Render */}
             {showGenderFilter && (
                 <div>
-                    <h4 className="font-semibold text-gray-900 mb-3">Gender</h4>
+                    <h4 className="font-semibold text-white mb-3">Gender</h4>
                     <div className="space-y-2">
                         {displayedGenders.map((gender) => (
                             <label key={gender} className="flex items-center gap-2 cursor-pointer">
@@ -58,9 +58,9 @@ export default function FilterSidebar({
                                     name="gender"
                                     checked={selectedGender === gender}
                                     onChange={() => setSelectedGender(gender)}
-                                    className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    className="w-4 h-4 text-blue-500 border-gray-600 bg-gray-800 focus:ring-blue-500 focus:ring-offset-gray-900"
                                 />
-                                <span className="text-gray-700 text-sm">{gender}</span>
+                                <span className="text-gray-300 text-sm">{gender}</span>
                             </label>
                         ))}
                     </div>
@@ -69,25 +69,25 @@ export default function FilterSidebar({
 
             {/* Price Filter - Always Relevant */}
             <div>
-                <h4 className="font-semibold text-gray-900 mb-3">Price Range</h4>
+                <h4 className="font-semibold text-white mb-3">Price Range</h4>
                 <div className="flex items-center gap-2 mb-4">
-                    <span className="text-sm font-medium text-gray-700">₹{priceRange[0]}</span>
+                    <span className="text-sm font-medium text-gray-300">₹{priceRange[0]}</span>
                     <input
                         type="range"
                         min="0"
                         max={globalMaxPrice}
                         value={priceRange[1]}
                         onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-gray-900"
+                        className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-white"
                     />
-                    <span className="text-sm font-medium text-gray-700">₹{priceRange[1]}</span>
+                    <span className="text-sm font-medium text-gray-300">₹{priceRange[1]}</span>
                 </div>
             </div>
 
             {/* Brand Filter - Smart Render */}
             {showBrandFilter && (
                 <div>
-                    <h4 className="font-semibold text-gray-900 mb-3">Brands</h4>
+                    <h4 className="font-semibold text-white mb-3">Brands</h4>
                     <div className="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
                         {brands.map((brand) => (
                             <label key={brand} className="flex items-center gap-2 cursor-pointer">
@@ -95,9 +95,9 @@ export default function FilterSidebar({
                                     type="checkbox"
                                     checked={selectedBrands.includes(brand)}
                                     onChange={() => handleBrandChange(brand)}
-                                    className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                                    className="w-4 h-4 text-blue-500 rounded border-gray-600 bg-gray-800 focus:ring-blue-500 focus:ring-offset-gray-900"
                                 />
-                                <span className="text-gray-700 text-sm truncate">{brand}</span>
+                                <span className="text-gray-300 text-sm truncate">{brand}</span>
                             </label>
                         ))}
                     </div>
@@ -106,23 +106,23 @@ export default function FilterSidebar({
 
             {/* Rating Filter - Always Relevant */}
             <div>
-                <h4 className="font-semibold text-gray-900 mb-3">Rating</h4>
+                <h4 className="font-semibold text-white mb-3">Rating</h4>
                 <div className="space-y-1">
                     {[4, 3, 2, 1].map((rating) => (
                         <button
                             key={rating}
                             onClick={() => setMinRating(rating === minRating ? 0 : rating)}
-                            className={`flex items-center gap-2 w-full px-2 py-1 rounded hover:bg-gray-100 ${minRating === rating ? 'bg-blue-50' : ''}`}
+                            className={`flex items-center gap-2 w-full px-2 py-1 rounded hover:bg-gray-800 ${minRating === rating ? 'bg-blue-900/30' : ''}`}
                         >
                             <div className="flex items-center">
                                 {[...Array(5)].map((_, i) => (
                                     <Star
                                         key={i}
-                                        className={`w-3.5 h-3.5 ${i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`}
+                                        className={`w-3.5 h-3.5 ${i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'}`}
                                     />
                                 ))}
                             </div>
-                            <span className="text-sm text-gray-600">& Up</span>
+                            <span className="text-sm text-gray-400">& Up</span>
                         </button>
                     ))}
                 </div>

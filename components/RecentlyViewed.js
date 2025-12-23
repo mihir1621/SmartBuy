@@ -9,11 +9,11 @@ export default function RecentlyViewed({ products }) {
     if (!products || products.length === 0) return null;
 
     return (
-        <section className="bg-gray-50 py-12 border-t border-gray-200">
+        <section className="bg-black py-12 border-t border-gray-800">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center gap-2 mb-6">
-                    <Clock className="w-5 h-5 text-gray-500" />
-                    <h2 className="text-xl font-bold text-gray-900">Recently Viewed</h2>
+                    <Clock className="w-5 h-5 text-gray-400" />
+                    <h2 className="text-xl font-bold text-white">Recently Viewed</h2>
                 </div>
 
                 <div className="relative">
@@ -23,8 +23,8 @@ export default function RecentlyViewed({ products }) {
                     >
                         {products.map((product) => (
                             <Link href={`/product/${product.id}`} key={product.id} className="flex-none w-[160px] md:w-[200px] snap-start group">
-                                <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden h-full flex flex-col hover:shadow-md transition-shadow">
-                                    <div className="relative w-full h-32 md:h-40 bg-gray-100">
+                                <div className="bg-gray-900 rounded-xl shadow-sm border border-gray-800 overflow-hidden h-full flex flex-col hover:shadow-md hover:border-blue-900 transition-all">
+                                    <div className="relative w-full h-32 md:h-40 bg-gray-800">
                                         <Image
                                             src={product.image}
                                             alt={product.name}
@@ -33,11 +33,11 @@ export default function RecentlyViewed({ products }) {
                                         />
                                     </div>
                                     <div className="p-3 flex-1 flex flex-col">
-                                        <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-1 group-hover:text-blue-600 transition-colors">
+                                        <h3 className="text-sm font-medium text-white line-clamp-2 mb-1 group-hover:text-blue-400 transition-colors">
                                             {product.name}
                                         </h3>
-                                        <p className="text-xs text-gray-500 mb-2">{product.category}</p>
-                                        <span className="text-sm font-bold text-gray-900 mt-auto">₹{product.price}</span>
+                                        <p className="text-xs text-gray-400 mb-2">{product.category}</p>
+                                        <span className="text-sm font-bold text-white mt-auto">₹{product.price}</span>
                                     </div>
                                 </div>
                             </Link>

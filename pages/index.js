@@ -52,7 +52,7 @@ export default function Home() {
   }, [router.query.category, setSelectedCategory]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-black text-white">
       <Head>
         <title>SmartBuy | Premium Online Shopping</title>
         <meta name="description" content="Shop the best brands in Fashion, Electronics, Home & More." />
@@ -105,11 +105,11 @@ export default function Home() {
               <div className="lg:hidden mb-4 flex justify-between items-center">
                 <button
                   onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-                  className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg text-sm font-medium shadow-sm"
+                  className="flex items-center gap-2 bg-gray-900 border border-gray-800 px-4 py-2 rounded-lg text-sm font-medium shadow-sm text-gray-200"
                 >
                   <Filter className="w-4 h-4" /> Filters
                 </button>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-gray-400">
                   {filteredProducts.length} Results
                 </span>
               </div>
@@ -122,7 +122,7 @@ export default function Home() {
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  className="lg:hidden overflow-hidden mb-6 bg-white rounded-xl border border-gray-100 p-4"
+                  className="lg:hidden overflow-hidden mb-6 bg-gray-900 rounded-xl border border-gray-800 p-4"
                 >
                   <FilterSidebar
                     selectedCategory={selectedCategory}
@@ -152,16 +152,16 @@ export default function Home() {
             <div className={(searchQuery || selectedCategory !== "All") ? "lg:col-span-3" : "lg:col-span-4"}>
               {/* Sorting Bar */}
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-gray-900">
+                <h2 className="text-xl font-bold text-white">
                   {selectedCategory === "All" ? (searchQuery ? `Results for "${searchQuery}"` : "All Products") : selectedCategory}
                 </h2>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-500 hidden sm:inline">Sort by:</span>
+                  <span className="text-sm text-gray-400 hidden sm:inline">Sort by:</span>
                   <div className="relative">
                     <select
                       value={sortOption}
                       onChange={(e) => setSortOption(e.target.value)}
-                      className="appearance-none bg-white border border-gray-200 text-gray-700 py-2 pl-4 pr-8 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                      className="appearance-none bg-gray-900 border border-gray-800 text-gray-300 py-2 pl-4 pr-8 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
                     >
                       <option value="popularity">Popularity</option>
                       <option value="newest">Newest First</option>
@@ -185,10 +185,10 @@ export default function Home() {
                   ))}
                 </motion.div>
               ) : (
-                <div className="text-center py-20 bg-white rounded-xl border border-gray-100">
+                <div className="text-center py-20 bg-gray-900 rounded-xl border border-gray-800">
                   <div className="text-6xl mb-4">🔍</div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">No results found</h3>
-                  <p className="text-gray-500 text-lg mb-6">Try adjusting your filters or search terms.</p>
+                  <h3 className="text-xl font-bold text-white mb-2">No results found</h3>
+                  <p className="text-gray-400 text-lg mb-6">Try adjusting your filters or search terms.</p>
                   <button
                     onClick={() => {
                       setSelectedCategory("All");
@@ -197,7 +197,7 @@ export default function Home() {
                       setPriceRange([0, globalMaxPrice]);
                       setSelectedGender("All");
                     }}
-                    className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 font-medium transition-colors"
+                    className="px-6 py-2 bg-white text-black rounded-lg hover:bg-gray-200 font-medium transition-colors"
                   >
                     Clear all filters
                   </button>

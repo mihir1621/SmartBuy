@@ -1,101 +1,90 @@
-import { useState } from 'react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { ShoppingCart, Star, Heart, Eye } from 'lucide-react';
-import { useCart } from '@/context/CartContext';
-import { useWishlist } from '@/context/WishlistContext';
 import Link from 'next/link';
-import QuickViewModal from './QuickViewModal';
+import { ShoppingCart, Heart, Star } from 'lucide-react';
+import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
 
 export default function ProductCard({ product }) {
     const { addToCart } = useCart();
-    const { toggleWishlist, isInWishlist } = useWishlist();
+    const { isInWishlist, toggleWishlist } = useWishlist();
     const isWishlisted = isInWishlist(product.id);
-    const [showQuickView, setShowQuickView] = useState(false);
+
+    const discountPercentage = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
 
     return (
-        <>
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -5 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 group relative"
-            >
-                <Link href={`/product/${product.id}`} className="absolute inset-0 z-10">
-                    <span className="sr-only">View {product.name}</span>
-                </Link>
-
-                <div className="relative h-48 w-full overflow-hidden bg-gray-100">
-                    <Image
+        <Link href={`/product/${product.id}`} className="group block h-full">
+            <div className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:shadow-lg hover:border-blue-900 transition-all duration-300 relative h-full flex flex-col">
+                {/* Image Container */}
+                <div className="relative aspect-[4/5] overflow-hidden bg-gray-800">
+                    <img
                         src={product.image}
                         alt={product.name}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
                     />
 
-                    {/* Overlay Elements */}
-                    <div className="absolute top-2 right-2 flex flex-col gap-1.5 z-20">
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                toggleWishlist(product);
-                            }}
-                            className="bg-white/90 backdrop-blur-sm p-1.5 rounded-full hover:scale-110 transition-transform shadow-sm flex items-center justify-center"
-                            title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
-                        >
-                            <Heart className={`w-3.5 h-3.5 ${isWishlisted ? 'text-red-500 fill-red-500' : 'text-gray-400'}`} />
-                        </button>
+                    {/* Wishlist Button */}
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            toggleWishlist(product);
+                        }}
+                        className={`absolute top-2 right-2 p-1.5 rounded-full backdrop-blur-sm transition-all shadow-sm ${isWishlisted
+                            ? 'bg-red-900/50 text-red-400'
+                            : 'bg-black/50 text-gray-300 hover:bg-black hover:text-red-400'
+                            }`}
+                    >
+                        <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
+                    </button>
 
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                setShowQuickView(true);
-                            }}
-                            className="bg-white/90 backdrop-blur-sm p-1.5 rounded-full hover:scale-110 transition-transform shadow-sm flex items-center justify-center text-gray-700 hover:text-blue-600"
-                            title="Quick View"
-                        >
-                            <Eye className="w-3.5 h-3.5" />
-                        </button>
-
-                        <div className="bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm mt-0.5">
-                            <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-                            <span className="text-[10px] font-bold text-gray-700">{product.rating}</span>
+                    {/* Discount Badge if Applicable */}
+                    {discountPercentage > 0 && (
+                        <div className="absolute top-2 left-2 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                            {discountPercentage}% OFF
                         </div>
-                    </div>
+                    )}
                 </div>
 
-                <div className="p-3">
-                    <div className="text-[10px] font-medium text-blue-500 mb-0.5 uppercase tracking-wider">{product.category}</div>
-                    <h3 className="text-sm font-bold text-gray-800 mb-1 truncate">{product.name}</h3>
-                    <p className="text-gray-500 text-xs mb-3 line-clamp-2">{product.description}</p>
+                {/* Content */}
+                <div className="p-3 flex flex-col flex-1">
+                    {/* Brand & Rating */}
+                    <div className="flex justify-between items-start mb-1.5">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider truncate pr-2">{product.brand}</span>
+                        <div className="flex items-center gap-1 bg-green-900/30 px-1.5 py-0.5 rounded text-[10px] font-bold text-green-400 border border-green-900 shrink-0">
+                            <span>{product.rating}</span>
+                            <Star className="w-2.5 h-2.5 fill-current" />
+                        </div>
+                    </div>
 
-                    <div className="flex items-center justify-between mt-auto">
-                        <span className="text-base font-bold text-gray-900">₹{product.price}</span>
+                    {/* Title */}
+                    <h3 className="text-sm font-medium text-white line-clamp-2 mb-2 group-hover:text-blue-400 transition-colors leading-snug">
+                        {product.name}
+                    </h3>
 
-                        <motion.button
-                            whileTap={{ scale: 0.95 }}
+                    {/* Price Section */}
+                    <div className="mt-auto">
+                        <div className="flex items-baseline gap-2 mb-3">
+                            <span className="text-base font-bold text-white">₹{product.price.toLocaleString()}</span>
+                            {product.originalPrice > product.price && (
+                                <span className="text-xs text-gray-500 line-through">₹{product.originalPrice.toLocaleString()}</span>
+                            )}
+                        </div>
+
+                        {/* Add to Cart Button */}
+                        <button
                             onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 addToCart(product);
                             }}
-                            className="bg-gray-900 text-white p-2 rounded-full hover:bg-gray-800 transition-colors shadow-md flex items-center justify-center relative z-20"
-                            aria-label="Add to cart"
+                            className="w-full bg-white hover:bg-gray-200 text-black text-xs font-bold py-2 rounded-lg transition-colors flex items-center justify-center gap-2 active:scale-95"
                         >
-                            <ShoppingCart className="w-4 h-4" />
-                        </motion.button>
+                            <ShoppingCart className="w-3.5 h-3.5" />
+                            Add to Cart
+                        </button>
                     </div>
                 </div>
-            </motion.div>
-
-            <QuickViewModal
-                isOpen={showQuickView}
-                onClose={() => setShowQuickView(false)}
-                product={product}
-            />
-        </>
+            </div>
+        </Link>
     );
 }

@@ -27,22 +27,22 @@ export default function CartSidebar() {
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        className="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white shadow-2xl z-50 flex flex-col"
+                        className="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-gray-900 shadow-2xl z-50 flex flex-col border-l border-gray-800"
                     >
                         {/* Header */}
-                        <div className="p-5 border-b border-gray-100 flex items-center justify-between bg-white">
+                        <div className="p-5 border-b border-gray-800 flex items-center justify-between bg-gray-900">
                             <div className="flex items-center gap-2">
-                                <ShoppingBag className="w-5 h-5 text-gray-700" />
-                                <h2 className="text-xl font-bold text-gray-800">Your Cart</h2>
-                                <span className="bg-gray-100 text-gray-600 text-xs font-bold px-2 py-1 rounded-full">
+                                <ShoppingBag className="w-5 h-5 text-gray-300" />
+                                <h2 className="text-xl font-bold text-white">Your Cart</h2>
+                                <span className="bg-gray-800 text-gray-300 text-xs font-bold px-2 py-1 rounded-full">
                                     {cart.length}
                                 </span>
                             </div>
                             <button
                                 onClick={() => setIsCartOpen(false)}
-                                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                                className="p-2 hover:bg-gray-800 rounded-full transition-colors"
                             >
-                                <X className="w-6 h-6 text-gray-500" />
+                                <X className="w-6 h-6 text-gray-400 hover:text-white" />
                             </button>
                         </div>
 
@@ -50,16 +50,16 @@ export default function CartSidebar() {
                         <div className="flex-1 overflow-y-auto p-5 space-y-6">
                             {cart.length === 0 ? (
                                 <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
-                                    <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center">
-                                        <ShoppingBag className="w-10 h-10 text-gray-300" />
+                                    <div className="w-20 h-20 bg-gray-800 rounded-full flex items-center justify-center">
+                                        <ShoppingBag className="w-10 h-10 text-gray-500" />
                                     </div>
                                     <div>
-                                        <p className="text-gray-800 font-medium text-lg">Your cart is empty</p>
-                                        <p className="text-gray-500 text-sm mt-1">Looks like you haven't added anything yet.</p>
+                                        <p className="text-white font-medium text-lg">Your cart is empty</p>
+                                        <p className="text-gray-400 text-sm mt-1">Looks like you haven't added anything yet.</p>
                                     </div>
                                     <button
                                         onClick={() => setIsCartOpen(false)}
-                                        className="mt-4 px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
+                                        className="mt-4 px-6 py-2 bg-white text-black rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
                                     >
                                         Start Shopping
                                     </button>
@@ -69,9 +69,9 @@ export default function CartSidebar() {
                                     <motion.div
                                         layout
                                         key={item.id}
-                                        className="flex gap-4 bg-gray-50/50 p-3 rounded-xl border border-gray-100"
+                                        className="flex gap-4 bg-gray-800/50 p-3 rounded-xl border border-gray-700"
                                     >
-                                        <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-white">
+                                        <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-700">
                                             <Image
                                                 src={item.image}
                                                 alt={item.name}
@@ -82,33 +82,33 @@ export default function CartSidebar() {
 
                                         <div className="flex-1 flex flex-col justify-between">
                                             <div>
-                                                <h3 className="font-semibold text-gray-800 text-sm line-clamp-1">{item.name}</h3>
-                                                <p className="text-gray-500 text-xs mt-0.5">{item.category}</p>
+                                                <h3 className="font-semibold text-white text-sm line-clamp-1">{item.name}</h3>
+                                                <p className="text-gray-400 text-xs mt-0.5">{item.category}</p>
                                             </div>
 
                                             <div className="flex items-center justify-between mt-2">
-                                                <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-lg px-2 py-1">
+                                                <div className="flex items-center gap-3 bg-gray-900 border border-gray-700 rounded-lg px-2 py-1">
                                                     <button
                                                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                                        className="p-0.5 hover:text-blue-600 transition-colors"
+                                                        className="p-0.5 text-gray-400 hover:text-white transition-colors"
                                                     >
                                                         <Minus className="w-3 h-3" />
                                                     </button>
-                                                    <span className="text-xs font-medium w-4 text-center">{item.quantity}</span>
+                                                    <span className="text-xs font-medium w-4 text-center text-white">{item.quantity}</span>
                                                     <button
                                                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                                        className="p-0.5 hover:text-blue-600 transition-colors"
+                                                        className="p-0.5 text-gray-400 hover:text-white transition-colors"
                                                     >
                                                         <Plus className="w-3 h-3" />
                                                     </button>
                                                 </div>
-                                                <span className="font-bold text-gray-900 text-sm">₹{(item.price * item.quantity).toFixed(2)}</span>
+                                                <span className="font-bold text-white text-sm">₹{(item.price * item.quantity).toFixed(2)}</span>
                                             </div>
                                         </div>
 
                                         <button
                                             onClick={() => removeFromCart(item.id)}
-                                            className="self-start p-1 text-gray-400 hover:text-red-500 transition-colors"
+                                            className="self-start p-1 text-gray-500 hover:text-red-400 transition-colors"
                                         >
                                             <Trash2 className="w-4 h-4" />
                                         </button>
@@ -119,17 +119,17 @@ export default function CartSidebar() {
 
                         {/* Footer */}
                         {cart.length > 0 && (
-                            <div className="p-5 border-t border-gray-100 bg-white">
+                            <div className="p-5 border-t border-gray-800 bg-gray-900">
                                 <div className="space-y-3 mb-5">
-                                    <div className="flex justify-between text-gray-500 text-sm">
+                                    <div className="flex justify-between text-gray-400 text-sm">
                                         <span>Subtotal</span>
                                         <span>₹{cartTotal.toFixed(2)}</span>
                                     </div>
-                                    <div className="flex justify-between text-gray-500 text-sm">
+                                    <div className="flex justify-between text-gray-400 text-sm">
                                         <span>Shipping</span>
                                         <span>Free</span>
                                     </div>
-                                    <div className="flex justify-between text-gray-900 font-bold text-lg pt-3 border-t border-gray-50">
+                                    <div className="flex justify-between text-white font-bold text-lg pt-3 border-t border-gray-800">
                                         <span>Total</span>
                                         <span>₹{cartTotal.toFixed(2)}</span>
                                     </div>
@@ -140,7 +140,7 @@ export default function CartSidebar() {
                                         setIsCartOpen(false);
                                         router.push('/checkout');
                                     }}
-                                    className="w-full bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-gray-800 transition-all active:scale-95 shadow-lg shadow-gray-200"
+                                    className="w-full bg-white text-black py-4 rounded-xl font-bold hover:bg-gray-200 transition-all active:scale-95 shadow-lg shadow-gray-900/50"
                                 >
                                     Checkout
                                 </button>
