@@ -6,7 +6,7 @@ import Image from 'next/image';
 const standardBanners = [
     {
         id: "main-1",
-        image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=1600&q=80", // Laptop
+        image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1600&q=80", // Laptop/Tech
         title: "Next Gen Electronics",
         subtitle: "Upgrade to the latest Tech today",
         color: "bg-purple-600",
@@ -14,7 +14,7 @@ const standardBanners = [
     },
     {
         id: "main-2",
-        image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&q=80", // Fashion
+        image: "https://images.unsplash.com/photo-1529139574466-a302d2d3f529?w=1600&q=80", // Fashion
         title: "Fashion Festival",
         subtitle: "Trendiest Styles for Men & Women",
         color: "bg-pink-600",
@@ -22,7 +22,7 @@ const standardBanners = [
     },
     {
         id: "main-3",
-        image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1600&q=80", // Interior
+        image: "https://images.unsplash.com/photo-1616486338812-3aeb1d630438?w=1600&q=80", // Interior
         title: "Home Makeover",
         subtitle: "Premium Decor & Furniture",
         color: "bg-orange-600",
@@ -35,7 +35,7 @@ const dailyOffers = [
     {
         id: "sun-deal",
         day: 0, // Sunday
-        image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=1600&q=80", // Headphones/Relax
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1600&q=80", // Headphones
         title: "Sunday Chill Deals",
         subtitle: "Premium Audio Gear for your Weekend",
         color: "bg-indigo-500",
@@ -44,7 +44,7 @@ const dailyOffers = [
     {
         id: "mon-deal",
         day: 1, // Monday
-        image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1600&q=80", // Fitness/Workout
+        image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1600&q=80", // Fitness
         title: "Monday Motivation",
         subtitle: "Get 40% Off on Sportswear & Fitness Trackers",
         color: "bg-red-600",
@@ -53,7 +53,7 @@ const dailyOffers = [
     {
         id: "tue-deal",
         day: 2, // Tuesday
-        image: "https://images.unsplash.com/photo-1588872657578-a3d2e184594c?w=1600&q=80", // Laptop/Work
+        image: "https://images.unsplash.com/photo-1531297461136-82lw8fca3c7c?w=1600&q=80", // Tech
         title: "Tech Tuesday",
         subtitle: "Massive Discounts on Laptops & Accessories",
         color: "bg-blue-600",
@@ -62,7 +62,7 @@ const dailyOffers = [
     {
         id: "wed-deal",
         day: 3, // Wednesday
-        image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=1600&q=80", // Clothes/Wardrobe
+        image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=1600&q=80", // Wardrobe
         title: "Wardrobe Wednesday",
         subtitle: "Mid-week Fashion Refresh Starts Here",
         color: "bg-emerald-600",
@@ -71,7 +71,7 @@ const dailyOffers = [
     {
         id: "thu-deal",
         day: 4, // Thursday
-        image: "https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=1600&q=80", // Electronics components
+        image: "https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=1600&q=80", // Electronics
         title: "Thunder Thursday",
         subtitle: "Flash Sales on Electronics & Gadgets",
         color: "bg-yellow-600",
@@ -80,7 +80,7 @@ const dailyOffers = [
     {
         id: "fri-deal",
         day: 5, // Friday
-        image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=1600&q=80", // Party/Dress
+        image: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=1600&q=80", // Party/Dress
         title: "Fashion Friday",
         subtitle: "Party Wear Special - Flat 50% Off",
         color: "bg-rose-600",
@@ -89,7 +89,7 @@ const dailyOffers = [
     {
         id: "sat-deal",
         day: 6, // Saturday
-        image: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=1600&q=80", // Home/Family
+        image: "https://images.unsplash.com/photo-1558002038-1091a166111c?w=1600&q=80", // Smart Home
         title: "Super Saturday",
         subtitle: "Everything for your Smart Home",
         color: "bg-cyan-600",
@@ -251,8 +251,8 @@ export default function BannerCarousel() {
                             setCurrentIndex(index);
                         }}
                         className={`transition-all rounded-full shadow-sm ${index === currentIndex
-                                ? 'bg-white w-12 h-3'
-                                : 'bg-white/40 hover:bg-white/60 w-3 h-3'
+                            ? 'bg-white w-12 h-3'
+                            : 'bg-white/40 hover:bg-white/60 w-3 h-3'
                             }`}
                     />
                 ))}
