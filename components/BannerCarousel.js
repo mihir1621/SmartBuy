@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Clock, Star } from 'lucide-react';
 import Image from 'next/image';
 
+import { useRouter } from 'next/router';
+
 const standardBanners = [
     {
         id: "main-1",
@@ -10,7 +12,8 @@ const standardBanners = [
         title: "Next Gen Electronics",
         subtitle: "Upgrade to the latest Tech today",
         color: "bg-purple-600",
-        badge: "Featured"
+        badge: "Featured",
+        link: "/?category=Electronics"
     },
     {
         id: "main-2",
@@ -18,7 +21,8 @@ const standardBanners = [
         title: "Fashion Festival",
         subtitle: "Trendiest Styles for Men & Women",
         color: "bg-pink-600",
-        badge: "Trending"
+        badge: "Trending",
+        link: "/?category=Menswear"
     },
     {
         id: "main-3",
@@ -26,7 +30,8 @@ const standardBanners = [
         title: "Home Makeover",
         subtitle: "Premium Decor & Furniture",
         color: "bg-orange-600",
-        badge: "New Arrivals"
+        badge: "New Arrivals",
+        link: "/?category=Home"
     }
 ];
 
@@ -39,7 +44,8 @@ const dailyOffers = [
         title: "Sunday Chill Deals",
         subtitle: "Premium Audio Gear for your Weekend",
         color: "bg-indigo-500",
-        badge: "Deal of the Day"
+        badge: "Deal of the Day",
+        link: "/?category=Audio"
     },
     {
         id: "mon-deal",
@@ -48,7 +54,8 @@ const dailyOffers = [
         title: "Monday Motivation",
         subtitle: "Get 40% Off on Sportswear & Fitness Trackers",
         color: "bg-red-600",
-        badge: "Deal of the Day"
+        badge: "Deal of the Day",
+        link: "/?category=Menswear"
     },
     {
         id: "tue-deal",
@@ -57,7 +64,8 @@ const dailyOffers = [
         title: "Tech Tuesday",
         subtitle: "Massive Discounts on Laptops & Accessories",
         color: "bg-blue-600",
-        badge: "Deal of the Day"
+        badge: "Deal of the Day",
+        link: "/?category=Laptops"
     },
     {
         id: "wed-deal",
@@ -66,7 +74,8 @@ const dailyOffers = [
         title: "Wardrobe Wednesday",
         subtitle: "Mid-week Fashion Refresh Starts Here",
         color: "bg-emerald-600",
-        badge: "Deal of the Day"
+        badge: "Deal of the Day",
+        link: "/?category=Menswear"
     },
     {
         id: "thu-deal",
@@ -75,7 +84,8 @@ const dailyOffers = [
         title: "Thunder Thursday",
         subtitle: "Flash Sales on Electronics & Gadgets",
         color: "bg-yellow-600",
-        badge: "Deal of the Day"
+        badge: "Deal of the Day",
+        link: "/?category=Electronics"
     },
     {
         id: "fri-deal",
@@ -84,7 +94,8 @@ const dailyOffers = [
         title: "Fashion Friday",
         subtitle: "Party Wear Special - Flat 50% Off",
         color: "bg-rose-600",
-        badge: "Deal of the Day"
+        badge: "Deal of the Day",
+        link: "/?category=Menswear"
     },
     {
         id: "sat-deal",
@@ -93,7 +104,8 @@ const dailyOffers = [
         title: "Super Saturday",
         subtitle: "Everything for your Smart Home",
         color: "bg-cyan-600",
-        badge: "Deal of the Day"
+        badge: "Deal of the Day",
+        link: "/?category=Home"
     }
 ];
 
@@ -101,6 +113,7 @@ export default function BannerCarousel() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(0);
     const [activeBanners, setActiveBanners] = useState(standardBanners);
+    const router = useRouter();
 
     useEffect(() => {
         // Determine the daily offer based on user's local day
@@ -154,7 +167,7 @@ export default function BannerCarousel() {
     const currentBanner = activeBanners[currentIndex];
 
     return (
-        <div className="relative w-full h-[250px] sm:h-[350px] md:h-[400px] lg:h-[60vh] overflow-hidden bg-gray-900 mt-1 shadow-2xl">
+        <div className="relative w-full h-[320px] sm:h-[400px] md:h-[450px] lg:h-[65vh] overflow-hidden bg-gray-900 mt-1 shadow-2xl">
             <AnimatePresence initial={false} custom={direction} mode="popLayout">
                 <motion.div
                     key={currentIndex}
@@ -183,45 +196,33 @@ export default function BannerCarousel() {
                         <div className={`absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent`} />
 
                         {/* Content Layer */}
-                        <div className="absolute inset-0 flex flex-col justify-center items-start text-left text-white p-8 md:p-16 lg:p-24 max-w-4xl">
+                        <div className="absolute inset-0 flex flex-col justify-center items-start text-left text-white p-6 sm:p-12 md:p-16 lg:p-24 max-w-4xl">
                             <motion.div
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.2 }}
                                 className="flex items-center gap-2 mb-4"
                             >
-                                <span className={`px-4 py-1.5 rounded-full text-xs md:text-sm font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg ${currentBanner.color}`}>
+                                <span className={`px-3 py-1 md:px-4 md:py-1.5 rounded-full text-[10px] md:text-sm font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg ${currentBanner.color}`}>
                                     {currentBanner.badge === "Deal of the Day" ? <Clock className="w-3 h-3" /> : <Star className="w-3 h-3" />}
                                     {currentBanner.badge}
                                 </span>
                             </motion.div>
 
-                            <motion.h2
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.3 }}
-                                className="text-4xl md:text-6xl lg:text-7xl font-black mb-4 tracking-tight drop-shadow-2xl leading-[1.1]"
-                            >
+                            <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black mb-3 md:mb-4 tracking-tight drop-shadow-2xl leading-[1.1]">
                                 {currentBanner.title}
-                            </motion.h2>
+                            </h2>
 
-                            <motion.p
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.4 }}
-                                className="text-lg md:text-2xl text-gray-200 font-medium max-w-2xl drop-shadow-lg mb-8 leading-relaxed"
-                            >
+                            <p className="text-sm sm:text-base md:text-2xl text-gray-200 font-medium max-w-2xl drop-shadow-lg mb-6 md:mb-8 leading-relaxed line-clamp-2 md:line-clamp-none">
                                 {currentBanner.subtitle}
-                            </motion.p>
+                            </p>
 
-                            <motion.button
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.5 }}
-                                className="px-10 py-4 bg-white text-gray-900 font-bold rounded-xl hover:bg-gray-100 transition-all shadow-xl hover:shadow-2xl active:scale-95 flex items-center gap-2 text-lg"
+                            <button
+                                onClick={() => router.push(currentBanner.link)}
+                                className="px-6 py-2.5 md:px-10 md:py-4 bg-white text-gray-900 font-bold rounded-xl hover:bg-gray-100 transition-all shadow-xl hover:shadow-2xl active:scale-95 flex items-center gap-2 text-sm md:text-lg"
                             >
-                                Explore Offers <ChevronRight className="w-5 h-5" />
-                            </motion.button>
+                                Explore Offers <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
+                            </button>
                         </div>
                     </div>
                 </motion.div>

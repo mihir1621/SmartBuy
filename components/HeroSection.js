@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const HERO_SLIDES = [
@@ -11,7 +12,8 @@ const HERO_SLIDES = [
         cta: "Shop Now",
         image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
         color: "bg-orange-50",
-        textCol: "text-orange-900"
+        textCol: "text-orange-900",
+        link: "/?category=Womenswear"
     },
     {
         id: 2,
@@ -20,7 +22,8 @@ const HERO_SLIDES = [
         cta: "Explore Tech",
         image: "https://images.unsplash.com/photo-1542332213-31f87348057f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
         color: "bg-gray-100",
-        textCol: "text-gray-900"
+        textCol: "text-gray-900",
+        link: "/?category=Electronics"
     },
     {
         id: 3,
@@ -29,12 +32,14 @@ const HERO_SLIDES = [
         cta: "View Collections",
         image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
         color: "bg-stone-100",
-        textCol: "text-stone-800"
+        textCol: "text-stone-800",
+        link: "/?category=Home"
     }
 ];
 
 export default function HeroSection() {
     const scrollRef = useRef(null);
+    const router = useRouter();
 
     const scroll = (direction) => {
         if (scrollRef.current) {
@@ -55,7 +60,7 @@ export default function HeroSection() {
                 {HERO_SLIDES.map((slide) => (
                     <div
                         key={slide.id}
-                        className={`flex-none w-full h-[300px] md:h-[400px] snap-center snap-always relative overflow-hidden`}
+                        className={`flex-none w-full h-[350px] sm:h-[450px] md:h-[550px] snap-center snap-always relative overflow-hidden`}
                     >
                         <div className="absolute inset-0 z-0">
                             <Image src={slide.image} alt={slide.title} fill className="object-cover brightness-75" priority={slide.id === 1} />
@@ -67,13 +72,16 @@ export default function HeroSection() {
                                     <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-widest border border-white/30">
                                         Featured
                                     </span>
-                                    <h2 className="text-4xl md:text-6xl font-extrabold leading-tight">
+                                    <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight">
                                         {slide.title}
                                     </h2>
-                                    <p className="text-lg md:text-xl text-gray-200">
+                                    <p className="text-sm sm:text-lg md:text-xl text-gray-200 line-clamp-2 md:line-clamp-none">
                                         {slide.subtitle}
                                     </p>
-                                    <button className="bg-white text-gray-900 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors shadow-lg mt-4">
+                                    <button
+                                        onClick={() => router.push(slide.link)}
+                                        className="bg-white text-gray-900 px-6 py-2 md:px-8 md:py-3 rounded-full font-bold hover:bg-gray-100 transition-colors shadow-lg mt-2 md:mt-4 text-sm md:text-base"
+                                    >
                                         {slide.cta}
                                     </button>
                                 </div>
