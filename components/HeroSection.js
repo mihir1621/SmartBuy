@@ -30,7 +30,7 @@ const HERO_SLIDES = [
         title: "Luxury Home Decor",
         subtitle: "Transform your living space into a sanctuary.",
         cta: "View Collections",
-        image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+        image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
         color: "bg-stone-100",
         textCol: "text-stone-800",
         link: "/?category=Home"

@@ -17,7 +17,7 @@ const standardBanners = [
     },
     {
         id: "main-2",
-        image: "https://images.unsplash.com/photo-1529139574466-a302d2d3f529?w=1600&q=80", // Fashion
+        image: "https://images.unsplash.com/photo-1445205170230-053b830c6050?w=1600&q=80", // Fashion
         title: "Fashion Festival",
         subtitle: "Trendiest Styles for Men & Women",
         color: "bg-pink-600",
@@ -26,7 +26,7 @@ const standardBanners = [
     },
     {
         id: "main-3",
-        image: "https://images.unsplash.com/photo-1616486338812-3aeb1d630438?w=1600&q=80", // Interior
+        image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Interior
         title: "Home Makeover",
         subtitle: "Premium Decor & Furniture",
         color: "bg-orange-600",
@@ -60,7 +60,7 @@ const dailyOffers = [
     {
         id: "tue-deal",
         day: 2, // Tuesday
-        image: "https://images.unsplash.com/photo-1531297461136-82lw8fca3c7c?w=1600&q=80", // Tech
+        image: "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1600&q=80", // Tech
         title: "Tech Tuesday",
         subtitle: "Massive Discounts on Laptops & Accessories",
         color: "bg-blue-600",

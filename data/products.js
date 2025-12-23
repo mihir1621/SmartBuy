@@ -3042,7 +3042,7 @@ export const products = [
         rating: 4.8,
         reviews: 1200,
         brand: "Rode",
-        image: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&q=80",
         description: "Dynamic podcast microphone for broadcast quality sound.",
         inStock: true
     },
@@ -3350,7 +3350,7 @@ export const products = [
         rating: 4.9,
         reviews: 2000,
         brand: "Shure",
-        image: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1594913785162-e67866bb0702?w=800&q=80",
         description: "Legendary vocal microphone for studio and broadcast.",
         inStock: true
     },
@@ -4266,7 +4266,7 @@ export const products = [
         rating: 4.7,
         reviews: 12000,
         brand: "Ridge",
-        image: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1524282745852-a4636fa0f997?w=800&q=80",
         description: "RFID blocking slim metal wallet.",
         inStock: true
     },
@@ -4280,7 +4280,7 @@ export const products = [
         rating: 4.8,
         reviews: 200,
         brand: "Montblanc",
-        image: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=800&q=80", // Pen
+        image: "https://images.unsplash.com/photo-1598501257912-dfa68c697816?w=800&q=80", // Pen
         description: "Luxury ballpoint pen in black precious resin.",
         inStock: true
     },
@@ -4308,7 +4308,7 @@ export const products = [
         rating: 4.9,
         reviews: 20000,
         brand: "Moleskine",
-        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&q=80", // Notebook
+        image: "https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&q=80", // Notebook
         description: "The heir to the legendary notebook used by artists and thinkers.",
         inStock: true
     },
@@ -4322,7 +4322,7 @@ export const products = [
         rating: 4.9,
         reviews: 8000,
         brand: "Zippo",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80", // Lighter
+        image: "https://images.unsplash.com/photo-1598136490941-30d885318abd?w=800&q=80", // Lighter
         description: "Windproof lighter with a distinctive Zippo 'click'.",
         inStock: true
     },
@@ -4336,7 +4336,7 @@ export const products = [
         rating: 4.9,
         reviews: 6000,
         brand: "Leatherman",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80", // Multitool
+        image: "https://images.unsplash.com/photo-1596700843644-83907409228d?w=800&q=80", // Multitool
         description: "The best-selling multi-tool with replaceable wire cutters.",
         inStock: true
     },
@@ -4350,7 +4350,7 @@ export const products = [
         rating: 4.8,
         reviews: 12000,
         brand: "Victorinox",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?w=800&q=80", // Knife
         description: "Small Swiss Army Knife with 7 functions.",
         inStock: true
     },
@@ -4378,7 +4378,7 @@ export const products = [
         rating: 4.9,
         reviews: 3500,
         brand: "Fisher",
-        image: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1549247198-4122dcaa955e?w=800&q=80",
         description: "Writes at any angle, even in zero gravity.",
         inStock: true
     },
@@ -4392,7 +4392,7 @@ export const products = [
         rating: 4.6,
         reviews: 800,
         brand: "Matador",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1610492421919-613d96923485?w=800&q=80",
         description: "Ultralight soap case that lets soap dry through the fabric.",
         inStock: true
     },
@@ -4406,7 +4406,7 @@ export const products = [
         rating: 4.7,
         reviews: 3000,
         brand: "Buff",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1515545934539-77a83f70e70a?w=800&q=80",
         description: "Multifunctional headwear for sun protection and cooling.",
         inStock: true
     },
@@ -4420,7 +4420,7 @@ export const products = [
         rating: 4.5,
         reviews: 2000,
         brand: "Maglite",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1555529731-180e07371987?w=800&q=80",
         description: "Keychain flashlight with powerful LED beam.",
         inStock: true
     },
@@ -4434,7 +4434,7 @@ export const products = [
         rating: 4.9,
         reviews: 15000,
         brand: "Nalgene",
-        image: "https://images.unsplash.com/photo-1602143407151-11115cdbf69c?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1523362628744-4cddf567347a?w=800&q=80",
         description: "Classic leak-proof durable water bottle.",
         inStock: true
     },
@@ -4462,7 +4462,7 @@ export const products = [
         rating: 4.8,
         reviews: 2100,
         brand: "Klean Kanteen",
-        image: "https://images.unsplash.com/photo-1602143407151-11115cdbf69c?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1623945414800-4b2e65239e26?w=800&q=80",
         description: "Vacuum insulated bottle with Cafe Cap.",
         inStock: true
     },
@@ -4476,7 +4476,7 @@ export const products = [
         rating: 4.7,
         reviews: 1100,
         brand: "Black Diamond",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80", // Headlamp
+        image: "https://images.unsplash.com/photo-1588698188179-81bc596d3f2d?w=800&q=80", // Headlamp
         description: "Powerful and robust waterproof headlamp.",
         inStock: true
     },
@@ -4490,7 +4490,7 @@ export const products = [
         rating: 4.6,
         reviews: 5000,
         brand: "Petzl",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1517420847424-60e5728a383d?w=800&q=80", // Headlamp
         description: "Compact, easy-to-use headlamp with 300 lumens.",
         inStock: true
     },
@@ -5220,7 +5220,7 @@ export const products = [
         rating: 4.7,
         reviews: 85000,
         brand: "Waterpik",
-        image: "https://images.unsplash.com/photo-1559591937-e6203cf815e4?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1609146103345-6e470177bb49?w=800&q=80",
         description: "Effective way to floss for healthier gums.",
         inStock: true
     },
@@ -5515,7 +5515,7 @@ export const products = [
         rating: 4.8,
         reviews: 95000,
         brand: "Lifestraw",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1541675154354-9275070386ff?w=800&q=80",
         description: "Removes 99.99% of waterborne bacteria and parasites.",
         inStock: true
     },
@@ -6005,7 +6005,7 @@ export const products = [
         rating: 4.9,
         reviews: 2100,
         brand: "Suunto",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1506546332824-a4c74d03988c?w=800&q=80",
         description: "Professional mirror compass for precise navigation.",
         inStock: true
     },
@@ -6327,7 +6327,7 @@ export const products = [
         rating: 4.7,
         reviews: 15000,
         brand: "Fujifilm",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80", // Camera
+        image: "https://images.unsplash.com/photo-1526170315873-3a56162824cf?w=800&q=80", // Camera
         description: "Instant film camera for instant memories.",
         inStock: true
     },
@@ -6341,7 +6341,7 @@ export const products = [
         rating: 4.6,
         reviews: 2100,
         brand: "Canon",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80", // Printer
+        image: "https://images.unsplash.com/photo-1563216839-84724d27150c?w=800&q=80", // Printer
         description: "Compact photo printer for high-quality prints from your phone.",
         inStock: true
     },
@@ -6355,7 +6355,7 @@ export const products = [
         rating: 4.5,
         reviews: 1800,
         brand: "Polaroid",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80",
         description: "Connected instant camera with creative light painting tools.",
         inStock: true
     },
@@ -6369,7 +6369,7 @@ export const products = [
         rating: 4.9,
         reviews: 4500,
         brand: "Pelican",
-        image: "https://images.unsplash.com/photo-1553062407-98eeb94c6a62?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1615803795156-f09bce055a40?w=800&q=80",
         description: "Virtually indestructible carry-on case for sensitive gear.",
         inStock: true
     },
@@ -7466,7 +7466,7 @@ export const products = [
         rating: 4.8,
         reviews: 95000,
         brand: "Colgate",
-        image: "https://images.unsplash.com/photo-1559591937-e6203cf815e4?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1558236714-d118a581290a?w=800&q=80",
         description: "Advanced protection for a healthier mouth.",
         inStock: true
     },
@@ -7844,7 +7844,7 @@ export const products = [
         rating: 4.6,
         reviews: 95000,
         brand: "Patanjali",
-        image: "https://images.unsplash.com/photo-1559591937-e6203cf815e4?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1628133515829-f8fd0409a259?w=800&q=80",
         description: "Herbal toothpaste for strong teeth.",
         inStock: true
     },
@@ -8728,7 +8728,7 @@ export const products = [
         rating: 4.9,
         reviews: 350000,
         brand: "George Orwell",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800&q=80",
         description: "The timeless cautionary tale of total surveillance.",
         inStock: true
     },
@@ -8980,7 +8980,7 @@ export const products = [
         rating: 4.8,
         reviews: 35000,
         brand: "Emily St. John Mandel",
-        image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&q=80",
         description: "A novel of art, time travel, love, and plague.",
         inStock: true
     },
