@@ -123,16 +123,43 @@ export default function EMICalculatorModal({ isOpen, onClose, price }) {
                                 <label className="text-sm font-medium text-gray-300">Duration</label>
                                 <span className="text-sm font-bold text-blue-400">{months} Months ({Math.floor(months / 12) > 0 ? `${(months / 12).toFixed(1)} Years` : "Months"})</span>
                             </div>
-                            <input
-                                type="range"
-                                min="3"
-                                max="36"
-                                step="3"
-                                value={months}
-                                onChange={(e) => setMonths(Number(e.target.value))}
-                                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
-                            />
-                            <div className="flex justify-between mt-1 text-xs text-gray-500">
+                            <div className="relative h-10 mb-2 flex items-center select-none cursor-pointer group">
+                                {/* Track */}
+                                <div className="absolute left-0 right-0 h-1 bg-gray-800 rounded-full" />
+
+                                {/* Active Progress */}
+                                <div
+                                    className="absolute left-0 h-1 bg-blue-600 rounded-full transition-all duration-300 ease-out"
+                                    style={{ width: `${((months - 3) / 33) * 100}%` }}
+                                />
+
+                                {/* Dots */}
+                                <div className="absolute inset-0 flex justify-between items-center z-10 px-0.5">
+                                    {Array.from({ length: 34 }, (_, i) => i + 3).map((m) => {
+                                        const isActive = m <= months;
+                                        const isSelected = m === months;
+
+                                        return (
+                                            <div
+                                                key={m}
+                                                onClick={() => setMonths(m)}
+                                                className={`relative flex items-center justify-center transition-all duration-200 ${isSelected ? 'w-4 h-4' : 'w-2 h-12'}`} // Larger hit area for non-selected
+                                            >
+                                                {/* The Dot Visual */}
+                                                <div
+                                                    className={`rounded-full transition-all duration-200 ${isSelected
+                                                        ? 'w-4 h-4 bg-white border-[3px] border-blue-600 shadow-lg scale-110'
+                                                        : isActive
+                                                            ? 'w-1 h-1 bg-blue-500'
+                                                            : 'w-1 h-1 bg-gray-700 hover:bg-gray-500'
+                                                        }`}
+                                                />
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                            <div className="flex justify-between mt-1 text-xs text-gray-500 font-medium">
                                 <span>3M</span>
                                 <span>6M</span>
                                 <span>9M</span>

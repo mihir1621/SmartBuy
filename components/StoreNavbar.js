@@ -1,6 +1,6 @@
 // StoreNavbar Component
 import Link from 'next/link';
-import { ShoppingBag, Search, Menu, X, User, Camera, Heart, MapPin, Loader2 } from 'lucide-react';
+import { ShoppingBag, Search, X, User, Camera, Heart, MapPin, Loader2 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { useLocation } from '@/context/LocationContext';
@@ -9,51 +9,18 @@ import AnnouncementBar from './AnnouncementBar';
 import { useState, useEffect, useRef } from 'react';
 import { INDIAN_CITIES } from '@/data/indianCities';
 import { useRouter } from 'next/router';
-import {
-    Grid,
-    Laptop,
-    Smartphone,
-    Headphones,
-    Shirt,
-    User as UserIcon,
-    Home as HomeIcon,
-    Cpu,
-    Tablet,
-    Watch,
-    BadgeInfo,
-    ChevronRight
-} from 'lucide-react';
+
 
 export default function StoreNavbar({ onSearch, categories = [], selectedCategory, setSelectedCategory }) {
     const { setIsCartOpen, cartCount } = useCart();
     const { wishlist } = useWishlist();
     const { location, detectLocation, updateLocation } = useLocation();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [showLocationModal, setShowLocationModal] = useState(false);
     const [locationSearch, setLocationSearch] = useState("");
     const [isDetecting, setIsDetecting] = useState(false);
     const fileInputRef = useRef(null);
     const router = useRouter();
-
-    const drawerCategories = [
-        { name: "All", icon: Grid },
-        { name: "Laptops", icon: Laptop },
-        { name: "Smartphones", icon: Smartphone },
-        { name: "Audio", icon: Headphones },
-        { name: "Menswear", icon: Shirt },
-        { name: "Womenswear", icon: UserIcon },
-        { name: "Home", icon: HomeIcon },
-        { name: "Electronics", icon: Cpu },
-        { name: "Tablets", icon: Tablet },
-        { name: "Watch", icon: Watch },
-        { name: "Accessories", icon: ShoppingBag },
-    ];
-
-    const handleCategoryClick = (categoryName) => {
-        setIsSidebarOpen(false);
-        router.push(`/?category=${encodeURIComponent(categoryName)}`);
-    };
 
     // Sort cities alphabetically by name
     const sortedCities = [...INDIAN_CITIES].sort((a, b) => a.city.localeCompare(b.city));
@@ -211,17 +178,6 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                 <div className="bg-black border-t border-gray-800 py-1.5 overflow-hidden">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
-                            <motion.button
-                                whileTap={{ scale: 0.95 }}
-                                onClick={() => setIsSidebarOpen(true)}
-                                className="flex items-center justify-center p-1.5 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-all shrink-0 border border-gray-700"
-                                title="All Categories"
-                            >
-                                <Menu className="w-4 h-4" />
-                            </motion.button>
-
-
-                            <div className="h-4 w-[1px] bg-gray-700 shrink-0 mx-1"></div>
 
                             {categories.map((category) => (
                                 <button
@@ -240,105 +196,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                 </div>
             </nav>
 
-            {/* Side Drawer Overlay */}
-            <AnimatePresence>
-                {isSidebarOpen && (
-                    <>
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setIsSidebarOpen(false)}
-                            className="fixed inset-0 bg-gray-900/30 backdrop-blur-[2px] z-[100]"
-                        />
-                        <motion.div
-                            initial={{ x: '-100%' }}
-                            animate={{ x: 0 }}
-                            exit={{ x: '-100%' }}
-                            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                            className="fixed inset-y-0 left-0 w-full max-w-[280px] bg-black z-[110] shadow-xl flex flex-col overflow-hidden border-r border-gray-800"
-                        >
-                            <div className="bg-gray-900 text-white px-5 py-6 flex flex-col justify-end shrink-0 relative border-b border-gray-800">
-                                <button
-                                    onClick={() => setIsSidebarOpen(false)}
-                                    className="absolute top-3 right-3 p-1.5 hover:bg-white/10 rounded-lg transition-colors"
-                                >
-                                    <X className="w-4 h-4" />
-                                </button>
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">
-                                        <User className="w-5 h-5 text-gray-300" />
-                                    </div>
-                                    <div>
-                                        <p className="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-0.5">Welcome</p>
-                                        <p className="font-bold text-base leading-none">Guest Account</p>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div className="flex-1 overflow-y-auto py-4">
-                                {/* Mobile Location Selector */}
-                                <div className="px-4 mb-6">
-                                    <div
-                                        onClick={() => {
-                                            setIsSidebarOpen(false);
-                                            setShowLocationModal(true);
-                                        }}
-                                        className="bg-gray-800 border border-gray-700 p-3 rounded-xl flex items-center justify-between cursor-pointer active:scale-98 transition-transform"
-                                    >
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 bg-black/30 rounded-lg flex items-center justify-center">
-                                                <MapPin className="w-4 h-4 text-blue-400" />
-                                            </div>
-                                            <div>
-                                                <p className="text-[10px] text-blue-400 font-bold uppercase tracking-wider mb-0.5">Deliver to</p>
-                                                <p className="text-sm font-bold text-white leading-none">{location?.city || "Select Location"}</p>
-                                            </div>
-                                        </div>
-                                        <ChevronRight className="w-4 h-4 text-gray-500" />
-                                    </div>
-                                </div>
-
-                                <div className="px-4 mb-4">
-                                    <h3 className="text-gray-500 font-bold text-[10px] uppercase tracking-widest mb-3 px-2">Top Categories</h3>
-                                    <div className="grid gap-0.5">
-                                        {drawerCategories.map((cat) => (
-                                            <button
-                                                key={cat.name}
-                                                onClick={() => handleCategoryClick(cat.name)}
-                                                className="w-full flex items-center justify-between p-2.5 px-3 rounded-lg hover:bg-gray-800 text-gray-300 transition-all group"
-                                            >
-                                                <div className="flex items-center gap-3">
-                                                    <cat.icon className="w-4 h-4 text-gray-500 group-hover:text-blue-400" />
-                                                    <span className="text-[13px] font-medium">{cat.name}</span>
-                                                </div>
-                                                <ChevronRight className="w-3.5 h-3.5 opacity-20 group-hover:opacity-100 transition-opacity text-white" />
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="px-4 border-t border-gray-800 pt-4">
-                                    <h3 className="text-gray-500 font-bold text-[10px] uppercase tracking-widest mb-3 px-2">Help & Tools</h3>
-                                    <div className="grid gap-1">
-                                        <Link href="/login" className="flex items-center gap-3 p-2.5 px-3 text-gray-300 hover:bg-gray-800 rounded-lg text-[13px] font-medium transition-all">
-                                            <BadgeInfo className="w-4 h-4 text-gray-500" />
-                                            <span>Customer Service</span>
-                                        </Link>
-                                        <Link href="/login" className="flex items-center gap-3 p-2.5 px-3 bg-blue-600 text-white rounded-lg text-[13px] font-bold transition-all hover:bg-blue-700 justify-center mt-2 shadow-md shadow-blue-900/20">
-                                            Sign In
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="p-5 border-t border-gray-800 bg-gray-900">
-                                <p className="text-[9px] text-gray-500 font-bold tracking-wider uppercase">© 2025 SmartBuy Inc.</p>
-                            </div>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
 
             {/* Smart Location Modal */}
             <AnimatePresence>

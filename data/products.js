@@ -1145,7 +1145,7 @@ export const products = [
     {
         id: 8,
         name: "Mango Tote Bag",
-        category: "Womenswear",
+        category: "Bags",
         price: 2290,
         originalPrice: 2990,
         discount: 23,
@@ -3357,7 +3357,7 @@ export const products = [
     {
         id: 240,
         name: "Fitbit Charge 6",
-        category: "Wearables",
+        category: "Watch",
         price: 14999,
         originalPrice: 16999,
         discount: 12,
@@ -3371,7 +3371,7 @@ export const products = [
     {
         id: 241,
         name: "Garmin Fenix 7X",
-        category: "Wearables",
+        category: "Watch",
         price: 75000,
         originalPrice: 85000,
         discount: 12,
@@ -3779,7 +3779,7 @@ export const products = [
     {
         id: 319,
         name: "Herschel Little America Backpack",
-        category: "Accessories",
+        category: "Bags",
         price: 8900,
         originalPrice: 10900,
         discount: 18,
@@ -3793,7 +3793,7 @@ export const products = [
     {
         id: 320,
         name: "Nike Heritage Duffel Bag",
-        category: "Accessories",
+        category: "Bags",
         price: 3495,
         originalPrice: 3995,
         discount: 12,
@@ -3807,7 +3807,7 @@ export const products = [
     {
         id: 321,
         name: "Adidas Linear Gym Bag",
-        category: "Accessories",
+        category: "Bags",
         price: 1599,
         originalPrice: 1999,
         discount: 20,
@@ -3881,7 +3881,7 @@ export const products = [
     {
         id: 326,
         name: "Seiko 5 Sports Watch",
-        category: "Accessories",
+        category: "Watch",
         price: 24500,
         originalPrice: 28500,
         discount: 14,
@@ -3895,7 +3895,7 @@ export const products = [
     {
         id: 327,
         name: "Citizen Eco-Drive",
-        category: "Accessories",
+        category: "Watch",
         price: 18500,
         originalPrice: 21500,
         discount: 14,
@@ -3909,7 +3909,7 @@ export const products = [
     {
         id: 328,
         name: "Casio G-Shock DW5600",
-        category: "Accessories",
+        category: "Watch",
         price: 5995,
         originalPrice: 6995,
         discount: 14,
@@ -4133,7 +4133,7 @@ export const products = [
     {
         id: 343,
         name: "Tissot Le Locle Powermatic",
-        category: "Accessories",
+        category: "Watch",
         price: 48500,
         originalPrice: 55000,
         discount: 12,
@@ -4147,7 +4147,7 @@ export const products = [
     {
         id: 344,
         name: "Hamilton Khaki Field",
-        category: "Accessories",
+        category: "Watch",
         price: 42000,
         originalPrice: 48000,
         discount: 12,
@@ -4189,7 +4189,7 @@ export const products = [
     {
         id: 347,
         name: "Eastpak Padded Pak'r",
-        category: "Accessories",
+        category: "Bags",
         price: 3990,
         originalPrice: 4990,
         discount: 20,
@@ -4203,7 +4203,7 @@ export const products = [
     {
         id: 348,
         name: "JanSport SuperBreak",
-        category: "Accessories",
+        category: "Bags",
         price: 2990,
         originalPrice: 3490,
         discount: 14,
@@ -4217,7 +4217,7 @@ export const products = [
     {
         id: 349,
         name: "Samsonite Winfield 2",
-        category: "Accessories",
+        category: "Bags",
         price: 18500,
         originalPrice: 22500,
         discount: 18,
@@ -4231,7 +4231,7 @@ export const products = [
     {
         id: 350,
         name: "Rimowa Original Cabin",
-        category: "Accessories",
+        category: "Bags",
         price: 115000,
         originalPrice: 125000,
         discount: 8,
@@ -5423,7 +5423,7 @@ export const products = [
     {
         id: 465,
         name: "Oura Ring Gen 3",
-        category: "Wearables",
+        category: "Watch",
         price: 26500,
         originalPrice: 29500,
         discount: 10,
@@ -5437,7 +5437,7 @@ export const products = [
     {
         id: 466,
         name: "Whoop 4.0 Band",
-        category: "Wearables",
+        category: "Watch",
         price: 18500,
         originalPrice: 21500,
         discount: 14,
@@ -9297,7 +9297,7 @@ export const products = [
     {
         id: 1101,
         name: "Oura Ring Gen3",
-        category: "Wearables",
+        category: "Watch",
         price: 29999,
         originalPrice: 34999,
         discount: 14,
@@ -9814,6 +9814,48 @@ export const products = [
         brand: "Dyson",
         image: "https://images.unsplash.com/photo-1558317374-a359392881b8?w=800&q=80", // Vacuum
         description: "Powerful cordless vacuum with laser detect.",
+    },
+    {
+        id: 9001,
+        name: "VINTA S-Series Travel Backpack",
+        category: "Bags",
+        price: 18500,
+        originalPrice: 22000,
+        discount: 15,
+        rating: 4.9,
+        reviews: 450,
+        brand: "VINTA",
+        image: "https://images.unsplash.com/photo-1553062407-98eeb94c6a62?w=800&q=80",
+        description: "Premium vintage-style travel backpack with leather details and weather-resistant canvas.",
+        inStock: true,
+        isNew: true
+    },
+    {
+        id: 9002,
+        name: "Bellroy Tokyo Totepack",
+        category: "Bags",
+        price: 14900,
+        originalPrice: 16500,
+        discount: 10,
+        rating: 4.8,
+        reviews: 320,
+        brand: "Bellroy",
+        image: "https://images.unsplash.com/photo-1581605405669-fcdf81165afa?w=800&q=80",
+        description: "Clean, minimalist backpack that transforms into a tote for urban professionals.",
+        inStock: true
+    },
+    {
+        id: 9003,
+        name: "Peak Design Everyday Backpack 20L",
+        category: "Bags",
+        price: 24500,
+        originalPrice: 27900,
+        discount: 12,
+        rating: 4.9,
+        reviews: 1200,
+        brand: "Peak Design",
+        image: "https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?w=800&q=80",
+        description: "The ultimate gear-hauling backpack with internal organization and weather-proof shell.",
         inStock: true
     }
 ];

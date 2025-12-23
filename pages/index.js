@@ -51,6 +51,19 @@ export default function Home() {
     }
   }, [router.query.category, setSelectedCategory]);
 
+  // Group filtered products by category
+  const groupedProducts = filteredProducts.reduce((acc, product) => {
+    const cat = product.category;
+    if (!acc[cat]) {
+      acc[cat] = [];
+    }
+    acc[cat].push(product);
+    return acc;
+  }, {});
+
+  const displayedCategories = Object.keys(groupedProducts).sort(); // Optional: Sort categories alphabetically
+
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Head>
@@ -176,14 +189,28 @@ export default function Home() {
 
               {/* Grid */}
               {filteredProducts.length > 0 ? (
-                <motion.div
-                  layout
-                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
-                >
-                  {filteredProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                <div className="space-y-12">
+                  {displayedCategories.map((category) => (
+                    <section key={category} className="space-y-4">
+                      <div className="flex items-center gap-4">
+                        <h2 className="text-2xl font-bold text-white relative">
+                          {category}
+                          <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-blue-500 rounded-full"></span>
+                        </h2>
+                        <div className="h-px bg-gray-800 flex-grow mt-1"></div>
+                      </div>
+
+                      <motion.div
+                        layout
+                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+                      >
+                        {groupedProducts[category].map((product) => (
+                          <ProductCard key={product.id} product={product} />
+                        ))}
+                      </motion.div>
+                    </section>
                   ))}
-                </motion.div>
+                </div>
               ) : (
                 <div className="text-center py-20 bg-gray-900 rounded-xl border border-gray-800">
                   <div className="text-6xl mb-4">🔍</div>
