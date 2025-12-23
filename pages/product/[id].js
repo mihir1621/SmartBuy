@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Star, ShoppingCart, Truck, ShieldCheck, RotateCcw, Heart, CreditCard, X } from 'lucide-react';
 import StoreNavbar from '@/components/StoreNavbar';
 import CartSidebar from '@/components/CartSidebar';
