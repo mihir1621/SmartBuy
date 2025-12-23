@@ -1,5 +1,6 @@
 
 import { useState, useMemo } from 'react';
+import { RankingSystem } from '@/utils/RankingSystem';
 
 export function useProductSystem(initialProducts) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -29,9 +30,11 @@ export function useProductSystem(initialProducts) {
         return result;
     }, [initialProducts, searchQuery, selectedCategory]);
 
-    // 2. Final Filtered Products (Apply remaining filters to base)
+    // 2. Final Filtered & Ranked Products
     const filteredProducts = useMemo(() => {
         let result = [...baseProducts];
+
+        // --- FILTERING ---
 
         // Brand Filter
         if (selectedBrands.length > 0) {
@@ -39,13 +42,10 @@ export function useProductSystem(initialProducts) {
         }
 
         // Gender Filter
-        // Gender Filter
         if (selectedGender !== "All") {
             if (["Men", "Women"].includes(selectedGender)) {
-                // For Men and Women, include Unisex items (typically Smartwatches)
                 result = result.filter(p => p.gender === selectedGender || p.gender === "Unisex");
             } else {
-                // For Kids, Unisex, and others, use strict filtering to avoid mixing adult items
                 result = result.filter(p => p.gender === selectedGender);
             }
         }
@@ -58,8 +58,16 @@ export function useProductSystem(initialProducts) {
             result = result.filter(p => p.rating >= minRating);
         }
 
-        // Sorting
-        result.sort((a, b) => {
+        // --- RANKING & SORTING ---
+
+        // Calculate Score for each product
+        // We attach the score to the object temporarily for sorting
+        const scoredResult = result.map(p => ({
+            ...p,
+            _score: RankingSystem.computeScore(p, searchQuery)
+        }));
+
+        scoredResult.sort((a, b) => {
             switch (sortOption) {
                 case "price-asc":
                     return a.price - b.price;
@@ -70,13 +78,17 @@ export function useProductSystem(initialProducts) {
                 case "rating":
                     return b.rating - a.rating;
                 case "popularity":
-                default:
+                    // Fallback to strict popularity if user explicitly wants it
                     return b.reviews - a.reviews;
+                default:
+                    // "Smart Sort" (Default) - Use our calculated Relevance Score
+                    // If scores are very close, break tie with Price or Rating
+                    return b._score - a._score;
             }
         });
 
-        return result;
-    }, [baseProducts, selectedBrands, selectedGender, priceRange, minRating, sortOption]);
+        return scoredResult;
+    }, [baseProducts, selectedBrands, selectedGender, priceRange, minRating, sortOption, searchQuery]);
 
     // Derived Lists for UI (Smart Filters based on baseProducts)
     const brands = useMemo(() => {
