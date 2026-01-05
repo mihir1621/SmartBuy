@@ -20,7 +20,7 @@ const HERO_SLIDES = [
         title: "Next Gen Electronics",
         subtitle: "Upgrade your productivity with the latest tech.",
         cta: "Explore Tech",
-        image: "https://images.unsplash.com/photo-1542332213-31f87348057f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
         color: "bg-gray-100",
         textCol: "text-gray-900",
         link: "/?category=Electronics"
