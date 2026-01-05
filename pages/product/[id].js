@@ -8,7 +8,8 @@ import StoreNavbar from '@/components/StoreNavbar';
 import CartSidebar from '@/components/CartSidebar';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
-import { products } from '@/data/products';
+import { products as staticProducts } from '@/data/products';
+import { prisma } from '@/lib/prisma';
 
 import Link from 'next/link';
 import Footer from '@/components/Footer';
@@ -17,19 +18,54 @@ import ProductCard from '@/components/ProductCard';
 import RecentlyViewed from "@/components/RecentlyViewed";
 import EMICalculatorModal from "@/components/EMICalculatorModal";
 
+export async function getServerSideProps({ params }) {
+    const { id } = params;
+    try {
+        const product = await prisma.product.findUnique({
+            where: { id: parseInt(id) },
+        });
 
-export default function ProductDetail() {
-    const router = useRouter();
-    const { id } = router.query;
+        if (!product) {
+            return { notFound: true };
+        }
+
+        const relatedProducts = await prisma.product.findMany({
+            where: {
+                category: product.category,
+                NOT: { id: product.id },
+            },
+            take: 4,
+        });
+
+        return {
+            props: {
+                initialProduct: JSON.parse(JSON.stringify(product)),
+                initialRelatedProducts: JSON.parse(JSON.stringify(relatedProducts)),
+            },
+        };
+    } catch (error) {
+        console.error("Database error:", error);
+        const product = staticProducts.find((p) => p.id === parseInt(id));
+        if (!product) return { notFound: true };
+        const related = staticProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
+        return {
+            props: {
+                initialProduct: product,
+                initialRelatedProducts: related,
+            },
+        };
+    }
+}
+
+export default function ProductDetail({ initialProduct, initialRelatedProducts }) {
+    const product = initialProduct;
+    const relatedProducts = initialRelatedProducts;
     const { addToCart } = useCart();
     const { toggleWishlist, isInWishlist } = useWishlist();
     const [selectedImage, setSelectedImage] = useState(0);
     const [showEMIModal, setShowEMIModal] = useState(false);
     const [activeFeature, setActiveFeature] = useState(null);
     const [recentProducts, setRecentProducts] = useState([]);
-
-    // Find product
-    const product = products.find((p) => p.id === parseInt(id));
 
     // Handle Recently Viewed Logic
     useEffect(() => {
@@ -40,11 +76,6 @@ export default function ProductDetail() {
             setRecentProducts(newViewed.filter(p => p.id !== product.id));
         }
     }, [product]);
-
-    // Get Related Products
-    const relatedProducts = product
-        ? products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4)
-        : [];
 
     const isWishlisted = product ? isInWishlist(product.id) : false;
 
@@ -66,7 +97,7 @@ export default function ProductDetail() {
                         <div className="space-y-4">
                             <div className="relative aspect-square bg-gray-800 rounded-xl overflow-hidden group">
                                 <Image
-                                    src={product.images ? product.images[selectedImage] : product.image}
+                                    src={product.images ? (typeof product.images === 'string' ? JSON.parse(product.images)[selectedImage] : product.images[selectedImage]) : product.image}
                                     alt={product.name}
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -81,7 +112,7 @@ export default function ProductDetail() {
                             </div>
                             {/* Thumbnail strip */}
                             <div className="flex gap-4 overflow-x-auto pb-2 no-scrollbar">
-                                {(product.images || [product.image]).map((img, idx) => (
+                                {((typeof product.images === 'string' ? JSON.parse(product.images) : product.images) || [product.image]).map((img, idx) => (
                                     <button
                                         key={idx}
                                         onClick={() => setSelectedImage(idx)}

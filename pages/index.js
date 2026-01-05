@@ -8,12 +8,32 @@ import CartSidebar from "@/components/CartSidebar";
 import FilterSidebar from "@/components/FilterSidebar";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
-import { products } from "@/data/products";
+import { products as staticProducts } from "@/data/products";
 import { useProductSystem } from "@/hooks/useProductSystem";
 import { Filter, SlidersHorizontal, ChevronDown } from "lucide-react";
 import BannerCarousel from "@/components/BannerCarousel";
+import { prisma } from "@/lib/prisma";
 
-export default function Home() {
+export async function getServerSideProps() {
+  try {
+    const dbProducts = await prisma.product.findMany();
+    return {
+      props: {
+        initialProducts: JSON.parse(JSON.stringify(dbProducts)),
+      },
+    };
+  } catch (error) {
+    console.error("Database error:", error);
+    return {
+      props: {
+        initialProducts: staticProducts,
+      },
+    };
+  }
+}
+
+export default function Home({ initialProducts }) {
+  const productsToUse = initialProducts || staticProducts;
   // Initialize the Advanced Product System
   const {
     products: filteredProducts,
@@ -34,13 +54,13 @@ export default function Home() {
     availableBrands,
     availableGenders,
     globalMaxPrice
-  } = useProductSystem(products);
+  } = useProductSystem(productsToUse);
 
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const router = useRouter();
 
   // Categories list for the top pill navigation
-  const categories = ["All", ...new Set(products.map((p) => p.category))];
+  const categories = ["All", ...new Set(productsToUse.map((p) => p.category))];
 
   // Sync category with URL query
   useEffect(() => {
