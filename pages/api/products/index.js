@@ -3,9 +3,17 @@ import { prisma } from '@/lib/prisma';
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-            const { category, brand, minPrice, maxPrice, sort } = req.query;
+            const { q, category, brand, minPrice, maxPrice, sort } = req.query;
 
             let where = {};
+            if (q) {
+                where.OR = [
+                    { name: { contains: q } },
+                    { brand: { contains: q } },
+                    { category: { contains: q } },
+                    { description: { contains: q } },
+                ];
+            }
             if (category) where.category = category;
             if (brand) where.brand = brand;
             if (minPrice || maxPrice) {

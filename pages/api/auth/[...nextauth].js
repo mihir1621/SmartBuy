@@ -36,8 +36,15 @@ export const authOptions = {
                 const calculatedHash = crypto.createHmac('sha256', SECRET_KEY).update(data).digest('hex');
 
                 if (calculatedHash === hashValue) {
-                    // Return user object (Simulated since no DB)
-                    return { id: phone, name: "Target Customer", email: phone, image: null };
+                    // Hardcoded admin for initial setup - replace with DB check later
+                    const role = phone === '9999999999' ? 'ADMIN' : 'USER';
+                    return {
+                        id: phone,
+                        name: "SmartBuy User",
+                        email: phone,
+                        image: null,
+                        role: role
+                    };
                 } else {
                     return null;
                 }
@@ -51,12 +58,14 @@ export const authOptions = {
         async jwt({ token, user }) {
             if (user) {
                 token.id = user.id;
+                token.role = user.role || 'USER'; // Default to USER
             }
             return token;
         },
         async session({ session, token }) {
             if (token && session.user) {
                 session.user.id = token.id;
+                session.user.role = token.role;
             }
             return session;
         }

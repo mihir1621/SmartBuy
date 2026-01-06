@@ -150,8 +150,8 @@ export default function AdminDashboard() {
                                     <div className="text-right">
                                         <p className="font-bold text-white">{order.amount}</p>
                                         <p className={`text-[10px] font-bold uppercase tracking-tighter ${order.status === 'Delivered' ? 'text-emerald-500' :
-                                                order.status === 'Processing' ? 'text-amber-500' :
-                                                    order.status === 'Shipped' ? 'text-blue-500' : 'text-gray-500'
+                                            order.status === 'Processing' ? 'text-amber-500' :
+                                                order.status === 'Shipped' ? 'text-blue-500' : 'text-gray-500'
                                             }`}>
                                             {order.status}
                                         </p>
