@@ -12,8 +12,13 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         const { phone } = req.body;
 
-        // Generate a 6 digit code
-        const otp = Math.floor(1000 + Math.random() * 9000).toString(); // Using 4 digits for simplicity as per UI
+        // Generate a 4 digit code
+        let otp = Math.floor(1000 + Math.random() * 9000).toString();
+
+        const cleanPhone = phone ? phone.trim() : '';
+
+        // Hardcoded OTP for demo admin
+        if (cleanPhone === '9999999999') otp = '1234';
 
         // Create a hash to verify this later (Phone + OTP + Secret + Expiry)
         // Expiry = 5 minutes
@@ -24,14 +29,15 @@ export default async function handler(req, res) {
         const fullHash = `${hash}.${expires}`;
 
         try {
-            if (client) {
+            // Bypass Twilio for demo admin or if no client configured
+            if (client && cleanPhone !== '9999999999') {
                 // Send Real SMS
                 await client.messages.create({
                     body: `Your SmartBuy Login OTP is: ${otp}`,
                     from: process.env.TWILIO_PHONE_NUMBER,
-                    to: phone
+                    to: cleanPhone
                 });
-                console.log(`Sent Real OTP ${otp} to ${phone}`);
+                console.log(`Sent Real OTP ${otp} to ${cleanPhone}`);
             } else {
                 // Mock SMS (Log to console)
                 console.log('==================================================');

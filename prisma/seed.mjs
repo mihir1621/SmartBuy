@@ -13,7 +13,6 @@ async function main() {
     for (const p of products) {
         await prisma.product.create({
             data: {
-                id: p.id,
                 name: p.name,
                 category: p.category,
                 price: p.price,
@@ -29,7 +28,7 @@ async function main() {
                 isNew: p.isNew || false,
             },
         });
-        console.log(`Created product with id: ${p.id}`);
+        console.log(`Created product: ${p.name}`);
     }
 
     console.log('Seeding finished.');
