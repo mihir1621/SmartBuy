@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getSessionUserId } from '@/lib/user';
 
 export default async function handler(req, res) {
     if (req.method !== 'GET') {
@@ -15,9 +16,12 @@ export default async function handler(req, res) {
             return res.status(401).json({ error: 'Please login to view your orders' });
         }
 
+        const userId = await getSessionUserId(session);
+        if (!userId) return res.status(200).json([]); // No user, no orders
+
         const orders = await prisma.order.findMany({
             where: {
-                userId: parseInt(session.user.id)
+                userId: userId
             },
             include: {
                 items: {

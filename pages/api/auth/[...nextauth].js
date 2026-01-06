@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import crypto from 'crypto';
+import { prisma } from "@/lib/prisma";
 
 const SECRET_KEY = process.env.OTP_SECRET || 'complex-secret-key-change-me';
 
@@ -36,14 +37,29 @@ export const authOptions = {
                 const calculatedHash = crypto.createHmac('sha256', SECRET_KEY).update(data).digest('hex');
 
                 if (calculatedHash === hashValue) {
-                    // Hardcoded admin for initial setup - replace with DB check later
-                    const role = phone === '9999999999' ? 'ADMIN' : 'USER';
+                    // Sync with Database
+                    let user = await prisma.user.findUnique({
+                        where: { phone: phone }
+                    });
+
+                    if (!user) {
+                        // Create user if doesn't exist
+                        const role = phone === '9999999999' ? 'ADMIN' : 'USER';
+                        user = await prisma.user.create({
+                            data: {
+                                phone: phone,
+                                email: `${phone}@smartbuy.com`, // Fallback email
+                                role: role,
+                                name: "SmartBuy User"
+                            }
+                        });
+                    }
+
                     return {
-                        id: phone,
-                        name: "SmartBuy User",
-                        email: phone,
-                        image: null,
-                        role: role
+                        id: user.id.toString(),
+                        name: user.name,
+                        email: user.email,
+                        role: user.role
                     };
                 } else {
                     return null;

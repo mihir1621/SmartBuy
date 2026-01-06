@@ -1,50 +1,87 @@
-import { useState, useRef } from "react";
-import { Star, ThumbsUp, MessageSquare, Plus } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Star, ThumbsUp, MessageSquare, Plus, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSession } from "next-auth/react";
 
-const MOCK_REVIEWS = [
-    {
-        id: 1,
-        user: "Sarah J.",
-        rating: 5,
-        date: "2 days ago",
-        title: "Absolutely love it!",
-        content: "The quality is amazing for the price. Fits perfectly and the material feels premium. Highly recommend!",
-        likes: 12
-    },
-    {
-        id: 2,
-        user: "Michael C.",
-        rating: 4,
-        date: "1 week ago",
-        title: "Good value",
-        content: "Delivery was fast. Product matches the description. Taking off one star because the color is slightly darker than the photo, but still looks great.",
-        likes: 5
-    }
-];
-
-export default function ProductReviews({ product }) {
+export default function ProductReviews({ product: initialProduct }) {
+    const { data: session } = useSession();
+    const [product, setProduct] = useState(initialProduct);
     const [activeTab, setActiveTab] = useState("reviews");
-    const [reviews, setReviews] = useState(MOCK_REVIEWS);
+    const [reviews, setReviews] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
     const [showForm, setShowForm] = useState(false);
 
     // Form State
-    const [newReview, setNewReview] = useState({ rating: 5, title: "", content: "" });
+    const [newReview, setNewReview] = useState({ rating: 5, comment: "" });
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+        fetchReviews();
+    }, [initialProduct.id]);
+
+    const fetchReviews = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch(`/api/reviews?productId=${initialProduct.id}`);
+            if (res.ok) {
+                const data = await res.json();
+                setReviews(data);
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const review = {
-            id: Date.now(),
-            user: "You",
-            rating: newReview.rating,
-            date: "Just now",
-            title: newReview.title,
-            content: newReview.content,
-            likes: 0
-        };
-        setReviews([review, ...reviews]);
-        setShowForm(false);
-        setNewReview({ rating: 5, title: "", content: "" });
+        if (!session) {
+            alert("Please login to write a review");
+            return;
+        }
+
+        setSubmitting(true);
+        try {
+            const res = await fetch("/api/reviews", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    productId: initialProduct.id,
+                    rating: newReview.rating,
+                    comment: newReview.comment
+                })
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                setReviews([data, ...reviews]);
+                setShowForm(false);
+                setNewReview({ rating: 5, comment: "" });
+
+                // Opitonally update local product rating count
+                setProduct(prev => ({
+                    ...prev,
+                    reviews: prev.reviews + 1
+                }));
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    const formatDate = (dateStr) => {
+        const date = new Date(dateStr);
+        const now = new Date();
+        const diff = Math.floor((now - date) / 1000); // seconds
+
+        if (diff < 60) return "Just now";
+        if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+        if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+        if (diff < 604800) return `${Math.floor(diff / 86400)}d ago`;
+        return date.toLocaleDateString();
     };
 
     return (
@@ -85,19 +122,23 @@ export default function ProductReviews({ product }) {
                                                 <Star key={i} className={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-600"}`} />
                                             ))}
                                         </div>
-                                        <div className="text-sm text-gray-500">{product.reviews} Verification</div>
+                                        <div className="text-sm text-gray-500">{reviews.length} Verification</div>
                                     </div>
                                     <div className="h-16 w-px bg-gray-800 hidden md:block"></div>
                                     <div className="flex-1 min-w-[200px] space-y-1 hidden sm:block">
-                                        {[5, 4, 3, 2, 1].map((star) => (
-                                            <div key={star} className="flex items-center gap-2 text-xs text-gray-400">
-                                                <span className="w-3">{star}</span>
-                                                <Star className="w-3 h-3 text-gray-600" />
-                                                <div className="flex-1 h-1.5 bg-gray-800 rounded-full overflow-hidden">
-                                                    <div className="h-full bg-yellow-400 rounded-full" style={{ width: star === 5 ? '70%' : star === 4 ? '20%' : '5%' }}></div>
+                                        {[5, 4, 3, 2, 1].map((star) => {
+                                            const count = reviews.filter(r => r.rating === star).length;
+                                            const percentage = reviews.length > 0 ? (count / reviews.length) * 100 : 0;
+                                            return (
+                                                <div key={star} className="flex items-center gap-2 text-xs text-gray-400">
+                                                    <span className="w-3">{star}</span>
+                                                    <Star className="w-3 h-3 text-gray-600" />
+                                                    <div className="flex-1 h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                                                        <div className="h-full bg-yellow-400 rounded-full" style={{ width: `${percentage}%` }}></div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            );
+                                        })}
                                     </div>
                                 </div>
 
@@ -121,6 +162,9 @@ export default function ProductReviews({ product }) {
                                     >
                                         <h3 className="font-bold text-lg mb-4 text-white">Share your thoughts</h3>
                                         <div className="space-y-4">
+                                            {!session && (
+                                                <p className="text-yellow-500 text-sm">Please sign in to submit a review.</p>
+                                            )}
                                             <div>
                                                 <label className="block text-sm font-medium mb-1 text-gray-300">Rating</label>
                                                 <div className="flex gap-2">
@@ -128,6 +172,7 @@ export default function ProductReviews({ product }) {
                                                         <button
                                                             key={star}
                                                             type="button"
+                                                            disabled={!session}
                                                             onClick={() => setNewReview({ ...newReview, rating: star })}
                                                             className={`p-1 ${newReview.rating >= star ? 'text-yellow-400' : 'text-gray-600'}`}
                                                         >
@@ -137,16 +182,15 @@ export default function ProductReviews({ product }) {
                                                 </div>
                                             </div>
                                             <div>
-                                                <label className="block text-sm font-medium mb-1 text-gray-300">Review Title</label>
-                                                <input required type="text" className="w-full px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-500" placeholder="Summarize your experience" value={newReview.title} onChange={e => setNewReview({ ...newReview, title: e.target.value })} />
-                                            </div>
-                                            <div>
                                                 <label className="block text-sm font-medium mb-1 text-gray-300">Review</label>
-                                                <textarea required rows="3" className="w-full px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-500" placeholder="What did you like or dislike?" value={newReview.content} onChange={e => setNewReview({ ...newReview, content: e.target.value })}></textarea>
+                                                <textarea required disabled={!session || submitting} rows="3" className="w-full px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-500 disabled:opacity-50" placeholder="What did you like or dislike?" value={newReview.comment} onChange={e => setNewReview({ ...newReview, comment: e.target.value })}></textarea>
                                             </div>
                                             <div className="flex justify-end gap-3">
                                                 <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-gray-400 hover:text-white">Cancel</button>
-                                                <button type="submit" className="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700">Submit Review</button>
+                                                <button type="submit" disabled={!session || submitting} className="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 disabled:bg-gray-700 flex items-center gap-2">
+                                                    {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
+                                                    Submit Review
+                                                </button>
                                             </div>
                                         </div>
                                     </motion.form>
@@ -155,30 +199,39 @@ export default function ProductReviews({ product }) {
 
                             {/* Review List */}
                             <div className="space-y-6">
-                                {reviews.map((review) => (
-                                    <div key={review.id} className="border-b border-gray-800 last:border-0 pb-6 last:pb-0">
-                                        <div className="flex justify-between items-start mb-2">
-                                            <div>
-                                                <div className="flex items-center gap-2 mb-1">
-                                                    <span className="font-bold text-white">{review.user}</span>
-                                                    <span className="text-xs text-green-400 bg-green-900/30 border border-green-900 px-2 py-0.5 rounded-full font-medium">Verified Buyer</span>
-                                                </div>
-                                                <div className="flex text-yellow-400 text-xs">
-                                                    {[...Array(5)].map((_, i) => (
-                                                        <Star key={i} className={`w-3 h-3 ${i < review.rating ? "fill-current" : "text-gray-600"}`} />
-                                                    ))}
-                                                </div>
-                                            </div>
-                                            <span className="text-xs text-gray-500">{review.date}</span>
-                                        </div>
-                                        <h4 className="font-bold text-white text-sm mb-1">{review.title}</h4>
-                                        <p className="text-gray-400 text-sm leading-relaxed mb-3">{review.content}</p>
-                                        <button className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-blue-400 transition-colors group">
-                                            <ThumbsUp className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-                                            Helpful ({review.likes})
-                                        </button>
+                                {loading ? (
+                                    <div className="flex justify-center py-10">
+                                        <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
                                     </div>
-                                ))}
+                                ) : reviews.length === 0 ? (
+                                    <div className="text-center py-10 text-gray-500">
+                                        No reviews yet. Be the first to review!
+                                    </div>
+                                ) : (
+                                    reviews.map((review) => (
+                                        <div key={review.id} className="border-b border-gray-800 last:border-0 pb-6 last:pb-0">
+                                            <div className="flex justify-between items-start mb-2">
+                                                <div>
+                                                    <div className="flex items-center gap-2 mb-1">
+                                                        <span className="font-bold text-white">{review.user?.name || 'Anonymous'}</span>
+                                                        <span className="text-xs text-green-400 bg-green-900/30 border border-green-900 px-2 py-0.5 rounded-full font-medium">Verified Buyer</span>
+                                                    </div>
+                                                    <div className="flex text-yellow-400 text-xs">
+                                                        {[...Array(5)].map((_, i) => (
+                                                            <Star key={i} className={`w-3 h-3 ${i < review.rating ? "fill-current" : "text-gray-600"}`} />
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                                <span className="text-xs text-gray-500">{formatDate(review.createdAt)}</span>
+                                            </div>
+                                            <p className="text-gray-400 text-sm leading-relaxed mb-3">{review.comment}</p>
+                                            <button className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-blue-400 transition-colors group">
+                                                <ThumbsUp className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                                                Helpful
+                                            </button>
+                                        </div>
+                                    ))
+                                )}
                             </div>
                         </motion.div>
                     ) : (

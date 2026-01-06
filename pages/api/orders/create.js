@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getSessionUserId } from '@/lib/user';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -16,16 +17,24 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'Cart is empty' });
         }
 
+        // Safer User ID resolution
+        const userId = await getSessionUserId(session);
+
+        console.log('Creating order for:', customerInfo.email);
+        console.log('Items count:', items.length);
+
         // Create the order in a transaction
         const order = await prisma.$transaction(async (tx) => {
             // 1. Check and Update Stock for each item
             for (const item of items) {
+                console.log(`Checking stock for SKU: ${item.id}`);
                 const product = await tx.product.findUnique({
                     where: { id: parseInt(item.id) },
                     select: { stock: true, name: true }
                 });
 
                 if (!product || product.stock < item.quantity) {
+                    console.log(`Insufficient stock for ${product?.name || item.id}`);
                     throw new Error(`Insufficient stock for product: ${product?.name || item.id}`);
                 }
 
@@ -40,22 +49,24 @@ export default async function handler(req, res) {
                 });
             }
 
+            console.log('Stock updated, creating order record...');
             // 2. Create the order
             const newOrder = await tx.order.create({
                 data: {
-                    customerName: `${customerInfo.firstName} ${customerInfo.lastName}`,
+                    customerName: `${customerInfo.firstName} ${customerInfo.lastName || ''}`.trim(),
                     customerPhone: customerInfo.phone || "N/A",
                     customerEmail: customerInfo.email,
-                    totalAmount: totalAmount,
+                    totalAmount: parseFloat(totalAmount),
                     status: 'PENDING',
-                    paymentStatus: 'PAID', // Simplified for demo
-                    userId: session?.user?.id ? parseInt(session.user.id) : null,
-                    shippingAddress: `${customerInfo.address}, ${customerInfo.city}, ${customerInfo.postalCode}`,
+                    paymentStatus: req.body.paymentInfo?.status === 'SUCCESS' ? 'PAID' : 'UNPAID',
+                    paymentMethod: req.body.paymentInfo?.method || 'N/A',
+                    userId: userId,
+                    shippingAddress: `${customerInfo.address}, ${customerInfo.city || ''}, ${customerInfo.postalCode || ''}`.trim(),
                     items: {
                         create: items.map(item => ({
-                            productId: item.id,
-                            quantity: item.quantity,
-                            price: item.price
+                            productId: parseInt(item.id),
+                            quantity: parseInt(item.quantity),
+                            price: parseFloat(item.price)
                         }))
                     }
                 },
@@ -64,6 +75,7 @@ export default async function handler(req, res) {
                 }
             });
 
+            console.log('Order record created:', newOrder.id);
             return newOrder;
         });
 

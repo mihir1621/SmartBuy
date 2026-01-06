@@ -38,12 +38,13 @@ export default function UserOrderDetails() {
 
     const fetchOrder = async () => {
         try {
-            const res = await fetch('/api/orders/history');
+            const res = await fetch(`/api/orders/${id}`);
             const data = await res.json();
             if (res.ok) {
-                const found = data.find(o => o.id === parseInt(id));
-                if (found) setOrder(found);
-                else router.push('/orders');
+                setOrder(data);
+            } else {
+                console.error(data.error);
+                router.push('/orders');
             }
         } catch (err) {
             console.error(err);
@@ -64,7 +65,9 @@ export default function UserOrderDetails() {
 
     if (!order) return null;
 
+    const isCancelled = order.status === 'CANCELLED';
     const currentStatusIdx = statusSteps.findIndex(s => s.status === order.status);
+    const progressWidth = isCancelled ? 0 : (currentStatusIdx === -1 ? 0 : (currentStatusIdx / (statusSteps.length - 1)) * 100);
 
     return (
         <div className="min-h-screen bg-black flex flex-col text-white">
@@ -87,48 +90,62 @@ export default function UserOrderDetails() {
                     {/* Left: Order Info */}
                     <div className="lg:col-span-2 space-y-8">
                         <section className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-xl">
-                            <div className="flex justify-between items-start mb-10">
+                            <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-10">
                                 <div>
-                                    <h1 className="text-3xl font-black mb-1">Order #ORD-{order.id}</h1>
+                                    <h1 className="text-3xl font-black mb-1 leading-tight tracking-tight">Order #ORD-{order.id}</h1>
                                     <p className="text-gray-500 font-medium">Placed on {new Date(order.createdAt).toLocaleDateString(undefined, { dateStyle: 'long' })}</p>
                                 </div>
-                                <div className="text-right">
+                                <div className="sm:text-right">
                                     <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Total Amount</p>
                                     <p className="text-3xl font-black text-blue-500">₹{order.totalAmount.toLocaleString()}</p>
                                 </div>
                             </div>
 
                             {/* Tracking Progress */}
-                            <div className="relative pt-4 pb-8">
-                                <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-800 -translate-y-1/2 rounded-full" />
-                                <div
-                                    className="absolute top-1/2 left-0 h-1 bg-blue-500 -translate-y-1/2 rounded-full transition-all duration-1000"
-                                    style={{ width: `${(currentStatusIdx / (statusSteps.length - 1)) * 100}%` }}
-                                />
-                                <div className="relative flex justify-between items-center">
-                                    {statusSteps.map((step, idx) => {
-                                        const StepIcon = step.icon;
-                                        const isCompleted = idx <= currentStatusIdx;
-                                        const isActive = idx === currentStatusIdx;
-
-                                        return (
-                                            <div key={step.status} className="flex flex-col items-center">
-                                                <div className={`w-10 h-10 rounded-full flex items-center justify-center z-10 border-4 ${isActive ? 'bg-blue-600 border-blue-400 scale-125 shadow-lg shadow-blue-500/20' :
-                                                        isCompleted ? 'bg-blue-500 border-gray-900' : 'bg-gray-800 border-gray-900'
-                                                    } transition-all duration-500`}>
-                                                    <StepIcon size={18} className={isCompleted ? 'text-white' : 'text-gray-500'} />
-                                                </div>
-                                                <p className={`mt-4 text-[10px] font-black uppercase tracking-widest ${isCompleted ? 'text-blue-400' : 'text-gray-600'
-                                                    }`}>{step.label}</p>
-                                            </div>
-                                        );
-                                    })}
+                            {isCancelled ? (
+                                <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 flex items-center gap-4">
+                                    <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-red-500/20">
+                                        <ArrowRight size={24} className="rotate-45" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-red-500 font-black uppercase tracking-widest text-sm">Order Cancelled</h3>
+                                        <p className="text-gray-500 text-xs mt-1">This order was cancelled and is no longer being processed.</p>
+                                    </div>
                                 </div>
-                            </div>
+                            ) : (
+                                <div className="relative pt-4 pb-8">
+                                    <div className="absolute top-1/2 left-0 w-full h-1.5 bg-gray-800 -translate-y-1/2 rounded-full" />
+                                    <motion.div
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${progressWidth}%` }}
+                                        transition={{ duration: 1.5, ease: "circOut" }}
+                                        className="absolute top-1/2 left-0 h-1.5 bg-gradient-to-r from-blue-600 to-blue-400 -translate-y-1/2 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"
+                                    />
+                                    <div className="relative flex justify-between items-center">
+                                        {statusSteps.map((step, idx) => {
+                                            const StepIcon = step.icon;
+                                            const isCompleted = idx <= currentStatusIdx;
+                                            const isActive = idx === currentStatusIdx;
+
+                                            return (
+                                                <div key={step.status} className="flex flex-col items-center">
+                                                    <div className={`w-12 h-12 rounded-full flex items-center justify-center z-10 border-4 ${isActive ? 'bg-blue-600 border-blue-400 scale-125 shadow-xl shadow-blue-500/40' :
+                                                        isCompleted ? 'bg-blue-500 border-gray-900 shadow-lg' : 'bg-gray-800 border-gray-900'
+                                                        } transition-all duration-700`}>
+                                                        <StepIcon size={20} className={isCompleted ? 'text-white' : 'text-gray-500'} />
+                                                    </div>
+                                                    <p className={`mt-6 text-[10px] font-black uppercase tracking-widest text-center max-w-[80px] ${isCompleted ? 'text-blue-400' : 'text-gray-600'
+                                                        }`}>{step.label}</p>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            )}
                         </section>
 
                         {/* Items */}
-                        <section className="bg-gray-900 border border-gray-800 rounded-3xl overflow-hidden shadow-xl">
+                        <section className="bg-gray-900 border border-gray-800 rounded-3xl overflow-hidden shadow-2xl">
                             <div className="p-8 border-b border-gray-800 bg-gray-950/20">
                                 <h2 className="text-xl font-bold flex items-center gap-3">
                                     <Box size={24} className="text-blue-500" />
@@ -137,22 +154,24 @@ export default function UserOrderDetails() {
                             </div>
                             <div className="divide-y divide-gray-800">
                                 {order.items.map((item) => (
-                                    <div key={item.id} className="p-8 flex gap-6 hover:bg-gray-800/20 transition-colors group">
-                                        <div className="w-24 h-24 relative rounded-2xl overflow-hidden bg-gray-800 flex-shrink-0 border border-gray-700 shadow-lg">
-                                            <Image src={item.product?.image} alt={item.product?.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
+                                    <div key={item.id} className="p-8 flex flex-col sm:row gap-6 hover:bg-gray-800/10 transition-colors group">
+                                        <div className="w-24 h-24 relative rounded-2xl overflow-hidden bg-gray-950 flex-shrink-0 border border-gray-800 shadow-lg group-hover:border-blue-500/30 transition-colors">
+                                            <Image src={item.product?.image} alt={item.product?.name} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                                         </div>
                                         <div className="flex-grow min-w-0 py-1">
-                                            <div className="flex justify-between items-start mb-2 group-hover:translate-x-1 transition-transform">
-                                                <h3 className="font-bold text-lg text-white truncate pr-4">{item.product?.name}</h3>
+                                            <div className="flex justify-between items-start mb-2">
+                                                <h3 className="font-bold text-lg text-white truncate pr-4 group-hover:text-blue-400 transition-colors">{item.product?.name}</h3>
                                                 <p className="font-black text-lg text-white">₹{(item.price * item.quantity).toLocaleString()}</p>
                                             </div>
-                                            <p className="text-sm text-gray-500 mb-4">{item.product?.category}</p>
-                                            <div className="flex items-center gap-6 text-sm">
+                                            <p className="text-sm text-gray-500 mb-4 font-medium uppercase tracking-wider">{item.product?.category}</p>
+                                            <div className="flex items-center gap-8 text-sm">
                                                 <div className="flex items-center gap-2 text-gray-400">
-                                                    <span className="font-bold">Quantity:</span> {item.quantity}
+                                                    <span className="font-bold text-[10px] uppercase tracking-widest text-gray-600">Quantity</span>
+                                                    <span className="text-white font-mono">{item.quantity}</span>
                                                 </div>
                                                 <div className="flex items-center gap-2 text-gray-400">
-                                                    <span className="font-bold">Unit Price:</span> ₹{item.price.toLocaleString()}
+                                                    <span className="font-bold text-[10px] uppercase tracking-widest text-gray-600">Unit Price</span>
+                                                    <span className="text-white font-mono">₹{item.price.toLocaleString()}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -166,50 +185,52 @@ export default function UserOrderDetails() {
                     <div className="space-y-8">
                         {/* Summary */}
                         <section className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-xl space-y-6">
-                            <h2 className="text-sm font-black uppercase tracking-widest text-gray-500">Order Summary</h2>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">Order Summary</h2>
                             <div className="space-y-4">
-                                <div className="flex justify-between text-gray-400">
+                                <div className="flex justify-between text-gray-400 text-sm">
                                     <span>Subtotal</span>
                                     <span className="text-white font-bold">₹{order.totalAmount.toLocaleString()}</span>
                                 </div>
-                                <div className="flex justify-between text-gray-400">
+                                <div className="flex justify-between text-gray-400 text-sm">
                                     <span>Shipping</span>
-                                    <span className="text-emerald-500 font-bold uppercase text-xs">Free</span>
+                                    <span className="text-emerald-500 font-bold uppercase text-[10px] tracking-widest">Free Delivery</span>
                                 </div>
-                                <div className="pt-4 border-t border-gray-800 flex justify-between items-center">
-                                    <span className="text-lg font-bold">Total Paid</span>
-                                    <span className="text-2xl font-black text-blue-500">₹{order.totalAmount.toLocaleString()}</span>
+                                <div className="pt-4 border-t border-gray-800/50 flex justify-between items-center">
+                                    <span className="text-base font-bold">Total Paid</span>
+                                    <span className="text-2xl font-black text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.3)]">₹{order.totalAmount.toLocaleString()}</span>
                                 </div>
                             </div>
                         </section>
 
                         {/* Shipping */}
                         <section className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-xl space-y-6">
-                            <h2 className="text-sm font-black uppercase tracking-widest text-gray-500 flex items-center gap-2">
-                                <MapPin size={16} /> Delivery Address
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 flex items-center gap-2">
+                                <MapPin size={14} className="text-blue-500" /> Delivery Address
                             </h2>
-                            <div className="p-5 bg-gray-950/40 rounded-2xl border border-gray-800 text-sm leading-relaxed text-gray-300">
-                                {order.shippingAddress}
+                            <div className="p-5 bg-gray-950/40 rounded-2xl border border-gray-800 text-sm leading-relaxed text-gray-300 font-medium">
+                                {order.shippingAddress || 'Address details unavailable'}
                             </div>
                         </section>
 
                         {/* Payment */}
                         <section className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-xl space-y-6">
-                            <h2 className="text-sm font-black uppercase tracking-widest text-gray-500 flex items-center gap-2">
-                                <CreditCard size={16} /> Payment Method
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 flex items-center gap-2">
+                                <CreditCard size={14} className="text-blue-500" /> Payment Information
                             </h2>
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center">
+                            <div className="flex items-center gap-4 p-4 bg-gray-950/40 rounded-2xl border border-gray-800">
+                                <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20">
                                     <CreditCard className="text-blue-500" size={24} />
                                 </div>
                                 <div>
-                                    <p className="font-bold text-sm">Credit Card</p>
-                                    <p className="text-xs text-gray-500 underline">Ending in **** 4242</p>
+                                    <p className="font-bold text-sm text-white">{order.paymentMethod === 'CARD' ? 'Credit / Debit Card' : order.paymentMethod}</p>
+                                    <p className={`text-[10px] font-black uppercase tracking-widest mt-0.5 ${order.paymentStatus === 'PAID' ? 'text-emerald-500' : 'text-amber-500'}`}>
+                                        {order.paymentStatus}
+                                    </p>
                                 </div>
                             </div>
                         </section>
 
-                        <button className="w-full bg-white text-black font-black py-4 rounded-2xl hover:bg-gray-200 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
+                        <button className="w-full bg-white text-black font-black py-4 rounded-2xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] shadow-lg hover:shadow-xl active:scale-95 duration-200">
                             Download Invoice <ArrowRight size={14} />
                         </button>
                     </div>
