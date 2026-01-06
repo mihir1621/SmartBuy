@@ -21,45 +21,67 @@ export default async function handler(req, res) {
         const userId = await getSessionUserId(session);
 
         console.log('Creating order for:', customerInfo.email);
-        console.log('Items count:', items.length);
 
-        // Create the order in a transaction
+        // 1. Pre-calculate total and verify details (Outside transaction)
+        let calculatedTotal = 0;
+        const productsToUpdate = [];
+
+        for (const item of items) {
+            const product = await prisma.product.findUnique({
+                where: { id: parseInt(item.id) },
+                select: { id: true, stock: true, name: true, price: true }
+            });
+
+            if (!product || product.stock < item.quantity) {
+                return res.status(400).json({ error: `Insufficient stock for product: ${product?.name || item.id}` });
+            }
+
+            calculatedTotal += product.price * item.quantity;
+            productsToUpdate.push({
+                id: product.id,
+                newStock: product.stock - item.quantity,
+                item: item
+            });
+        }
+
+        // 2. Create Razorpay Order (External API - outside DB transaction)
+        let razorpayOrderId = null;
+        const useRazorpay = req.body.paymentMethod === 'RAZORPAY';
+
+        if (useRazorpay) {
+            const { razorpay } = await import('@/lib/razorpay');
+            const razorOrder = await razorpay.orders.create({
+                amount: Math.round(calculatedTotal * 100), // Amount in paise
+                currency: "INR",
+                receipt: `order_rcpt_${Date.now()}`
+            });
+            razorpayOrderId = razorOrder.id;
+        }
+
+        // 3. Execute DB Transaction (Deduct stock and create records)
         const order = await prisma.$transaction(async (tx) => {
-            // 1. Check and Update Stock for each item
-            for (const item of items) {
-                console.log(`Checking stock for SKU: ${item.id}`);
-                const product = await tx.product.findUnique({
-                    where: { id: parseInt(item.id) },
-                    select: { stock: true, name: true }
-                });
-
-                if (!product || product.stock < item.quantity) {
-                    console.log(`Insufficient stock for ${product?.name || item.id}`);
-                    throw new Error(`Insufficient stock for product: ${product?.name || item.id}`);
-                }
-
-                // Update product stock
-                const newStock = product.stock - item.quantity;
+            // Update stock
+            for (const p of productsToUpdate) {
                 await tx.product.update({
-                    where: { id: parseInt(item.id) },
+                    where: { id: p.id },
                     data: {
-                        stock: newStock,
-                        inStock: newStock > 0
+                        stock: p.newStock,
+                        inStock: p.newStock > 0
                     }
                 });
             }
 
-            console.log('Stock updated, creating order record...');
-            // 2. Create the order
-            const newOrder = await tx.order.create({
+            // Create Order record
+            return await tx.order.create({
                 data: {
                     customerName: `${customerInfo.firstName} ${customerInfo.lastName || ''}`.trim(),
                     customerPhone: customerInfo.phone || "N/A",
                     customerEmail: customerInfo.email,
-                    totalAmount: parseFloat(totalAmount),
+                    totalAmount: parseFloat(calculatedTotal),
                     status: 'PENDING',
-                    paymentStatus: req.body.paymentInfo?.status === 'SUCCESS' ? 'PAID' : 'UNPAID',
-                    paymentMethod: req.body.paymentInfo?.method || 'N/A',
+                    paymentStatus: 'UNPAID',
+                    paymentMethod: useRazorpay ? 'RAZORPAY' : (req.body.paymentMethod || 'N/A'),
+                    razorpayOrderId: razorpayOrderId,
                     userId: userId,
                     shippingAddress: `${customerInfo.address}, ${customerInfo.city || ''}, ${customerInfo.postalCode || ''}`.trim(),
                     items: {
@@ -69,17 +91,19 @@ export default async function handler(req, res) {
                             price: parseFloat(item.price)
                         }))
                     }
-                },
-                include: {
-                    items: true
                 }
             });
-
-            console.log('Order record created:', newOrder.id);
-            return newOrder;
+        }, {
+            timeout: 10000 // 10 seconds timeout for the DB transaction
         });
 
-        res.status(201).json({ message: 'Order created successfully', orderId: order.id });
+        res.status(201).json({
+            message: 'Order created successfully',
+            orderId: order.id,
+            razorpayOrderId: razorpayOrderId,
+            amount: Math.round(order.totalAmount * 100),
+            currency: "INR"
+        });
     } catch (error) {
         console.error('Order creation error:', error);
         res.status(500).json({ error: 'Failed to create order: ' + error.message });
