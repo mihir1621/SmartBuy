@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ShoppingCart, Heart, Star } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -15,9 +16,10 @@ export default function ProductCard({ product }) {
             <div className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:shadow-lg hover:border-blue-900 transition-all duration-300 relative h-full flex flex-col">
                 {/* Image Container */}
                 <div className="relative aspect-[4/5] overflow-hidden bg-gray-800">
-                    <img
+                    <Image
                         src={product.image}
                         alt={product.name}
+                        fill
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                     />

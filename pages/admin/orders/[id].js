@@ -1,5 +1,5 @@
 import AdminLayout from '@/components/admin/AdminLayout';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import {
     ChevronLeft,
@@ -33,11 +33,8 @@ export default function OrderDetails() {
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
 
-    useEffect(() => {
-        if (id) fetchOrder();
-    }, [id]);
-
-    const fetchOrder = async () => {
+    const fetchOrder = useCallback(async () => {
+        if (!id) return;
         try {
             const res = await fetch(`/api/admin/orders/${id}`);
             const data = await res.json();
@@ -52,7 +49,11 @@ export default function OrderDetails() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [id, router]);
+
+    useEffect(() => {
+        fetchOrder();
+    }, [fetchOrder]);
 
     const updateStatus = async (newStatus) => {
         setUpdating(true);

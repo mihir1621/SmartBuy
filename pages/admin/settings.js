@@ -54,7 +54,7 @@ export default function AdminSettings() {
                             </div>
 
                             <p className="text-gray-400 font-medium leading-relaxed max-w-lg">
-                                Need to test your dashboard with real data? Use the "Demo Data Generator" to instantly populate your
+                                Need to test your dashboard with real data? Use the &quot;Demo Data Generator&quot; to instantly populate your
                                 database with mock orders and customers.
                             </p>
 
@@ -79,8 +79,8 @@ export default function AdminSettings() {
                                     initial={{ opacity: 0, x: -10 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     className={`mt-6 p-4 rounded-2xl border flex items-center gap-3 font-bold text-sm ${result.type === 'success'
-                                            ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                                            : 'bg-red-500/10 border-red-500/20 text-red-400'
+                                        ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                                        : 'bg-red-500/10 border-red-500/20 text-red-400'
                                         }`}
                                 >
                                     {result.type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}

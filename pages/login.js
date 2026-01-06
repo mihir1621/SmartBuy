@@ -248,7 +248,7 @@ export default function Login() {
                                     transition={{ duration: 0.7 }}
                                 >
                                     <h3 className="text-3xl font-medium leading-tight mb-4">
-                                        "{slides[currentSlide].text}"
+                                        &quot;{slides[currentSlide].text}&quot;
                                     </h3>
                                     <div>
                                         <p className="font-bold text-lg">{slides[currentSlide].author}</p>

@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import AdminSidebar from './AdminSidebar';
 import { Bell, Search, User, ShieldAlert, Loader2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
@@ -36,7 +37,7 @@ export default function AdminLayout({ children, title }) {
                     </div>
                     <h1 className="text-2xl font-bold text-white tracking-tight">Access Restricted</h1>
                     <p className="text-gray-500 font-medium italic">
-                        "Your current account does not have administrative privileges. Please log in with an authorized administrator account to access this panel."
+                        &quot;Your current account does not have administrative privileges. Please log in with an authorized administrator account to access this panel.&quot;
                     </p>
                     <div className="flex flex-col gap-3 pt-4">
                         <Link href="/" className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 rounded-2xl transition-all">
@@ -88,7 +89,7 @@ export default function AdminLayout({ children, title }) {
                             <div className="flex items-center gap-3 ml-2 group cursor-pointer">
                                 <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-gray-700 to-gray-600 border border-gray-600 flex items-center justify-center text-gray-200 group-hover:scale-105 transition-transform overflow-hidden">
                                     {session.user.image ? (
-                                        <img src={session.user.image} alt="Admin" className="w-full h-full object-cover" />
+                                        <Image src={session.user.image} alt="Admin" fill className="object-cover" />
                                     ) : (
                                         <User size={20} />
                                     )}

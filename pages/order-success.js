@@ -76,7 +76,7 @@ export default function OrderSuccess() {
                         <h1 className="text-4xl font-black text-white mb-4 tracking-tight">Success!</h1>
                         <p className="text-gray-400 mb-10 text-lg leading-relaxed font-medium">
                             Your order has been placed successfully.
-                            We've sent a confirmation email to <span className="text-white font-bold">{order?.customerEmail || 'your inbox'}</span>.
+                            We&apos;ve sent a confirmation email to <span className="text-white font-bold">{order?.customerEmail || 'your inbox'}</span>.
                         </p>
 
                         <div className="bg-gray-950/50 rounded-3xl p-8 mb-10 text-left border border-gray-800/50 backdrop-blur-sm">

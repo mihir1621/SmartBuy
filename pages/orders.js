@@ -89,7 +89,7 @@ export default function OrderHistory() {
                             <Package className="w-10 h-10 text-gray-500" />
                         </div>
                         <h2 className="text-xl font-bold mb-2">No orders found</h2>
-                        <p className="text-gray-400 mb-8">It looks like you haven't placed any orders yet.</p>
+                        <p className="text-gray-400 mb-8">It looks like you haven&apos;t placed any orders yet.</p>
                         <Link href="/" className="inline-block bg-white text-black px-8 py-3 rounded-xl font-bold hover:bg-gray-200 transition-all">
                             Start Shopping
                         </Link>

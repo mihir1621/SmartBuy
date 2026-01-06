@@ -55,7 +55,7 @@ export default function CartSidebar() {
                                     </div>
                                     <div>
                                         <p className="text-white font-medium text-lg">Your cart is empty</p>
-                                        <p className="text-gray-400 text-sm mt-1">Looks like you haven't added anything yet.</p>
+                                        <p className="text-gray-400 text-sm mt-1">Looks like you haven&apos;t added anything yet.</p>
                                     </div>
                                     <button
                                         onClick={() => setIsCartOpen(false)}

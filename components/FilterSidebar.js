@@ -197,7 +197,7 @@ export default function FilterSidebar({
                                     />
                                 )) || null}
                             </div>
-                            <span className="text-[10px] font-bold text-gray-400 uppercase whitespace-nowrap">{rating}.0 & Up</span>
+                            <span className="text-[10px] font-bold text-gray-400 uppercase whitespace-nowrap">{rating}.0 &amp; Up</span>
                         </button>
                     ))}
                 </div>
