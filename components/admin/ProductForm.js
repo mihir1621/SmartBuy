@@ -29,6 +29,7 @@ export default function ProductForm({ initialData = null, isEditing = false }) {
         image: '',
         images: [],
         description: '',
+        stock: 50,
         inStock: true,
         isNew: true,
     });
@@ -46,7 +47,7 @@ export default function ProductForm({ initialData = null, isEditing = false }) {
         const { name, value, type, checked } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: type === 'checkbox' ? checked : (name === 'price' || name === 'originalPrice' || name === 'discount' || name === 'rating' || name === 'reviews' ? parseFloat(value) : value)
+            [name]: type === 'checkbox' ? checked : (name === 'price' || name === 'originalPrice' || name === 'discount' || name === 'rating' || name === 'reviews' || name === 'stock' ? parseFloat(value) : value)
         }));
     };
 
@@ -200,6 +201,17 @@ export default function ProductForm({ initialData = null, isEditing = false }) {
                                     value={formData.discount}
                                     onChange={handleChange}
                                     className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-4 px-5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-medium"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1 text-blue-500">Inventory Stock</label>
+                                <input
+                                    name="stock"
+                                    type="number"
+                                    value={formData.stock}
+                                    onChange={handleChange}
+                                    required
+                                    className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-4 px-5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-bold text-lg"
                                 />
                             </div>
                         </div>

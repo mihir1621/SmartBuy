@@ -16,10 +16,10 @@ export function useProductSystem(initialProducts) {
         let result = [...initialProducts];
 
         if (searchQuery) {
-            const query = searchQuery.toLowerCase();
+            const words = searchQuery.toLowerCase().split(/\s+/).filter(w => w.length > 0);
             result = result.filter(p => {
                 const searchString = `${p.name} ${p.brand || ''} ${p.category} ${p.subCategory || ''} ${p.description}`.toLowerCase();
-                return searchString.includes(query);
+                return words.every(word => searchString.includes(word));
             });
         }
 

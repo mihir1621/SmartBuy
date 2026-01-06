@@ -26,6 +26,7 @@ model Product {
   image         String
   images        Json?
   description   String      @db.Text
+  stock         Int         @default(50)
   inStock       Boolean     @default(true)
   isNew         Boolean     @default(false)
   createdAt     DateTime    @default(now())

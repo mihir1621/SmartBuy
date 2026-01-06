@@ -269,21 +269,47 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                             />
 
                             {/* Actions */}
-                            <div className="flex flex-col sm:flex-row gap-4 mt-auto pt-4">
-                                <motion.button
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => addToCart(product)}
-                                    className="flex-1 bg-white text-black font-bold py-4 rounded-xl hover:bg-gray-200 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-lg"
-                                >
-                                    <ShoppingCart className="w-6 h-6" />
-                                    Add to Cart
-                                </motion.button>
-                                <motion.button
-                                    whileTap={{ scale: 0.95 }}
-                                    className="flex-1 bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl hover:bg-blue-700 text-lg"
-                                >
-                                    Buy Now
-                                </motion.button>
+                            <div className="flex flex-col sm:flex-row gap-4 mt-auto pt-6 border-t border-gray-800">
+                                <div className="w-full">
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className={`h-2.5 w-2.5 rounded-full ${product.inStock ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-red-500'}`} />
+                                        <span className={`text-sm font-bold uppercase tracking-widest ${product.inStock ? 'text-emerald-400' : 'text-red-400'}`}>
+                                            {product.inStock ? 'In Stock & Ready to Ship' : 'Out of Stock'}
+                                        </span>
+                                    </div>
+
+                                    {product.inStock && product.stock > 0 && product.stock < 10 && (
+                                        <div className="bg-amber-500/10 border border-amber-500/20 p-3 rounded-xl mb-4 flex items-center gap-3">
+                                            <div className="w-2 h-2 bg-amber-500 rounded-full animate-ping" />
+                                            <p className="text-amber-500 text-sm font-black">HURRY! ONLY {product.stock} ITEMS REMAINING</p>
+                                        </div>
+                                    )}
+
+                                    <div className="flex flex-col sm:flex-row gap-4">
+                                        <motion.button
+                                            whileTap={product.inStock ? { scale: 0.95 } : {}}
+                                            disabled={!product.inStock}
+                                            onClick={() => addToCart(product)}
+                                            className={`flex-1 font-bold py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 text-lg ${product.inStock
+                                                    ? "bg-white text-black hover:bg-gray-200"
+                                                    : "bg-gray-800 text-gray-600 cursor-not-allowed"
+                                                }`}
+                                        >
+                                            <ShoppingCart className="w-6 h-6" />
+                                            {product.inStock ? "Add to Cart" : "Sold Out"}
+                                        </motion.button>
+                                        <motion.button
+                                            whileTap={product.inStock ? { scale: 0.95 } : {}}
+                                            disabled={!product.inStock}
+                                            className={`flex-1 font-bold py-4 rounded-xl transition-all shadow-lg text-lg ${product.inStock
+                                                    ? "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-500/20"
+                                                    : "bg-gray-900 text-gray-700 border border-gray-800 cursor-not-allowed"
+                                                }`}
+                                        >
+                                            {product.inStock ? "Buy Now" : "Currently Unavailable"}
+                                        </motion.button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

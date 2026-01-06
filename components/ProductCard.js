@@ -37,10 +37,26 @@ export default function ProductCard({ product }) {
                         <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
                     </button>
 
-                    {/* Discount Badge if Applicable */}
+                    {/* Discount Badge */}
                     {discountPercentage > 0 && (
                         <div className="absolute top-2 left-2 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
                             {discountPercentage}% OFF
+                        </div>
+                    )}
+
+                    {/* Out of Stock Overlay */}
+                    {!product.inStock && (
+                        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center z-10">
+                            <span className="bg-white text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-xl">
+                                Out of Stock
+                            </span>
+                        </div>
+                    )}
+
+                    {/* Low Stock Badge */}
+                    {product.inStock && product.stock > 0 && product.stock < 10 && (
+                        <div className="absolute bottom-2 left-2 bg-amber-500 text-black text-[9px] font-black px-2 py-0.5 rounded shadow-lg animate-pulse">
+                            ONLY {product.stock} LEFT!
                         </div>
                     )}
                 </div>
@@ -72,15 +88,19 @@ export default function ProductCard({ product }) {
 
                         {/* Add to Cart Button */}
                         <button
+                            disabled={!product.inStock}
                             onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 addToCart(product);
                             }}
-                            className="w-full bg-white hover:bg-gray-200 text-black text-xs font-bold py-2 rounded-lg transition-colors flex items-center justify-center gap-2 active:scale-95"
+                            className={`w-full text-xs font-bold py-2 rounded-lg transition-all flex items-center justify-center gap-2 active:scale-95 ${product.inStock
+                                ? "bg-white hover:bg-gray-200 text-black shadow-lg shadow-white/5"
+                                : "bg-gray-800 text-gray-600 cursor-not-allowed"
+                                }`}
                         >
                             <ShoppingCart className="w-3.5 h-3.5" />
-                            Add to Cart
+                            {product.inStock ? "Add to Cart" : "Sold Out"}
                         </button>
                     </div>
                 </div>

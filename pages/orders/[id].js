@@ -1,0 +1,222 @@
+import { useState, useEffect } from 'react';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
+import StoreNavbar from '@/components/StoreNavbar';
+import Footer from '@/components/Footer';
+import {
+    ChevronLeft,
+    Box,
+    Truck,
+    CheckCircle,
+    Clock,
+    MapPin,
+    CreditCard,
+    ArrowRight
+} from 'lucide-react';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+
+const statusSteps = [
+    { status: 'PENDING', label: 'Order Placed', icon: Clock },
+    { status: 'PROCESSING', label: 'Processing', icon: Box },
+    { status: 'SHIPPED', label: 'Shipped', icon: Truck },
+    { status: 'DELIVERED', label: 'Delivered', icon: CheckCircle },
+];
+
+export default function UserOrderDetails() {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+    const { id } = router.query;
+    const [order, setOrder] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (status === 'unauthenticated') router.push('/login');
+        if (id) fetchOrder();
+    }, [id, status]);
+
+    const fetchOrder = async () => {
+        try {
+            const res = await fetch('/api/orders/history');
+            const data = await res.json();
+            if (res.ok) {
+                const found = data.find(o => o.id === parseInt(id));
+                if (found) setOrder(found);
+                else router.push('/orders');
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading) return (
+        <div className="min-h-screen bg-black flex flex-col">
+            <StoreNavbar />
+            <div className="flex-grow flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+            <Footer />
+        </div>
+    );
+
+    if (!order) return null;
+
+    const currentStatusIdx = statusSteps.findIndex(s => s.status === order.status);
+
+    return (
+        <div className="min-h-screen bg-black flex flex-col text-white">
+            <Head>
+                <title>Order Detail #ORD-{order.id} | SmartBuy</title>
+            </Head>
+            <StoreNavbar />
+
+            <main className="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full mb-20">
+                {/* Breadcrumbs */}
+                <button
+                    onClick={() => router.push('/orders')}
+                    className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors mb-8 group"
+                >
+                    <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+                    <span className="font-bold text-sm tracking-widest uppercase">My Orders</span>
+                </button>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Left: Order Info */}
+                    <div className="lg:col-span-2 space-y-8">
+                        <section className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-xl">
+                            <div className="flex justify-between items-start mb-10">
+                                <div>
+                                    <h1 className="text-3xl font-black mb-1">Order #ORD-{order.id}</h1>
+                                    <p className="text-gray-500 font-medium">Placed on {new Date(order.createdAt).toLocaleDateString(undefined, { dateStyle: 'long' })}</p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Total Amount</p>
+                                    <p className="text-3xl font-black text-blue-500">₹{order.totalAmount.toLocaleString()}</p>
+                                </div>
+                            </div>
+
+                            {/* Tracking Progress */}
+                            <div className="relative pt-4 pb-8">
+                                <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-800 -translate-y-1/2 rounded-full" />
+                                <div
+                                    className="absolute top-1/2 left-0 h-1 bg-blue-500 -translate-y-1/2 rounded-full transition-all duration-1000"
+                                    style={{ width: `${(currentStatusIdx / (statusSteps.length - 1)) * 100}%` }}
+                                />
+                                <div className="relative flex justify-between items-center">
+                                    {statusSteps.map((step, idx) => {
+                                        const StepIcon = step.icon;
+                                        const isCompleted = idx <= currentStatusIdx;
+                                        const isActive = idx === currentStatusIdx;
+
+                                        return (
+                                            <div key={step.status} className="flex flex-col items-center">
+                                                <div className={`w-10 h-10 rounded-full flex items-center justify-center z-10 border-4 ${isActive ? 'bg-blue-600 border-blue-400 scale-125 shadow-lg shadow-blue-500/20' :
+                                                        isCompleted ? 'bg-blue-500 border-gray-900' : 'bg-gray-800 border-gray-900'
+                                                    } transition-all duration-500`}>
+                                                    <StepIcon size={18} className={isCompleted ? 'text-white' : 'text-gray-500'} />
+                                                </div>
+                                                <p className={`mt-4 text-[10px] font-black uppercase tracking-widest ${isCompleted ? 'text-blue-400' : 'text-gray-600'
+                                                    }`}>{step.label}</p>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* Items */}
+                        <section className="bg-gray-900 border border-gray-800 rounded-3xl overflow-hidden shadow-xl">
+                            <div className="p-8 border-b border-gray-800 bg-gray-950/20">
+                                <h2 className="text-xl font-bold flex items-center gap-3">
+                                    <Box size={24} className="text-blue-500" />
+                                    Package Contents
+                                </h2>
+                            </div>
+                            <div className="divide-y divide-gray-800">
+                                {order.items.map((item) => (
+                                    <div key={item.id} className="p-8 flex gap-6 hover:bg-gray-800/20 transition-colors group">
+                                        <div className="w-24 h-24 relative rounded-2xl overflow-hidden bg-gray-800 flex-shrink-0 border border-gray-700 shadow-lg">
+                                            <Image src={item.product?.image} alt={item.product?.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
+                                        </div>
+                                        <div className="flex-grow min-w-0 py-1">
+                                            <div className="flex justify-between items-start mb-2 group-hover:translate-x-1 transition-transform">
+                                                <h3 className="font-bold text-lg text-white truncate pr-4">{item.product?.name}</h3>
+                                                <p className="font-black text-lg text-white">₹{(item.price * item.quantity).toLocaleString()}</p>
+                                            </div>
+                                            <p className="text-sm text-gray-500 mb-4">{item.product?.category}</p>
+                                            <div className="flex items-center gap-6 text-sm">
+                                                <div className="flex items-center gap-2 text-gray-400">
+                                                    <span className="font-bold">Quantity:</span> {item.quantity}
+                                                </div>
+                                                <div className="flex items-center gap-2 text-gray-400">
+                                                    <span className="font-bold">Unit Price:</span> ₹{item.price.toLocaleString()}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    </div>
+
+                    {/* Right: Shipping & Payment */}
+                    <div className="space-y-8">
+                        {/* Summary */}
+                        <section className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-xl space-y-6">
+                            <h2 className="text-sm font-black uppercase tracking-widest text-gray-500">Order Summary</h2>
+                            <div className="space-y-4">
+                                <div className="flex justify-between text-gray-400">
+                                    <span>Subtotal</span>
+                                    <span className="text-white font-bold">₹{order.totalAmount.toLocaleString()}</span>
+                                </div>
+                                <div className="flex justify-between text-gray-400">
+                                    <span>Shipping</span>
+                                    <span className="text-emerald-500 font-bold uppercase text-xs">Free</span>
+                                </div>
+                                <div className="pt-4 border-t border-gray-800 flex justify-between items-center">
+                                    <span className="text-lg font-bold">Total Paid</span>
+                                    <span className="text-2xl font-black text-blue-500">₹{order.totalAmount.toLocaleString()}</span>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* Shipping */}
+                        <section className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-xl space-y-6">
+                            <h2 className="text-sm font-black uppercase tracking-widest text-gray-500 flex items-center gap-2">
+                                <MapPin size={16} /> Delivery Address
+                            </h2>
+                            <div className="p-5 bg-gray-950/40 rounded-2xl border border-gray-800 text-sm leading-relaxed text-gray-300">
+                                {order.shippingAddress}
+                            </div>
+                        </section>
+
+                        {/* Payment */}
+                        <section className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-xl space-y-6">
+                            <h2 className="text-sm font-black uppercase tracking-widest text-gray-500 flex items-center gap-2">
+                                <CreditCard size={16} /> Payment Method
+                            </h2>
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center">
+                                    <CreditCard className="text-blue-500" size={24} />
+                                </div>
+                                <div>
+                                    <p className="font-bold text-sm">Credit Card</p>
+                                    <p className="text-xs text-gray-500 underline">Ending in **** 4242</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <button className="w-full bg-white text-black font-black py-4 rounded-2xl hover:bg-gray-200 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
+                            Download Invoice <ArrowRight size={14} />
+                        </button>
+                    </div>
+                </div>
+            </main>
+
+            <Footer />
+        </div>
+    );
+}

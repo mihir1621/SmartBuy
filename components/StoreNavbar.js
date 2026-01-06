@@ -1,5 +1,6 @@
 // StoreNavbar Component
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { ShoppingBag, Search, X, User, Camera, Heart, MapPin, Loader2 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
@@ -12,6 +13,7 @@ import { useRouter } from 'next/router';
 
 
 export default function StoreNavbar({ onSearch, categories = [], selectedCategory, setSelectedCategory }) {
+    const { data: session, status } = useSession();
     const { setIsCartOpen, cartCount } = useCart();
     const { wishlist } = useWishlist();
     const { location, detectLocation, updateLocation } = useLocation();
@@ -143,10 +145,24 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                         </div>
 
                         <div className="flex items-center gap-1.5">
-                            <Link href="/login" className="p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
-                                <User className="w-4 h-4" />
-                                <span className="text-xs font-semibold hidden lg:block">Sign In</span>
-                            </Link>
+                            {status === 'authenticated' ? (
+                                <div className="flex items-center gap-1.5">
+                                    <Link href="/orders" className="p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
+                                        <ShoppingBag className="w-4 h-4" />
+                                        <span className="text-xs font-semibold hidden lg:block">My Orders</span>
+                                    </Link>
+                                    <div className="h-4 w-px bg-gray-800 mx-1 hidden lg:block" />
+                                    <div className="p-1.5 text-blue-400 font-bold text-xs flex items-center gap-1.5">
+                                        <User className="w-4 h-4" />
+                                        <span className="hidden lg:block truncate max-w-[80px]">{session.user.name || 'User'}</span>
+                                    </div>
+                                </div>
+                            ) : (
+                                <Link href="/login" className="p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
+                                    <User className="w-4 h-4" />
+                                    <span className="text-xs font-semibold hidden lg:block">Sign In</span>
+                                </Link>
+                            )}
 
                             <Link href="/wishlist" className="relative p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
                                 <Heart className={`w-4 h-4 ${wishlist.length > 0 ? 'text-red-500 fill-red-500 animate-pulse' : ''}`} />

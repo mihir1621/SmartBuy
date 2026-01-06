@@ -20,6 +20,7 @@ export default function Checkout() {
         city: '',
         postalCode: ''
     });
+    const [isProcessing, setIsProcessing] = useState(false);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;

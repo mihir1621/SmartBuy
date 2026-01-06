@@ -18,7 +18,29 @@ export default async function handler(req, res) {
 
         // Create the order in a transaction
         const order = await prisma.$transaction(async (tx) => {
-            // 1. Create the order
+            // 1. Check and Update Stock for each item
+            for (const item of items) {
+                const product = await tx.product.findUnique({
+                    where: { id: parseInt(item.id) },
+                    select: { stock: true, name: true }
+                });
+
+                if (!product || product.stock < item.quantity) {
+                    throw new Error(`Insufficient stock for product: ${product?.name || item.id}`);
+                }
+
+                // Update product stock
+                const newStock = product.stock - item.quantity;
+                await tx.product.update({
+                    where: { id: parseInt(item.id) },
+                    data: {
+                        stock: newStock,
+                        inStock: newStock > 0
+                    }
+                });
+            }
+
+            // 2. Create the order
             const newOrder = await tx.order.create({
                 data: {
                     customerName: `${customerInfo.firstName} ${customerInfo.lastName}`,
