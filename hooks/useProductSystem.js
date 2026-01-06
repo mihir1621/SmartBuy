@@ -74,7 +74,7 @@ export function useProductSystem(initialProducts) {
                 case "price-desc":
                     return b.price - a.price;
                 case "newest":
-                    return (b.newArrival === a.newArrival) ? 0 : b.newArrival ? 1 : -1;
+                    return new Date(b.createdAt || 0) - new Date(a.createdAt || 0) || (b.isNew ? 1 : -1);
                 case "rating":
                     return b.rating - a.rating;
                 case "popularity":

@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import { products as staticProducts } from "@/data/products";
 import { useProductSystem } from "@/hooks/useProductSystem";
-import { Filter, SlidersHorizontal, ChevronDown } from "lucide-react";
+import { Filter, SlidersHorizontal, ChevronDown, X } from "lucide-react";
 import BannerCarousel from "@/components/BannerCarousel";
 import { prisma } from "@/lib/prisma";
 
@@ -106,51 +106,49 @@ export default function Home({ initialProducts }) {
       <main>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="lg:grid lg:grid-cols-4 lg:gap-8">
-            {/* Desktop Sidebar */}
-            {(searchQuery || selectedCategory !== "All") && (
-              <aside className="hidden lg:block lg:col-span-1 sticky top-32 h-fit">
-                <FilterSidebar
-                  selectedCategory={selectedCategory}
-                  brands={availableBrands}
-                  availableGenders={availableGenders}
-                  selectedBrands={selectedBrands}
-                  setSelectedBrands={setSelectedBrands}
-                  priceRange={priceRange}
-                  setPriceRange={setPriceRange}
-                  globalMaxPrice={globalMaxPrice}
-                  selectedGender={selectedGender}
-                  setSelectedGender={setSelectedGender}
-                  minRating={minRating}
-                  setMinRating={setMinRating}
-                  clearAll={() => {
-                    setSelectedBrands([]);
-                    setPriceRange([0, globalMaxPrice]);
-                    setSelectedGender("All");
-                    setMinRating(0);
-                    setSelectedCategory("All");
-                  }}
-                />
-              </aside>
-            )}
+            {/* Desktop Sidebar - Always show on product listing */}
+            <aside className="hidden lg:block lg:col-span-1 sticky top-32 h-fit">
+              <FilterSidebar
+                selectedCategory={selectedCategory}
+                brands={availableBrands}
+                availableGenders={availableGenders}
+                selectedBrands={selectedBrands}
+                setSelectedBrands={setSelectedBrands}
+                priceRange={priceRange}
+                setPriceRange={setPriceRange}
+                globalMaxPrice={globalMaxPrice}
+                selectedGender={selectedGender}
+                setSelectedGender={setSelectedGender}
+                minRating={minRating}
+                setMinRating={setMinRating}
+                sortOption={sortOption}
+                setSortOption={setSortOption}
+                clearAll={() => {
+                  setSelectedBrands([]);
+                  setPriceRange([0, globalMaxPrice]);
+                  setSelectedGender("All");
+                  setMinRating(0);
+                  setSelectedCategory("All");
+                }}
+              />
+            </aside>
 
             {/* Mobile Filter Toggle */}
-            {(searchQuery || selectedCategory !== "All") && (
-              <div className="lg:hidden mb-4 flex justify-between items-center">
-                <button
-                  onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-                  className="flex items-center gap-2 bg-gray-900 border border-gray-800 px-4 py-2 rounded-lg text-sm font-medium shadow-sm text-gray-200"
-                >
-                  <Filter className="w-4 h-4" /> Filters
-                </button>
-                <span className="text-sm text-gray-400">
-                  {filteredProducts.length} Results
-                </span>
-              </div>
-            )}
+            <div className="lg:hidden mb-4 flex justify-between items-center">
+              <button
+                onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+                className="flex items-center gap-2 bg-gray-900 border border-gray-800 px-4 py-2 rounded-lg text-sm font-medium shadow-sm text-gray-200"
+              >
+                <Filter className="w-4 h-4" /> Filters
+              </button>
+              <span className="text-sm text-gray-400">
+                {filteredProducts.length} Results
+              </span>
+            </div>
 
             {/* Mobile Filter Dropdown */}
             <AnimatePresence>
-              {(searchQuery || selectedCategory !== "All") && isMobileFilterOpen && (
+              {isMobileFilterOpen && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
@@ -170,6 +168,8 @@ export default function Home({ initialProducts }) {
                     setSelectedGender={setSelectedGender}
                     minRating={minRating}
                     setMinRating={setMinRating}
+                    sortOption={sortOption}
+                    setSortOption={setSortOption}
                     clearAll={() => {
                       setSelectedBrands([]);
                       setPriceRange([0, globalMaxPrice]);
@@ -182,7 +182,7 @@ export default function Home({ initialProducts }) {
             </AnimatePresence>
 
             {/* Product Grid Area */}
-            <div className={(searchQuery || selectedCategory !== "All") ? "lg:col-span-3" : "lg:col-span-4"}>
+            <div className="lg:col-span-3">
               {/* Sorting Bar */}
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-bold text-white">
@@ -197,7 +197,7 @@ export default function Home({ initialProducts }) {
                       className="appearance-none bg-gray-900 border border-gray-800 text-gray-300 py-2 pl-4 pr-8 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
                     >
                       <option value="popularity">Popularity</option>
-                      <option value="newest">Newest First</option>
+                      <option value="newest">Newest Arrivals</option>
                       <option value="price-asc">Price: Low to High</option>
                       <option value="price-desc">Price: High to Low</option>
                       <option value="rating">Rating</option>
@@ -206,6 +206,32 @@ export default function Home({ initialProducts }) {
                   </div>
                 </div>
               </div>
+
+              {/* Active Filter Chips */}
+              {(selectedCategory !== "All" || selectedBrands.length > 0 || minRating > 0 || selectedGender !== "All") && (
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {selectedCategory !== "All" && (
+                    <button onClick={() => setSelectedCategory("All")} className="flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-blue-500/20 transition-all">
+                      {selectedCategory} <X size={12} />
+                    </button>
+                  )}
+                  {selectedGender !== "All" && (
+                    <button onClick={() => setSelectedGender("All")} className="flex items-center gap-2 bg-gray-800 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-gray-700 transition-all">
+                      {selectedGender} <X size={12} />
+                    </button>
+                  )}
+                  {selectedBrands.map(brand => (
+                    <button key={brand} onClick={() => setSelectedBrands(selectedBrands.filter(b => b !== brand))} className="flex items-center gap-2 bg-gray-800 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-gray-700 transition-all">
+                      {brand} <X size={12} />
+                    </button>
+                  ))}
+                  {minRating > 0 && (
+                    <button onClick={() => setMinRating(0)} className="flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/20 text-yellow-500 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-yellow-400/20 transition-all">
+                      {minRating}+ Stars <X size={12} />
+                    </button>
+                  )}
+                </div>
+              )}
 
               {/* Grid */}
               {filteredProducts.length > 0 ? (

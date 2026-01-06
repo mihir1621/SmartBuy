@@ -1,5 +1,5 @@
 
-import { Star } from 'lucide-react';
+import { Star, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function FilterSidebar({
@@ -15,6 +15,8 @@ export default function FilterSidebar({
     setSelectedGender,
     minRating,
     setMinRating,
+    sortOption,
+    setSortOption,
     clearAll
 }) {
     const handleBrandChange = (brand) => {
@@ -25,7 +27,15 @@ export default function FilterSidebar({
         }
     };
 
-    // Filter standard genders to only show relevant ones
+    const handlePriceChange = (index, value) => {
+        const newRange = [...priceRange];
+        newRange[index] = parseInt(value) || 0;
+        // Ensure min doesn't exceed max
+        if (index === 0 && newRange[0] > newRange[1]) newRange[1] = newRange[0];
+        if (index === 1 && newRange[1] < newRange[0]) newRange[0] = newRange[1];
+        setPriceRange(newRange);
+    };
+
     const displayedGenders = ['All', 'Men', 'Women', 'Kids', 'Boys', 'Girls', 'Unisex'].filter(g =>
         g === 'All' || availableGenders.includes(g)
     );
@@ -34,95 +44,160 @@ export default function FilterSidebar({
     const showBrandFilter = brands.length > 1;
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 bg-gray-900/40 p-6 rounded-3xl border border-gray-800/50 backdrop-blur-md">
             {/* Header */}
-            <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-white">Filters</h3>
+            <div className="flex items-center justify-between pb-4 border-b border-gray-800/50">
+                <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Filters</h3>
                 <button
                     onClick={clearAll}
-                    className="text-sm text-blue-400 font-medium hover:underline"
+                    className="text-xs font-bold uppercase tracking-widest text-blue-400 hover:text-blue-300 transition-colors"
                 >
                     Clear All
                 </button>
             </div>
 
-            {/* Gender Filter - Smart Render */}
-            {showGenderFilter && (
-                <div>
-                    <h4 className="font-semibold text-white mb-3">Gender</h4>
-                    <div className="space-y-2">
-                        {displayedGenders.map((gender) => (
-                            <label key={gender} className="flex items-center gap-2 cursor-pointer">
-                                <input
-                                    type="radio"
-                                    name="gender"
-                                    checked={selectedGender === gender}
-                                    onChange={() => setSelectedGender(gender)}
-                                    className="w-4 h-4 text-blue-500 border-gray-600 bg-gray-800 focus:ring-blue-500 focus:ring-offset-gray-900"
-                                />
-                                <span className="text-gray-300 text-sm">{gender}</span>
-                            </label>
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            {/* Price Filter - Always Relevant */}
+            {/* Sort By - Unified in Sidebar */}
             <div>
-                <h4 className="font-semibold text-white mb-3">Price Range</h4>
-                <div className="flex items-center gap-2 mb-4">
-                    <span className="text-sm font-medium text-gray-300">₹{priceRange[0]}</span>
-                    <input
-                        type="range"
-                        min="0"
-                        max={globalMaxPrice}
-                        value={priceRange[1]}
-                        onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
-                        className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-white"
-                    />
-                    <span className="text-sm font-medium text-gray-300">₹{priceRange[1]}</span>
+                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Sort Result</h4>
+                <div className="relative group">
+                    <select
+                        value={sortOption}
+                        onChange={(e) => setSortOption(e.target.value)}
+                        className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-3 px-4 text-sm text-gray-200 appearance-none focus:border-blue-500 outline-none cursor-pointer transition-all"
+                    >
+                        <option value="popularity">Popularity</option>
+                        <option value="newest">Newest Arrivals</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="rating">Top Rated</option>
+                    </select>
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 group-hover:text-blue-400 transition-colors">
+                        <Star size={14} className="rotate-90" /> {/* Just a visual indicator icon */}
+                    </div>
                 </div>
             </div>
 
-            {/* Brand Filter - Smart Render */}
+            {/* Current Context */}
+            {selectedCategory !== 'All' && (
+                <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-3 flex items-center justify-between">
+                    <div>
+                        <p className="text-[10px] font-bold text-blue-400 uppercase tracking-tighter mb-0.5">Category</p>
+                        <p className="text-sm font-bold text-gray-100">{selectedCategory}</p>
+                    </div>
+                </div>
+            )}
+
+            {/* Gender Filter */}
+            {showGenderFilter && (
+                <div>
+                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Target</h4>
+                    <div className="flex flex-wrap gap-2">
+                        {displayedGenders.map((gender) => (
+                            <button
+                                key={gender}
+                                onClick={() => setSelectedGender(gender)}
+                                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${selectedGender === gender
+                                    ? "bg-white text-black border-white shadow-lg shadow-white/10"
+                                    : "bg-gray-950 text-gray-400 border-gray-800 hover:border-gray-600"
+                                    }`}
+                            >
+                                {gender}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Price Filter - Advanced Dual Input */}
+            <div>
+                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Price Range (₹)</h4>
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                    <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold text-gray-600 uppercase">Min</label>
+                        <input
+                            type="number"
+                            value={priceRange[0]}
+                            onChange={(e) => handlePriceChange(0, e.target.value)}
+                            className="w-full bg-gray-950 border border-gray-800 rounded-xl py-2 px-3 text-sm text-gray-200 focus:border-blue-500 outline-none"
+                        />
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold text-gray-600 uppercase">Max</label>
+                        <input
+                            type="number"
+                            value={priceRange[1]}
+                            onChange={(e) => handlePriceChange(1, e.target.value)}
+                            className="w-full bg-gray-950 border border-gray-800 rounded-xl py-2 px-3 text-sm text-gray-200 focus:border-blue-500 outline-none"
+                        />
+                    </div>
+                </div>
+                {/* Visual Slider (Single range for now but dual handles would be better, using single for stability) */}
+                <input
+                    type="range"
+                    min="0"
+                    max={globalMaxPrice}
+                    value={priceRange[1]}
+                    onChange={(e) => handlePriceChange(1, e.target.value)}
+                    className="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                />
+                <div className="flex justify-between mt-2">
+                    <span className="text-[10px] font-bold text-gray-600 uppercase tracking-tighter">Budget Friendly</span>
+                    <span className="text-[10px] font-bold text-gray-600 uppercase tracking-tighter">Premium</span>
+                </div>
+            </div>
+
+            {/* Brand Filter */}
             {showBrandFilter && (
                 <div>
-                    <h4 className="font-semibold text-white mb-3">Brands</h4>
-                    <div className="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Popular Brands</h4>
+                    <div className="space-y-1.5 max-h-56 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent">
                         {brands.map((brand) => (
-                            <label key={brand} className="flex items-center gap-2 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    checked={selectedBrands.includes(brand)}
-                                    onChange={() => handleBrandChange(brand)}
-                                    className="w-4 h-4 text-blue-500 rounded border-gray-600 bg-gray-800 focus:ring-blue-500 focus:ring-offset-gray-900"
-                                />
-                                <span className="text-gray-300 text-sm truncate">{brand}</span>
+                            <label
+                                key={brand}
+                                className={`flex items-center gap-3 p-2.5 rounded-xl cursor-pointer transition-all border ${selectedBrands.includes(brand)
+                                    ? "bg-blue-500/5 border-blue-500/20 text-blue-400"
+                                    : "bg-transparent border-transparent text-gray-400 hover:bg-gray-800/30"
+                                    }`}
+                            >
+                                <div className={`relative w-4 h-4 rounded border flex items-center justify-center transition-all ${selectedBrands.includes(brand) ? "bg-blue-500 border-blue-500" : "border-gray-700"
+                                    }`}>
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedBrands.includes(brand)}
+                                        onChange={() => handleBrandChange(brand)}
+                                        className="absolute inset-0 opacity-0 cursor-pointer"
+                                    />
+                                    {selectedBrands.includes(brand) && <X size={12} className="text-white" />}
+                                </div>
+                                <span className="text-sm font-bold truncate">{brand}</span>
                             </label>
                         ))}
                     </div>
                 </div>
             )}
 
-            {/* Rating Filter - Always Relevant */}
+            {/* Rating Filter */}
             <div>
-                <h4 className="font-semibold text-white mb-3">Rating</h4>
-                <div className="space-y-1">
-                    {[4, 3, 2, 1].map((rating) => (
+                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Customer Rating</h4>
+                <div className="grid grid-cols-2 gap-2">
+                    {[4, 3].map((rating) => (
                         <button
                             key={rating}
                             onClick={() => setMinRating(rating === minRating ? 0 : rating)}
-                            className={`flex items-center gap-2 w-full px-2 py-1 rounded hover:bg-gray-800 ${minRating === rating ? 'bg-blue-900/30' : ''}`}
+                            className={`flex flex-col items-center gap-1.5 p-3 rounded-2xl border transition-all ${minRating === rating
+                                ? "bg-yellow-400/10 border-yellow-400/30 ring-1 ring-yellow-400/20"
+                                : "bg-gray-950 border-gray-800 hover:border-gray-700"
+                                }`}
                         >
-                            <div className="flex items-center">
+                            <div className="flex gap-0.5">
                                 {[...Array(5)].map((_, i) => (
                                     <Star
                                         key={i}
-                                        className={`w-3.5 h-3.5 ${i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'}`}
+                                        className={`w-3 h-3 ${i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-800'}`}
                                     />
-                                ))}
+                                )) || null}
                             </div>
-                            <span className="text-sm text-gray-400">& Up</span>
+                            <span className="text-[10px] font-bold text-gray-400 uppercase whitespace-nowrap">{rating}.0 & Up</span>
                         </button>
                     ))}
                 </div>
@@ -130,3 +205,4 @@ export default function FilterSidebar({
         </div>
     );
 }
+
