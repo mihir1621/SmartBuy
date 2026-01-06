@@ -1,4 +1,5 @@
 import AdminLayout from '@/components/admin/AdminLayout';
+import { useState, useEffect } from 'react';
 import {
     TrendingUp,
     Users,
@@ -13,56 +14,88 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
-const stats = [
-    {
-        label: 'Total Revenue',
-        value: '₹12,45,800',
-        change: '+12.5%',
-        isPositive: true,
-        icon: DollarSign,
-        color: 'from-blue-500 to-indigo-600'
-    },
-    {
-        label: 'New Orders',
-        value: '456',
-        change: '+18.2%',
-        isPositive: true,
-        icon: ShoppingBag,
-        color: 'from-emerald-500 to-teal-600'
-    },
-    {
-        label: 'Total Customers',
-        value: '2,840',
-        change: '+5.4%',
-        isPositive: true,
-        icon: Users,
-        color: 'from-violet-500 to-purple-600'
-    },
-    {
-        label: 'Active Products',
-        value: '142',
-        change: '-2.1%',
-        isPositive: false,
-        icon: Package,
-        color: 'from-amber-500 to-orange-600'
-    },
-];
-
-const recentOrders = [
-    { id: '#ORD-7829', customer: 'Rahul Sharma', status: 'Delivered', amount: '₹14,999', date: '2 mins ago' },
-    { id: '#ORD-7828', customer: 'Anjali Gupta', status: 'Processing', amount: '₹2,499', date: '15 mins ago' },
-    { id: '#ORD-7827', customer: 'Amit Patel', status: 'Shipped', amount: '₹45,000', date: '1 hour ago' },
-    { id: '#ORD-7826', customer: 'Priya Singh', status: 'Pending', amount: '₹999', date: '3 hours ago' },
-];
+// Dynamic import for Recharts to prevent SSR issues
+const AreaChart = dynamic(() => import('recharts').then(mod => mod.AreaChart), { ssr: false });
+const Area = dynamic(() => import('recharts').then(mod => mod.Area), { ssr: false });
+const XAxis = dynamic(() => import('recharts').then(mod => mod.XAxis), { ssr: false });
+const YAxis = dynamic(() => import('recharts').then(mod => mod.YAxis), { ssr: false });
+const CartesianGrid = dynamic(() => import('recharts').then(mod => mod.CartesianGrid), { ssr: false });
+const Tooltip = dynamic(() => import('recharts').then(mod => mod.Tooltip), { ssr: false });
+const ResponsiveContainer = dynamic(() => import('recharts').then(mod => mod.ResponsiveContainer), { ssr: false });
 
 export default function AdminDashboard() {
+    const [statsData, setStatsData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchStats();
+    }, []);
+
+    const fetchStats = async () => {
+        try {
+            const res = await fetch('/api/admin/stats');
+            const data = await res.json();
+            setStatsData(data);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading) return (
+        <AdminLayout title="Dashboard Overview">
+            <div className="flex h-[60vh] items-center justify-center">
+                <Clock className="animate-spin text-blue-500 w-10 h-10" />
+            </div>
+        </AdminLayout>
+    );
+
+    const { stats, chartData, recentOrders } = statsData;
+
+    const statsCards = [
+        {
+            label: 'Total Revenue',
+            value: `₹${stats.totalRevenue.toLocaleString()}`,
+            change: '+12.5%',
+            isPositive: true,
+            icon: DollarSign,
+            color: 'from-blue-500 to-indigo-600'
+        },
+        {
+            label: 'Total Orders',
+            value: stats.totalOrders.toString(),
+            change: '+18.2%',
+            isPositive: true,
+            icon: ShoppingBag,
+            color: 'from-emerald-500 to-teal-600'
+        },
+        {
+            label: 'Total Customers',
+            value: stats.totalUsers.toString(),
+            change: '+5.4%',
+            isPositive: true,
+            icon: Users,
+            color: 'from-violet-500 to-purple-600'
+        },
+        {
+            label: 'Active Products',
+            value: stats.totalProducts.toString(),
+            change: '-2.1%',
+            isPositive: false,
+            icon: Package,
+            color: 'from-amber-500 to-orange-600'
+        },
+    ];
+
     return (
         <AdminLayout title="Dashboard Overview">
             <div className="space-y-8">
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {stats.map((stat, idx) => (
+                    {statsCards.map((stat, idx) => (
                         <motion.div
                             key={stat.label}
                             initial={{ opacity: 0, y: 20 }}
@@ -92,37 +125,57 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                    {/* Main Chart Placeholder */}
+                    {/* Main Chart */}
                     <div className="xl:col-span-2 bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-sm">
                         <div className="flex justify-between items-center mb-8">
                             <div>
                                 <h3 className="text-xl font-bold text-white mb-1">Sales Performance</h3>
-                                <p className="text-sm text-gray-500">Revenue stats for the last 30 days</p>
+                                <p className="text-sm text-gray-500">Revenue stats for the last 7 days</p>
                             </div>
                             <div className="flex gap-2 bg-gray-800 p-1 rounded-xl">
-                                <button className="px-4 py-1.5 text-xs font-bold bg-gray-700 text-white rounded-lg shadow-xl">Month</button>
-                                <button className="px-4 py-1.5 text-xs font-bold text-gray-400 hover:text-white transition-colors">Year</button>
+                                <button className="px-4 py-1.5 text-xs font-bold bg-gray-700 text-white rounded-lg shadow-xl">Weekly</button>
+                                <button className="px-4 py-1.5 text-xs font-bold text-gray-400 hover:text-white transition-colors">Monthly</button>
                             </div>
                         </div>
 
-                        <div className="h-80 w-full bg-gray-950/30 rounded-2xl border border-dashed border-gray-800 flex items-center justify-center relative overflow-hidden group">
-                            <div className="text-center z-10">
-                                <TrendingUp className="mx-auto mb-4 text-gray-700 group-hover:text-blue-500 transition-colors" size={48} />
-                                <p className="text-gray-600 font-semibold tracking-wide uppercase text-[10px]">Revenue Chart visualization would load here</p>
-                            </div>
-
-                            {/* Animated wave pattern simulation */}
-                            <div className="absolute inset-0 opacity-10 pointer-events-none">
-                                <svg width="100%" height="100%" viewBox="0 0 1000 200" className="absolute bottom-0">
-                                    <path d="M0,150 Q250,50 500,150 T1000,150 L1000,200 L0,200 Z" fill="url(#grad)" />
+                        <div className="h-80 w-full">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <AreaChart data={chartData}>
                                     <defs>
-                                        <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                            <stop offset="0%" style={{ stopColor: '#3b82f6', stopOpacity: 1 }} />
-                                            <stop offset="100%" style={{ stopColor: '#000', stopOpacity: 1 }} />
+                                        <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
+                                            <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                                         </linearGradient>
                                     </defs>
-                                </svg>
-                            </div>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1f2937" />
+                                    <XAxis
+                                        dataKey="name"
+                                        stroke="#9ca3af"
+                                        fontSize={12}
+                                        tickLine={false}
+                                        axisLine={false}
+                                    />
+                                    <YAxis
+                                        stroke="#9ca3af"
+                                        fontSize={12}
+                                        tickLine={false}
+                                        axisLine={false}
+                                        tickFormatter={(value) => `₹${value}`}
+                                    />
+                                    <Tooltip
+                                        contentStyle={{ backgroundColor: '#111827', borderColor: '#1f2937', borderRadius: '12px', color: '#fff' }}
+                                        itemStyle={{ color: '#3b82f6' }}
+                                    />
+                                    <Area
+                                        type="monotone"
+                                        dataKey="total"
+                                        stroke="#3b82f6"
+                                        strokeWidth={4}
+                                        fillOpacity={1}
+                                        fill="url(#colorTotal)"
+                                    />
+                                </AreaChart>
+                            </ResponsiveContainer>
                         </div>
                     </div>
 
@@ -140,18 +193,19 @@ export default function AdminDashboard() {
                                 <div key={order.id} className="flex items-center justify-between group">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 bg-gray-800 border border-gray-700 rounded-2xl flex items-center justify-center text-gray-400 group-hover:bg-blue-600/10 group-hover:text-blue-400 transition-all border border-transparent shadow-sm group-hover:border-blue-500/20">
-                                            {order.status === 'Delivered' ? <CheckCircle size={20} /> : <Clock size={20} />}
+                                            {order.status === 'DELIVERED' ? <CheckCircle size={20} /> : <Clock size={20} />}
                                         </div>
                                         <div>
-                                            <p className="font-bold text-white group-hover:text-blue-400 transition-colors leading-tight">{order.customer}</p>
-                                            <p className="text-xs text-gray-500 mt-0.5">{order.id} • {order.date}</p>
+                                            <p className="font-bold text-white group-hover:text-blue-400 transition-colors leading-tight truncate max-w-[120px]">{order.customerName}</p>
+                                            <p className="text-xs text-gray-500 mt-0.5">#ORD-{order.id} • {new Date(order.createdAt).toLocaleDateString()}</p>
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <p className="font-bold text-white">{order.amount}</p>
-                                        <p className={`text-[10px] font-bold uppercase tracking-tighter ${order.status === 'Delivered' ? 'text-emerald-500' :
-                                            order.status === 'Processing' ? 'text-amber-500' :
-                                                order.status === 'Shipped' ? 'text-blue-500' : 'text-gray-500'
+                                        <p className="font-bold text-white">₹{order.totalAmount.toLocaleString()}</p>
+                                        <p className={`text-[10px] font-bold uppercase tracking-tighter ${order.status === 'DELIVERED' ? 'text-emerald-500' :
+                                                order.status === 'PROCESSING' ? 'text-blue-500' :
+                                                    order.status === 'SHIPPED' ? 'text-violet-500' :
+                                                        order.status === 'CANCELLED' ? 'text-red-500' : 'text-amber-500'
                                             }`}>
                                             {order.status}
                                         </p>

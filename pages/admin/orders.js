@@ -1,5 +1,6 @@
 import AdminLayout from '@/components/admin/AdminLayout';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import {
     ShoppingBag,
     Search,
@@ -23,6 +24,7 @@ const statusColors = {
 };
 
 export default function AdminOrders() {
+    const router = useRouter();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
@@ -117,7 +119,10 @@ export default function AdminOrders() {
                                         </td>
                                         <td className="px-6 py-5 text-gray-400 text-sm">{new Date(order.createdAt).toLocaleDateString()}</td>
                                         <td className="px-6 py-5 text-right">
-                                            <button className="p-2.5 rounded-xl bg-gray-800 text-gray-400 hover:text-white transition-all">
+                                            <button
+                                                onClick={() => router.push(`/admin/orders/${order.id}`)}
+                                                className="p-2.5 rounded-xl bg-gray-800 text-gray-400 hover:text-white transition-all hover:bg-blue-600/20 hover:text-blue-400 border border-transparent hover:border-blue-500/30"
+                                            >
                                                 <Eye size={18} />
                                             </button>
                                         </td>

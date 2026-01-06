@@ -11,23 +11,60 @@ import Footer from '@/components/Footer';
 export default function Checkout() {
     const { cart, cartTotal, clearCart } = useCart();
     const router = useRouter();
-    const [isProcessing, setIsProcessing] = useState(false);
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        address: '',
+        city: '',
+        postalCode: ''
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
 
     const handlePlaceOrder = async (e) => {
         e.preventDefault();
+
+        if (!formData.firstName || !formData.email || !formData.address) {
+            alert('Please fill in the required fields');
+            return;
+        }
+
         setIsProcessing(true);
 
-        // Simulate API call
-        setTimeout(() => {
-            clearCart();
+        try {
+            const res = await fetch('/api/orders/create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    customerInfo: formData,
+                    items: cart,
+                    totalAmount: cartTotal * 1.05 // Including tax
+                })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                clearCart();
+                router.push('/order-success?id=' + data.orderId);
+            } else {
+                alert(data.error || 'Something went wrong');
+            }
+        } catch (error) {
+            console.error('Checkout error:', error);
+            alert('Failed to place order. Please try again.');
+        } finally {
             setIsProcessing(false);
-            router.push('/order-success');
-        }, 2000);
+        }
     };
 
     if (cart.length === 0) {
         return (
-
             <div className="min-h-screen bg-black flex flex-col">
                 <StoreNavbar />
                 <main className="flex-grow flex items-center justify-center">
@@ -44,7 +81,6 @@ export default function Checkout() {
                 <Footer />
             </div>
         );
-
     }
 
     return (
@@ -68,28 +104,84 @@ export default function Checkout() {
                             </h2>
                             <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
-                                    <label className="text-sm font-medium text-gray-300">First Name</label>
-                                    <input type="text" className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white" placeholder="John" />
+                                    <label className="text-sm font-medium text-gray-300">First Name *</label>
+                                    <input
+                                        type="text"
+                                        name="firstName"
+                                        value={formData.firstName}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white"
+                                        placeholder="John"
+                                    />
                                 </div>
                                 <div className="space-y-1">
                                     <label className="text-sm font-medium text-gray-300">Last Name</label>
-                                    <input type="text" className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white" placeholder="Doe" />
+                                    <input
+                                        type="text"
+                                        name="lastName"
+                                        value={formData.lastName}
+                                        onChange={handleInputChange}
+                                        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white"
+                                        placeholder="Doe"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm font-medium text-gray-300">Email Address *</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white"
+                                        placeholder="john@example.com"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm font-medium text-gray-300">Phone Number</label>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleInputChange}
+                                        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white"
+                                        placeholder="+91 00000 00000"
+                                    />
                                 </div>
                                 <div className="md:col-span-2 space-y-1">
-                                    <label className="text-sm font-medium text-gray-300">Email Address</label>
-                                    <input type="email" className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white" placeholder="john@example.com" />
-                                </div>
-                                <div className="md:col-span-2 space-y-1">
-                                    <label className="text-sm font-medium text-gray-300">Street Address</label>
-                                    <input type="text" className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white" placeholder="123 Main St" />
+                                    <label className="text-sm font-medium text-gray-300">Street Address *</label>
+                                    <input
+                                        type="text"
+                                        name="address"
+                                        value={formData.address}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white"
+                                        placeholder="123 Main St"
+                                    />
                                 </div>
                                 <div className="space-y-1">
                                     <label className="text-sm font-medium text-gray-300">City</label>
-                                    <input type="text" className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white" placeholder="New York" />
+                                    <input
+                                        type="text"
+                                        name="city"
+                                        value={formData.city}
+                                        onChange={handleInputChange}
+                                        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white"
+                                        placeholder="New York"
+                                    />
                                 </div>
                                 <div className="space-y-1">
                                     <label className="text-sm font-medium text-gray-300">Postal Code</label>
-                                    <input type="text" className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white" placeholder="10001" />
+                                    <input
+                                        type="text"
+                                        name="postalCode"
+                                        value={formData.postalCode}
+                                        onChange={handleInputChange}
+                                        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white"
+                                        placeholder="10001"
+                                    />
                                 </div>
                             </form>
                         </div>
@@ -106,10 +198,7 @@ export default function Checkout() {
                                     <div className="flex-1">
                                         <div className="flex items-center justify-between">
                                             <span className="font-bold text-white">Credit / Debit Card</span>
-                                            <div className="flex gap-2">
-                                                <div className="w-8 h-5 bg-gray-700 rounded"></div>
-                                                <div className="w-8 h-5 bg-gray-700 rounded"></div>
-                                            </div>
+                                            <div className="flex gap-2 text-xs font-bold text-blue-400">DEMO MODE</div>
                                         </div>
                                         <p className="text-sm text-gray-400">Safe money transfer using your bank account. Visa, Maestro, Discover, American Express.</p>
                                     </div>
@@ -118,19 +207,19 @@ export default function Checkout() {
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-1">
                                         <label className="text-sm font-medium text-gray-300">Card Number</label>
-                                        <input type="text" className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white" placeholder="0000 0000 0000 0000" />
+                                        <input type="text" disabled className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg outline-none text-gray-500" placeholder="0000 0000 0000 0000" />
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-sm font-medium text-gray-300">Expiry Date</label>
-                                        <input type="text" className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white" placeholder="MM/YY" />
+                                        <input type="text" disabled className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg outline-none text-gray-500" placeholder="MM/YY" />
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-sm font-medium text-gray-300">CVC</label>
-                                        <input type="text" className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white" placeholder="123" />
+                                        <input type="text" disabled className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg outline-none text-gray-500" placeholder="123" />
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-sm font-medium text-gray-300">Card Holder</label>
-                                        <input type="text" className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-white" placeholder="Name on card" />
+                                        <input type="text" disabled className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg outline-none text-gray-500" placeholder="Name on card" />
                                     </div>
                                 </div>
                             </div>
@@ -202,3 +291,4 @@ export default function Checkout() {
         </div>
     );
 }
+
