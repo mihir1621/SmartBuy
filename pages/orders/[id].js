@@ -222,7 +222,12 @@ export default function UserOrderDetails() {
                                     <CreditCard className="text-blue-500" size={24} />
                                 </div>
                                 <div>
-                                    <p className="font-bold text-sm text-white">{order.paymentMethod === 'CARD' ? 'Credit / Debit Card' : order.paymentMethod}</p>
+                                    <p className="font-bold text-sm text-white">
+                                        {order.paymentMethod === 'RAZORPAY' ? 'Online Payment' :
+                                            order.paymentMethod === 'EMI' ? 'EMI / Buy Now Pay Later' :
+                                                order.paymentMethod === 'COD' ? 'Cash on Delivery' :
+                                                    order.paymentMethod}
+                                    </p>
                                     <p className={`text-[10px] font-black uppercase tracking-widest mt-0.5 ${order.paymentStatus === 'PAID' ? 'text-emerald-500' : 'text-amber-500'}`}>
                                         {order.paymentStatus}
                                     </p>

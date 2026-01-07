@@ -48,6 +48,7 @@ export default function Checkout() {
     }, [session]);
     const [isProcessing, setIsProcessing] = useState(false);
     const [paymentStep, setPaymentStep] = useState(''); // '', 'creating', 'payment', 'verifying'
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('RAZORPAY'); // 'RAZORPAY', 'COD', 'EMI'
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -96,7 +97,7 @@ export default function Checkout() {
                 body: JSON.stringify({
                     customerInfo: formData,
                     items: cart,
-                    paymentMethod: 'RAZORPAY',
+                    paymentMethod: selectedPaymentMethod === 'COD' ? 'COD' : 'RAZORPAY',
                     totalAmount: cartTotal * 1.05 // Base total for server reference
                 })
             });
@@ -104,7 +105,15 @@ export default function Checkout() {
             const data = await res.json();
 
             if (!res.ok) {
-                throw new Error(data.error || 'Failed to initialize payment');
+                throw new Error(data.error || 'Failed to initialize order');
+            }
+
+            // If COD, we're done with creating. Redirect to success.
+            if (selectedPaymentMethod === 'COD') {
+                setPaymentStep('done');
+                clearCart();
+                router.push('/order-success?id=' + data.orderId);
+                return;
             }
 
             setPaymentStep('payment');
@@ -115,7 +124,7 @@ export default function Checkout() {
                 amount: data.amount,
                 currency: data.currency,
                 name: "SmartBuy Store",
-                description: "Secure Checkout Payment",
+                description: selectedPaymentMethod === 'EMI' ? "EMI / Buy Now Pay Later" : "Secure Checkout Payment",
                 order_id: data.razorpayOrderId,
                 handler: async function (response) {
                     setPaymentStep('verifying');
@@ -151,6 +160,27 @@ export default function Checkout() {
                 theme: {
                     color: "#3b82f6"
                 },
+                config: selectedPaymentMethod === 'EMI' ? {
+                    display: {
+                        blocks: {
+                            emi: {
+                                name: 'EMI / Pay Later',
+                                instruments: [
+                                    {
+                                        method: 'emi',
+                                    },
+                                    {
+                                        method: 'paylater',
+                                    }
+                                ],
+                            },
+                        },
+                        sequence: ['block.emi', 'block.other'],
+                        preferences: {
+                            show_default_blocks: true,
+                        },
+                    },
+                } : undefined,
                 modal: {
                     ondismiss: function () {
                         setIsProcessing(false);
@@ -300,16 +330,56 @@ export default function Checkout() {
                                 Payment Method
                             </h2>
                             <div className="space-y-4">
-                                <div className="flex items-center gap-4 p-5 border border-blue-500/30 bg-blue-900/10 rounded-2xl group hover:border-blue-500 transition-all cursor-pointer">
-                                    <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-                                        <CreditCard className="w-6 h-6 text-white" />
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className="flex items-center justify-between">
-                                            <span className="font-black text-white uppercase tracking-wider">Razorpay Secure Checkout</span>
-                                            <div className="flex gap-2 text-[10px] font-black tracking-widest text-emerald-400 bg-emerald-900/30 px-2 py-0.5 rounded border border-emerald-800/50 uppercase">Secured</div>
+                                <div className="grid grid-cols-1 gap-4">
+                                    {/* Razorpay Option */}
+                                    <div
+                                        onClick={() => setSelectedPaymentMethod('RAZORPAY')}
+                                        className={`flex items-center gap-4 p-5 border rounded-2xl transition-all cursor-pointer ${selectedPaymentMethod === 'RAZORPAY' ? 'border-blue-500 bg-blue-900/10' : 'border-gray-800 bg-gray-900 hover:border-gray-700'}`}
+                                    >
+                                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-lg ${selectedPaymentMethod === 'RAZORPAY' ? 'bg-blue-500 shadow-blue-500/20' : 'bg-gray-800'}`}>
+                                            <CreditCard className="w-6 h-6 text-white" />
                                         </div>
-                                        <p className="text-sm text-gray-500 mt-1 font-medium">Pay securely via UPI, Cards, Netbanking, or Wallets.</p>
+                                        <div className="flex-1">
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-black text-white uppercase tracking-wider">Online Payment</span>
+                                                {selectedPaymentMethod === 'RAZORPAY' && <div className="flex gap-2 text-[10px] font-black tracking-widest text-emerald-400 bg-emerald-900/30 px-2 py-0.5 rounded border border-emerald-800/50 uppercase">Active</div>}
+                                            </div>
+                                            <p className="text-sm text-gray-500 mt-1 font-medium">Pay via UPI, Cards, Netbanking, or Wallets.</p>
+                                        </div>
+                                    </div>
+
+                                    {/* EMI Option */}
+                                    <div
+                                        onClick={() => setSelectedPaymentMethod('EMI')}
+                                        className={`flex items-center gap-4 p-5 border rounded-2xl transition-all cursor-pointer ${selectedPaymentMethod === 'EMI' ? 'border-blue-500 bg-blue-900/10' : 'border-gray-800 bg-gray-900 hover:border-gray-700'}`}
+                                    >
+                                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-lg ${selectedPaymentMethod === 'EMI' ? 'bg-purple-600 shadow-purple-500/20' : 'bg-gray-800'}`}>
+                                            <CreditCard className="w-6 h-6 text-white" />
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-black text-white uppercase tracking-wider">EMI / Buy Now Pay Later</span>
+                                                {selectedPaymentMethod === 'EMI' && <div className="flex gap-2 text-[10px] font-black tracking-widest text-blue-400 bg-blue-900/30 px-2 py-0.5 rounded border border-blue-800/50 uppercase">Flexible</div>}
+                                            </div>
+                                            <p className="text-sm text-gray-500 mt-1 font-medium">Monthly installments or interest-free credit options.</p>
+                                        </div>
+                                    </div>
+
+                                    {/* COD Option */}
+                                    <div
+                                        onClick={() => setSelectedPaymentMethod('COD')}
+                                        className={`flex items-center gap-4 p-5 border rounded-2xl transition-all cursor-pointer ${selectedPaymentMethod === 'COD' ? 'border-blue-500 bg-blue-900/10' : 'border-gray-800 bg-gray-900 hover:border-gray-700'}`}
+                                    >
+                                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-lg ${selectedPaymentMethod === 'COD' ? 'bg-amber-600 shadow-amber-500/20' : 'bg-gray-800'}`}>
+                                            <Truck className="w-6 h-6 text-white" />
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-black text-white uppercase tracking-wider">Cash on Delivery</span>
+                                                {selectedPaymentMethod === 'COD' && <div className="flex gap-2 text-[10px] font-black tracking-widest text-amber-400 bg-amber-900/30 px-2 py-0.5 rounded border border-amber-800/50 uppercase">Verified</div>}
+                                            </div>
+                                            <p className="text-sm text-gray-500 mt-1 font-medium">Pay in cash when your order is delivered to your doorstep.</p>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -389,7 +459,7 @@ export default function Checkout() {
                                     </div>
                                 ) : (
                                     <>
-                                        Complete Payment <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                        {selectedPaymentMethod === 'COD' ? 'Confirm Order' : 'Complete Payment'} <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                     </>
                                 )}
                             </button>

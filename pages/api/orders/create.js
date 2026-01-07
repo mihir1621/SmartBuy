@@ -46,7 +46,7 @@ export default async function handler(req, res) {
 
         // 2. Create Razorpay Order (External API - outside DB transaction)
         let razorpayOrderId = null;
-        const useRazorpay = req.body.paymentMethod === 'RAZORPAY';
+        const useRazorpay = ['RAZORPAY', 'EMI'].includes(req.body.paymentMethod);
 
         if (useRazorpay) {
             const { razorpay } = await import('@/lib/razorpay');
@@ -80,7 +80,7 @@ export default async function handler(req, res) {
                     totalAmount: parseFloat(calculatedTotal),
                     status: 'PENDING',
                     paymentStatus: 'UNPAID',
-                    paymentMethod: useRazorpay ? 'RAZORPAY' : (req.body.paymentMethod || 'N/A'),
+                    paymentMethod: req.body.paymentMethod || 'N/A',
                     razorpayOrderId: razorpayOrderId,
                     userId: userId,
                     shippingAddress: `${customerInfo.address}, ${customerInfo.city || ''}, ${customerInfo.postalCode || ''}`.trim(),

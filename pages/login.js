@@ -7,6 +7,39 @@ import { Mail, Lock, User, ArrowRight, Smartphone, Star, ShoppingBag, Truck, Shi
 import { FcGoogle } from 'react-icons/fc';
 import { signIn } from "next-auth/react";
 
+const slides = [
+    {
+        image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=1287",
+        text: "Style is a way to say who you are without having to speak.",
+        author: "Ralph Lauren",
+        role: "Fashion Legend"
+    },
+    {
+        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=1287",
+        text: "Fashion fades, only style remains the same.",
+        author: "Coco Chanel",
+        role: "Icon"
+    },
+    {
+        image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&q=80&w=1287",
+        text: "Shoes transform your body language and attitude. They lift you physically and emotionally.",
+        author: "Christian Louboutin",
+        role: "Designer"
+    },
+    {
+        image: "https://images.unsplash.com/photo-1589310243389-96a5483213a8?auto=format&fit=crop&q=80&w=1287",
+        text: "Tradition is not the worship of ashes, but the preservation of fire.",
+        author: "Gustav Mahler",
+        role: "Classic"
+    },
+    {
+        image: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&q=80&w=1287",
+        text: "Style has no age limit. Let them dream in colors.",
+        author: "Iris Apfel",
+        role: "Fashion Icon"
+    }
+];
+
 export default function Login() {
     const router = useRouter();
     const [view, setView] = useState('login'); // 'login', 'signup', 'forgot', 'mobile', 'google'
@@ -21,39 +54,6 @@ export default function Login() {
 
     // Google Login States
     const [googleEmail, setGoogleEmail] = useState('');
-
-    const slides = [
-        {
-            image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=1287",
-            text: "Style is a way to say who you are without having to speak.",
-            author: "Ralph Lauren",
-            role: "Fashion Legend"
-        },
-        {
-            image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=1287",
-            text: "Fashion fades, only style remains the same.",
-            author: "Coco Chanel",
-            role: "Icon"
-        },
-        {
-            image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&q=80&w=1287",
-            text: "Shoes transform your body language and attitude. They lift you physically and emotionally.",
-            author: "Christian Louboutin",
-            role: "Designer"
-        },
-        {
-            image: "https://images.unsplash.com/photo-1589310243389-96a5483213a8?auto=format&fit=crop&q=80&w=1287",
-            text: "Tradition is not the worship of ashes, but the preservation of fire.",
-            author: "Gustav Mahler",
-            role: "Classic"
-        },
-        {
-            image: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&q=80&w=1287",
-            text: "Style has no age limit. Let them dream in colors.",
-            author: "Iris Apfel",
-            role: "Fashion Icon"
-        }
-    ];
 
     useEffect(() => {
         // Preload images for seamless transitions
