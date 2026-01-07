@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import StoreNavbar from '@/components/StoreNavbar';
 import Footer from '@/components/Footer';
 
-import { ShoppingBag, Package, ChevronRight, Clock, CheckCircle, Truck, XCircle, Search } from 'lucide-react';
+import { ShoppingBag, Package, ChevronRight, Clock, CheckCircle, Truck, XCircle, Search, RefreshCcw, RotateCcw } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -16,6 +16,8 @@ const statusIcons = {
     'SHIPPED': <Truck className="w-4 h-4 text-violet-500" />,
     'DELIVERED': <CheckCircle className="w-4 h-4 text-emerald-500" />,
     'CANCELLED': <XCircle className="w-4 h-4 text-red-500" />,
+    'RETURN_REQUESTED': <RefreshCcw className="w-4 h-4 text-blue-400" />,
+    'REFUND_REQUESTED': <RotateCcw className="w-4 h-4 text-blue-400" />,
 };
 
 const statusClasses = {
@@ -24,6 +26,8 @@ const statusClasses = {
     'SHIPPED': 'bg-violet-500/10 text-violet-500 border-violet-500/20',
     'DELIVERED': 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
     'CANCELLED': 'bg-red-500/10 text-red-500 border-red-500/20',
+    'RETURN_REQUESTED': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+    'REFUND_REQUESTED': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
 };
 
 export default function OrderHistory() {

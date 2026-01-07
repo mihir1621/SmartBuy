@@ -65,6 +65,11 @@ model Order {
   user            User?       @relation(fields: [userId], references: [id])
   userId          Int?
   shippingAddress String?     @db.Text
+  returnType      String?     // RETURN, REFUND
+  returnReason    String?
+  returnComments  String?     @db.Text
+  returnStatus    String?     // REQUESTED, APPROVED, REJECTED, COMPLETED
+  returnImages    Json?
   items           OrderItem[]
 }
 

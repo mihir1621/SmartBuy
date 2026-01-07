@@ -12,7 +12,14 @@ import {
     Clock,
     MapPin,
     CreditCard,
-    ArrowRight
+    ArrowRight,
+    RefreshCcw,
+    RotateCcw,
+    AlertCircle,
+    X,
+    Upload,
+    ChevronDown,
+    MessageSquare
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -22,6 +29,19 @@ const statusSteps = [
     { status: 'PROCESSING', label: 'Processing', icon: Box },
     { status: 'SHIPPED', label: 'Shipped', icon: Truck },
     { status: 'DELIVERED', label: 'Delivered', icon: CheckCircle },
+    { status: 'RETURN_REQUESTED', label: 'Return Req.', icon: RefreshCcw },
+    { status: 'REFUND_REQUESTED', label: 'Refund Req.', icon: RotateCcw },
+];
+
+const returnReasonOptions = [
+    "Damaged Product",
+    "Wrong Item Received",
+    "Quality not as expected",
+    "Item missing in package",
+    "Size/Fit issues",
+    "Changed my mind",
+    "Found better price elsewhere",
+    "Other"
 ];
 
 export default function UserOrderDetails() {
@@ -30,6 +50,14 @@ export default function UserOrderDetails() {
     const { id } = router.query;
     const [order, setOrder] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isReturnModalOpen, setIsReturnModalOpen] = useState(false);
+    const [returnForm, setReturnForm] = useState({
+        type: 'RETURN', // RETURN or REFUND
+        reason: '',
+        comments: '',
+        images: []
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const fetchOrder = useCallback(async () => {
         try {
@@ -148,6 +176,39 @@ export default function UserOrderDetails() {
         doc.save(`Invoice_SmartBuy_ORD_${order.id}.pdf`);
     };
 
+    const handleSubmitReturn = async (e) => {
+        e.preventDefault();
+        if (!returnForm.reason) return alert('Please select a reason');
+
+        setIsSubmitting(true);
+        try {
+            const res = await fetch('/api/orders/return', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    orderId: order.id,
+                    returnType: returnForm.type,
+                    returnReason: returnForm.reason,
+                    returnComments: returnForm.comments,
+                    returnImages: [] // Image upload logic would go here
+                })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                setOrder(data.order);
+                setIsReturnModalOpen(false);
+                alert(`${returnForm.type} request submitted successfully!`);
+            } else {
+                alert(data.error);
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Failed to submit request');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     if (loading) return (
         <div className="min-h-screen bg-black flex flex-col">
             <StoreNavbar />
@@ -161,8 +222,15 @@ export default function UserOrderDetails() {
     if (!order) return null;
 
     const isCancelled = order.status === 'CANCELLED';
-    const currentStatusIdx = statusSteps.findIndex(s => s.status === order.status);
-    const progressWidth = isCancelled ? 0 : (currentStatusIdx === -1 ? 0 : (currentStatusIdx / (statusSteps.length - 1)) * 100);
+    const isReturned = order.status.includes('RETURN');
+    const isRefunded = order.status.includes('REFUND');
+
+    // Find current status index, but cap it at DELIVERED for the progress bar if it's already past it
+    const baseStatusIdx = statusSteps.findIndex(s => s.status === order.status);
+    const deliveredIdx = statusSteps.findIndex(s => s.status === 'DELIVERED');
+
+    const displayStatusIdx = (baseStatusIdx > deliveredIdx || baseStatusIdx === -1) ? deliveredIdx : baseStatusIdx;
+    const progressWidth = isCancelled ? 0 : (displayStatusIdx / deliveredIdx) * 100;
 
     return (
         <div className="min-h-screen bg-black flex flex-col text-white">
@@ -217,24 +285,41 @@ export default function UserOrderDetails() {
                                         className="absolute top-1/2 left-0 h-1.5 bg-gradient-to-r from-blue-600 to-blue-400 -translate-y-1/2 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"
                                     />
                                     <div className="relative flex justify-between items-center">
-                                        {statusSteps.map((step, idx) => {
+                                        {statusSteps.slice(0, 4).map((step, idx) => {
                                             const StepIcon = step.icon;
-                                            const isCompleted = idx <= currentStatusIdx;
-                                            const isActive = idx === currentStatusIdx;
+                                            const isStepCompleted = idx <= displayStatusIdx;
+                                            const isStepActive = idx === displayStatusIdx;
 
                                             return (
                                                 <div key={step.status} className="flex flex-col items-center">
-                                                    <div className={`w-12 h-12 rounded-full flex items-center justify-center z-10 border-4 ${isActive ? 'bg-blue-600 border-blue-400 scale-125 shadow-xl shadow-blue-500/40' :
-                                                        isCompleted ? 'bg-blue-500 border-gray-900 shadow-lg' : 'bg-gray-800 border-gray-900'
+                                                    <div className={`w-12 h-12 rounded-full flex items-center justify-center z-10 border-4 ${isStepActive ? 'bg-blue-600 border-blue-400 scale-125 shadow-xl shadow-blue-500/40' :
+                                                        isStepCompleted ? 'bg-blue-500 border-gray-900 shadow-lg' : 'bg-gray-800 border-gray-900'
                                                         } transition-all duration-700`}>
-                                                        <StepIcon size={20} className={isCompleted ? 'text-white' : 'text-gray-500'} />
+                                                        <StepIcon size={20} className={isStepCompleted ? 'text-white' : 'text-gray-500'} />
                                                     </div>
-                                                    <p className={`mt-6 text-[10px] font-black uppercase tracking-widest text-center max-w-[80px] ${isCompleted ? 'text-blue-400' : 'text-gray-600'
+                                                    <p className={`mt-6 text-[10px] font-black uppercase tracking-widest text-center max-w-[80px] ${isStepCompleted ? 'text-blue-400' : 'text-gray-600'
                                                         }`}>{step.label}</p>
                                                 </div>
                                             );
                                         })}
                                     </div>
+
+                                    {/* Post-Delivery Status Badge if applicable */}
+                                    {(isReturned || isRefunded) && (
+                                        <div className="mt-12 p-6 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center gap-4">
+                                            <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+                                                {isReturned ? <RefreshCcw size={24} /> : <RotateCcw size={24} />}
+                                            </div>
+                                            <div>
+                                                <h3 className="text-blue-500 font-black uppercase tracking-widest text-sm">
+                                                    {order.status.replace('_', ' ')}
+                                                </h3>
+                                                <p className="text-gray-500 text-xs mt-1">
+                                                    Your {order.returnType?.toLowerCase()} request is being reviewed by our team.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </section>
@@ -336,8 +421,116 @@ export default function UserOrderDetails() {
                         >
                             Download Invoice <ArrowRight size={14} />
                         </button>
+
+                        {order.status === 'DELIVERED' && (
+                            <div className="grid grid-cols-2 gap-4">
+                                <button
+                                    onClick={() => {
+                                        setReturnForm(prev => ({ ...prev, type: 'RETURN' }));
+                                        setIsReturnModalOpen(true);
+                                    }}
+                                    className="bg-gray-900 border border-gray-800 text-white font-black py-4 rounded-2xl hover:bg-gray-800 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] active:scale-95 duration-200"
+                                >
+                                    <RefreshCcw size={14} /> Return
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setReturnForm(prev => ({ ...prev, type: 'REFUND' }));
+                                        setIsReturnModalOpen(true);
+                                    }}
+                                    className="bg-gray-900 border border-gray-800 text-white font-black py-4 rounded-2xl hover:bg-gray-800 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] active:scale-95 duration-200"
+                                >
+                                    <RotateCcw size={14} /> Refund
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
+
+                {/* Return/Refund Modal */}
+                <AnimatePresence>
+                    {isReturnModalOpen && (
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                onClick={() => setIsReturnModalOpen(false)}
+                                className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+                            />
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                                className="relative bg-gray-900 border border-gray-800 rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-2xl"
+                            >
+                                <div className="p-8 border-b border-gray-800 flex justify-between items-center bg-gray-950/20">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
+                                            {returnForm.type === 'RETURN' ? <RefreshCcw className="text-blue-500" size={20} /> : <RotateCcw className="text-blue-500" size={20} />}
+                                        </div>
+                                        <div>
+                                            <h2 className="text-xl font-bold">Request {returnForm.type === 'RETURN' ? 'Return' : 'Refund'}</h2>
+                                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Order #ORD-{order.id}</p>
+                                        </div>
+                                    </div>
+                                    <button onClick={() => setIsReturnModalOpen(false)} className="text-gray-500 hover:text-white p-2">
+                                        <X size={24} />
+                                    </button>
+                                </div>
+
+                                <form onSubmit={handleSubmitReturn} className="p-8 space-y-6 max-h-[70vh] overflow-y-auto no-scrollbar">
+                                    <div className="space-y-4">
+                                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest">Reason for {returnForm.type.toLowerCase()}</label>
+                                        <div className="grid grid-cols-1 gap-2">
+                                            {returnReasonOptions.map((reason) => (
+                                                <button
+                                                    key={reason}
+                                                    type="button"
+                                                    onClick={() => setReturnForm(prev => ({ ...prev, reason }))}
+                                                    className={`text-left px-5 py-4 rounded-2xl border transition-all text-sm font-medium flex items-center justify-between group ${returnForm.reason === reason
+                                                        ? 'bg-blue-600/10 border-blue-500 text-white shadow-lg shadow-blue-500/10'
+                                                        : 'bg-gray-800/40 border-gray-800 text-gray-400 hover:border-gray-700'
+                                                        }`}
+                                                >
+                                                    {reason}
+                                                    {returnForm.reason === reason && <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]" />}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest">Additional Comments</label>
+                                        <textarea
+                                            value={returnForm.comments}
+                                            onChange={(e) => setReturnForm(prev => ({ ...prev, comments: e.target.value }))}
+                                            placeholder="Tell us more about the issue..."
+                                            className="w-full bg-gray-800/40 border border-gray-800 rounded-2xl p-5 text-sm focus:border-blue-500 outline-none min-h-[120px] transition-colors resize-none"
+                                        />
+                                    </div>
+
+                                    {(returnForm.reason === 'Damaged Product' || returnForm.reason === 'Wrong Item Received') && (
+                                        <div className="p-5 bg-amber-500/5 border border-amber-500/10 rounded-2xl">
+                                            <div className="flex gap-3">
+                                                <AlertCircle size={18} className="text-amber-500 shrink-0" />
+                                                <p className="text-xs text-amber-500/80 leading-relaxed font-medium">To speed up your request, please ensure you have photos of the product and its original packaging ready for inspection.</p>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting || !returnForm.reason}
+                                        className="w-full bg-blue-600 text-white font-black py-5 rounded-2xl hover:bg-blue-500 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] shadow-lg shadow-blue-600/20 active:scale-95 disabled:opacity-50 disabled:active:scale-100"
+                                    >
+                                        {isSubmitting ? 'Submitting Request...' : `Submit ${returnForm.type} Request`}
+                                    </button>
+                                </form>
+                            </motion.div>
+                        </div>
+                    )}
+                </AnimatePresence>
             </main>
 
             <Footer />
