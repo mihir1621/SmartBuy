@@ -9,6 +9,7 @@ import { CreditCard, Truck, ShieldCheck, Lock, ChevronRight } from 'lucide-react
 import StoreNavbar from '@/components/StoreNavbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import { calculateTotalGST, getStateFromCity } from '@/utils/gstUtils';
 
 const loadRazorpayScript = () => {
     return new Promise((resolve) => {
@@ -98,7 +99,7 @@ export default function Checkout() {
                     customerInfo: formData,
                     items: cart,
                     paymentMethod: selectedPaymentMethod === 'COD' ? 'COD' : 'RAZORPAY',
-                    totalAmount: cartTotal * 1.05 // Base total for server reference
+                    totalAmount: cartTotal // Prices are already inclusive of GST
                 })
             });
 
@@ -416,24 +417,45 @@ export default function Checkout() {
                                 ))}
                             </div>
 
-                            <div className="space-y-3 py-5 sm:py-6 border-t border-gray-800">
-                                <div className="flex justify-between text-gray-400 text-xs sm:text-sm">
-                                    <span>Subtotal</span>
-                                    <span className="text-white font-bold">₹{cartTotal.toLocaleString()}</span>
-                                </div>
-                                <div className="flex justify-between text-gray-400 text-xs sm:text-sm">
-                                    <span>Shipping</span>
-                                    <span className="text-emerald-500 font-bold uppercase text-[10px] tracking-widest">Free</span>
-                                </div>
-                                <div className="flex justify-between text-gray-400 text-xs sm:text-sm">
-                                    <span>Tax (GST 5%)</span>
-                                    <span className="text-white font-bold">₹{(cartTotal * 0.05).toLocaleString()}</span>
-                                </div>
-                                <div className="flex justify-between text-white font-black text-lg sm:text-xl pt-3.5 sm:pt-4 border-t border-gray-800">
-                                    <span>Total</span>
-                                    <span className="text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.3)]">₹{(cartTotal * 1.05).toLocaleString()}</span>
-                                </div>
-                            </div>
+                            {(() => {
+                                const shippingState = getStateFromCity(formData.city);
+                                const gstDetails = calculateTotalGST(cart, shippingState);
+
+                                return (
+                                    <div className="space-y-3 py-5 sm:py-6 border-t border-gray-800">
+                                        <div className="flex justify-between text-gray-400 text-xs sm:text-sm">
+                                            <span>Subtotal</span>
+                                            <span className="text-white font-bold">₹{gstDetails.taxableValue.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
+                                        </div>
+                                        <div className="flex justify-between text-gray-400 text-xs sm:text-sm">
+                                            <span>Shipping</span>
+                                            <span className="text-emerald-500 font-bold uppercase text-[10px] tracking-widest">Free</span>
+                                        </div>
+                                        {gstDetails.cgst > 0 && (
+                                            <div className="flex justify-between text-gray-500 text-[10px] sm:text-xs">
+                                                <span>CGST ({gstDetails.totalGst > 0 ? (cart[0]?.category?.toLowerCase() === 'fashion' ? '6%' : '9%') : '0%'})</span>
+                                                <span className="text-gray-400 font-medium">₹{gstDetails.cgst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                        )}
+                                        {gstDetails.sgst > 0 && (
+                                            <div className="flex justify-between text-gray-500 text-[10px] sm:text-xs">
+                                                <span>SGST ({gstDetails.totalGst > 0 ? (cart[0]?.category?.toLowerCase() === 'fashion' ? '6%' : '9%') : '0%'})</span>
+                                                <span className="text-gray-400 font-medium">₹{gstDetails.sgst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                        )}
+                                        {gstDetails.igst > 0 && (
+                                            <div className="flex justify-between text-gray-500 text-[10px] sm:text-xs">
+                                                <span>IGST ({gstDetails.totalGst > 0 ? (cart[0]?.category?.toLowerCase() === 'fashion' ? '12%' : '18%') : '0%'})</span>
+                                                <span className="text-gray-400 font-medium">₹{gstDetails.igst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                        )}
+                                        <div className="flex justify-between text-white font-black text-lg sm:text-xl pt-3.5 sm:pt-4 border-t border-gray-800">
+                                            <span>Total</span>
+                                            <span className="text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.3)]">₹{cartTotal.toLocaleString()}</span>
+                                        </div>
+                                    </div>
+                                );
+                            })()}
 
                             <button
                                 onClick={handlePlaceOrder}

@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { calculateGST, calculateTotalGST, getStateFromCity } from '@/utils/gstUtils';
 
 const statusSteps = [
     { status: 'PENDING', label: 'Order Placed', icon: Clock },
@@ -150,19 +151,43 @@ export default function UserOrderDetails() {
 
         // Totals
         const finalY = doc.lastAutoTable.finalY + 10;
-        const subtotal = order.totalAmount / 1.05;
-        const tax = order.totalAmount - subtotal;
+
+        // Determine shipping state from address string
+        let shippingState = null;
+        const addressLower = order.shippingAddress.toLowerCase();
+        const { INDIAN_CITIES } = await import('@/data/indianCities');
+        const cityMatch = INDIAN_CITIES.find(c => addressLower.includes(c.city.toLowerCase()));
+        if (cityMatch) shippingState = cityMatch.state;
+
+        const gstDetails = calculateTotalGST(order.items.map(item => ({
+            price: item.price,
+            quantity: item.quantity,
+            category: item.product?.category || 'default'
+        })), shippingState);
 
         doc.text(`Subtotal:`, 140, finalY);
-        doc.text(`INR ${subtotal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`, 195, finalY, { align: 'right' });
+        doc.text(`INR ${gstDetails.taxableValue.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`, 195, finalY, { align: 'right' });
 
-        doc.text(`GST (5%):`, 140, finalY + 7);
-        doc.text(`INR ${tax.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`, 195, finalY + 7, { align: 'right' });
+        if (gstDetails.cgst > 0) {
+            doc.text(`CGST:`, 140, finalY + 7);
+            doc.text(`INR ${gstDetails.cgst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`, 195, finalY + 7, { align: 'right' });
 
-        doc.setFontSize(12);
-        doc.setTextColor(40);
-        doc.text(`Total Payable:`, 140, finalY + 16);
-        doc.text(`INR ${order.totalAmount.toLocaleString()}`, 195, finalY + 16, { align: 'right' });
+            doc.text(`SGST:`, 140, finalY + 14);
+            doc.text(`INR ${gstDetails.sgst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`, 195, finalY + 14, { align: 'right' });
+
+            doc.setFontSize(12);
+            doc.setTextColor(40);
+            doc.text(`Total (Inclusive of GST):`, 140, finalY + 23);
+            doc.text(`INR ${order.totalAmount.toLocaleString()}`, 195, finalY + 23, { align: 'right' });
+        } else {
+            doc.text(`IGST:`, 140, finalY + 7);
+            doc.text(`INR ${gstDetails.igst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`, 195, finalY + 7, { align: 'right' });
+
+            doc.setFontSize(12);
+            doc.setTextColor(40);
+            doc.text(`Total (Inclusive of GST):`, 140, finalY + 16);
+            doc.text(`INR ${order.totalAmount.toLocaleString()}`, 195, finalY + 16, { align: 'right' });
+        }
 
         // Policy
         doc.setFontSize(9);
@@ -366,20 +391,56 @@ export default function UserOrderDetails() {
                         {/* Summary */}
                         <section className="bg-gray-900 border border-gray-800 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl space-y-4 sm:space-y-6">
                             <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">Order Summary</h2>
-                            <div className="space-y-3 sm:space-y-4">
-                                <div className="flex justify-between text-gray-400 text-xs sm:text-sm">
-                                    <span>Subtotal</span>
-                                    <span className="text-white font-bold">₹{order.totalAmount.toLocaleString()}</span>
-                                </div>
-                                <div className="flex justify-between text-gray-400 text-xs sm:text-sm">
-                                    <span>Shipping</span>
-                                    <span className="text-emerald-500 font-bold uppercase text-[9px] sm:text-[10px] tracking-widest">Free Delivery</span>
-                                </div>
-                                <div className="pt-3 sm:pt-4 border-t border-gray-800/50 flex justify-between items-center">
-                                    <span className="text-sm sm:text-base font-bold text-gray-300">Total Paid</span>
-                                    <span className="text-xl sm:text-2xl font-black text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.3)]">₹{order.totalAmount.toLocaleString()}</span>
-                                </div>
-                            </div>
+                            {(() => {
+                                // Extract state from shipping address
+                                let shippingState = null;
+                                const addressLower = order.shippingAddress.toLowerCase();
+                                // We don't have INDIAN_CITIES here directly, but we can use the helper if we pass it correctly
+                                // For now, let's assume if it contains 'KA' or 'Karnataka' it's intra-state. 
+                                // Actually, I should use the same logic as invoice.
+                                if (addressLower.includes('karnataka') || addressLower.includes('bangalore')) shippingState = 'Karnataka';
+
+                                const gstDetails = calculateTotalGST(order.items.map(item => ({
+                                    price: item.price,
+                                    quantity: item.quantity,
+                                    category: item.product?.category || 'default'
+                                })), shippingState);
+
+                                return (
+                                    <div className="space-y-3 sm:space-y-4">
+                                        <div className="flex justify-between text-gray-400 text-xs sm:text-sm">
+                                            <span>Subtotal</span>
+                                            <span className="text-white font-bold">₹{gstDetails.taxableValue.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
+                                        </div>
+                                        {gstDetails.cgst > 0 && (
+                                            <>
+                                                <div className="flex justify-between text-gray-500 text-[10px] sm:text-xs">
+                                                    <span>CGST</span>
+                                                    <span className="text-gray-400 font-medium">₹{gstDetails.cgst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
+                                                </div>
+                                                <div className="flex justify-between text-gray-500 text-[10px] sm:text-xs">
+                                                    <span>SGST</span>
+                                                    <span className="text-gray-400 font-medium">₹{gstDetails.sgst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
+                                                </div>
+                                            </>
+                                        )}
+                                        {gstDetails.igst > 0 && (
+                                            <div className="flex justify-between text-gray-500 text-[10px] sm:text-xs">
+                                                <span>IGST</span>
+                                                <span className="text-gray-400 font-medium">₹{gstDetails.igst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                        )}
+                                        <div className="flex justify-between text-gray-400 text-xs sm:text-sm">
+                                            <span>Shipping</span>
+                                            <span className="text-emerald-500 font-bold uppercase text-[9px] sm:text-[10px] tracking-widest">Free Delivery</span>
+                                        </div>
+                                        <div className="pt-3 sm:pt-4 border-t border-gray-800/50 flex justify-between items-center">
+                                            <span className="text-sm sm:text-base font-bold text-gray-300">Total (Inclusive of GST)</span>
+                                            <span className="text-xl sm:text-2xl font-black text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.3)]">₹{order.totalAmount.toLocaleString()}</span>
+                                        </div>
+                                    </div>
+                                );
+                            })()}
                         </section>
 
                         {/* Shipping */}
