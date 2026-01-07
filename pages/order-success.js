@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, ShoppingBag, ArrowRight, Home, Clock } from 'lucide-react';
 import StoreNavbar from '@/components/StoreNavbar';
@@ -14,13 +14,7 @@ export default function OrderSuccess() {
     const [order, setOrder] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        if (id) {
-            fetchOrder();
-        }
-    }, [id]);
-
-    const fetchOrder = async () => {
+    const fetchOrder = useCallback(async () => {
         try {
             const res = await fetch(`/api/orders/${id}`);
             const data = await res.json();
@@ -32,7 +26,13 @@ export default function OrderSuccess() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [id]);
+
+    useEffect(() => {
+        if (id) {
+            fetchOrder();
+        }
+    }, [id, fetchOrder]);
 
     if (loading && id) {
         return (

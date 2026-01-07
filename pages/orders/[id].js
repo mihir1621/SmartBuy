@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
@@ -31,12 +31,7 @@ export default function UserOrderDetails() {
     const [order, setOrder] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        if (status === 'unauthenticated') router.push('/login');
-        if (id) fetchOrder();
-    }, [id, status]);
-
-    const fetchOrder = async () => {
+    const fetchOrder = useCallback(async () => {
         try {
             const res = await fetch(`/api/orders/${id}`);
             const data = await res.json();
@@ -51,6 +46,106 @@ export default function UserOrderDetails() {
         } finally {
             setLoading(false);
         }
+    }, [id, router]);
+
+    useEffect(() => {
+        if (status === 'unauthenticated') router.push('/login');
+        if (id) fetchOrder();
+    }, [id, status, fetchOrder, router]);
+
+    const handleDownloadInvoice = async () => {
+        if (!order) return;
+
+        const { default: jsPDF } = await import('jspdf');
+        const { default: autoTable } = await import('jspdf-autotable');
+
+        const doc = new jsPDF();
+
+        // Header
+        doc.setFontSize(22);
+        doc.setTextColor(40);
+        doc.text('SmartBuy', 14, 22);
+
+        doc.setFontSize(10);
+        doc.setTextColor(100);
+        doc.text('123 Tech Park, Electronic City', 14, 30);
+        doc.text('Bangalore, KA, 560100', 14, 35);
+        doc.text('GSTIN: 29AAAAA0000A1Z5', 14, 40);
+
+        doc.setFontSize(18);
+        doc.setTextColor(40);
+        doc.text('INVOICE', 150, 22);
+
+        doc.setFontSize(10);
+        doc.setTextColor(100);
+        doc.text(`Invoice No: INV-${order.id}${Date.now().toString().slice(-4)}`, 150, 30);
+        doc.text(`Order ID: #ORD-${order.id}`, 150, 35);
+        doc.text(`Date: ${new Date(order.createdAt).toLocaleDateString()}`, 150, 40);
+
+        // Buyer Info
+        doc.setFontSize(12);
+        doc.setTextColor(40);
+        doc.text('Bill To:', 14, 55);
+        doc.setFontSize(10);
+        doc.setTextColor(100);
+        doc.text(order.customerName, 14, 62);
+        const addressLines = doc.splitTextToSize(order.shippingAddress || 'N/A', 80);
+        doc.text(addressLines, 14, 67);
+
+        // Payment Info
+        doc.setFontSize(12);
+        doc.setTextColor(40);
+        doc.text('Payment Information:', 120, 55);
+        doc.setFontSize(10);
+        doc.setTextColor(100);
+        doc.text(`Method: ${order.paymentMethod === 'RAZORPAY' ? 'Online Payment' : order.paymentMethod}`, 120, 62);
+        doc.text(`Status: ${order.paymentStatus}`, 120, 67);
+        if (order.razorpayPaymentId) {
+            doc.text(`Transaction ID: ${order.razorpayPaymentId}`, 120, 72);
+        }
+
+        // Items Table
+        const tableData = order.items.map(item => [
+            item.product?.name || 'Product',
+            item.quantity,
+            `INR ${item.price.toLocaleString()}`,
+            `INR ${(item.price * item.quantity).toLocaleString()}`
+        ]);
+
+        autoTable(doc, {
+            startY: 85,
+            head: [['Product', 'Qty', 'Unit Price', 'Total']],
+            body: tableData,
+            theme: 'grid',
+            headStyles: { fillColor: [59, 130, 246] },
+        });
+
+        // Totals
+        const finalY = doc.lastAutoTable.finalY + 10;
+        const subtotal = order.totalAmount / 1.05;
+        const tax = order.totalAmount - subtotal;
+
+        doc.text(`Subtotal:`, 140, finalY);
+        doc.text(`INR ${subtotal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`, 195, finalY, { align: 'right' });
+
+        doc.text(`GST (5%):`, 140, finalY + 7);
+        doc.text(`INR ${tax.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`, 195, finalY + 7, { align: 'right' });
+
+        doc.setFontSize(12);
+        doc.setTextColor(40);
+        doc.text(`Total Payable:`, 140, finalY + 16);
+        doc.text(`INR ${order.totalAmount.toLocaleString()}`, 195, finalY + 16, { align: 'right' });
+
+        // Policy
+        doc.setFontSize(9);
+        doc.setTextColor(150);
+        const policyText = "Return, Refund, and Cancellation Policy: You can return items within 7 days of delivery. Refunds are processed within 3-5 business days. Cancellations are only allowed before the order is shipped.";
+        const policyLines = doc.splitTextToSize(policyText, 180);
+        doc.text(policyLines, 14, finalY + 40);
+
+        doc.text('Thank you for shopping with SmartBuy!', 105, finalY + 70, { align: 'center' });
+
+        doc.save(`Invoice_SmartBuy_ORD_${order.id}.pdf`);
     };
 
     if (loading) return (
@@ -235,7 +330,10 @@ export default function UserOrderDetails() {
                             </div>
                         </section>
 
-                        <button className="w-full bg-white text-black font-black py-4 rounded-2xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] shadow-lg hover:shadow-xl active:scale-95 duration-200">
+                        <button
+                            onClick={handleDownloadInvoice}
+                            className="w-full bg-white text-black font-black py-4 rounded-2xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] shadow-lg hover:shadow-xl active:scale-95 duration-200"
+                        >
                             Download Invoice <ArrowRight size={14} />
                         </button>
                     </div>

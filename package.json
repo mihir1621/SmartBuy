@@ -16,6 +16,8 @@
     "@stripe/react-stripe-js": "^5.4.1",
     "@stripe/stripe-js": "^8.6.1",
     "framer-motion": "^12.5.0",
+    "jspdf": "^4.0.0",
+    "jspdf-autotable": "^5.0.7",
     "lucide-react": "^0.484.0",
     "micro": "^10.0.1",
     "mysql2": "^3.16.0",

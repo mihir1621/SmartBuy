@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Clock, Star } from 'lucide-react';
 import Image from 'next/image';
@@ -126,23 +126,23 @@ export default function BannerCarousel() {
         }
     }, []);
 
+    const nextSlide = useCallback(() => {
+        setDirection(1);
+        setCurrentIndex((prev) => (prev === activeBanners.length - 1 ? 0 : prev + 1));
+    }, [activeBanners.length]);
+
+    const prevSlide = useCallback(() => {
+        setDirection(-1);
+        setCurrentIndex((prev) => (prev === 0 ? activeBanners.length - 1 : prev - 1));
+    }, [activeBanners.length]);
+
     useEffect(() => {
         const timer = setInterval(() => {
             nextSlide();
         }, 5000);
 
         return () => clearInterval(timer);
-    }, [currentIndex, activeBanners]);
-
-    const nextSlide = () => {
-        setDirection(1);
-        setCurrentIndex((prev) => (prev === activeBanners.length - 1 ? 0 : prev + 1));
-    };
-
-    const prevSlide = () => {
-        setDirection(-1);
-        setCurrentIndex((prev) => (prev === 0 ? activeBanners.length - 1 : prev - 1));
-    };
+    }, [nextSlide]);
 
     const variants = {
         enter: (direction) => ({
