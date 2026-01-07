@@ -105,18 +105,18 @@ export default function OrderHistory() {
             <StoreNavbar />
 
             <main className="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-                    <div className="flex items-center gap-4">
-                        <div className="p-4 bg-blue-500/10 rounded-2xl border border-blue-500/20">
-                            <ShoppingBag className="w-8 h-8 text-blue-500" />
+                <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 sm:mb-10">
+                    <div className="flex items-center gap-3 sm:gap-4">
+                        <div className="p-3 sm:p-4 bg-blue-500/10 rounded-2xl border border-blue-500/20">
+                            <ShoppingBag className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500" />
                         </div>
                         <div>
-                            <h1 className="text-3xl font-black tracking-tight underline decoration-blue-500/30 decoration-4 underline-offset-8">My Orders</h1>
-                            <p className="text-gray-400 mt-2 font-medium">Manage and track your recent purchases</p>
+                            <h1 className="text-2xl sm:text-3xl font-black tracking-tight underline decoration-blue-500/30 decoration-4 underline-offset-8">My Orders</h1>
+                            <p className="text-gray-500 mt-1 sm:mt-2 font-medium text-xs sm:text-base">Manage and track your recent purchases</p>
                         </div>
                     </div>
 
-                    <div className="relative w-full md:w-64">
+                    <div className="relative w-full lg:w-64">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                         <input
                             type="text"
@@ -129,12 +129,12 @@ export default function OrderHistory() {
                 </div>
 
                 {/* Status Tabs */}
-                <div className="flex gap-2 overflow-x-auto no-scrollbar mb-8 p-1 bg-gray-900/50 rounded-2xl border border-gray-800/50 w-fit">
+                <div className="flex gap-2 overflow-x-auto no-scrollbar mb-8 p-1 bg-gray-900/50 rounded-2xl border border-gray-800/50 w-full sm:w-fit">
                     {tabs.map((tab) => (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
-                            className={`px-6 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${activeTab === tab.id
+                            className={`px-4 sm:px-6 py-2 rounded-xl text-[10px] sm:text-xs font-bold transition-all whitespace-nowrap flex-1 sm:flex-none ${activeTab === tab.id
                                 ? "bg-white text-black shadow-lg shadow-white/5"
                                 : "text-gray-500 hover:text-white hover:bg-gray-800"
                                 }`}
@@ -145,54 +145,54 @@ export default function OrderHistory() {
                 </div>
 
                 {filteredOrders.length === 0 ? (
-                    <div className="bg-gray-900/30 border border-gray-800/50 rounded-[2.5rem] p-16 text-center backdrop-blur-sm">
-                        <div className="w-24 h-24 bg-gray-800/50 rounded-full flex items-center justify-center mx-auto mb-8 border border-gray-700/50">
-                            <Package className="w-10 h-10 text-gray-600" />
+                    <div className="bg-gray-900/30 border border-gray-800/50 rounded-[2.5rem] p-10 sm:p-16 text-center backdrop-blur-sm">
+                        <div className="w-20 h-20 sm:w-24 h-24 bg-gray-800/50 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8 border border-gray-700/50">
+                            <Package className="w-8 h-8 sm:w-10 sm:h-10 text-gray-600" />
                         </div>
-                        <h2 className="text-2xl font-black mb-3">No matching orders</h2>
-                        <p className="text-gray-500 mb-10 max-w-xs mx-auto">We couldn&apos;t find any orders matching your current filters.</p>
-                        <Link href="/" className="inline-block bg-white text-black px-10 py-4 rounded-2xl font-black hover:bg-gray-200 transition-all shadow-xl shadow-white/5 active:scale-95">
+                        <h2 className="text-xl sm:text-2xl font-black mb-3 text-white">No matching orders</h2>
+                        <p className="text-gray-500 mb-8 sm:mb-10 max-w-xs mx-auto text-sm">We couldn&apos;t find any orders matching your current filters.</p>
+                        <Link href="/" className="inline-block bg-white text-black px-8 sm:px-10 py-3 sm:py-4 rounded-2xl font-black hover:bg-gray-200 transition-all shadow-xl shadow-white/5 active:scale-95 text-sm">
                             Continue Shopping
                         </Link>
                     </div>
                 ) : (
-                    <div className="space-y-8">
+                    <div className="space-y-6 sm:space-y-8">
                         {filteredOrders.map((order, idx) => (
                             <motion.div
                                 key={order.id}
                                 initial={{ opacity: 0, scale: 0.98 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: idx * 0.05 }}
-                                className="bg-gray-900/50 border border-gray-800 rounded-[2rem] overflow-hidden hover:border-gray-700 transition-all group backdrop-blur-sm"
+                                className="bg-gray-900/50 border border-gray-800 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden hover:border-gray-700 transition-all group backdrop-blur-sm"
                             >
-                                <div className="p-6 sm:p-8 flex flex-col lg:flex-row justify-between lg:items-center gap-6 bg-gray-950/40">
-                                    <div className="flex flex-wrap gap-x-10 gap-y-4">
+                                <div className="p-5 sm:p-8 flex flex-col lg:flex-row justify-between lg:items-center gap-6 bg-gray-950/40">
+                                    <div className="flex flex-wrap gap-x-6 sm:gap-x-10 gap-y-4">
                                         <div className="space-y-1">
-                                            <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Order Ref</p>
-                                            <p className="font-black text-white">#ORD-{order.id}</p>
+                                            <p className="text-[9px] sm:text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Order Ref</p>
+                                            <p className="font-black text-white text-sm sm:text-base">#ORD-{order.id}</p>
                                         </div>
                                         <div className="space-y-1">
-                                            <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Ordered On</p>
-                                            <p className="font-bold text-gray-300">{new Date(order.createdAt).toLocaleDateString(undefined, { dateStyle: 'long' })}</p>
+                                            <p className="text-[9px] sm:text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Ordered On</p>
+                                            <p className="font-bold text-gray-300 text-sm sm:text-base">{new Date(order.createdAt).toLocaleDateString(undefined, { dateStyle: 'medium' })}</p>
                                         </div>
                                         <div className="space-y-1">
-                                            <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Total Paid</p>
-                                            <p className="font-black text-xl text-blue-500">₹{order.totalAmount.toLocaleString()}</p>
+                                            <p className="text-[9px] sm:text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Total Paid</p>
+                                            <p className="font-black text-lg sm:text-xl text-blue-500">₹{order.totalAmount.toLocaleString()}</p>
                                         </div>
-                                        <div className="space-y-2">
-                                            <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Track Status</p>
-                                            <div className={`flex items-center gap-2 px-3 py-1 rounded-lg border text-[10px] font-black uppercase tracking-widest ${statusClasses[order.status]}`}>
+                                        <div className="space-y-1.5 sm:space-y-2">
+                                            <p className="text-[9px] sm:text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Track Status</p>
+                                            <div className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 rounded-lg border text-[9px] sm:text-[10px] font-black uppercase tracking-widest ${statusClasses[order.status]}`}>
                                                 {statusIcons[order.status]}
-                                                {order.status}
+                                                {order.status.replace('_', ' ')}
                                             </div>
                                         </div>
                                     </div>
                                     <div className="flex-shrink-0">
                                         <button
                                             onClick={() => router.push(`/orders/${order.id}`)}
-                                            className="w-full sm:w-auto bg-white text-black px-8 py-3 rounded-xl text-xs font-black transition-all shadow-lg hover:shadow-white/10 flex items-center justify-center gap-2 group/btn active:scale-95"
+                                            className="w-full sm:w-auto bg-white text-black px-6 sm:px-8 py-3 rounded-xl text-[10px] sm:text-xs font-black transition-all shadow-lg hover:shadow-white/10 flex items-center justify-center gap-2 group/btn active:scale-95 uppercase tracking-widest"
                                         >
-                                            TRACK SHIPMENT <ChevronRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                                            Track Order <ChevronRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
                                         </button>
                                     </div>
                                 </div>

@@ -68,27 +68,27 @@ export default function ProductCard({ product }) {
                 </div>
 
                 {/* Content */}
-                <div className="p-3 flex flex-col flex-1">
+                <div className="p-2 sm:p-3 flex flex-col flex-1">
                     {/* Brand & Rating */}
-                    <div className="flex justify-between items-start mb-1.5">
-                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider truncate pr-2">{product.brand}</span>
-                        <div className="flex items-center gap-1 bg-green-900/30 px-1.5 py-0.5 rounded text-[10px] font-bold text-green-400 border border-green-900 shrink-0">
+                    <div className="flex justify-between items-start mb-1 sm:mb-1.5">
+                        <span className="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider truncate pr-1 sm:pr-2">{product.brand}</span>
+                        <div className="flex items-center gap-0.5 sm:gap-1 bg-green-900/30 px-1 sm:px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold text-green-400 border border-green-900 shrink-0">
                             <span>{product.rating}</span>
-                            <Star className="w-2.5 h-2.5 fill-current" />
+                            <Star className="w-2 sm:w-2.5 h-2 sm:h-2.5 fill-current" />
                         </div>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-sm font-medium text-white line-clamp-2 mb-2 group-hover:text-blue-400 transition-colors leading-snug">
+                    <h3 className="text-xs sm:text-sm font-medium text-white line-clamp-2 mb-1.5 sm:mb-2 group-hover:text-blue-400 transition-colors leading-snug">
                         {product.name}
                     </h3>
 
                     {/* Price Section */}
                     <div className="mt-auto">
-                        <div className="flex items-baseline gap-2 mb-3">
-                            <span className="text-base font-bold text-white">₹{product.price.toLocaleString()}</span>
+                        <div className="flex items-baseline gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                            <span className="text-sm sm:text-base font-bold text-white">₹{product.price.toLocaleString()}</span>
                             {product.originalPrice > product.price && (
-                                <span className="text-xs text-gray-500 line-through">₹{product.originalPrice.toLocaleString()}</span>
+                                <span className="text-[10px] sm:text-xs text-gray-500 line-through">₹{product.originalPrice.toLocaleString()}</span>
                             )}
                         </div>
 
@@ -100,12 +100,12 @@ export default function ProductCard({ product }) {
                                 e.stopPropagation();
                                 addToCart(product);
                             }}
-                            className={`w-full text-xs font-bold py-2 rounded-lg transition-all flex items-center justify-center gap-2 active:scale-95 ${product.inStock
+                            className={`w-full text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 rounded-lg transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 ${product.inStock
                                 ? "bg-white hover:bg-gray-200 text-black shadow-lg shadow-white/5"
                                 : "bg-gray-800 text-gray-600 cursor-not-allowed"
                                 }`}
                         >
-                            <ShoppingCart className="w-3.5 h-3.5" />
+                            <ShoppingCart className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
                             {product.inStock ? "Add to Cart" : "Sold Out"}
                         </button>
                     </div>

@@ -95,24 +95,24 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
 
 
                         {/* Mobile Search Bar integrated in header */}
-                        <div className="flex-1 max-w-xl md:hidden px-2">
+                        <div className="flex-1 max-w-xl md:hidden px-1 sm:px-2">
                             <div className="relative w-full group">
                                 <input
                                     type="text"
                                     value={searchQuery}
                                     onChange={handleSearch}
                                     placeholder="Search..."
-                                    className="w-full pl-3 pr-8 py-1.5 bg-gray-900 border border-gray-700 rounded-lg focus:bg-black focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm text-white outline-none shadow-sm placeholder-gray-500"
+                                    className="w-full pl-2 sm:pl-3 pr-7 sm:pr-8 py-1.5 bg-gray-900 border border-gray-700 rounded-lg focus:bg-black focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all text-[12px] sm:text-sm text-white outline-none shadow-sm placeholder-gray-500"
                                 />
-                                <div className="absolute right-0 top-0 h-full flex items-center pr-1.5 gap-1">
+                                <div className="absolute right-0 top-0 h-full flex items-center pr-1 sm:pr-1.5">
                                     <button className="text-gray-400 p-1">
-                                        <Search className="w-4 h-4" />
+                                        <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                     </button>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Search Bar - Compact Amazon Style */}
+                        {/* Search Bar - Compact Amazon Style (Desktop) */}
                         <div className="flex-1 max-w-xl hidden md:flex items-center">
                             <div className="relative w-full group">
                                 <input
@@ -144,35 +144,35 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-1 sm:gap-1.5">
                             {status === 'authenticated' ? (
-                                <div className="flex items-center gap-1.5">
-                                    <Link href="/orders" className="p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
+                                <div className="flex items-center gap-1 sm:gap-1.5">
+                                    <Link href="/orders" className="p-1 sm:p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
                                         <ShoppingBag className="w-4 h-4" />
                                         <span className="text-xs font-semibold hidden lg:block">My Orders</span>
                                     </Link>
-                                    <div className="h-4 w-px bg-gray-800 mx-1 hidden lg:block" />
-                                    <div className="p-1.5 text-blue-400 font-bold text-xs flex items-center gap-1.5">
+                                    <div className="h-4 w-px bg-gray-800 mx-0.5 sm:mx-1 hidden lg:block" />
+                                    <div className="p-1 sm:p-1.5 text-blue-400 font-bold text-xs flex items-center gap-1.5">
                                         <User className="w-4 h-4" />
                                         <span className="hidden lg:block truncate max-w-[80px]">{session.user.name || 'User'}</span>
                                     </div>
                                 </div>
                             ) : (
-                                <Link href="/login" className="p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
+                                <Link href="/login" className="p-1 sm:p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
                                     <User className="w-4 h-4" />
                                     <span className="text-xs font-semibold hidden lg:block">Sign In</span>
                                 </Link>
                             )}
 
-                            <Link href="/wishlist" className="relative p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
-                                <Heart className={`w-4 h-4 ${wishlist.length > 0 ? 'text-red-500 fill-red-500 animate-pulse' : ''}`} />
+                            <Link href="/wishlist" className="relative p-1 sm:p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
+                                <Heart className={`w-4 h-4 ${wishlist.length > 0 ? 'text-red-500 fill-red-500' : ''}`} />
                                 <span className="text-xs font-semibold hidden lg:block">Wishlist</span>
                             </Link>
 
                             <motion.button
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => setIsCartOpen(true)}
-                                className="p-1.5 px-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-all flex items-center gap-1.5"
+                                className="p-1 sm:p-1.5 px-2 sm:px-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-all flex items-center gap-1 sm:gap-1.5"
                             >
                                 <div className="relative">
                                     <ShoppingBag className="w-4 h-4" />

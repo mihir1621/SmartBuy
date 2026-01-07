@@ -210,17 +210,17 @@ export default function Home({ initialProducts }) {
             {/* Product Grid Area */}
             <div className="lg:col-span-3">
               {/* Sorting Bar */}
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-white">
+              <div className="flex justify-between items-center mb-6 gap-4">
+                <h2 className="text-lg sm:text-xl font-bold text-white truncate">
                   {selectedCategory === "All" ? (searchQuery ? `Results for "${searchQuery}"` : "All Products") : selectedCategory}
                 </h2>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-shrink-0">
                   <span className="text-sm text-gray-400 hidden sm:inline">Sort by:</span>
                   <div className="relative">
                     <select
                       value={sortOption}
                       onChange={(e) => setSortOption(e.target.value)}
-                      className="appearance-none bg-gray-900 border border-gray-800 text-gray-300 py-2 pl-4 pr-8 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                      className="appearance-none bg-gray-900 border border-gray-800 text-gray-300 py-1.5 sm:py-2 pl-3 sm:pl-4 pr-7 sm:pr-8 rounded-lg text-xs sm:text-sm font-medium focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
                     >
                       <option value="popularity">Popularity</option>
                       <option value="newest">Newest Arrivals</option>
@@ -228,32 +228,32 @@ export default function Home({ initialProducts }) {
                       <option value="price-desc">Price: High to Low</option>
                       <option value="rating">Rating</option>
                     </select>
-                    <ChevronDown className="w-4 h-4 text-gray-500 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500 absolute right-2 sm:right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                   </div>
                 </div>
               </div>
 
               {/* Active Filter Chips */}
               {(selectedCategory !== "All" || selectedBrands.length > 0 || minRating > 0 || selectedGender !== "All") && (
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6">
                   {selectedCategory !== "All" && (
-                    <button onClick={() => setSelectedCategory("All")} className="flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-blue-500/20 transition-all">
-                      {selectedCategory} <X size={12} />
+                    <button onClick={() => setSelectedCategory("All")} className="flex items-center gap-1.5 sm:gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-blue-500/20 transition-all">
+                      {selectedCategory} <X size={10} className="sm:size-[12px]" />
                     </button>
                   )}
                   {selectedGender !== "All" && (
-                    <button onClick={() => setSelectedGender("All")} className="flex items-center gap-2 bg-gray-800 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-gray-700 transition-all">
-                      {selectedGender} <X size={12} />
+                    <button onClick={() => setSelectedGender("All")} className="flex items-center gap-1.5 sm:gap-2 bg-gray-800 border border-gray-700 text-gray-300 px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-gray-700 transition-all">
+                      {selectedGender} <X size={10} className="sm:size-[12px]" />
                     </button>
                   )}
                   {selectedBrands.map(brand => (
-                    <button key={brand} onClick={() => setSelectedBrands(selectedBrands.filter(b => b !== brand))} className="flex items-center gap-2 bg-gray-800 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-gray-700 transition-all">
-                      {brand} <X size={12} />
+                    <button key={brand} onClick={() => setSelectedBrands(selectedBrands.filter(b => b !== brand))} className="flex items-center gap-1.5 sm:gap-2 bg-gray-800 border border-gray-700 text-gray-300 px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-gray-700 transition-all">
+                      {brand} <X size={10} className="sm:size-[12px]" />
                     </button>
                   ))}
                   {minRating > 0 && (
-                    <button onClick={() => setMinRating(0)} className="flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/20 text-yellow-500 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-yellow-400/20 transition-all">
-                      {minRating}+ Stars <X size={12} />
+                    <button onClick={() => setMinRating(0)} className="flex items-center gap-1.5 sm:gap-2 bg-yellow-400/10 border border-yellow-400/20 text-yellow-500 px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-yellow-400/20 transition-all">
+                      {minRating}+ Stars <X size={10} className="sm:size-[12px]" />
                     </button>
                   )}
                 </div>
@@ -261,20 +261,20 @@ export default function Home({ initialProducts }) {
 
               {/* Grid */}
               {filteredProducts.length > 0 ? (
-                <div className="space-y-12">
+                <div className="space-y-8 sm:space-y-12">
                   {displayedCategories.map((category) => (
-                    <section key={category} className="space-y-4">
-                      <div className="flex items-center gap-4">
-                        <h2 className="text-2xl font-bold text-white relative">
+                    <section key={category} className="space-y-3 sm:space-y-4">
+                      <div className="flex items-center gap-2 sm:gap-4">
+                        <h2 className="text-xl sm:text-2xl font-bold text-white relative whitespace-nowrap">
                           {category}
-                          <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-blue-500 rounded-full"></span>
+                          <span className="absolute -bottom-1.5 sm:-bottom-2 left-0 w-1/3 h-0.5 sm:h-1 bg-blue-500 rounded-full"></span>
                         </h2>
-                        <div className="h-px bg-gray-800 flex-grow mt-1"></div>
+                        <div className="h-px bg-gray-800 flex-grow mt-1 sm:mt-1"></div>
                       </div>
 
                       <motion.div
                         layout
-                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4"
                       >
                         {groupedProducts[category].map((product) => (
                           <ProductCard key={product.id} product={product} />
@@ -284,10 +284,10 @@ export default function Home({ initialProducts }) {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-20 bg-gray-900 rounded-xl border border-gray-800">
-                  <div className="text-6xl mb-4">🔍</div>
-                  <h3 className="text-xl font-bold text-white mb-2">No results found</h3>
-                  <p className="text-gray-400 text-lg mb-6">Try adjusting your filters or search terms.</p>
+                <div className="text-center py-12 sm:py-20 bg-gray-900 rounded-xl border border-gray-800 px-4">
+                  <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🔍</div>
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">No results found</h3>
+                  <p className="text-gray-400 text-base sm:text-lg mb-4 sm:mb-6">Try adjusting your filters or search terms.</p>
                   <button
                     onClick={() => {
                       setSelectedCategory("All");
@@ -296,7 +296,7 @@ export default function Home({ initialProducts }) {
                       setPriceRange([0, globalMaxPrice]);
                       setSelectedGender("All");
                     }}
-                    className="px-6 py-2 bg-white text-black rounded-lg hover:bg-gray-200 font-medium transition-colors"
+                    className="px-5 sm:px-6 py-2 bg-white text-black rounded-lg hover:bg-gray-200 font-medium transition-colors text-sm sm:text-base"
                   >
                     Clear all filters
                   </button>

@@ -60,52 +60,52 @@ export default function OrderSuccess() {
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="bg-gray-900 rounded-[2.5rem] border border-gray-800 shadow-2xl overflow-hidden text-center p-10 md:p-16 relative"
+                        className="bg-gray-900 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-800 shadow-2xl overflow-hidden text-center p-8 sm:p-12 md:p-16 relative"
                     >
                         {/* Status Icon */}
                         <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                            className="w-28 h-28 bg-blue-600/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-blue-500/20"
+                            className="w-20 h-20 sm:w-28 sm:h-28 bg-blue-600/10 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8 border border-blue-500/20"
                         >
-                            <CheckCircle className="w-14 h-14 text-blue-500" />
+                            <CheckCircle className="w-10 h-10 sm:w-14 sm:h-14 text-blue-500" />
                         </motion.div>
 
-                        <h1 className="text-4xl font-black text-white mb-4 tracking-tight">Success!</h1>
-                        <p className="text-gray-400 mb-10 text-lg leading-relaxed font-medium">
+                        <h1 className="text-3xl sm:text-4xl font-black text-white mb-3 sm:mb-4 tracking-tight">Success!</h1>
+                        <p className="text-gray-400 mb-8 sm:mb-10 text-base sm:text-lg leading-relaxed font-medium">
                             Your order has been placed successfully.
                             We&apos;ve sent a confirmation email to <span className="text-white font-bold">{order?.customerEmail || 'your inbox'}</span>.
                         </p>
 
-                        <div className="bg-gray-950/50 rounded-3xl p-8 mb-10 text-left border border-gray-800/50 backdrop-blur-sm">
-                            <div className="flex justify-between mb-4">
-                                <span className="text-gray-500 font-bold uppercase text-[10px] tracking-[0.2em]">Order ID</span>
-                                <span className="text-blue-400 font-black">#ORD-{order?.id || id || '---'}</span>
+                        <div className="bg-gray-950/50 rounded-[1.5rem] sm:rounded-3xl p-6 sm:p-8 mb-8 sm:mb-10 text-left border border-gray-800/50 backdrop-blur-sm">
+                            <div className="flex justify-between mb-3 sm:mb-4 gap-2">
+                                <span className="text-gray-500 font-bold uppercase text-[9px] sm:text-[10px] tracking-[0.2em] shrink-0">Order Ref</span>
+                                <span className="text-blue-400 font-black text-xs sm:text-sm truncate">#ORD-{order?.id || id || '---'}</span>
                             </div>
-                            <div className="flex justify-between mb-4">
-                                <span className="text-gray-500 font-bold uppercase text-[10px] tracking-[0.2em]">Purchase Date</span>
-                                <span className="text-white font-bold">{order ? new Date(order.createdAt).toLocaleDateString() : new Date().toLocaleDateString()}</span>
+                            <div className="flex justify-between mb-3 sm:mb-4 gap-2">
+                                <span className="text-gray-500 font-bold uppercase text-[9px] sm:text-[10px] tracking-[0.2em] shrink-0">Purchased</span>
+                                <span className="text-white font-bold text-xs sm:text-sm">{order ? new Date(order.createdAt).toLocaleDateString(undefined, { dateStyle: 'medium' }) : new Date().toLocaleDateString(undefined, { dateStyle: 'medium' })}</span>
                             </div>
-                            <div className="flex justify-between pt-4 border-t border-gray-800">
-                                <span className="text-gray-500 font-bold uppercase text-[10px] tracking-[0.2em]">Total Amount</span>
-                                <span className="text-white font-black text-xl">₹{order?.totalAmount.toLocaleString() || '---'}</span>
+                            <div className="flex justify-between pt-3 sm:pt-4 border-t border-gray-800 gap-2">
+                                <span className="text-gray-500 font-bold uppercase text-[9px] sm:text-[10px] tracking-[0.2em] shrink-0">Total Amount</span>
+                                <span className="text-white font-black text-lg sm:text-xl">₹{order?.totalAmount.toLocaleString() || '---'}</span>
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                             <Link
                                 href="/"
-                                className="bg-gray-800 text-white font-bold py-4 rounded-2xl hover:bg-gray-700 transition-all border border-gray-700 flex items-center justify-center gap-2 group"
+                                className="bg-gray-800 text-white font-bold py-3.5 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-gray-700 transition-all border border-gray-700 flex items-center justify-center gap-2 group text-sm sm:text-base"
                             >
-                                <Home className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
-                                Return Home
+                                <Home className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-y-0.5 transition-transform" />
+                                Home
                             </Link>
                             <Link
                                 href={order ? `/orders/${order.id}` : "/orders"}
-                                className="bg-white text-black font-black py-4 rounded-2xl hover:bg-gray-200 transition-all shadow-xl shadow-white/10 flex items-center justify-center gap-2 group"
+                                className="bg-white text-black font-black py-3.5 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-gray-200 transition-all shadow-xl shadow-white/10 flex items-center justify-center gap-2 group text-sm sm:text-base"
                             >
-                                <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform" />
                                 Track Order
                             </Link>
                         </div>

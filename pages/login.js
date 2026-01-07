@@ -312,34 +312,34 @@ export default function Login() {
                     </Link>
                 </div>
 
-                <div className="mx-auto w-full max-w-sm lg:w-96">
+                <div className="mx-auto w-full max-w-[340px] sm:max-w-sm lg:w-96">
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="mb-8 text-center"
+                        className="mb-6 sm:mb-8 text-center"
                     >
-                        <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+                        <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 uppercase">
                             {view === 'login' && 'Welcome'}
-                            {view === 'signup' && 'Create an account'}
-                            {view === 'forgot' && 'Reset password'}
-                            {view === 'mobile' && 'Mobile Login'}
-                            {view === 'google' && 'Google Login'}
+                            {view === 'signup' && 'Create account'}
+                            {view === 'forgot' && 'Reset pass'}
+                            {view === 'mobile' && 'Mobile Sign In'}
+                            {view === 'google' && 'Google Sign In'}
                         </h2>
-                        <p className="mt-2 text-sm text-gray-600">
+                        <p className="mt-2 text-[11px] sm:text-sm text-gray-500 font-bold uppercase tracking-wider">
                             {view === 'login' && (
-                                <>New to SmartBuy? <button onClick={() => setView('signup')} className="font-semibold text-blue-600 hover:text-blue-500 transition-colors">Start for free</button></>
+                                <>New here? <button onClick={() => setView('signup')} className="text-blue-600 hover:text-blue-500 transition-colors">Join Now</button></>
                             )}
                             {view === 'signup' && (
-                                <>Already have an account? <button onClick={() => setView('login')} className="font-semibold text-blue-600 hover:text-blue-500 transition-colors">Log in</button></>
+                                <>Have an account? <button onClick={() => setView('login')} className="text-blue-600 hover:text-blue-500 transition-colors">Log in</button></>
                             )}
                             {view === 'forgot' && (
-                                <>Remember your password? <button onClick={() => setView('login')} className="font-semibold text-blue-600 hover:text-blue-500 transition-colors">Back to login</button></>
+                                <>Remember? <button onClick={() => setView('login')} className="text-blue-600 hover:text-blue-500 transition-colors">Return</button></>
                             )}
                             {view === 'mobile' && (
-                                <>Prefer email? <button onClick={() => setView('login')} className="font-semibold text-blue-600 hover:text-blue-500 transition-colors">Login with Email</button></>
+                                <>Prefer email? <button onClick={() => setView('login')} className="text-blue-600 hover:text-blue-500 transition-colors">Email Login</button></>
                             )}
                             {view === 'google' && (
-                                <>Prefer email? <button onClick={() => setView('login')} className="font-semibold text-blue-600 hover:text-blue-500 transition-colors">Login with Email</button></>
+                                <>Prefer email? <button onClick={() => setView('login')} className="text-blue-600 hover:text-blue-500 transition-colors">Email Login</button></>
                             )}
                         </p>
                     </motion.div>

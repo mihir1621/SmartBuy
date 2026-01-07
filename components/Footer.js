@@ -3,66 +3,66 @@ import Link from 'next/link';
 
 export default function Footer() {
     return (
-        <footer className="bg-gray-900 text-gray-300 py-12 border-t border-gray-800">
+        <footer className="bg-gray-900 text-gray-300 py-10 sm:py-16 border-t border-gray-800">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
                     {/* Brand Section */}
-                    <div className="space-y-4">
-                        <Link href="/" className="flex items-center gap-2 group">
-                            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center transition-transform group-hover:scale-110">
-                                <span className="text-gray-900 font-bold text-xl">S</span>
+                    <div className="col-span-2 lg:col-span-1 space-y-5 sm:space-y-6">
+                        <Link href="/" className="flex items-center gap-3 group">
+                            <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-xl flex items-center justify-center transition-all group-hover:scale-110 shadow-lg shadow-white/5">
+                                <span className="text-gray-900 font-black text-xl sm:text-2xl">S</span>
                             </div>
-                            <span className="font-bold text-xl tracking-tight text-white">SmartBuy</span>
+                            <span className="font-black text-xl sm:text-2xl tracking-tighter text-white">SmartBuy</span>
                         </Link>
-                        <p className="text-sm text-gray-400">
-                            Your one-stop destination for premium products. Experience quality shopping with fast delivery and excellent support.
+                        <p className="text-xs sm:text-sm text-gray-500 leading-relaxed max-w-xs font-medium">
+                            Premium shopping experience for the modern aesthetic. Quality goods, fast delivery, and 24/7 dedicated support.
                         </p>
                     </div>
 
                     {/* Quick Links */}
-                    <div>
-                        <h3 className="text-white font-bold mb-4">Shop</h3>
-                        <ul className="space-y-2 text-sm">
-                            <li><Link href="#" className="hover:text-white transition-colors">New Arrivals</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Best Sellers</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Electronics</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Fashion</Link></li>
+                    <div className="col-span-1">
+                        <h3 className="text-white font-black text-xs sm:text-sm uppercase tracking-[0.2em] mb-4 sm:mb-6">Shop</h3>
+                        <ul className="space-y-3 sm:space-y-4 text-[11px] sm:text-sm font-bold">
+                            <li><Link href="#" className="text-gray-500 hover:text-white transition-colors">New Arrivals</Link></li>
+                            <li><Link href="#" className="text-gray-500 hover:text-white transition-colors">Best Sellers</Link></li>
+                            <li><Link href="#" className="text-gray-500 hover:text-white transition-colors">Electronics</Link></li>
+                            <li><Link href="#" className="text-gray-500 hover:text-white transition-colors">Fashion</Link></li>
                         </ul>
                     </div>
 
                     {/* Support */}
-                    <div>
-                        <h3 className="text-white font-bold mb-4">Support</h3>
-                        <ul className="space-y-2 text-sm">
-                            <li><Link href="#" className="hover:text-white transition-colors">Help Center</Link></li>
-                            <li><Link href="/orders" className="hover:text-white transition-colors">Track Order</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Returns & Refunds</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Contact Us</Link></li>
+                    <div className="col-span-1">
+                        <h3 className="text-white font-black text-xs sm:text-sm uppercase tracking-[0.2em] mb-4 sm:mb-6">Support</h3>
+                        <ul className="space-y-3 sm:space-y-4 text-[11px] sm:text-sm font-bold">
+                            <li><Link href="#" className="text-gray-500 hover:text-white transition-colors">Help Center</Link></li>
+                            <li><Link href="/orders" className="text-gray-500 hover:text-white transition-colors">Track Order</Link></li>
+                            <li><Link href="#" className="text-gray-500 hover:text-white transition-colors">Returns</Link></li>
+                            <li><Link href="#" className="text-gray-500 hover:text-white transition-colors">Warranty</Link></li>
                         </ul>
                     </div>
 
                     {/* Newsletter */}
-                    <div>
-                        <h3 className="text-white font-bold mb-4">Stay Updated</h3>
-                        <p className="text-sm text-gray-400 mb-4">Subscribe to our newsletter for the latest updates and offers.</p>
+                    <div className="col-span-2 lg:col-span-1 pt-4 lg:pt-0">
+                        <h3 className="text-white font-black text-xs sm:text-sm uppercase tracking-[0.2em] mb-4 sm:mb-6">Newsletter</h3>
+                        <p className="text-[11px] sm:text-sm text-gray-500 mb-5 font-medium leading-relaxed">Join our club for exclusive updates and premium offers.</p>
                         <form className="flex gap-2">
                             <input
                                 type="email"
                                 placeholder="Email address"
-                                className="bg-gray-800 text-white text-sm px-4 py-2 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                className="bg-gray-800/50 border border-gray-700 text-white text-xs sm:text-sm px-4 py-2.5 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 w-full transition-all"
                             />
-                            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">
-                                Subscribe
+                            <button className="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-blue-700 transition-all active:scale-95 shadow-lg shadow-blue-500/20 shrink-0">
+                                Join
                             </button>
                         </form>
                     </div>
                 </div>
 
-                <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-                    <p>&copy; {new Date().getFullYear()} SmartBuy. All rights reserved.</p>
-                    <div className="flex gap-6 mt-4 md:mt-0">
-                        <Link href="#" className="hover:text-white">Privacy Policy</Link>
-                        <Link href="#" className="hover:text-white">Terms of Service</Link>
+                <div className="border-t border-gray-800 mt-12 sm:mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-600">
+                    <p>&copy; {new Date().getFullYear()} SmartBuy Inc. All rights reserved.</p>
+                    <div className="flex gap-6 sm:gap-8">
+                        <Link href="#" className="hover:text-white transition-colors">Privacy</Link>
+                        <Link href="#" className="hover:text-white transition-colors">Terms</Link>
                     </div>
                 </div>
             </div>
