@@ -4266,7 +4266,7 @@ export const products = [
         rating: 4.7,
         reviews: 12000,
         brand: "Ridge",
-        image: "https://images.unsplash.com/photo-1524282745852-a4636fa0f997?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1627384113743-6bd5a479fffd?w=800&q=80",
         description: "RFID blocking slim metal wallet.",
         inStock: true
     },

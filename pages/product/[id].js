@@ -79,7 +79,25 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
 
     const isWishlisted = product ? isInWishlist(product.id) : false;
 
+    const [mainImg, setMainImg] = useState(null);
+    const [thumbs, setThumbs] = useState([]);
+
+    useEffect(() => {
+        if (product) {
+            const images = (typeof product.images === 'string' ? JSON.parse(product.images) : product.images) || [product.image];
+            setThumbs(images);
+            setMainImg(images[selectedImage] || product.image);
+        }
+    }, [product, selectedImage]);
+
     if (!product) return <div>Loading...</div>;
+
+    const handleImgError = (idx) => {
+        const newThumbs = [...thumbs];
+        newThumbs[idx] = 'https://via.placeholder.com/800x800?text=Image+Unavailable';
+        setThumbs(newThumbs);
+        if (selectedImage === idx) setMainImg(newThumbs[idx]);
+    };
 
     return (
         <div className="min-h-screen bg-black text-white flex flex-col">
@@ -97,11 +115,12 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                         <div className="space-y-4">
                             <div className="relative aspect-square bg-gray-800 rounded-xl overflow-hidden group">
                                 <Image
-                                    src={product.images ? (typeof product.images === 'string' ? JSON.parse(product.images)[selectedImage] : product.images[selectedImage]) : product.image}
+                                    src={mainImg || product.image}
                                     alt={product.name}
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                                     priority
+                                    onError={() => handleImgError(selectedImage)}
                                 />
                                 <button
                                     onClick={() => toggleWishlist(product)}
@@ -112,14 +131,20 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                             </div>
                             {/* Thumbnail strip */}
                             <div className="flex gap-4 overflow-x-auto pb-2 no-scrollbar">
-                                {((typeof product.images === 'string' ? JSON.parse(product.images) : product.images) || [product.image]).map((img, idx) => (
+                                {thumbs.map((img, idx) => (
                                     <button
                                         key={idx}
                                         onClick={() => setSelectedImage(idx)}
                                         className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 flex-shrink-0 transition-all ${selectedImage === idx ? 'border-white ring-2 ring-gray-700' : 'border-transparent opacity-70 hover:opacity-100'
                                             }`}
                                     >
-                                        <Image src={img} alt={`Thumbnail ${idx + 1}`} fill className="object-cover" />
+                                        <Image
+                                            src={img}
+                                            alt={`Thumbnail ${idx + 1}`}
+                                            fill
+                                            className="object-cover"
+                                            onError={() => handleImgError(idx)}
+                                        />
                                     </button>
                                 ))}
                             </div>
@@ -291,8 +316,8 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                             disabled={!product.inStock}
                                             onClick={() => addToCart(product)}
                                             className={`flex-1 font-bold py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 text-lg ${product.inStock
-                                                    ? "bg-white text-black hover:bg-gray-200"
-                                                    : "bg-gray-800 text-gray-600 cursor-not-allowed"
+                                                ? "bg-white text-black hover:bg-gray-200"
+                                                : "bg-gray-800 text-gray-600 cursor-not-allowed"
                                                 }`}
                                         >
                                             <ShoppingCart className="w-6 h-6" />
@@ -302,8 +327,8 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                             whileTap={product.inStock ? { scale: 0.95 } : {}}
                                             disabled={!product.inStock}
                                             className={`flex-1 font-bold py-4 rounded-xl transition-all shadow-lg text-lg ${product.inStock
-                                                    ? "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-500/20"
-                                                    : "bg-gray-900 text-gray-700 border border-gray-800 cursor-not-allowed"
+                                                ? "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-500/20"
+                                                : "bg-gray-900 text-gray-700 border border-gray-800 cursor-not-allowed"
                                                 }`}
                                         >
                                             {product.inStock ? "Buy Now" : "Currently Unavailable"}

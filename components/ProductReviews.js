@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Star, ThumbsUp, MessageSquare, Plus, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
@@ -15,11 +15,7 @@ export default function ProductReviews({ product: initialProduct }) {
     // Form State
     const [newReview, setNewReview] = useState({ rating: 5, comment: "" });
 
-    useEffect(() => {
-        fetchReviews();
-    }, [initialProduct.id]);
-
-    const fetchReviews = async () => {
+    const fetchReviews = useCallback(async () => {
         setLoading(true);
         try {
             const res = await fetch(`/api/reviews?productId=${initialProduct.id}`);
@@ -32,7 +28,11 @@ export default function ProductReviews({ product: initialProduct }) {
         } finally {
             setLoading(false);
         }
-    };
+    }, [initialProduct.id]);
+
+    useEffect(() => {
+        fetchReviews();
+    }, [fetchReviews]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
