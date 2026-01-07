@@ -17,11 +17,19 @@ export default async function handler(req, res) {
         }
 
         const userId = await getSessionUserId(session);
-        if (!userId) return res.status(200).json([]); // No user, no orders
+        const userEmail = session.user.email;
 
         const orders = await prisma.order.findMany({
             where: {
-                userId: userId
+                OR: [
+                    { userId: userId },
+                    {
+                        AND: [
+                            { customerEmail: userEmail ? userEmail : '___non_existent___' },
+                            { userId: null }
+                        ]
+                    }
+                ]
             },
             include: {
                 items: {

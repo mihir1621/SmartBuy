@@ -1,7 +1,7 @@
 // StoreNavbar Component
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { ShoppingBag, Search, X, User, Camera, Heart, MapPin, Loader2 } from 'lucide-react';
+import { ShoppingBag, Search, X, User, Camera, Heart, MapPin, Loader2, Clock } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { useLocation } from '@/context/LocationContext';
@@ -193,19 +193,23 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                 {/* Compact Sub-nav */}
                 <div className="bg-black border-t border-gray-800 py-1.5 overflow-hidden">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
-
-                            {categories.map((category) => (
-                                <button
-                                    key={category}
-                                    onClick={() => setSelectedCategory(category)}
-                                    className={`px-3 py-1 rounded-md text-[11px] font-semibold whitespace-nowrap transition-all ${selectedCategory === category
-                                        ? "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-                                        : "text-gray-400 hover:text-white hover:bg-gray-800"
-                                        }`}
+                        <div className="flex items-center gap-6 overflow-x-auto no-scrollbar scroll-smooth">
+                            <Link
+                                href="/orders"
+                                className={`flex items-center gap-1.5 py-1 text-[11px] font-black uppercase tracking-widest whitespace-nowrap transition-all ${router.pathname === '/orders' ? 'text-blue-400 border-b-2 border-blue-500' : 'text-gray-400 hover:text-white'}`}
+                            >
+                                <Clock className="w-3.5 h-3.5" />
+                                Track Orders
+                            </Link>
+                            <div className="w-px h-4 bg-gray-800 shrink-0" />
+                            {categories.map((cat) => (
+                                <Link
+                                    key={cat}
+                                    href={`/?category=${cat}`}
+                                    className={`py-1 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors ${selectedCategory === cat ? 'text-blue-400 border-b-2 border-blue-500' : 'text-gray-400 hover:text-white'}`}
                                 >
-                                    {category}
-                                </button>
+                                    {cat}
+                                </Link>
                             ))}
                         </div>
                     </div>

@@ -22,11 +22,10 @@ export default function OrderSuccess() {
 
     const fetchOrder = async () => {
         try {
-            const res = await fetch('/api/orders/history');
+            const res = await fetch(`/api/orders/${id}`);
             const data = await res.json();
             if (res.ok) {
-                const found = data.find(o => o.id === parseInt(id));
-                if (found) setOrder(found);
+                setOrder(data);
             }
         } catch (err) {
             console.error(err);

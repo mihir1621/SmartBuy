@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useCart } from '@/context/CartContext';
+import { useSession } from 'next-auth/react';
 import { motion } from 'framer-motion';
 import { CreditCard, Truck, ShieldCheck, Lock, ChevronRight } from 'lucide-react';
 import StoreNavbar from '@/components/StoreNavbar';
@@ -20,6 +21,7 @@ const loadRazorpayScript = () => {
 };
 
 export default function Checkout() {
+    const { data: session } = useSession();
     const { cart, cartTotal, clearCart } = useCart();
     const router = useRouter();
     const [formData, setFormData] = useState({
@@ -31,6 +33,19 @@ export default function Checkout() {
         city: '',
         postalCode: ''
     });
+
+    useEffect(() => {
+        if (session?.user) {
+            const nameParts = session.user.name ? session.user.name.split(' ') : ['', ''];
+            setFormData(prev => ({
+                ...prev,
+                firstName: nameParts[0] || '',
+                lastName: nameParts.slice(1).join(' ') || '',
+                email: session.user.email || prev.email,
+                phone: session.user.phone || prev.phone || ''
+            }));
+        }
+    }, [session]);
     const [isProcessing, setIsProcessing] = useState(false);
     const [paymentStep, setPaymentStep] = useState(''); // '', 'creating', 'payment', 'verifying'
 
