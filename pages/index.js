@@ -17,7 +17,8 @@ import { prisma } from "@/lib/prisma";
 export async function getServerSideProps() {
   try {
     const products = await prisma.product.findMany({
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
+      take: 20
     });
 
     const serializedProducts = JSON.parse(JSON.stringify(products)).map(p => ({

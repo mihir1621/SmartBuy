@@ -9,6 +9,8 @@ const nextConfig = {
       { protocol: 'https', hostname: 'fakestoreapi.com' },
       { protocol: 'https', hostname: 'images.pexels.com' },
       { protocol: 'https', hostname: 'via.placeholder.com' },
+      { protocol: 'https', hostname: 'img.bbystatic.com' },
+      { protocol: 'https', hostname: 'images.bestbuy.com' },
     ],
   },
 };
