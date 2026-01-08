@@ -10,6 +10,9 @@ export default function ProductCard({ product }) {
     const { isInWishlist, toggleWishlist } = useWishlist();
     const isWishlisted = isInWishlist(product.id);
 
+    // Robust inStock check: use boolean if available, fallback to checking stock count
+    const isInStock = product.inStock !== undefined ? product.inStock : (product.stock > 0);
+
     const discountPercentage = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
 
     const [imgSrc, setImgSrc] = useState(product.image);
@@ -51,7 +54,7 @@ export default function ProductCard({ product }) {
                     )}
 
                     {/* Out of Stock Overlay */}
-                    {!product.inStock && (
+                    {!isInStock && (
                         <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center z-10">
                             <span className="bg-white text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-xl">
                                 Out of Stock
@@ -60,7 +63,7 @@ export default function ProductCard({ product }) {
                     )}
 
                     {/* Low Stock Badge */}
-                    {product.inStock && product.stock > 0 && product.stock < 10 && (
+                    {isInStock && product.stock > 0 && product.stock < 10 && (
                         <div className="absolute bottom-2 left-2 bg-amber-500 text-black text-[9px] font-black px-2 py-0.5 rounded shadow-lg animate-pulse">
                             ONLY {product.stock} LEFT!
                         </div>
@@ -94,19 +97,19 @@ export default function ProductCard({ product }) {
 
                         {/* Add to Cart Button */}
                         <button
-                            disabled={!product.inStock}
+                            disabled={!isInStock}
                             onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 addToCart(product);
                             }}
-                            className={`w-full text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 rounded-lg transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 ${product.inStock
+                            className={`w-full text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 rounded-lg transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 ${isInStock
                                 ? "bg-white hover:bg-gray-200 text-black shadow-lg shadow-white/5"
                                 : "bg-gray-800 text-gray-600 cursor-not-allowed"
                                 }`}
                         >
                             <ShoppingCart className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
-                            {product.inStock ? "Add to Cart" : "Sold Out"}
+                            {isInStock ? "Add to Cart" : "Sold Out"}
                         </button>
                     </div>
                 </div>

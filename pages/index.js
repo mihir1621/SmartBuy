@@ -16,33 +16,18 @@ import { prisma } from "@/lib/prisma";
 
 export async function getServerSideProps() {
   try {
-    const dbProducts = await prisma.product.findMany({
-      select: {
-        id: true,
-        name: true,
-        category: true,
-        price: true,
-        originalPrice: true,
-        discount: true,
-        rating: true,
-        reviews: true,
-        brand: true,
-        image: true,
-        inStock: true,
-        isNew: true,
-        createdAt: true,
-        description: true, // Keep it for search but maybe we can truncate it here if needed
-      }
+    const products = await prisma.product.findMany({
+      orderBy: { createdAt: 'desc' }
     });
 
-    const products = JSON.parse(JSON.stringify(dbProducts)).map(p => ({
+    const serializedProducts = JSON.parse(JSON.stringify(products)).map(p => ({
       ...p,
       description: p.description ? (p.description.length > 150 ? p.description.substring(0, 150) + '...' : p.description) : ''
     }));
 
     return {
       props: {
-        initialProducts: products,
+        initialProducts: serializedProducts,
       },
     };
   } catch (error) {

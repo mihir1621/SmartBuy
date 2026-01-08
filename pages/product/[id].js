@@ -78,6 +78,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
     }, [product]);
 
     const isWishlisted = product ? isInWishlist(product.id) : false;
+    const isInStock = product ? (product.inStock !== undefined ? product.inStock : (product.stock > 0)) : false;
 
     const [mainImg, setMainImg] = useState(null);
     const [thumbs, setThumbs] = useState([]);
@@ -301,13 +302,13 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-auto pt-6 border-t border-gray-800">
                                 <div className="w-full">
                                     <div className="flex items-center gap-2.5 mb-4">
-                                        <div className={`h-2 w-2 rounded-full ${product.inStock ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-red-500'}`} />
-                                        <span className={`text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] ${product.inStock ? 'text-emerald-500' : 'text-red-500'}`}>
-                                            {product.inStock ? 'In Stock — Ships Today' : 'Out of Stock'}
+                                        <div className={`h-2 w-2 rounded-full ${isInStock ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-red-500'}`} />
+                                        <span className={`text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] ${isInStock ? 'text-emerald-500' : 'text-red-500'}`}>
+                                            {isInStock ? 'In Stock — Ships Today' : 'Out of Stock'}
                                         </span>
                                     </div>
 
-                                    {product.inStock && product.stock > 0 && product.stock < 10 && (
+                                    {isInStock && product.stock > 0 && product.stock < 10 && (
                                         <div className="bg-amber-500/10 border border-amber-500/20 p-2.5 sm:p-3 rounded-xl mb-4 flex items-center gap-3">
                                             <div className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" />
                                             <p className="text-amber-500 text-[10px] sm:text-xs font-black uppercase tracking-wider">Hurry! Only {product.stock} items remaining</p>
@@ -316,26 +317,26 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
 
                                     <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                                         <motion.button
-                                            whileTap={product.inStock ? { scale: 0.98 } : {}}
-                                            disabled={!product.inStock}
+                                            whileTap={isInStock ? { scale: 0.98 } : {}}
+                                            disabled={!isInStock}
                                             onClick={() => addToCart(product)}
-                                            className={`flex-1 font-black py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base uppercase tracking-widest ${product.inStock
+                                            className={`flex-1 font-black py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base uppercase tracking-widest ${isInStock
                                                 ? "bg-white text-black hover:bg-gray-100"
                                                 : "bg-gray-800 text-gray-600 cursor-not-allowed"
                                                 }`}
                                         >
                                             <ShoppingCart className="w-5 h-5" />
-                                            {product.inStock ? "Add to Cart" : "Sold Out"}
+                                            {isInStock ? "Add to Cart" : "Sold Out"}
                                         </motion.button>
                                         <motion.button
-                                            whileTap={product.inStock ? { scale: 0.98 } : {}}
-                                            disabled={!product.inStock}
-                                            className={`flex-1 font-black py-4 rounded-xl transition-all shadow-lg text-sm sm:text-base uppercase tracking-widest ${product.inStock
+                                            whileTap={isInStock ? { scale: 0.98 } : {}}
+                                            disabled={!isInStock}
+                                            className={`flex-1 font-black py-4 rounded-xl transition-all shadow-lg text-sm sm:text-base uppercase tracking-widest ${isInStock
                                                 ? "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-500/20"
                                                 : "bg-gray-900 text-gray-700 border border-gray-800 cursor-not-allowed"
                                                 }`}
                                         >
-                                            {product.inStock ? "Checkout Now" : "Unavailable"}
+                                            {isInStock ? "Checkout Now" : "Unavailable"}
                                         </motion.button>
                                     </div>
                                 </div>
