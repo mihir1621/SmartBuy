@@ -83,12 +83,14 @@ export default function Checkout() {
         setPaymentStep('creating');
 
         try {
-            // 1. Load Razorpay Script
-            const resScript = await loadRazorpayScript();
-            if (!resScript) {
-                alert("Razorpay SDK failed to load. Are you online?");
-                setIsProcessing(false);
-                return;
+            // 1. Only load Razorpay Script if needed
+            if (selectedPaymentMethod !== 'COD') {
+                const resScript = await loadRazorpayScript();
+                if (!resScript) {
+                    alert("Razorpay SDK failed to load. Are you online?");
+                    setIsProcessing(false);
+                    return;
+                }
             }
 
             // 2. Create internal order and Razorpay order
@@ -106,6 +108,12 @@ export default function Checkout() {
             const data = await res.json();
 
             if (!res.ok) {
+                if (res.status === 404) {
+                    alert(data.error || 'Some items in your cart are no longer available. Clearing your cart so you can start fresh.');
+                    clearCart();
+                    router.push('/');
+                    return;
+                }
                 throw new Error(data.error || 'Failed to initialize order');
             }
 
@@ -121,7 +129,7 @@ export default function Checkout() {
 
             // 3. Open Razorpay Modal
             const options = {
-                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Use public key from env
+                key: data.razorpayKeyId || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Use server key or fallback
                 amount: data.amount,
                 currency: data.currency,
                 name: "SmartBuy Store",

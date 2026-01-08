@@ -20,7 +20,7 @@ export const products = [
         isNew: true
     },
     {
-        id: 101,
+        id: 2,
         name: "Dell XPS 13",
         category: "Laptops",
         price: 89990,
@@ -38,7 +38,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 102,
+        id: 3,
         name: "HP Spectre x360",
         category: "Laptops",
         price: 99990,
@@ -52,7 +52,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 103,
+        id: 4,
         name: "Acer Predator Helios",
         category: "Laptops",
         price: 105000,
@@ -66,7 +66,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 104,
+        id: 5,
         name: "Lenovo ThinkPad X1",
         category: "Laptops",
         price: 135000,
@@ -80,7 +80,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 105,
+        id: 6,
         name: "Asus ROG Zephyrus",
         category: "Laptops",
         price: 140000,
@@ -94,7 +94,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 106,
+        id: 7,
         name: "Microsoft Surface Laptop 5",
         category: "Laptops",
         price: 95000,
@@ -108,7 +108,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 107,
+        id: 8,
         name: "HP Victus Gaming",
         category: "Laptops",
         price: 58990,
@@ -122,7 +122,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 108,
+        id: 9,
         name: "ASUS TUF Gaming F15",
         category: "Laptops",
         price: 64990,
@@ -136,7 +136,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 109,
+        id: 10,
         name: "Acer Nitro V",
         category: "Laptops",
         price: 77990,
@@ -152,7 +152,7 @@ export const products = [
 
     // --- SMARTPHONES ---
     {
-        id: 2001,
+        id: 11,
         name: "iPhone 15 Pro Max",
         category: "Smartphones",
         price: 109900,
@@ -171,7 +171,7 @@ export const products = [
         isNew: true
     },
     {
-        id: 20011,
+        id: 12,
         name: "iPhone 15 Pro",
         category: "Smartphones",
         price: 89900,
@@ -189,7 +189,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 20012,
+        id: 13,
         name: "iPhone 15",
         category: "Smartphones",
         price: 59900,
@@ -203,7 +203,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 2002,
+        id: 14,
         name: "iPhone 14 Plus",
         category: "Smartphones",
         price: 79900,
@@ -212,12 +212,12 @@ export const products = [
         rating: 4.7,
         reviews: 850,
         brand: "Apple",
-        image: "https://images.unsplash.com/photo-1663499114701-76611596b659?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800&q=80",
         description: "Big screen, huge battery life. iPhone 14 Plus.",
         inStock: true
     },
     {
-        id: 20021,
+        id: 15,
         name: "iPhone 14",
         category: "Smartphones",
         price: 69900,
@@ -231,7 +231,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 20031,
+        id: 16,
         name: "iPhone 13",
         category: "Smartphones",
         price: 52999,
@@ -245,7 +245,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 2003,
+        id: 17,
         name: "iPhone 13 Mini",
         category: "Smartphones",
         price: 59900,
@@ -259,7 +259,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 20041,
+        id: 18,
         name: "iPhone 12",
         category: "Smartphones",
         price: 42999,
@@ -273,7 +273,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 20042,
+        id: 19,
         name: "iPhone 11",
         category: "Smartphones",
         price: 36999,
@@ -287,7 +287,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 2004,
+        id: 20,
         name: "iPhone SE (3rd Gen)",
         category: "Smartphones",
         price: 49900,
@@ -301,7 +301,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 2005,
+        id: 21,
         name: "Samsung Galaxy S24 Ultra",
         category: "Smartphones",
         price: 84999,
@@ -310,12 +310,12 @@ export const products = [
         rating: 4.9,
         reviews: 580,
         brand: "Samsung",
-        image: "https://images.unsplash.com/photo-1707248332159-073b6408229b?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1605371289196-857500593b4a?w=800&q=80",
         description: "Galaxy AI powered flagship with 200MP camera.",
         inStock: true
     },
     {
-        id: 2006,
+        id: 22,
         name: "Samsung Galaxy Z Fold 5",
         category: "Smartphones",
         price: 154999,
@@ -324,12 +324,12 @@ export const products = [
         rating: 4.8,
         reviews: 210,
         brand: "Samsung",
-        image: "https://images.unsplash.com/photo-1692285148019-f9c3ba40aae9?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1598289411511-b930fd181414?w=800&q=80",
         description: "The ultimate productivity tool that folds into a tablet.",
         inStock: true
     },
     {
-        id: 2007,
+        id: 23,
         name: "Samsung Galaxy A54 5G",
         category: "Smartphones",
         price: 38999,
@@ -343,7 +343,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 2008,
+        id: 24,
         name: "Samsung Galaxy M34 5G",
         category: "Smartphones",
         price: 18999,
@@ -352,12 +352,12 @@ export const products = [
         rating: 4.3,
         reviews: 3400,
         brand: "Samsung",
-        image: "https://images.unsplash.com/photo-1556656793-02715d8dd660?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=800&q=80",
         description: "Monstrous battery and superfluid display.",
         inStock: true
     },
     {
-        id: 2009,
+        id: 25,
         name: "Samsung Galaxy F54 5G",
         category: "Smartphones",
         price: 24999,
@@ -371,7 +371,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 2010,
+        id: 26,
         name: "OnePlus 12",
         category: "Smartphones",
         price: 64999,
@@ -380,12 +380,12 @@ export const products = [
         rating: 4.8,
         reviews: 1500,
         brand: "OnePlus",
-        image: "https://images.unsplash.com/photo-1647891221711-6677f3747fc4?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1549439602-43ebca2327af?w=800&q=80",
         description: "Fast and Smooth flagship experience with Hasselblad camera.",
         inStock: true
     },
     {
-        id: 2011,
+        id: 27,
         name: "OnePlus Nord CE 3 Lite",
         category: "Smartphones",
         price: 19999,
@@ -394,12 +394,12 @@ export const products = [
         rating: 4.3,
         reviews: 5600,
         brand: "OnePlus",
-        image: "https://images.unsplash.com/photo-1598327105666-5b89351aff23?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
         description: "A little more than you'd expect for a lot less.",
         inStock: true
     },
     {
-        id: 2012,
+        id: 28,
         name: "Xiaomi 14 Ultra",
         category: "Smartphones",
         price: 99999,
@@ -413,7 +413,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 2013,
+        id: 29,
         name: "Redmi Note 13 Pro+",
         category: "Smartphones",
         price: 24999,
@@ -427,7 +427,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 2014,
+        id: 30,
         name: "Realme 12 Pro+",
         category: "Smartphones",
         price: 29999,
@@ -441,7 +441,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 2015,
+        id: 31,
         name: "Vivo V29 Pro",
         category: "Smartphones",
         price: 39999,
@@ -455,7 +455,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 2016,
+        id: 32,
         name: "Oppo Reno 11 Pro",
         category: "Smartphones",
         price: 39999,
@@ -469,7 +469,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 2017,
+        id: 33,
         name: "Google Pixel 8 Pro",
         category: "Smartphones",
         price: 106999,
@@ -478,12 +478,12 @@ export const products = [
         rating: 4.8,
         reviews: 320,
         brand: "Google",
-        image: "https://images.unsplash.com/photo-1598327105666-5b89351aff23?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
         description: "The AI-powered phone that captures every detail.",
         inStock: true
     },
     {
-        id: 2018,
+        id: 34,
         name: "Nothing Phone (2)",
         category: "Smartphones",
         price: 44999,
@@ -492,12 +492,12 @@ export const products = [
         rating: 4.7,
         reviews: 950,
         brand: "Nothing",
-        image: "https://images.unsplash.com/photo-1688647576722-19e344e782f9?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1593642632823-8f78536788c6?w=800&q=80",
         description: "Unique Glyph interface and refined software experience.",
         inStock: true
     },
     {
-        id: 2019,
+        id: 35,
         name: "iQOO 12",
         category: "Smartphones",
         price: 52999,
@@ -506,12 +506,12 @@ export const products = [
         rating: 4.9,
         reviews: 150,
         brand: "iQOO",
-        image: "https://images.unsplash.com/photo-1596740926475-618d3d2e1327?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1580870069867-74c57ee1bb07?w=800&q=80",
         description: "Extreme performance flagship for the ultimate gamer.",
         inStock: true
     },
     {
-        id: 2020,
+        id: 36,
         name: "Moto Edge 40",
         category: "Smartphones",
         price: 29999,
@@ -525,7 +525,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 20201,
+        id: 37,
         name: "Motorola Razr 40 Ultra",
         category: "Smartphones",
         price: 89999,
@@ -534,12 +534,12 @@ export const products = [
         rating: 4.7,
         reviews: 450,
         brand: "Motorola",
-        image: "https://images.unsplash.com/photo-1551817958-c5b51e737089?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=800&q=80",
         description: "Iconic flip design with the largest external display.",
         inStock: true
     },
     {
-        id: 20202,
+        id: 38,
         name: "Motorola Edge 40 Neo",
         category: "Smartphones",
         price: 22999,
@@ -553,7 +553,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 20203,
+        id: 39,
         name: "Moto G84 5G",
         category: "Smartphones",
         price: 18999,
@@ -562,12 +562,12 @@ export const products = [
         rating: 4.4,
         reviews: 2500,
         brand: "Motorola",
-        image: "https://images.unsplash.com/photo-1565849906461-0eaa0c330b6c?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=800&q=80",
         description: "Viva Magenta vegan leather finish and 12GB RAM.",
         inStock: true
     },
     {
-        id: 20241,
+        id: 40,
         name: "POCO X6 Pro 5G",
         category: "Smartphones",
         price: 26999,
@@ -581,7 +581,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 20242,
+        id: 41,
         name: "Realme 12 Pro 5G",
         category: "Smartphones",
         price: 25999,
@@ -590,12 +590,12 @@ export const products = [
         rating: 4.7,
         reviews: 1500,
         brand: "Realme",
-        image: "https://images.unsplash.com/photo-1627145782782-45e396263884?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1627704548671-331c1015024d?w=800&q=80",
         description: "Portrait Master with Sony IMX sensor.",
         inStock: true
     },
     {
-        id: 20243,
+        id: 42,
         name: "Nothing Phone (2a)",
         category: "Smartphones",
         price: 23999,
@@ -604,12 +604,12 @@ export const products = [
         rating: 4.5,
         reviews: 1200,
         brand: "Nothing",
-        image: "https://images.unsplash.com/photo-1695646199653-ec4d4204c356?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=800&q=80",
         description: "Uniquely designed with Glyph Interface.",
         inStock: true
     },
     {
-        id: 20244,
+        id: 43,
         name: "Redmi Note 13 Pro 5G",
         category: "Smartphones",
         price: 25999,
@@ -623,7 +623,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 20204,
+        id: 44,
         name: "Moto G54 5G",
         category: "Smartphones",
         price: 15999,
@@ -632,12 +632,12 @@ export const products = [
         rating: 4.3,
         reviews: 3200,
         brand: "Motorola",
-        image: "https://images.unsplash.com/photo-1565849906461-0eaa0c330b6c?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=800&q=80",
         description: "India's first 12GB RAM + 256GB storage in this segment.",
         inStock: true
     },
     {
-        id: 2021,
+        id: 45,
         name: "Infinix Zero 30 5G",
         category: "Smartphones",
         price: 23999,
@@ -651,7 +651,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 2022,
+        id: 46,
         name: "Tecno Phantom X2 Pro",
         category: "Smartphones",
         price: 49999,
@@ -665,7 +665,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 2023,
+        id: 47,
         name: "Lava Agni 2 5G",
         category: "Smartphones",
         price: 19999,
@@ -674,12 +674,12 @@ export const products = [
         rating: 4.7,
         reviews: 1500,
         brand: "Lava",
-        image: "https://images.unsplash.com/photo-1512499617640-c74ae3a49dd2?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=800&q=80",
         description: "Premium curved display and clean Android experience.",
         inStock: true
     },
     {
-        id: 2024,
+        id: 48,
         name: "Micromax IN Note 2",
         category: "Smartphones",
         price: 12999,
@@ -696,7 +696,7 @@ export const products = [
 
     // --- HEADPHONES & AUDIO ---
     {
-        id: 4,
+        id: 49,
         name: "Sony WH-1000XM5",
         category: "Audio",
         price: 21990,
@@ -710,7 +710,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 110,
+        id: 50,
         name: "Bose QuietComfort 45",
         category: "Audio",
         price: 24900,
@@ -724,7 +724,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 111,
+        id: 51,
         name: "JBL Flip 6",
         category: "Audio",
         price: 9999,
@@ -738,7 +738,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 112,
+        id: 52,
         name: "Sennheiser Momentum 4",
         category: "Audio",
         price: 27990,
@@ -752,7 +752,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 113,
+        id: 53,
         name: "Apple AirPods Pro 2",
         category: "Audio",
         price: 18900,
@@ -766,7 +766,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1141,
+        id: 54,
         name: "boAt Airdopes 161",
         category: "Audio",
         price: 1299,
@@ -780,7 +780,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1142,
+        id: 55,
         name: "OnePlus Buds 3",
         category: "Audio",
         price: 5499,
@@ -794,7 +794,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1143,
+        id: 56,
         name: "Sony WH-CH720N",
         category: "Audio",
         price: 9990,
@@ -810,7 +810,7 @@ export const products = [
 
     // --- MENSWEAR ---
     {
-        id: 5,
+        id: 57,
         name: "Nike Air Max 90",
         category: "Menswear",
         price: 9995,
@@ -825,7 +825,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 6,
+        id: 58,
         name: "H&M Relaxed Fit Hoodie",
         category: "Menswear",
         price: 1499,
@@ -840,7 +840,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 114,
+        id: 59,
         name: "Levi's 511 Slim Jeans",
         category: "Menswear",
         price: 2800,
@@ -855,7 +855,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 115,
+        id: 60,
         name: "Puma T-Shirt",
         category: "Menswear",
         price: 899,
@@ -870,7 +870,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 116,
+        id: 61,
         name: "Allen Solly Formal Shirt",
         category: "Menswear",
         price: 1899,
@@ -885,7 +885,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 117,
+        id: 62,
         name: "Adidas Running Shoes",
         category: "Menswear",
         price: 4500,
@@ -901,7 +901,7 @@ export const products = [
     },
 
     {
-        id: 1401,
+        id: 63,
         name: "Allen Solly Polo T-Shirt",
         category: "Menswear",
         price: 899,
@@ -916,7 +916,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1402,
+        id: 64,
         name: "Raymond Formal Shirt",
         category: "Menswear",
         price: 1499,
@@ -931,7 +931,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1403,
+        id: 65,
         name: "U.S. Polo Assn. Denim Shirt",
         category: "Menswear",
         price: 1899,
@@ -946,7 +946,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1404,
+        id: 66,
         name: "Peter England Formal Trousers",
         category: "Menswear",
         price: 1299,
@@ -961,7 +961,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1405,
+        id: 67,
         name: "Manyavar Kurta Set",
         category: "Menswear",
         price: 2999,
@@ -976,7 +976,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1406,
+        id: 68,
         name: "Jack & Jones Printed Tee",
         category: "Menswear",
         price: 699,
@@ -991,7 +991,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1407,
+        id: 69,
         name: "Louis Philippe Blazer",
         category: "Menswear",
         price: 6999,
@@ -1006,7 +1006,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1408,
+        id: 70,
         name: "Flying Machine Skinny Jeans",
         category: "Menswear",
         price: 1599,
@@ -1021,7 +1021,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1409,
+        id: 71,
         name: "Woodland Leather Jacket",
         category: "Menswear",
         price: 5599,
@@ -1036,7 +1036,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1410,
+        id: 72,
         name: "Nike Dri-FIT Shorts",
         category: "Menswear",
         price: 1295,
@@ -1051,7 +1051,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1411,
+        id: 73,
         name: "Van Heusen 3-Piece Suit",
         category: "Menswear",
         price: 9999,
@@ -1066,7 +1066,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1412,
+        id: 74,
         name: "Highlander Puffer Jacket",
         category: "Menswear",
         price: 1199,
@@ -1081,7 +1081,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1413,
+        id: 75,
         name: "FabIndia Linen Kurta",
         category: "Menswear",
         price: 1899,
@@ -1096,7 +1096,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1414,
+        id: 76,
         name: "Monte Carlo Sweater",
         category: "Menswear",
         price: 2200,
@@ -1111,7 +1111,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1415,
+        id: 77,
         name: "Spykar Distressed Jeans",
         category: "Menswear",
         price: 1799,
@@ -1128,7 +1128,7 @@ export const products = [
 
     // --- WOMENSWEAR ---
     {
-        id: 7,
+        id: 78,
         name: "Zara Floral Maxi Dress",
         category: "Womenswear",
         price: 3590,
@@ -1143,7 +1143,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 8,
+        id: 79,
         name: "Mango Tote Bag",
         category: "Bags",
         price: 2290,
@@ -1158,7 +1158,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 118,
+        id: 80,
         name: "H&M Blouse",
         category: "Womenswear",
         price: 1299,
@@ -1173,7 +1173,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 119,
+        id: 81,
         name: "Levis Skinny Jeans",
         category: "Womenswear",
         price: 3200,
@@ -1188,7 +1188,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 120,
+        id: 82,
         name: "Nike Air Zoom Pegasus",
         category: "Womenswear",
         price: 9000,
@@ -1203,7 +1203,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 121,
+        id: 83,
         name: "Silk Saree",
         category: "Womenswear",
         price: 5500,
@@ -1220,7 +1220,7 @@ export const products = [
 
     // --- HOME & KITCHEN ---
     {
-        id: 9,
+        id: 84,
         name: "Dyson V15 Detect",
         category: "Home",
         price: 62900,
@@ -1234,7 +1234,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10,
+        id: 85,
         name: "Philips Air Fryer",
         category: "Home",
         price: 8999,
@@ -1248,7 +1248,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 122,
+        id: 86,
         name: "IKEA Billy Bookcase",
         category: "Home",
         price: 4500,
@@ -1262,7 +1262,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 123,
+        id: 87,
         name: "Milton Thermosteel Bottle",
         category: "Home",
         price: 850,
@@ -1276,7 +1276,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 124,
+        id: 88,
         name: "Prestige Gas Stove",
         category: "Home",
         price: 3500,
@@ -1292,7 +1292,7 @@ export const products = [
 
     // --- SMARTWATCHES ---
     {
-        id: 125,
+        id: 89,
         name: "Apple Watch Series 9",
         category: "Watch",
         price: 34900,
@@ -1307,7 +1307,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 126,
+        id: 90,
         name: "Samsung Galaxy Watch 6",
         category: "Watch",
         price: 12499,
@@ -1322,7 +1322,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1301,
+        id: 91,
         name: "Noise ColorFit Pro 5",
         category: "Watch",
         price: 3999,
@@ -1337,7 +1337,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1302,
+        id: 92,
         name: "boAt Wave Call 2",
         category: "Watch",
         price: 1299,
@@ -1346,12 +1346,12 @@ export const products = [
         rating: 4.0,
         reviews: 8500,
         brand: "boAt",
-        image: "https://images.unsplash.com/photo-1544117963-8dd25d94e3ac?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
         description: "Advanced BT Calling & DIY Watch Face Studio.",
         inStock: true
     },
     {
-        id: 1303,
+        id: 93,
         name: "Fire-Boltt Phoenix",
         category: "Watch",
         price: 1499,
@@ -1361,12 +1361,12 @@ export const products = [
         reviews: 12000,
         brand: "Fire-Boltt",
         gender: "Men",
-        image: "https://images.unsplash.com/photo-1558507352-79357d620242?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
         description: "Round dial with stainless steel body.",
         inStock: true
     },
     {
-        id: 1304,
+        id: 94,
         name: "Titan Smart Pro",
         category: "Watch",
         price: 9995,
@@ -1380,7 +1380,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1305,
+        id: 95,
         name: "Fossil Gen 6",
         category: "Watch",
         price: 18495,
@@ -1395,7 +1395,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1308,
+        id: 96,
         name: "Titan Raga Viva",
         category: "Watch",
         price: 4500,
@@ -1410,7 +1410,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1309,
+        id: 97,
         name: "Michael Kors Gen 6",
         category: "Watch",
         price: 24995,
@@ -1425,7 +1425,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1310,
+        id: 98,
         name: "Casio Vintage Series",
         category: "Watch",
         price: 3995,
@@ -1435,12 +1435,12 @@ export const products = [
         reviews: 3000,
         brand: "Casio",
         gender: "Kids",
-        image: "https://images.unsplash.com/photo-1558180496-e2b8612ca453?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&q=80",
         description: "Digital display with retro styling.",
         inStock: true
     },
     {
-        id: 1311,
+        id: 99,
         name: "Zoop by Titan",
         category: "Watch",
         price: 999,
@@ -1455,7 +1455,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1312,
+        id: 100,
         name: "Noise Champ 2 Kids",
         category: "Watch",
         price: 2499,
@@ -1470,7 +1470,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1306,
+        id: 101,
         name: "Amazfit GTR 4",
         category: "Watch",
         price: 16999,
@@ -1484,7 +1484,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1307,
+        id: 102,
         name: "Garmin Forerunner 265",
         category: "Watch",
         price: 50490,
@@ -1499,7 +1499,7 @@ export const products = [
     },
     // --- MEN'S WATCHES ---
     {
-        id: 1320,
+        id: 103,
         name: "Fossil Grant Chronograph",
         category: "Watch",
         price: 10995,
@@ -1514,7 +1514,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1321,
+        id: 104,
         name: "Titan Neo IV",
         category: "Watch",
         price: 5495,
@@ -1529,7 +1529,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1322,
+        id: 105,
         name: "Casio Edifice EC",
         category: "Watch",
         price: 12995,
@@ -1544,7 +1544,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1323,
+        id: 106,
         name: "Seiko 5 Automatic",
         category: "Watch",
         price: 22500,
@@ -1559,7 +1559,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1324,
+        id: 107,
         name: "Citizen Eco-Drive",
         category: "Watch",
         price: 18900,
@@ -1574,7 +1574,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1325,
+        id: 108,
         name: "Timex Expedition",
         category: "Watch",
         price: 3495,
@@ -1589,7 +1589,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1326,
+        id: 109,
         name: "G-Shock GA-2100",
         category: "Watch",
         price: 8995,
@@ -1604,7 +1604,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1327,
+        id: 110,
         name: "Diesel Mega Chief",
         category: "Watch",
         price: 19995,
@@ -1619,7 +1619,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1328,
+        id: 111,
         name: "Tommy Hilfiger Sport",
         category: "Watch",
         price: 8500,
@@ -1634,7 +1634,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1329,
+        id: 112,
         name: "Armani Exchange Gold",
         category: "Watch",
         price: 14495,
@@ -1649,7 +1649,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1330,
+        id: 113,
         name: "Fastrack Casual Analog",
         category: "Watch",
         price: 1895,
@@ -1664,7 +1664,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1331,
+        id: 114,
         name: "Giordano Classic",
         category: "Watch",
         price: 4500,
@@ -1679,7 +1679,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1332,
+        id: 115,
         name: "Daniel Wellington Sheffield",
         category: "Watch",
         price: 11999,
@@ -1694,7 +1694,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1333,
+        id: 116,
         name: "Police Batman Edition",
         category: "Watch",
         price: 22000,
@@ -1709,7 +1709,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1334,
+        id: 117,
         name: "Guess Gold Tone",
         category: "Watch",
         price: 13500,
@@ -1724,7 +1724,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1335,
+        id: 118,
         name: "Tissot PRX",
         category: "Watch",
         price: 32000,
@@ -1739,7 +1739,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1336,
+        id: 119,
         name: "Kenneth Cole Skeleton",
         category: "Watch",
         price: 15995,
@@ -1754,7 +1754,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1337,
+        id: 120,
         name: "Sonata Ocean Series",
         category: "Watch",
         price: 2499,
@@ -1769,7 +1769,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1338,
+        id: 121,
         name: "Lee Cooper Dual Time",
         category: "Watch",
         price: 5999,
@@ -1784,7 +1784,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1339,
+        id: 122,
         name: "Maserati Potenza",
         category: "Watch",
         price: 28000,
@@ -1801,7 +1801,7 @@ export const products = [
 
     // --- WOMEN'S WATCHES ---
     {
-        id: 1340,
+        id: 123,
         name: "Titan Raga Moments",
         category: "Watch",
         price: 7495,
@@ -1816,7 +1816,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1341,
+        id: 124,
         name: "Michael Kors Parker",
         category: "Watch",
         price: 18995,
@@ -1831,7 +1831,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1342,
+        id: 125,
         name: "Fossil Jacqueline",
         category: "Watch",
         price: 8995,
@@ -1846,7 +1846,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1343,
+        id: 126,
         name: "Daniel Wellington Petite",
         category: "Watch",
         price: 12999,
@@ -1861,7 +1861,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1344,
+        id: 127,
         name: "Guess Confetti",
         category: "Watch",
         price: 11500,
@@ -1876,7 +1876,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1345,
+        id: 128,
         name: "Rosefield The Boxy",
         category: "Watch",
         price: 9800,
@@ -1891,7 +1891,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1346,
+        id: 129,
         name: "Olivia Burton Bee",
         category: "Watch",
         price: 14500,
@@ -1906,7 +1906,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1347,
+        id: 130,
         name: "Skagen Signatur",
         category: "Watch",
         price: 7995,
@@ -1921,7 +1921,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1348,
+        id: 131,
         name: "Fastrack Tees",
         category: "Watch",
         price: 995,
@@ -1931,12 +1931,12 @@ export const products = [
         reviews: 2000,
         brand: "Fastrack",
         gender: "Women",
-        image: "https://images.unsplash.com/photo-1517056690467-33a59518cc3b?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1552061332-68875508a8e3?w=800&q=80",
         description: "Fun and quirky prints for college wear.",
         inStock: true
     },
     {
-        id: 1349,
+        id: 132,
         name: "Giordano Rose Gold",
         category: "Watch",
         price: 3995,
@@ -1951,7 +1951,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1350,
+        id: 133,
         name: "Nordgreen Native",
         category: "Watch",
         price: 15500,
@@ -1966,7 +1966,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1351,
+        id: 134,
         name: "Cartier Tank Style",
         category: "Watch",
         price: 45000,
@@ -1981,7 +1981,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1352,
+        id: 135,
         name: "French Connection",
         category: "Watch",
         price: 4900,
@@ -1996,7 +1996,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1353,
+        id: 136,
         name: "Chumbak Owl Watch",
         category: "Watch",
         price: 2495,
@@ -2011,7 +2011,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1354,
+        id: 137,
         name: "Swarovski Crystalline",
         category: "Watch",
         price: 28000,
@@ -2026,7 +2026,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1355,
+        id: 138,
         name: "Anne Klein Ceramic",
         category: "Watch",
         price: 6500,
@@ -2041,7 +2041,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1356,
+        id: 139,
         name: "Emporio Armani",
         category: "Watch",
         price: 21995,
@@ -2056,7 +2056,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1357,
+        id: 140,
         name: "Casio Sheen",
         category: "Watch",
         price: 8995,
@@ -2071,7 +2071,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1358,
+        id: 141,
         name: "Obaku Harmony",
         category: "Watch",
         price: 6800,
@@ -2086,7 +2086,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1359,
+        id: 142,
         name: "Coach Park Two Tone",
         category: "Watch",
         price: 16500,
@@ -2102,7 +2102,7 @@ export const products = [
     },
     // --- KIDS' WATCHES ---
     {
-        id: 1360,
+        id: 143,
         name: "Zoop Marvel Spider-Man",
         category: "Watch",
         price: 995,
@@ -2117,7 +2117,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1361,
+        id: 144,
         name: "Skmei Transformer Robot",
         category: "Watch",
         price: 499,
@@ -2132,7 +2132,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1362,
+        id: 145,
         name: "Disney Frozen Elsa",
         category: "Watch",
         price: 1299,
@@ -2147,7 +2147,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1363,
+        id: 146,
         name: "Q&Q Digital Sport",
         category: "Watch",
         price: 1195,
@@ -2162,7 +2162,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1364,
+        id: 147,
         name: "Casio Calculater Watch",
         category: "Watch",
         price: 1695,
@@ -2172,12 +2172,12 @@ export const products = [
         reviews: 400,
         brand: "Casio",
         gender: "Kids",
-        image: "https://images.unsplash.com/photo-1558180496-e2b8612ca453?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&q=80",
         description: "Retro calculator watch for math whizzes.",
         inStock: true
     },
     {
-        id: 1365,
+        id: 148,
         name: "Sonata SF Digital",
         category: "Watch",
         price: 799,
@@ -2192,7 +2192,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1366,
+        id: 149,
         name: "Lego Star Wars",
         category: "Watch",
         price: 1999,
@@ -2207,7 +2207,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1367,
+        id: 150,
         name: "Hello Kitty Analog",
         category: "Watch",
         price: 899,
@@ -2222,7 +2222,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1368,
+        id: 151,
         name: "Fastrack Avengers",
         category: "Watch",
         price: 1495,
@@ -2237,7 +2237,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1369,
+        id: 152,
         name: "Mickey Mouse Classic",
         category: "Watch",
         price: 1899,
@@ -2252,7 +2252,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1370,
+        id: 153,
         name: "Timex Time Machines",
         category: "Watch",
         price: 2295,
@@ -2267,7 +2267,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1371,
+        id: 154,
         name: "Skmei Camouflage",
         category: "Watch",
         price: 599,
@@ -2282,7 +2282,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1372,
+        id: 155,
         name: "Zoop Floral Print",
         category: "Watch",
         price: 850,
@@ -2297,7 +2297,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1373,
+        id: 156,
         name: "Batman Projection Watch",
         category: "Watch",
         price: 399,
@@ -2312,7 +2312,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1374,
+        id: 157,
         name: "Barbie Digital",
         category: "Watch",
         price: 699,
@@ -2327,7 +2327,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1375,
+        id: 158,
         name: "Minions Slap Watch",
         category: "Watch",
         price: 499,
@@ -2342,7 +2342,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1376,
+        id: 159,
         name: "Fitbit Ace 3",
         category: "Watch",
         price: 6999,
@@ -2357,7 +2357,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1377,
+        id: 160,
         name: "Garmin Vivofit Jr",
         category: "Watch",
         price: 7990,
@@ -2372,7 +2372,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1378,
+        id: 161,
         name: "Noise Explorer Kids",
         category: "Watch",
         price: 3499,
@@ -2387,7 +2387,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1379,
+        id: 162,
         name: "Puma Kids Motorsport",
         category: "Watch",
         price: 1999,
@@ -2403,7 +2403,7 @@ export const products = [
     },
     // --- UNISEX WATCHES ---
     {
-        id: 1380,
+        id: 163,
         name: "Apple Watch Ultra 2",
         category: "Watch",
         price: 89900,
@@ -2418,7 +2418,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1381,
+        id: 164,
         name: "Google Pixel Watch 2",
         category: "Watch",
         price: 39999,
@@ -2433,7 +2433,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1382,
+        id: 165,
         name: "Samsung Galaxy Watch 5 Pro",
         category: "Watch",
         price: 29999,
@@ -2448,7 +2448,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1383,
+        id: 166,
         name: "Casio Vintage Gold",
         category: "Watch",
         price: 4995,
@@ -2463,7 +2463,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1384,
+        id: 167,
         name: "Fitbit Charge 6",
         category: "Watch",
         price: 14999,
@@ -2478,7 +2478,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1385,
+        id: 168,
         name: "Garmin Venu 3",
         category: "Watch",
         price: 45990,
@@ -2493,7 +2493,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1386,
+        id: 169,
         name: "OnePlus Watch 2",
         category: "Watch",
         price: 24999,
@@ -2508,7 +2508,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1387,
+        id: 170,
         name: "CMF Watch Pro",
         category: "Watch",
         price: 3499,
@@ -2518,12 +2518,12 @@ export const products = [
         reviews: 1500,
         brand: "CMF by Nothing",
         gender: "Unisex",
-        image: "https://images.unsplash.com/photo-1695646199653-ec4d4204c356?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=800&q=80",
         description: "Big screen, built-in GPS.",
         inStock: true
     },
     {
-        id: 1388,
+        id: 171,
         name: "Amazfit Balance",
         category: "Watch",
         price: 22999,
@@ -2538,7 +2538,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1389,
+        id: 172,
         name: "Timex Weekender",
         category: "Watch",
         price: 3995,
@@ -2553,7 +2553,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1390,
+        id: 173,
         name: "Casio A168",
         category: "Watch",
         price: 2695,
@@ -2568,7 +2568,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1391,
+        id: 174,
         name: "Swatch Big Bold",
         category: "Watch",
         price: 9500,
@@ -2583,7 +2583,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1392,
+        id: 175,
         name: "Fastrack Reflex Vox",
         category: "Watch",
         price: 2995,
@@ -2598,7 +2598,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1393,
+        id: 176,
         name: "Boat Lunar Connect",
         category: "Watch",
         price: 1899,
@@ -2613,7 +2613,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1394,
+        id: 177,
         name: "Mondaine Official Swiss",
         category: "Watch",
         price: 24000,
@@ -2628,7 +2628,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1395,
+        id: 178,
         name: "Withings ScanWatch 2",
         category: "Watch",
         price: 32000,
@@ -2643,7 +2643,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1396,
+        id: 179,
         name: "Coros Pace 3",
         category: "Watch",
         price: 24990,
@@ -2658,7 +2658,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1397,
+        id: 180,
         name: "Suunto 9 Peak",
         category: "Watch",
         price: 39999,
@@ -2668,12 +2668,12 @@ export const products = [
         reviews: 120,
         brand: "Suunto",
         gender: "Unisex",
-        image: "https://images.unsplash.com/photo-1558507352-79357d620242?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
         description: "Ultra thin, touch screen GPS watch.",
         inStock: true
     },
     {
-        id: 1398,
+        id: 181,
         name: "Huawei Watch GT 4",
         category: "Watch",
         price: 21990,
@@ -2688,7 +2688,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1399,
+        id: 182,
         name: "Realme Watch 3 Pro",
         category: "Watch",
         price: 4999,
@@ -2698,13 +2698,13 @@ export const products = [
         reviews: 900,
         brand: "Realme",
         gender: "Unisex",
-        image: "https://images.unsplash.com/photo-1627145782782-45e396263884?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1627704548671-331c1015024d?w=800&q=80",
         description: "AMOLED display with multi-system GPS.",
         inStock: true
     },
     // --- CAMERAS ---
     {
-        id: 127,
+        id: 183,
         name: "Sony Alpha a7 IV",
         category: "Electronics",
         price: 215000,
@@ -2718,7 +2718,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 128,
+        id: 184,
         name: "Canon EOS R6",
         category: "Electronics",
         price: 200000,
@@ -2734,7 +2734,7 @@ export const products = [
 
     // --- MORE ADIDAS SHOES ---
     {
-        id: 129,
+        id: 185,
         name: "Adidas Ultraboost 22",
         category: "Menswear",
         price: 17999,
@@ -2749,7 +2749,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 130,
+        id: 186,
         name: "Adidas Superstar",
         category: "Menswear",
         price: 8999,
@@ -2764,7 +2764,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 131,
+        id: 187,
         name: "Adidas NMD_R1",
         category: "Menswear",
         price: 12999,
@@ -2779,7 +2779,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 132,
+        id: 188,
         name: "Adidas Stan Smith",
         category: "Menswear",
         price: 7999,
@@ -2795,7 +2795,7 @@ export const products = [
     },
     // --- ELECTRONICS & PERIPHERALS (200-259) ---
     {
-        id: 200,
+        id: 189,
         name: "Dell UltraSharp 27",
         category: "Electronics",
         price: 45000,
@@ -2809,7 +2809,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 201,
+        id: 190,
         name: "Logitech MX Master 3S",
         category: "Electronics",
         price: 9500,
@@ -2823,7 +2823,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 202,
+        id: 191,
         name: "Keychron K2 V2",
         category: "Electronics",
         price: 7500,
@@ -2837,7 +2837,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 203,
+        id: 192,
         name: "ASUS ROG Swift 360Hz",
         category: "Electronics",
         price: 65000,
@@ -2851,7 +2851,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 204,
+        id: 193,
         name: "Razer BlackWidow V4",
         category: "Electronics",
         price: 15999,
@@ -2865,7 +2865,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 205,
+        id: 194,
         name: "Samsung Odyssey G9",
         category: "Electronics",
         price: 135000,
@@ -2879,7 +2879,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 206,
+        id: 195,
         name: "Blue Yeti USB Mic",
         category: "Electronics",
         price: 11500,
@@ -2893,7 +2893,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 207,
+        id: 196,
         name: "Elgato Stream Deck MK.2",
         category: "Electronics",
         price: 14500,
@@ -2907,7 +2907,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 208,
+        id: 197,
         name: "Corsair Vengeance 32GB RAM",
         category: "Electronics",
         price: 12500,
@@ -2921,7 +2921,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 209,
+        id: 198,
         name: "Samsung 980 Pro 1TB",
         category: "Electronics",
         price: 10500,
@@ -2935,7 +2935,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 210,
+        id: 199,
         name: "Western Digital 4TB HDD",
         category: "Electronics",
         price: 8500,
@@ -2949,7 +2949,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 211,
+        id: 200,
         name: "TP-Link AX6000 Router",
         category: "Electronics",
         price: 24500,
@@ -2963,7 +2963,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 212,
+        id: 201,
         name: "Intel Core i9-13900K",
         category: "Electronics",
         price: 58000,
@@ -2977,7 +2977,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 213,
+        id: 202,
         name: "NVIDIA RTX 4080",
         category: "Electronics",
         price: 115000,
@@ -2991,7 +2991,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 214,
+        id: 203,
         name: "NZXT H7 Elite Case",
         category: "Electronics",
         price: 18500,
@@ -3005,7 +3005,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 215,
+        id: 204,
         name: "EVGA 850W Gold PSU",
         category: "Electronics",
         price: 12500,
@@ -3019,7 +3019,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 216,
+        id: 205,
         name: "SteelSeries Arctis Nova Pro",
         category: "Audio",
         price: 34500,
@@ -3033,7 +3033,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 217,
+        id: 206,
         name: "Rode PodMic",
         category: "Electronics",
         price: 9999,
@@ -3047,7 +3047,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 218,
+        id: 207,
         name: "Focusrite Scarlett 2i2",
         category: "Electronics",
         price: 16500,
@@ -3061,7 +3061,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 219,
+        id: 208,
         name: "Canon EOS R5",
         category: "Electronics",
         price: 245000,
@@ -3075,7 +3075,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 220,
+        id: 209,
         name: "GoPro HERO12 Black",
         category: "Electronics",
         price: 24500,
@@ -3089,7 +3089,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 221,
+        id: 210,
         name: "DJI Mini 4 Pro",
         category: "Electronics",
         price: 85000,
@@ -3103,7 +3103,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 222,
+        id: 211,
         name: "Kindle Paperwhite 16GB",
         category: "Electronics",
         price: 13999,
@@ -3117,7 +3117,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 223,
+        id: 212,
         name: "iPad Air M1",
         category: "Tablets",
         price: 34900,
@@ -3131,7 +3131,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 224,
+        id: 213,
         name: "Samsung Galaxy Tab S9",
         category: "Tablets",
         price: 44999,
@@ -3145,7 +3145,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 225,
+        id: 214,
         name: "Microsoft Surface Pro 9",
         category: "Tablets",
         price: 65000,
@@ -3154,12 +3154,12 @@ export const products = [
         rating: 4.6,
         reviews: 450,
         brand: "Microsoft",
-        image: "https://images.unsplash.com/photo-1589739900243-4b123b397500?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1583394132317-0a701469a9b3?w=800&q=80",
         description: "Versatile 2-in-1 laptop and tablet for productivity.",
         inStock: true
     },
     {
-        id: 226,
+        id: 215,
         name: "Nintendo Switch OLED",
         category: "Electronics",
         price: 21500,
@@ -3173,7 +3173,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 227,
+        id: 216,
         name: "PlayStation 5 Console",
         category: "Electronics",
         price: 44990,
@@ -3187,7 +3187,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 228,
+        id: 217,
         name: "Xbox Series X",
         category: "Electronics",
         price: 39990,
@@ -3201,7 +3201,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 229,
+        id: 218,
         name: "Logitech G Pro X Headset",
         category: "Audio",
         price: 13500,
@@ -3215,7 +3215,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 230,
+        id: 219,
         name: "Apple Pencil (2nd Gen)",
         category: "Electronics",
         price: 10900,
@@ -3229,7 +3229,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 231,
+        id: 220,
         name: "Logitech MX Keys S",
         category: "Electronics",
         price: 12999,
@@ -3243,7 +3243,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 232,
+        id: 221,
         name: "Belkin BoostCharge Pro",
         category: "Electronics",
         price: 5500,
@@ -3257,7 +3257,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 233,
+        id: 222,
         name: "Anker 737 Power Bank",
         category: "Electronics",
         price: 12500,
@@ -3271,7 +3271,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 234,
+        id: 223,
         name: "Lacie Rugged Mini 2TB",
         category: "Electronics",
         price: 9500,
@@ -3285,7 +3285,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 235,
+        id: 224,
         name: "Sonos Era 100",
         category: "Audio",
         price: 24900,
@@ -3299,7 +3299,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 236,
+        id: 225,
         name: "Marshall Kilburn II",
         category: "Audio",
         price: 26500,
@@ -3308,12 +3308,12 @@ export const products = [
         rating: 4.7,
         reviews: 950,
         brand: "Marshall",
-        image: "https://images.unsplash.com/photo-1520170350707-b2da59070392?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
         description: "Portable Bluetooth speaker with multidirectional sound.",
         inStock: true
     },
     {
-        id: 237,
+        id: 226,
         name: "Audio-Technica M50x",
         category: "Audio",
         price: 13500,
@@ -3327,7 +3327,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 238,
+        id: 227,
         name: "Beyerdynamic DT 990 Pro",
         category: "Audio",
         price: 15500,
@@ -3341,7 +3341,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 239,
+        id: 228,
         name: "Shure SM7B Mic",
         category: "Audio",
         price: 36500,
@@ -3350,12 +3350,12 @@ export const products = [
         rating: 4.9,
         reviews: 2000,
         brand: "Shure",
-        image: "https://images.unsplash.com/photo-1594913785162-e67866bb0702?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
         description: "Legendary vocal microphone for studio and broadcast.",
         inStock: true
     },
     {
-        id: 240,
+        id: 229,
         name: "Fitbit Charge 6",
         category: "Watch",
         price: 14999,
@@ -3369,7 +3369,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 241,
+        id: 230,
         name: "Garmin Fenix 7X",
         category: "Watch",
         price: 75000,
@@ -3383,7 +3383,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 242,
+        id: 231,
         name: "Oculus Quest 3 (128GB)",
         category: "Electronics",
         price: 49900,
@@ -3397,7 +3397,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 243,
+        id: 232,
         name: "Nanoleaf Shapes Panels",
         category: "Electronics",
         price: 16500,
@@ -3411,7 +3411,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 244,
+        id: 233,
         name: "Philips Hue Starter Kit",
         category: "Electronics",
         price: 12500,
@@ -3425,7 +3425,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 245,
+        id: 234,
         name: "Secretlab Titan EVO",
         category: "Electronics",
         price: 52000,
@@ -3439,7 +3439,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 246,
+        id: 235,
         name: "Logitech Brio 4K Webcam",
         category: "Electronics",
         price: 18500,
@@ -3453,7 +3453,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 247,
+        id: 236,
         name: "Asus RT-AX88U Pro",
         category: "Electronics",
         price: 28999,
@@ -3467,7 +3467,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 248,
+        id: 237,
         name: "Govee Glide Light Bar",
         category: "Electronics",
         price: 7500,
@@ -3481,7 +3481,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 249,
+        id: 238,
         name: "HyperX Cloud Alpha Wireless",
         category: "Audio",
         price: 15999,
@@ -3496,7 +3496,7 @@ export const products = [
     },
     // --- FASHION & APPAREL (300-369) ---
     {
-        id: 300,
+        id: 239,
         name: "Nike Sportswear Tech Fleece",
         category: "Menswear",
         price: 8500,
@@ -3511,7 +3511,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 301,
+        id: 240,
         name: "Adidas Tiro Track Suit",
         category: "Menswear",
         price: 6500,
@@ -3526,7 +3526,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 302,
+        id: 241,
         name: "Levi's Trucker Jacket",
         category: "Menswear",
         price: 4500,
@@ -3541,7 +3541,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 303,
+        id: 242,
         name: "Zara Oversized T-Shirt",
         category: "Menswear",
         price: 1990,
@@ -3556,7 +3556,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 304,
+        id: 243,
         name: "H&M Slim Fit Chinos",
         category: "Menswear",
         price: 2299,
@@ -3571,7 +3571,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 305,
+        id: 244,
         name: "Nike Air Force 1 '07",
         category: "Menswear",
         price: 8195,
@@ -3586,7 +3586,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 306,
+        id: 245,
         name: "Adidas Samba OG",
         category: "Menswear",
         price: 10999,
@@ -3601,7 +3601,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 307,
+        id: 246,
         name: "Puma Suede Classic",
         category: "Menswear",
         price: 5499,
@@ -3616,7 +3616,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 308,
+        id: 247,
         name: "Zara Satin Effect Dress",
         category: "Womenswear",
         price: 3990,
@@ -3631,7 +3631,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 309,
+        id: 248,
         name: "H&M Mom High Ankle Jeans",
         category: "Womenswear",
         price: 2499,
@@ -3646,7 +3646,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 310,
+        id: 249,
         name: "Mango Leather Biker Jacket",
         category: "Womenswear",
         price: 7990,
@@ -3661,7 +3661,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 311,
+        id: 250,
         name: "Nike Air Max Dawn",
         category: "Womenswear",
         price: 7500,
@@ -3676,7 +3676,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 312,
+        id: 251,
         name: "Adidas Forum Low",
         category: "Womenswear",
         price: 9500,
@@ -3691,7 +3691,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 313,
+        id: 252,
         name: "Converse Chuck Taylor 70",
         category: "Menswear",
         price: 4999,
@@ -3706,7 +3706,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 314,
+        id: 253,
         name: "Vans Old Skool Classic",
         category: "Menswear",
         price: 4599,
@@ -3721,7 +3721,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 315,
+        id: 254,
         name: "Ray-Ban Aviator Classic",
         category: "Accessories",
         price: 9500,
@@ -3735,7 +3735,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 316,
+        id: 255,
         name: "Fossil Gen 6 Smartwatch",
         category: "Electronics",
         price: 9999,
@@ -3749,7 +3749,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 317,
+        id: 256,
         name: "Tommy Hilfiger Leather Belt",
         category: "Accessories",
         price: 2499,
@@ -3763,7 +3763,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 318,
+        id: 257,
         name: "Calvin Klein Reversible Belt",
         category: "Accessories",
         price: 2999,
@@ -3777,7 +3777,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 319,
+        id: 258,
         name: "Herschel Little America Backpack",
         category: "Bags",
         price: 8900,
@@ -3791,7 +3791,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 320,
+        id: 259,
         name: "Nike Heritage Duffel Bag",
         category: "Bags",
         price: 3495,
@@ -3805,7 +3805,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 321,
+        id: 260,
         name: "Adidas Linear Gym Bag",
         category: "Bags",
         price: 1599,
@@ -3819,7 +3819,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 322,
+        id: 261,
         name: "Lacoste Polo Shirt",
         category: "Menswear",
         price: 5999,
@@ -3834,7 +3834,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 323,
+        id: 262,
         name: "Ralph Lauren Oxford Shirt",
         category: "Menswear",
         price: 8500,
@@ -3849,7 +3849,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 324,
+        id: 263,
         name: "Puma Performance Running Tee",
         category: "Menswear",
         price: 1499,
@@ -3864,7 +3864,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 325,
+        id: 264,
         name: "Under Armour Tech Shorts",
         category: "Menswear",
         price: 2499,
@@ -3879,7 +3879,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 326,
+        id: 265,
         name: "Seiko 5 Sports Watch",
         category: "Watch",
         price: 24500,
@@ -3893,7 +3893,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 327,
+        id: 266,
         name: "Citizen Eco-Drive",
         category: "Watch",
         price: 18500,
@@ -3907,7 +3907,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 328,
+        id: 267,
         name: "Casio G-Shock DW5600",
         category: "Watch",
         price: 5995,
@@ -3916,12 +3916,12 @@ export const products = [
         rating: 4.9,
         reviews: 15000,
         brand: "Casio",
-        image: "https://images.unsplash.com/photo-1522312346375-d1ad505d683b?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
         description: "Shock resistant digital watch used by special forces.",
         inStock: true
     },
     {
-        id: 329,
+        id: 268,
         name: "New Balance 574",
         category: "Menswear",
         price: 7999,
@@ -3936,7 +3936,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 330,
+        id: 269,
         name: "Timberland 6-Inch Premium",
         category: "Menswear",
         price: 15999,
@@ -3951,7 +3951,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 331,
+        id: 270,
         name: "Dr. Martens 1460",
         category: "Menswear",
         price: 13999,
@@ -3966,7 +3966,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 332,
+        id: 271,
         name: "Birkenstock Arizona",
         category: "Menswear",
         price: 8999,
@@ -3981,7 +3981,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 333,
+        id: 272,
         name: "Nike Pro Leggings",
         category: "Womenswear",
         price: 2995,
@@ -3996,7 +3996,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 334,
+        id: 273,
         name: "Lululemon Align Pant",
         category: "Womenswear",
         price: 8900,
@@ -4011,7 +4011,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 335,
+        id: 274,
         name: "The North Face Nuptse Jacket",
         category: "Menswear",
         price: 24999,
@@ -4026,7 +4026,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 336,
+        id: 275,
         name: "Patagonia Torrentshell 3L",
         category: "Menswear",
         price: 14900,
@@ -4041,7 +4041,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 337,
+        id: 276,
         name: "Arc'teryx Beta LT Jacket",
         category: "Menswear",
         price: 45000,
@@ -4056,7 +4056,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 338,
+        id: 277,
         name: "Champion Reverse Weave",
         category: "Menswear",
         price: 4500,
@@ -4071,7 +4071,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 339,
+        id: 278,
         name: "Uniqlo Ultra Light Down",
         category: "Menswear",
         price: 5990,
@@ -4086,7 +4086,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 340,
+        id: 279,
         name: "ASICS Gel-Kayano 29",
         category: "Menswear",
         price: 13999,
@@ -4101,7 +4101,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 341,
+        id: 280,
         name: "Brooks Ghost 14",
         category: "Menswear",
         price: 11999,
@@ -4116,7 +4116,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 342,
+        id: 281,
         name: "Saucony Endorphin Speed",
         category: "Menswear",
         price: 15999,
@@ -4131,7 +4131,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 343,
+        id: 282,
         name: "Tissot Le Locle Powermatic",
         category: "Watch",
         price: 48500,
@@ -4145,7 +4145,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 344,
+        id: 283,
         name: "Hamilton Khaki Field",
         category: "Watch",
         price: 42000,
@@ -4159,7 +4159,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 345,
+        id: 284,
         name: "Oakley Holbrook Prizm",
         category: "Accessories",
         price: 11500,
@@ -4173,7 +4173,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 346,
+        id: 285,
         name: "Persol 714 Folding",
         category: "Accessories",
         price: 26500,
@@ -4187,7 +4187,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 347,
+        id: 286,
         name: "Eastpak Padded Pak'r",
         category: "Bags",
         price: 3990,
@@ -4201,7 +4201,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 348,
+        id: 287,
         name: "JanSport SuperBreak",
         category: "Bags",
         price: 2990,
@@ -4215,7 +4215,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 349,
+        id: 288,
         name: "Samsonite Winfield 2",
         category: "Bags",
         price: 18500,
@@ -4229,7 +4229,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 350,
+        id: 289,
         name: "Rimowa Original Cabin",
         category: "Bags",
         price: 115000,
@@ -4243,7 +4243,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 351,
+        id: 290,
         name: "Bellroy Slim Sleeve",
         category: "Accessories",
         price: 4900,
@@ -4257,7 +4257,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 352,
+        id: 291,
         name: "Ridge Wallet Aluminum",
         category: "Accessories",
         price: 8500,
@@ -4271,7 +4271,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 353,
+        id: 292,
         name: "Montblanc Pix Ballpoint",
         category: "Accessories",
         price: 22500,
@@ -4285,7 +4285,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 354,
+        id: 293,
         name: "Parker Jotter Special",
         category: "Accessories",
         price: 999,
@@ -4299,7 +4299,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 355,
+        id: 294,
         name: "Moleskine Classic Notebook",
         category: "Accessories",
         price: 1499,
@@ -4313,7 +4313,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 356,
+        id: 295,
         name: "Zippo Classic Lighter",
         category: "Accessories",
         price: 1999,
@@ -4327,7 +4327,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 357,
+        id: 296,
         name: "Leatherman Wave Plus",
         category: "Accessories",
         price: 11500,
@@ -4341,7 +4341,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 358,
+        id: 297,
         name: "Victorinox Classic SD",
         category: "Accessories",
         price: 1499,
@@ -4355,7 +4355,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 359,
+        id: 298,
         name: "Lamy Safari Fountain Pen",
         category: "Accessories",
         price: 2400,
@@ -4369,7 +4369,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 360,
+        id: 299,
         name: "Fisher Space Pen Bullet",
         category: "Accessories",
         price: 1850,
@@ -4383,7 +4383,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 361,
+        id: 300,
         name: "Matador FlatPak Soap Bar Case",
         category: "Accessories",
         price: 1200,
@@ -4397,7 +4397,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 362,
+        id: 301,
         name: "Buff CoolNet UV+",
         category: "Accessories",
         price: 1800,
@@ -4411,7 +4411,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 363,
+        id: 302,
         name: "Maglite Solitaire LED",
         category: "Accessories",
         price: 1499,
@@ -4425,7 +4425,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 364,
+        id: 303,
         name: "Nalgene Wide Mouth 1L",
         category: "Accessories",
         price: 1200,
@@ -4439,7 +4439,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 365,
+        id: 304,
         name: "Snow Peak Titanium Mug",
         category: "Accessories",
         price: 3500,
@@ -4453,7 +4453,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 366,
+        id: 305,
         name: "Klean Kanteen Insulated TKWide",
         category: "Accessories",
         price: 2900,
@@ -4467,7 +4467,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 367,
+        id: 306,
         name: "Black Diamond Storm 450",
         category: "Accessories",
         price: 5500,
@@ -4481,7 +4481,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 368,
+        id: 307,
         name: "Petzl Tikkina Headlamp",
         category: "Accessories",
         price: 1999,
@@ -4495,7 +4495,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 369,
+        id: 308,
         name: "Havaianas Slim Flip Flops",
         category: "Womenswear",
         price: 1999,
@@ -4511,7 +4511,7 @@ export const products = [
     },
     // --- HOME & KITCHEN (400-469) ---
     {
-        id: 400,
+        id: 309,
         name: "KitchenAid Artisan Stand Mixer",
         category: "Home",
         price: 35000,
@@ -4525,7 +4525,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 401,
+        id: 310,
         name: "Nespresso Vertuo Pop",
         category: "Home",
         price: 9999,
@@ -4539,7 +4539,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 402,
+        id: 311,
         name: "Instant Pot Duo Plus",
         category: "Home",
         price: 8500,
@@ -4553,7 +4553,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 403,
+        id: 312,
         name: "Lodge Cast Iron Skillet",
         category: "Home",
         price: 2499,
@@ -4567,7 +4567,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 404,
+        id: 313,
         name: "Le Creuset Dutch Oven",
         category: "Home",
         price: 28500,
@@ -4581,7 +4581,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 405,
+        id: 314,
         name: "Wusthof Classic Chef's Knife",
         category: "Home",
         price: 12500,
@@ -4595,7 +4595,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 406,
+        id: 315,
         name: "Simplehuman Sensor Bin",
         category: "Home",
         price: 14500,
@@ -4609,7 +4609,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 407,
+        id: 316,
         name: "Dyson Purifier Cool Gen1",
         category: "Home",
         price: 32900,
@@ -4623,7 +4623,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 408,
+        id: 317,
         name: "Blueair Blue Pure 411",
         category: "Home",
         price: 9500,
@@ -4637,7 +4637,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 409,
+        id: 318,
         name: "Philips Hue Gradiente Lightstrip",
         category: "Home",
         price: 15500,
@@ -4651,7 +4651,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 410,
+        id: 319,
         name: "IKEA Poäng Armchair",
         category: "Home",
         price: 6999,
@@ -4665,7 +4665,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 411,
+        id: 320,
         name: "Herman Miller Aeron",
         category: "Home",
         price: 125000,
@@ -4679,7 +4679,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 412,
+        id: 321,
         name: "Casper Original Mattress",
         category: "Home",
         price: 85000,
@@ -4693,7 +4693,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 413,
+        id: 322,
         name: "Brooklinen Luxe Core Sheet Set",
         category: "Home",
         price: 12500,
@@ -4707,7 +4707,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 414,
+        id: 323,
         name: "Yeti Tundra 45 Cooler",
         category: "Home",
         price: 28500,
@@ -4716,12 +4716,12 @@ export const products = [
         rating: 4.9,
         reviews: 6000,
         brand: "Yeti",
-        image: "https://images.unsplash.com/photo-1583394238313-7313c0afb3cc?w=800&q=80", // Cooler
+        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=800&q=80", // Cooler
         description: "Indestructible rotomolded cooler for adventures.",
         inStock: true
     },
     {
-        id: 415,
+        id: 324,
         name: "Hydro Flask 32oz Wide Mouth",
         category: "Home",
         price: 3500,
@@ -4735,7 +4735,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 416,
+        id: 325,
         name: "Weber Original Kettle",
         category: "Home",
         price: 12999,
@@ -4749,7 +4749,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 417,
+        id: 326,
         name: "Breville Barista Express",
         category: "Home",
         price: 58000,
@@ -4763,7 +4763,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 418,
+        id: 327,
         name: "Vitamix A3500 Blender",
         category: "Home",
         price: 45000,
@@ -4777,7 +4777,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 419,
+        id: 328,
         name: "Ninja Air Fryer Max XL",
         category: "Home",
         price: 12500,
@@ -4791,7 +4791,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 420,
+        id: 329,
         name: "Sodastream Terra",
         category: "Home",
         price: 8500,
@@ -4805,7 +4805,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 421,
+        id: 330,
         name: "Bose Smart Soundbar 900",
         category: "Audio",
         price: 85000,
@@ -4819,7 +4819,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 422,
+        id: 331,
         name: "Samsung Frame TV 55\"",
         category: "Electronics",
         price: 89999,
@@ -4833,7 +4833,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 423,
+        id: 332,
         name: "Sony Bravia XR A80L",
         category: "Electronics",
         price: 145000,
@@ -4847,7 +4847,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 424,
+        id: 333,
         name: "LG C3 OLED TV 65\"",
         category: "Electronics",
         price: 165000,
@@ -4861,7 +4861,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 425,
+        id: 334,
         name: "Apple TV 4K (2022)",
         category: "Electronics",
         price: 14900,
@@ -4875,7 +4875,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 426,
+        id: 335,
         name: "Roku Streaming Stick 4K",
         category: "Electronics",
         price: 4500,
@@ -4889,7 +4889,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 427,
+        id: 336,
         name: "Sonos Beam (Gen 2)",
         category: "Audio",
         price: 39900,
@@ -4903,7 +4903,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 428,
+        id: 337,
         name: "JBL Bar 1300",
         category: "Audio",
         price: 115000,
@@ -4917,7 +4917,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 429,
+        id: 338,
         name: "Tineco Floor One S5",
         category: "Home",
         price: 45000,
@@ -4931,7 +4931,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 430,
+        id: 339,
         name: "Roborock S8 Pro Ultra",
         category: "Home",
         price: 95000,
@@ -4945,7 +4945,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 431,
+        id: 340,
         name: "Shark Stratos Cordless",
         category: "Home",
         price: 32500,
@@ -4959,7 +4959,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 432,
+        id: 341,
         name: "Honeywell QuietSet Fan",
         category: "Home",
         price: 5500,
@@ -4973,7 +4973,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 433,
+        id: 342,
         name: "Vornado 660 Air Circulator",
         category: "Home",
         price: 8500,
@@ -4987,7 +4987,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 434,
+        id: 343,
         name: "August Wi-Fi Smart Lock",
         category: "Home",
         price: 18500,
@@ -5001,7 +5001,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 435,
+        id: 344,
         name: "Ring Video Doorbell Pro 2",
         category: "Home",
         price: 22500,
@@ -5015,7 +5015,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 436,
+        id: 345,
         name: "Ecobee Smart Thermostat",
         category: "Home",
         price: 19500,
@@ -5029,7 +5029,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 437,
+        id: 346,
         name: "Google Nest Hub Max",
         category: "Electronics",
         price: 18500,
@@ -5043,7 +5043,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 438,
+        id: 347,
         name: "Apple Echo Show 15",
         category: "Electronics",
         price: 22500,
@@ -5057,7 +5057,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 439,
+        id: 348,
         name: "AeroGarden Harvest",
         category: "Home",
         price: 9500,
@@ -5071,7 +5071,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 440,
+        id: 349,
         name: "Moleskine Smart Writing Set",
         category: "Accessories",
         price: 18500,
@@ -5085,7 +5085,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 441,
+        id: 350,
         name: "Sony PlayStation VR2",
         category: "Electronics",
         price: 44990,
@@ -5099,7 +5099,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 442,
+        id: 351,
         name: "Steam Deck 512GB",
         category: "Electronics",
         price: 39999,
@@ -5113,7 +5113,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 443,
+        id: 352,
         name: "Backbone One Controller",
         category: "Electronics",
         price: 8500,
@@ -5127,7 +5127,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 444,
+        id: 353,
         name: "Tile Pro (2022)",
         category: "Electronics",
         price: 2900,
@@ -5141,7 +5141,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 445,
+        id: 354,
         name: "AirTag (4 Pack)",
         category: "Electronics",
         price: 9900,
@@ -5155,7 +5155,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 446,
+        id: 355,
         name: "Eero 6+ Mesh System",
         category: "Electronics",
         price: 24500,
@@ -5169,7 +5169,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 447,
+        id: 356,
         name: "Starlink Standard Kit",
         category: "Electronics",
         price: 49999,
@@ -5183,7 +5183,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 448,
+        id: 357,
         name: "Theragun Pro G5",
         category: "Health",
         price: 45000,
@@ -5197,7 +5197,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 449,
+        id: 358,
         name: "Oral-B iO Series 9",
         category: "Health",
         price: 22500,
@@ -5211,7 +5211,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 450,
+        id: 359,
         name: "Waterpik Aquarius Water Flosser",
         category: "Health",
         price: 6500,
@@ -5225,7 +5225,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 451,
+        id: 360,
         name: "Withings Body Scan",
         category: "Health",
         price: 35000,
@@ -5239,7 +5239,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 452,
+        id: 361,
         name: "Luxe Bidet Neo 185",
         category: "Home",
         price: 3500,
@@ -5253,7 +5253,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 453,
+        id: 362,
         name: "Turo Carbon Filter",
         category: "Home",
         price: 1500,
@@ -5267,7 +5267,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 454,
+        id: 363,
         name: "Lutron Caseta Smart Switch",
         category: "Home",
         price: 4900,
@@ -5281,7 +5281,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 455,
+        id: 364,
         name: "Philips OneBlade Pro",
         category: "Health",
         price: 5500,
@@ -5295,7 +5295,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 456,
+        id: 365,
         name: "Manscaped Lawn Mower 4.0",
         category: "Health",
         price: 8500,
@@ -5309,7 +5309,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 457,
+        id: 366,
         name: "Dyson Airwrap Multi-Styler",
         category: "Health",
         price: 49900,
@@ -5323,7 +5323,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 458,
+        id: 367,
         name: "GHD Gold Styler",
         category: "Health",
         price: 18500,
@@ -5337,7 +5337,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 459,
+        id: 368,
         name: "Foreo Luna 4",
         category: "Health",
         price: 24500,
@@ -5351,7 +5351,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 460,
+        id: 369,
         name: "NuFace Trinity Device",
         category: "Health",
         price: 32500,
@@ -5365,7 +5365,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 461,
+        id: 370,
         name: "Peloton Bike+",
         category: "Health",
         price: 145000,
@@ -5379,7 +5379,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 462,
+        id: 371,
         name: "Bowflex SelectTech 552",
         category: "Health",
         price: 35000,
@@ -5393,7 +5393,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 463,
+        id: 372,
         name: "Manduka PRO Yoga Mat",
         category: "Health",
         price: 9900,
@@ -5407,7 +5407,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 464,
+        id: 373,
         name: "Hyperice Venom 2 Back",
         category: "Health",
         price: 18500,
@@ -5421,7 +5421,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 465,
+        id: 374,
         name: "Oura Ring Gen 3",
         category: "Watch",
         price: 26500,
@@ -5435,7 +5435,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 466,
+        id: 375,
         name: "Whoop 4.0 Band",
         category: "Watch",
         price: 18500,
@@ -5449,7 +5449,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 467,
+        id: 376,
         name: "Loftie Smart Alarm Clock",
         category: "Home",
         price: 12500,
@@ -5463,7 +5463,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 468,
+        id: 377,
         name: "Hatch Restore 2",
         category: "Home",
         price: 16500,
@@ -5477,7 +5477,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 469,
+        id: 378,
         name: "Yeti Rambler 20 oz Tumbler",
         category: "Home",
         price: 2900,
@@ -5492,7 +5492,7 @@ export const products = [
     },
     // --- OUTDOORS & SPORTS (500-569) ---
     {
-        id: 500,
+        id: 379,
         name: "Coleman Carlsbad Dark Room Tent",
         category: "Outdoors",
         price: 14500,
@@ -5506,7 +5506,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 501,
+        id: 380,
         name: "Lifestraw Personal Water Filter",
         category: "Outdoors",
         price: 1999,
@@ -5520,7 +5520,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 502,
+        id: 381,
         name: "Black Diamond Momentum Harness",
         category: "Outdoors",
         price: 4500,
@@ -5534,7 +5534,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 503,
+        id: 382,
         name: "Wilson Evolution Basketball",
         category: "Sports",
         price: 5499,
@@ -5543,12 +5543,12 @@ export const products = [
         rating: 4.9,
         reviews: 18000,
         brand: "Wilson",
-        image: "https://images.unsplash.com/photo-1519861531153-f361ea267d34?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1504274066651-8d31a536b11c?w=800&q=80",
         description: "The #1 indoor game basketball in America.",
         inStock: true
     },
     {
-        id: 504,
+        id: 383,
         name: "Spalding NBA Street Basketball",
         category: "Sports",
         price: 1800,
@@ -5557,12 +5557,12 @@ export const products = [
         rating: 4.7,
         reviews: 45000,
         brand: "Spalding",
-        image: "https://images.unsplash.com/photo-1519861531153-f361ea267d34?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1504274066651-8d31a536b11c?w=800&q=80",
         description: "Durable rubber cover designed for outdoor play.",
         inStock: true
     },
     {
-        id: 505,
+        id: 384,
         name: "Adidas Al Rihla World Cup Ball",
         category: "Sports",
         price: 12500,
@@ -5576,7 +5576,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 506,
+        id: 385,
         name: "Nike Academy Soccer Ball",
         category: "Sports",
         price: 2499,
@@ -5590,7 +5590,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 507,
+        id: 386,
         name: "Babolat Pure Drive Racquet",
         category: "Sports",
         price: 18500,
@@ -5599,12 +5599,12 @@ export const products = [
         rating: 4.9,
         reviews: 1200,
         brand: "Babolat",
-        image: "https://images.unsplash.com/photo-1595435010657-69566373e97a?w=800&q=80", // Tennis
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80", // Tennis
         description: "The ultimate power racquet for competitive players.",
         inStock: true
     },
     {
-        id: 508,
+        id: 387,
         name: "Wilson Roger Federer 27",
         category: "Sports",
         price: 4500,
@@ -5613,12 +5613,12 @@ export const products = [
         rating: 4.5,
         reviews: 2100,
         brand: "Wilson",
-        image: "https://images.unsplash.com/photo-1595435010657-69566373e97a?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
         description: "Lightweight tennis racquet for recreational players.",
         inStock: true
     },
     {
-        id: 509,
+        id: 388,
         name: "Callaway Strata Golf Set",
         category: "Sports",
         price: 45000,
@@ -5632,7 +5632,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 510,
+        id: 389,
         name: "Titleist Pro V1 Golf Balls",
         category: "Sports",
         price: 4999,
@@ -5646,7 +5646,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 511,
+        id: 390,
         name: "Manduka PROlite Yoga Mat",
         category: "Sports",
         price: 7500,
@@ -5660,7 +5660,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 512,
+        id: 391,
         name: "Gaiam Essentials Yoga Block",
         category: "Sports",
         price: 999,
@@ -5674,7 +5674,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 513,
+        id: 392,
         name: "LEGO Star Wars Millennium Falcon",
         category: "Toys",
         price: 97943,
@@ -5688,7 +5688,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 514,
+        id: 393,
         name: "LEGO Ideas Central Perk",
         category: "Toys",
         price: 5499,
@@ -5702,7 +5702,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 515,
+        id: 394,
         name: "Barbie Dreamhouse 2023",
         category: "Toys",
         price: 16500,
@@ -5716,7 +5716,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 516,
+        id: 395,
         name: "Hot Wheels 50-Car Pack",
         category: "Toys",
         price: 4999,
@@ -5730,7 +5730,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 517,
+        id: 396,
         name: "Nerf Elite 2.0 Commander",
         category: "Toys",
         price: 1499,
@@ -5744,7 +5744,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 518,
+        id: 397,
         name: "Catan Board Game",
         category: "Toys",
         price: 3500,
@@ -5753,12 +5753,12 @@ export const products = [
         rating: 4.9,
         reviews: 65000,
         brand: "Catan",
-        image: "https://images.unsplash.com/photo-1610890716171-6b1bb98faddb?w=800&q=80", // Board game
+        image: "https://images.unsplash.com/photo-1542393545-facac42e67ea?w=800&q=80", // Board game
         description: "Trade, build, and settle on the island of Catan.",
         inStock: true
     },
     {
-        id: 519,
+        id: 398,
         name: "Ticket to Ride",
         category: "Toys",
         price: 3200,
@@ -5767,12 +5767,12 @@ export const products = [
         rating: 4.8,
         reviews: 45000,
         brand: "Days of Wonder",
-        image: "https://images.unsplash.com/photo-1610890716171-6b1bb98faddb?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1542393545-facac42e67ea?w=800&q=80",
         description: "Cross-country train adventure board game.",
         inStock: true
     },
     {
-        id: 520,
+        id: 399,
         name: "Exploding Kittens",
         category: "Toys",
         price: 1800,
@@ -5781,12 +5781,12 @@ export const products = [
         rating: 4.7,
         reviews: 85000,
         brand: "Exploding Kittens",
-        image: "https://images.unsplash.com/photo-1610890716171-6b1bb98faddb?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1542393545-facac42e67ea?w=800&q=80",
         description: "A card game for people who are into kittens and explosions.",
         inStock: true
     },
     {
-        id: 521,
+        id: 400,
         name: "DJI Mavic 3 Pro",
         category: "Electronics",
         price: 239990,
@@ -5800,7 +5800,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 522,
+        id: 401,
         name: "GoPro Max 360",
         category: "Electronics",
         price: 45000,
@@ -5814,7 +5814,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 523,
+        id: 402,
         name: "Insta360 X3",
         category: "Electronics",
         price: 39900,
@@ -5828,7 +5828,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 524,
+        id: 403,
         name: "Segway Ninebot Max G30",
         category: "Outdoors",
         price: 65000,
@@ -5842,7 +5842,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 525,
+        id: 404,
         name: "Yeti Hopper Flip 12",
         category: "Outdoors",
         price: 22500,
@@ -5851,12 +5851,12 @@ export const products = [
         rating: 4.9,
         reviews: 4000,
         brand: "Yeti",
-        image: "https://images.unsplash.com/photo-1583394238313-7313c0afb3cc?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=800&q=80",
         description: "Leak-proof portable soft cooler for day trips.",
         inStock: true
     },
     {
-        id: 526,
+        id: 405,
         name: "CamelBak M.U.L.E. 12L",
         category: "Outdoors",
         price: 8500,
@@ -5870,7 +5870,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 527,
+        id: 406,
         name: "Osprey Atmos AG 65",
         category: "Outdoors",
         price: 24500,
@@ -5884,7 +5884,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 528,
+        id: 407,
         name: "Patagonia Black Hole Duffel",
         category: "Outdoors",
         price: 15500,
@@ -5898,7 +5898,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 529,
+        id: 408,
         name: "Helinox Chair One",
         category: "Outdoors",
         price: 8900,
@@ -5912,7 +5912,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 530,
+        id: 409,
         name: "BioLite CampStove 2+",
         category: "Outdoors",
         price: 12500,
@@ -5926,7 +5926,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 531,
+        id: 410,
         name: "MSR PocketRocket 2",
         category: "Outdoors",
         price: 4500,
@@ -5940,7 +5940,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 532,
+        id: 411,
         name: "Big Agnes Copper Spur HV UL2",
         category: "Outdoors",
         price: 45000,
@@ -5954,7 +5954,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 533,
+        id: 412,
         name: "Exped Megamat 10",
         category: "Outdoors",
         price: 18500,
@@ -5968,7 +5968,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 534,
+        id: 413,
         name: "Rumpl Original Puffy Blanket",
         category: "Outdoors",
         price: 8500,
@@ -5982,7 +5982,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 535,
+        id: 414,
         name: "Luekens 40L Hiking Backpack",
         category: "Outdoors",
         price: 5500,
@@ -5996,7 +5996,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 536,
+        id: 415,
         name: "Suunto MC-2 Compass",
         category: "Outdoors",
         price: 4500,
@@ -6010,7 +6010,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 537,
+        id: 416,
         name: "Goal Zero Nomad 20",
         category: "Outdoors",
         price: 15500,
@@ -6024,7 +6024,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 540,
+        id: 417,
         name: "Garmin Edge 530 Bundle",
         category: "Sports",
         price: 32500,
@@ -6038,7 +6038,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 541,
+        id: 418,
         name: "Wahoo KICKR CORE",
         category: "Sports",
         price: 85000,
@@ -6047,12 +6047,12 @@ export const products = [
         rating: 4.9,
         reviews: 2100,
         brand: "Wahoo",
-        image: "https://images.unsplash.com/photo-1591546252988-1ca6fcf68853?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=800&q=80",
         description: "Realistic and accurate smart indoor bike trainer.",
         inStock: true
     },
     {
-        id: 542,
+        id: 419,
         name: "Hyperice Normatec 3 Legs",
         category: "Health",
         price: 75000,
@@ -6066,7 +6066,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 543,
+        id: 420,
         name: "TRX Pro4 System",
         category: "Sports",
         price: 16500,
@@ -6075,12 +6075,12 @@ export const products = [
         rating: 4.8,
         reviews: 12000,
         brand: "TRX",
-        image: "https://images.unsplash.com/photo-1599058917232-d750c185967c?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=800&q=80",
         description: "The ultimate suspension trainer for bodyweight workouts.",
         inStock: true
     },
     {
-        id: 544,
+        id: 421,
         name: "Bowflex C6 Bike",
         category: "Sports",
         price: 125000,
@@ -6089,12 +6089,12 @@ export const products = [
         rating: 4.7,
         reviews: 3500,
         brand: "Bowflex",
-        image: "https://images.unsplash.com/photo-1591117207239-788cd85d11b0?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1588872657578-a3d2e184594c?w=800&q=80",
         description: "Connected indoor cycling bike for streaming classes.",
         inStock: true
     },
     {
-        id: 545,
+        id: 422,
         name: "PowerBlock Elite EXP",
         category: "Sports",
         price: 45000,
@@ -6103,12 +6103,12 @@ export const products = [
         rating: 4.9,
         reviews: 11000,
         brand: "PowerBlock",
-        image: "https://images.unsplash.com/photo-1638515847424-6d9b014cd70b?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
         description: "Adjustable dumbbells starting at 5 lbs up to 50 lbs.",
         inStock: true
     },
     {
-        id: 546,
+        id: 423,
         name: "Iron Gym Upper Body Bar",
         category: "Sports",
         price: 2499,
@@ -6117,12 +6117,12 @@ export const products = [
         rating: 4.6,
         reviews: 35000,
         brand: "Iron Gym",
-        image: "https://images.unsplash.com/photo-1598514982205-f36b96d1e3d3?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
         description: "Multi-function strength training system for pull-ups and more.",
         inStock: true
     },
     {
-        id: 547,
+        id: 424,
         name: "TriggerPoint GRID Roller",
         category: "Sports",
         price: 3500,
@@ -6131,12 +6131,12 @@ export const products = [
         rating: 4.8,
         reviews: 55000,
         brand: "TriggerPoint",
-        image: "https://images.unsplash.com/photo-1620188467120-0987c80287a2?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80",
         description: "The original multi-density foam roller for total-body massage.",
         inStock: true
     },
     {
-        id: 548,
+        id: 425,
         name: "Rogue Kettlebell 16kg",
         category: "Sports",
         price: 6500,
@@ -6150,7 +6150,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 549,
+        id: 426,
         name: "Life Fitness T5 Treadmill",
         category: "Sports",
         price: 325000,
@@ -6164,7 +6164,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 550,
+        id: 427,
         name: "Concept2 RowErg",
         category: "Sports",
         price: 95000,
@@ -6173,12 +6173,12 @@ export const products = [
         rating: 4.9,
         reviews: 25000,
         brand: "Concept2",
-        image: "https://images.unsplash.com/photo-1599447421416-3414500d1f20?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1526170315873-3a56162824cf?w=800&q=80",
         description: "The best-selling rowing machine for home and gyms.",
         inStock: true
     },
     {
-        id: 551,
+        id: 428,
         name: "Fitbit Aria Air Scale",
         category: "Health",
         price: 4999,
@@ -6192,7 +6192,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 552,
+        id: 429,
         name: "Renpho Eye Massager",
         category: "Health",
         price: 5500,
@@ -6206,7 +6206,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 553,
+        id: 430,
         name: "HoMedics Neck Massager",
         category: "Health",
         price: 4500,
@@ -6220,7 +6220,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 554,
+        id: 431,
         name: "Philips Wake-Up Light",
         category: "Home",
         price: 9500,
@@ -6234,7 +6234,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 555,
+        id: 432,
         name: "Kindle Oasis (8GB)",
         category: "Electronics",
         price: 19999,
@@ -6248,7 +6248,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 556,
+        id: 433,
         name: "Sony SRS-XG300",
         category: "Audio",
         price: 22500,
@@ -6262,7 +6262,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 557,
+        id: 434,
         name: "Bose SoundLink Flex",
         category: "Audio",
         price: 13500,
@@ -6276,7 +6276,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 558,
+        id: 435,
         name: "Ultimate Ears MEGABOOM 3",
         category: "Audio",
         price: 16500,
@@ -6290,7 +6290,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 559,
+        id: 436,
         name: "Beats Fit Pro",
         category: "Audio",
         price: 18500,
@@ -6304,7 +6304,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 560,
+        id: 437,
         name: "Bang & Olufsen Beosound A1",
         category: "Audio",
         price: 24500,
@@ -6318,7 +6318,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 561,
+        id: 438,
         name: "Fuji Instax Mini 12",
         category: "Electronics",
         price: 7500,
@@ -6332,7 +6332,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 562,
+        id: 439,
         name: "Canon SELPHY CP1500",
         category: "Electronics",
         price: 12500,
@@ -6346,7 +6346,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 563,
+        id: 440,
         name: "Polaroid Now+ Gen 2",
         category: "Electronics",
         price: 16500,
@@ -6360,7 +6360,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 564,
+        id: 441,
         name: "Pelican 1510 Protector Case",
         category: "Accessories",
         price: 24500,
@@ -6374,7 +6374,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 565,
+        id: 442,
         name: "Lowepro ProTactic BP 450",
         category: "Accessories",
         price: 18500,
@@ -6388,7 +6388,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 566,
+        id: 443,
         name: "Peak Design Capture Clip",
         category: "Accessories",
         price: 7500,
@@ -6402,7 +6402,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 567,
+        id: 444,
         name: "DJI Ronin-SC Gimbal",
         category: "Electronics",
         price: 32500,
@@ -6416,7 +6416,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 568,
+        id: 445,
         name: "Zhiyun Smooth 5S",
         category: "Electronics",
         price: 16500,
@@ -6430,7 +6430,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 569,
+        id: 446,
         name: "Sandisk 128GB Extreme PRO",
         category: "Electronics",
         price: 2499,
@@ -6444,7 +6444,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 570,
+        id: 447,
         name: "Joby GorillaPod 3K Kit",
         category: "Accessories",
         price: 5500,
@@ -6459,7 +6459,7 @@ export const products = [
     },
     // --- AUTOMOTIVE (600-619) ---
     {
-        id: 600,
+        id: 448,
         name: "Tesla Wall Connector",
         category: "Automotive",
         price: 45000,
@@ -6473,7 +6473,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 601,
+        id: 449,
         name: "Nextbase 622GW Dash Cam",
         category: "Automotive",
         price: 24500,
@@ -6487,7 +6487,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 602,
+        id: 450,
         name: "Bosch ICON Wiper Blades",
         category: "Automotive",
         price: 1999,
@@ -6501,7 +6501,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 603,
+        id: 451,
         name: "NOCO Boost Plus GB40",
         category: "Automotive",
         price: 9500,
@@ -6515,7 +6515,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 604,
+        id: 452,
         name: "Chemical Guys Hol126 Kit",
         category: "Automotive",
         price: 8500,
@@ -6529,7 +6529,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 605,
+        id: 453,
         name: "WeatherTech FloorLiners",
         category: "Automotive",
         price: 16500,
@@ -6543,7 +6543,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 606,
+        id: 454,
         name: "Garmin Dash Cam 67W",
         category: "Automotive",
         price: 18500,
@@ -6557,7 +6557,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 607,
+        id: 455,
         name: "Yeti Roadie 24 Cooler",
         category: "Automotive",
         price: 22500,
@@ -6566,12 +6566,12 @@ export const products = [
         rating: 4.9,
         reviews: 9000,
         brand: "Yeti",
-        image: "https://images.unsplash.com/photo-1583394238313-7313c0afb3cc?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=800&q=80",
         description: "Tough, portable cooler designed to fit behind front seats.",
         inStock: true
     },
     {
-        id: 608,
+        id: 456,
         name: "ThisWorx Car Vacuum",
         category: "Automotive",
         price: 2999,
@@ -6585,7 +6585,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 609,
+        id: 457,
         name: "Tile Mate (2022)",
         category: "Automotive",
         price: 1999,
@@ -6600,7 +6600,7 @@ export const products = [
     },
     // --- PET SUPPLIES (620-639) ---
     {
-        id: 620,
+        id: 458,
         name: "Furbo 360 Dog Camera",
         category: "Pets",
         price: 16500,
@@ -6614,7 +6614,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 621,
+        id: 459,
         name: "Litter-Robot 4",
         category: "Pets",
         price: 65000,
@@ -6628,7 +6628,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 622,
+        id: 460,
         name: "Chuckit! Classic Launcher",
         category: "Pets",
         price: 1200,
@@ -6642,7 +6642,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 623,
+        id: 461,
         name: "Outward Hound Hide A Squirrel",
         category: "Pets",
         price: 1800,
@@ -6656,7 +6656,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 624,
+        id: 462,
         name: "Feliway Classic Kit",
         category: "Pets",
         price: 2900,
@@ -6670,7 +6670,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 625,
+        id: 463,
         name: "Kong Classic Dog Toy",
         category: "Pets",
         price: 999,
@@ -6684,7 +6684,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 626,
+        id: 464,
         name: "Petmate Sky Kennel",
         category: "Pets",
         price: 8500,
@@ -6698,7 +6698,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 627,
+        id: 465,
         name: "Seresto Flea & Tick Collar",
         category: "Pets",
         price: 4500,
@@ -6712,7 +6712,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 628,
+        id: 466,
         name: "Petnet SmartFeeder",
         category: "Pets",
         price: 14500,
@@ -6726,7 +6726,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 629,
+        id: 467,
         name: "Wisdom Panel Essential",
         category: "Pets",
         price: 7500,
@@ -6741,7 +6741,7 @@ export const products = [
     },
     // --- BABY & KIDS (640-669) ---
     {
-        id: 640,
+        id: 468,
         name: "Hatch Rest+ Baby Light",
         category: "Baby",
         price: 7500,
@@ -6750,12 +6750,12 @@ export const products = [
         rating: 4.8,
         reviews: 25000,
         brand: "Hatch",
-        image: "https://images.unsplash.com/photo-1579612349781-8074d2091763?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1605371289196-857500593b4a?w=800&q=80",
         description: "Sound machine, night light, and time-to-rise alert.",
         inStock: true
     },
     {
-        id: 641,
+        id: 469,
         name: "Nanit Pro Baby Monitor",
         category: "Baby",
         price: 24500,
@@ -6769,7 +6769,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 642,
+        id: 470,
         name: "Ergobaby Omni 360",
         category: "Baby",
         price: 16500,
@@ -6778,12 +6778,12 @@ export const products = [
         rating: 4.9,
         reviews: 12000,
         brand: "Ergobaby",
-        image: "https://images.unsplash.com/photo-1540479859204-0391d17d5982?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
         description: "All-in-one ergonomic baby carrier for all positions.",
         inStock: true
     },
     {
-        id: 643,
+        id: 471,
         name: "Uppababy Vista V2 Stroller",
         category: "Baby",
         price: 85000,
@@ -6797,7 +6797,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 644,
+        id: 472,
         name: "Baby Bjorn Bouncer Bliss",
         category: "Baby",
         price: 18500,
@@ -6806,12 +6806,12 @@ export const products = [
         rating: 4.8,
         reviews: 15000,
         brand: "Baby Bjorn",
-        image: "https://images.unsplash.com/photo-1544126592-807daa2b567b?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
         description: "Ergonomic infant bouncer with natural rocking.",
         inStock: true
     },
     {
-        id: 645,
+        id: 473,
         name: "4moms MamaRoo Multi-Motion",
         category: "Baby",
         price: 22500,
@@ -6825,7 +6825,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 646,
+        id: 474,
         name: "Pampers Swaddlers Size 1",
         category: "Baby",
         price: 2499,
@@ -6839,7 +6839,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 647,
+        id: 475,
         name: "Philips Avent Sterilizer",
         category: "Baby",
         price: 6500,
@@ -6848,12 +6848,12 @@ export const products = [
         rating: 4.7,
         reviews: 12000,
         brand: "Philips",
-        image: "https://images.unsplash.com/photo-1584622781564-1d9876a13d11?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
         description: "Kill 99.9% of germs with steam sterilization.",
         inStock: true
     },
     {
-        id: 648,
+        id: 476,
         name: "FridaBaby NoseFrida",
         category: "Baby",
         price: 1500,
@@ -6862,12 +6862,12 @@ export const products = [
         rating: 4.8,
         reviews: 65000,
         brand: "Frida",
-        image: "https://images.unsplash.com/photo-1515488764276-beab76077ee4?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&q=80",
         description: "The doctor-invented nasal aspirator that actually works.",
         inStock: true
     },
     {
-        id: 649,
+        id: 477,
         name: "Skip Hop Activity Center",
         category: "Baby",
         price: 9500,
@@ -6876,13 +6876,13 @@ export const products = [
         rating: 4.8,
         reviews: 21000,
         brand: "Skip Hop",
-        image: "https://images.unsplash.com/photo-1515023115689-589c3386b83f?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
         description: "3-stage activity center that grows with baby.",
         inStock: true
     },
     // --- BEAUTY & PERSONAL CARE (670-699) ---
     {
-        id: 670,
+        id: 478,
         name: "Dyson Corrale Straightener",
         category: "Beauty",
         price: 45000,
@@ -6896,7 +6896,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 671,
+        id: 479,
         name: "Estée Lauder Advanced Night Repair",
         category: "Beauty",
         price: 8500,
@@ -6910,7 +6910,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 672,
+        id: 480,
         name: "La Mer Crème de la Mer",
         category: "Beauty",
         price: 24500,
@@ -6924,7 +6924,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 673,
+        id: 481,
         name: "SK-II Facial Treatment Essence",
         category: "Beauty",
         price: 18500,
@@ -6938,7 +6938,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 674,
+        id: 482,
         name: "Clarisonic Mia Smart",
         category: "Beauty",
         price: 16500,
@@ -6952,7 +6952,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 675,
+        id: 483,
         name: "Vintner's Daughter Active Botanical",
         category: "Beauty",
         price: 14500,
@@ -6966,7 +6966,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 676,
+        id: 484,
         name: "Tatcha The Dewy Skin Cream",
         category: "Beauty",
         price: 5500,
@@ -6980,7 +6980,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 677,
+        id: 485,
         name: "Augustinus Bader The Rich Cream",
         category: "Beauty",
         price: 22500,
@@ -6994,7 +6994,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 678,
+        id: 486,
         name: "Charlotte Tilbury Magic Cream",
         category: "Beauty",
         price: 8900,
@@ -7008,7 +7008,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 679,
+        id: 487,
         name: "Tom Ford Black Orchid",
         category: "Beauty",
         price: 12500,
@@ -7022,7 +7022,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 680,
+        id: 488,
         name: "Chanel No. 5 Eau de Parfum",
         category: "Beauty",
         price: 11500,
@@ -7036,7 +7036,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 681,
+        id: 489,
         name: "Dior Sauvage Elixir",
         category: "Beauty",
         price: 14500,
@@ -7050,7 +7050,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 682,
+        id: 490,
         name: "Le Labo Santal 33",
         category: "Beauty",
         price: 24500,
@@ -7064,7 +7064,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 683,
+        id: 491,
         name: "Creed Aventus",
         category: "Beauty",
         price: 35000,
@@ -7078,7 +7078,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 684,
+        id: 492,
         name: "Byredo Mojave Ghost",
         category: "Beauty",
         price: 18500,
@@ -7092,7 +7092,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 685,
+        id: 493,
         name: "Maison Francis Kurkdjian Baccarat",
         category: "Beauty",
         price: 28500,
@@ -7106,7 +7106,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 686,
+        id: 494,
         name: "Glossier Boy Brow",
         category: "Beauty",
         price: 1500,
@@ -7120,7 +7120,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 687,
+        id: 495,
         name: "Laneige Lip Sleeping Mask",
         category: "Beauty",
         price: 1800,
@@ -7134,7 +7134,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 688,
+        id: 496,
         name: "Paula's Choice 2% BHA",
         category: "Beauty",
         price: 2900,
@@ -7148,7 +7148,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 689,
+        id: 497,
         name: "Drunk Elephant C-Firma",
         category: "Beauty",
         price: 6500,
@@ -7162,7 +7162,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 690,
+        id: 498,
         name: "Sunday Riley Good Genes",
         category: "Beauty",
         price: 7500,
@@ -7176,7 +7176,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 691,
+        id: 499,
         name: "The Ordinary Niacinamide",
         category: "Beauty",
         price: 599,
@@ -7190,7 +7190,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 692,
+        id: 500,
         name: "Olaplex No. 3 Hair Perfector",
         category: "Beauty",
         price: 2499,
@@ -7204,7 +7204,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 693,
+        id: 501,
         name: "Bumble and bumble Hairdresser's Oil",
         category: "Beauty",
         price: 3500,
@@ -7218,7 +7218,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 694,
+        id: 502,
         name: "Living Proof Perfect Hair Day",
         category: "Beauty",
         price: 2900,
@@ -7232,7 +7232,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 695,
+        id: 503,
         name: "Kérastase Elixir Ultime",
         category: "Beauty",
         price: 4900,
@@ -7246,7 +7246,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 696,
+        id: 504,
         name: "Briogeo Don't Despair, Repair!",
         category: "Beauty",
         price: 3200,
@@ -7260,7 +7260,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 697,
+        id: 505,
         name: "Aveda Cherry Almond Shampoo",
         category: "Beauty",
         price: 1800,
@@ -7274,7 +7274,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 698,
+        id: 506,
         name: "Ouai Wave Spray",
         category: "Beauty",
         price: 2400,
@@ -7288,7 +7288,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 699,
+        id: 507,
         name: "Moroccanoil Treatment",
         category: "Beauty",
         price: 3900,
@@ -7303,7 +7303,7 @@ export const products = [
     },
     // --- GROCERY & STAPLES (800-839) ---
     {
-        id: 800,
+        id: 508,
         name: "Nestle Nido Instant Milk Powder",
         category: "Grocery",
         price: 1500,
@@ -7317,7 +7317,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 801,
+        id: 509,
         name: "Kellogg's Corn Flakes",
         category: "Grocery",
         price: 450,
@@ -7331,7 +7331,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 802,
+        id: 510,
         name: "Nutella Hazelnut Spread",
         category: "Grocery",
         price: 650,
@@ -7345,7 +7345,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 803,
+        id: 511,
         name: "Starbucks Pike Place Roast",
         category: "Grocery",
         price: 1200,
@@ -7359,7 +7359,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 804,
+        id: 512,
         name: "Twinings English Breakfast Tea",
         category: "Grocery",
         price: 850,
@@ -7373,7 +7373,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 805,
+        id: 513,
         name: "Lindt Excellence Dark Chocolate",
         category: "Grocery",
         price: 350,
@@ -7387,7 +7387,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 806,
+        id: 514,
         name: "Barilla Penne Rigate",
         category: "Grocery",
         price: 199,
@@ -7401,7 +7401,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 807,
+        id: 515,
         name: "Bertolli Extra Virgin Olive Oil",
         category: "Grocery",
         price: 1450,
@@ -7415,7 +7415,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 808,
+        id: 516,
         name: "Quaker Rolled Oats",
         category: "Grocery",
         price: 399,
@@ -7429,7 +7429,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 809,
+        id: 517,
         name: "Ariel Matic Front Load Liquid",
         category: "Grocery",
         price: 750,
@@ -7443,7 +7443,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 810,
+        id: 518,
         name: "Dettol Liquid Handwash",
         category: "Grocery",
         price: 250,
@@ -7457,7 +7457,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 811,
+        id: 519,
         name: "Colgate Total Toothpaste",
         category: "Grocery",
         price: 180,
@@ -7471,7 +7471,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 812,
+        id: 520,
         name: "Gillette Fusion5 Razor",
         category: "Beauty",
         price: 999,
@@ -7485,7 +7485,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 813,
+        id: 521,
         name: "Head & Shoulders Shampoo",
         category: "Beauty",
         price: 550,
@@ -7499,7 +7499,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 814,
+        id: 522,
         name: "Pampers Baby Wipes",
         category: "Baby",
         price: 350,
@@ -7513,7 +7513,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 815,
+        id: 523,
         name: "Johnson's Baby Powder",
         category: "Baby",
         price: 250,
@@ -7527,7 +7527,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 816,
+        id: 524,
         name: "Aptamil Prosyneo Milk",
         category: "Baby",
         price: 2850,
@@ -7541,7 +7541,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 817,
+        id: 525,
         name: "Heinz Tomato Ketchup",
         category: "Grocery",
         price: 299,
@@ -7555,7 +7555,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 818,
+        id: 526,
         name: "Lipton Yellow Label Tea",
         category: "Grocery",
         price: 450,
@@ -7569,7 +7569,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 819,
+        id: 527,
         name: "Maggi 2-Minute Noodles",
         category: "Grocery",
         price: 150,
@@ -7583,7 +7583,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 820,
+        id: 528,
         name: "Amul Butter 500g",
         category: "Grocery",
         price: 250,
@@ -7597,7 +7597,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 821,
+        id: 529,
         name: "Tropicana Orange Juice",
         category: "Grocery",
         price: 120,
@@ -7611,7 +7611,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 822,
+        id: 530,
         name: "Haldiram's Bhujia Sev",
         category: "Grocery",
         price: 90,
@@ -7625,7 +7625,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 823,
+        id: 531,
         name: "Lay's Magic Masala",
         category: "Grocery",
         price: 20,
@@ -7639,7 +7639,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 824,
+        id: 532,
         name: "Bournvita Health Drink",
         category: "Grocery",
         price: 450,
@@ -7653,7 +7653,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 825,
+        id: 533,
         name: "Coca-Cola 2L",
         category: "Grocery",
         price: 95,
@@ -7667,7 +7667,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 826,
+        id: 534,
         name: "Kinley Mineral Water 1L",
         category: "Grocery",
         price: 20,
@@ -7681,7 +7681,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 827,
+        id: 535,
         name: "Saffola Gold Cooking Oil",
         category: "Grocery",
         price: 750,
@@ -7695,7 +7695,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 828,
+        id: 536,
         name: "Daawat Rozana Basmati Rice",
         category: "Grocery",
         price: 499,
@@ -7709,7 +7709,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 829,
+        id: 537,
         name: "Knorr Tomato Soup",
         category: "Grocery",
         price: 55,
@@ -7723,7 +7723,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 830,
+        id: 538,
         name: "Whisper Ultra Clean XL",
         category: "Beauty",
         price: 450,
@@ -7737,7 +7737,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 831,
+        id: 539,
         name: "Savlon Antiseptic Liquid",
         category: "Grocery",
         price: 150,
@@ -7751,7 +7751,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 832,
+        id: 540,
         name: "Catch Table Salt",
         category: "Grocery",
         price: 20,
@@ -7765,7 +7765,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 833,
+        id: 541,
         name: "MTR Ready-to-Eat Paneer Tikka",
         category: "Grocery",
         price: 110,
@@ -7779,7 +7779,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 834,
+        id: 542,
         name: "Parle-G Gold Biscuits",
         category: "Grocery",
         price: 30,
@@ -7793,7 +7793,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 835,
+        id: 543,
         name: "Amul Pro Health Drink",
         category: "Grocery",
         price: 350,
@@ -7807,7 +7807,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 836,
+        id: 544,
         name: "Saffola Oats",
         category: "Grocery",
         price: 199,
@@ -7821,7 +7821,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 837,
+        id: 545,
         name: "Cinthol Lime Soap",
         category: "Beauty",
         price: 180,
@@ -7835,7 +7835,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 838,
+        id: 546,
         name: "Patanjali Dant Kanti",
         category: "Grocery",
         price: 85,
@@ -7849,7 +7849,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 839,
+        id: 547,
         name: "Dabur Honey 500g",
         category: "Grocery",
         price: 199,
@@ -7864,7 +7864,7 @@ export const products = [
     },
     // --- OFFICE SUPPLIES (840-879) ---
     {
-        id: 840,
+        id: 548,
         name: "Paper Mate InkJoy Pens",
         category: "Office",
         price: 850,
@@ -7878,7 +7878,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 841,
+        id: 549,
         name: "Post-it Super Sticky Notes",
         category: "Office",
         price: 1200,
@@ -7892,7 +7892,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 842,
+        id: 550,
         name: "Sharpie Permanent Markers",
         category: "Office",
         price: 950,
@@ -7906,7 +7906,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 843,
+        id: 551,
         name: "HP OfficeJet Pro 9015e",
         category: "Electronics",
         price: 24500,
@@ -7920,7 +7920,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 844,
+        id: 552,
         name: "Logitech MX Master 3S",
         category: "Electronics",
         price: 9500,
@@ -7934,7 +7934,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 845,
+        id: 553,
         name: "Steelcase Gesture Chair",
         category: "Home",
         price: 135000,
@@ -7948,7 +7948,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 846,
+        id: 554,
         name: "Standing Desk by Fully",
         category: "Home",
         price: 55000,
@@ -7962,7 +7962,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 847,
+        id: 555,
         name: "BenQ ScreenBar Halo",
         category: "Electronics",
         price: 18500,
@@ -7976,7 +7976,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 848,
+        id: 556,
         name: "Fuji Xerox P375 dw",
         category: "Electronics",
         price: 16500,
@@ -7990,7 +7990,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 849,
+        id: 557,
         name: "Western Digital My Book 8TB",
         category: "Electronics",
         price: 15500,
@@ -8004,7 +8004,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 850,
+        id: 558,
         name: "APC Back-UPS Pro 1500",
         category: "Electronics",
         price: 24500,
@@ -8018,7 +8018,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 851,
+        id: 559,
         name: "Seagate IronWolf 12TB",
         category: "Electronics",
         price: 28500,
@@ -8032,7 +8032,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 852,
+        id: 560,
         name: "Brother P-touch Cube Plus",
         category: "Office",
         price: 8500,
@@ -8046,7 +8046,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 853,
+        id: 561,
         name: "Swingline 747 Stapler",
         category: "Office",
         price: 2500,
@@ -8060,7 +8060,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 854,
+        id: 562,
         name: "Quartet Glass Whiteboard",
         category: "Office",
         price: 12500,
@@ -8074,7 +8074,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 855,
+        id: 563,
         name: "SentrySafe SFW123GDC",
         category: "Home",
         price: 35000,
@@ -8083,12 +8083,12 @@ export const products = [
         rating: 4.7,
         reviews: 8000,
         brand: "SentrySafe",
-        image: "https://images.unsplash.com/photo-1583394238313-7313c0afb3cc?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=800&q=80",
         description: "Fireproof and waterproof safe with digital keypad.",
         inStock: true
     },
     {
-        id: 856,
+        id: 564,
         name: "Pilot G2 Gel Pens",
         category: "Office",
         price: 450,
@@ -8102,7 +8102,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 857,
+        id: 565,
         name: "Uni-ball Eye Rollerball",
         category: "Office",
         price: 900,
@@ -8116,7 +8116,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 858,
+        id: 566,
         name: "Staedtler Lumocolor Whiteboard",
         category: "Office",
         price: 750,
@@ -8130,7 +8130,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 859,
+        id: 567,
         name: "Double A Copy Paper A4",
         category: "Office",
         price: 350,
@@ -8144,7 +8144,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 860,
+        id: 568,
         name: "Canon PIXMA G3010",
         category: "Electronics",
         price: 14500,
@@ -8158,7 +8158,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 861,
+        id: 569,
         name: "Epson EcoTank L3211",
         category: "Electronics",
         price: 15500,
@@ -8172,7 +8172,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 862,
+        id: 570,
         name: "Durable Desktop Organizer",
         category: "Office",
         price: 1200,
@@ -8186,7 +8186,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 863,
+        id: 571,
         name: "Fellowes Powershred 73Ci",
         category: "Office",
         price: 18500,
@@ -8200,7 +8200,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 864,
+        id: 572,
         name: "Logitech K380 Keyboard",
         category: "Electronics",
         price: 2800,
@@ -8214,7 +8214,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 865,
+        id: 573,
         name: "Microsoft Sculpt Ergonomic",
         category: "Electronics",
         price: 8500,
@@ -8228,7 +8228,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 866,
+        id: 574,
         name: "Blue Yeti USB Microphone",
         category: "Electronics",
         price: 12500,
@@ -8242,7 +8242,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 867,
+        id: 575,
         name: "Ring Light with Stand",
         category: "Electronics",
         price: 3500,
@@ -8256,7 +8256,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 868,
+        id: 576,
         name: "Dell UltraSharp 27 Monitor",
         category: "Electronics",
         price: 35000,
@@ -8270,7 +8270,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 869,
+        id: 577,
         name: "Lacie Rugged Mini 2TB",
         category: "Electronics",
         price: 9500,
@@ -8284,7 +8284,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 870,
+        id: 578,
         name: "Elgato Stream Deck",
         category: "Electronics",
         price: 14500,
@@ -8298,7 +8298,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 871,
+        id: 579,
         name: "Anker PowerConf Speakerphone",
         category: "Electronics",
         price: 9500,
@@ -8312,7 +8312,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 872,
+        id: 580,
         name: "Belkin BoostCharge Pro",
         category: "Electronics",
         price: 12500,
@@ -8326,7 +8326,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 873,
+        id: 581,
         name: "Caldigit TS4 Dock",
         category: "Electronics",
         price: 39500,
@@ -8340,7 +8340,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 874,
+        id: 582,
         name: "Vogels Monitor Wall Mount",
         category: "Office",
         price: 8500,
@@ -8354,7 +8354,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 875,
+        id: 583,
         name: "Moleskine Classic Notebook",
         category: "Office",
         price: 2500,
@@ -8368,7 +8368,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 876,
+        id: 584,
         name: "Zebra Sarasa Clip Pens",
         category: "Office",
         price: 1200,
@@ -8382,7 +8382,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 877,
+        id: 585,
         name: "TWS Wireless Presenter",
         category: "Office",
         price: 3500,
@@ -8396,7 +8396,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 878,
+        id: 586,
         name: "Avery Mailing Labels",
         category: "Office",
         price: 950,
@@ -8410,7 +8410,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 879,
+        id: 587,
         name: "GBC Fusion Laminator",
         category: "Office",
         price: 12500,
@@ -8419,13 +8419,13 @@ export const products = [
         rating: 4.7,
         reviews: 1500,
         brand: "GBC",
-        image: "https://images.unsplash.com/photo-1583394238313-7313c0afb3cc?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=800&q=80",
         description: "Fast and easy-to-use home/office laminator.",
         inStock: true
     },
     // --- BOOKS & MEDIA (880-939) ---
     {
-        id: 880,
+        id: 588,
         name: "Atomic Habits",
         category: "Books",
         price: 399,
@@ -8439,7 +8439,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 881,
+        id: 589,
         name: "The Psychology of Money",
         category: "Books",
         price: 320,
@@ -8453,7 +8453,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 882,
+        id: 590,
         name: "Project Hail Mary",
         category: "Books",
         price: 850,
@@ -8467,7 +8467,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 883,
+        id: 591,
         name: "Clean Code",
         category: "Books",
         price: 799,
@@ -8481,7 +8481,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 884,
+        id: 592,
         name: "The Pragmatic Programmer",
         category: "Books",
         price: 899,
@@ -8495,7 +8495,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 885,
+        id: 593,
         name: "The Alchemist",
         category: "Books",
         price: 299,
@@ -8509,7 +8509,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 886,
+        id: 594,
         name: "Thinking, Fast and Slow",
         category: "Books",
         price: 950,
@@ -8523,7 +8523,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 887,
+        id: 595,
         name: "Sapiens",
         category: "Books",
         price: 499,
@@ -8537,7 +8537,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 888,
+        id: 596,
         name: "The 7 Habits of Highly Effective People",
         category: "Books",
         price: 650,
@@ -8551,7 +8551,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 889,
+        id: 597,
         name: "Good to Great",
         category: "Books",
         price: 1200,
@@ -8565,7 +8565,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 890,
+        id: 598,
         name: "Start with Why",
         category: "Books",
         price: 550,
@@ -8579,7 +8579,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 891,
+        id: 599,
         name: "Zero to One",
         category: "Books",
         price: 499,
@@ -8593,7 +8593,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 892,
+        id: 600,
         name: "The Lean Startup",
         category: "Books",
         price: 750,
@@ -8607,7 +8607,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 893,
+        id: 601,
         name: "Predictably Irrational",
         category: "Books",
         price: 850,
@@ -8621,7 +8621,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 894,
+        id: 602,
         name: "The Intelligent Investor",
         category: "Books",
         price: 550,
@@ -8633,7 +8633,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 895,
+        id: 603,
         name: "Principles",
         category: "Books",
         price: 1850,
@@ -8647,7 +8647,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 896,
+        id: 604,
         name: "Deep Work",
         category: "Books",
         price: 550,
@@ -8661,7 +8661,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 897,
+        id: 605,
         name: "Can't Hurt Me",
         category: "Books",
         price: 999,
@@ -8675,7 +8675,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 898,
+        id: 606,
         name: "Man's Search for Meaning",
         category: "Books",
         price: 399,
@@ -8689,7 +8689,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 899,
+        id: 607,
         name: "Dune",
         category: "Books",
         price: 850,
@@ -8703,7 +8703,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 900,
+        id: 608,
         name: "Foundation",
         category: "Books",
         price: 750,
@@ -8717,7 +8717,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 901,
+        id: 609,
         name: "1984",
         category: "Books",
         price: 199,
@@ -8731,7 +8731,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 902,
+        id: 610,
         name: "Brave New World",
         category: "Books",
         price: 550,
@@ -8745,7 +8745,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 903,
+        id: 611,
         name: "The Lord of the Rings",
         category: "Books",
         price: 1599,
@@ -8759,7 +8759,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 904,
+        id: 612,
         name: "Harry Potter Set",
         category: "Books",
         price: 3999,
@@ -8773,7 +8773,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 905,
+        id: 613,
         name: "Circe",
         category: "Books",
         price: 850,
@@ -8787,7 +8787,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 906,
+        id: 614,
         name: "The Song of Achilles",
         category: "Books",
         price: 750,
@@ -8801,7 +8801,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 907,
+        id: 615,
         name: "Where the Crawdads Sing",
         category: "Books",
         price: 950,
@@ -8815,7 +8815,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 908,
+        id: 616,
         name: "Educated",
         category: "Books",
         price: 850,
@@ -8829,7 +8829,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 909,
+        id: 617,
         name: "Becoming",
         category: "Books",
         price: 1200,
@@ -8843,7 +8843,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 910,
+        id: 618,
         name: "The Overstory",
         category: "Books",
         price: 950,
@@ -8857,7 +8857,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 911,
+        id: 619,
         name: "A Little Life",
         category: "Books",
         price: 1200,
@@ -8871,7 +8871,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 912,
+        id: 620,
         name: "Normal People",
         category: "Books",
         price: 750,
@@ -8885,7 +8885,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 913,
+        id: 621,
         name: "Stay with Me",
         category: "Books",
         price: 850,
@@ -8899,7 +8899,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 914,
+        id: 622,
         name: "The Dutch House",
         category: "Books",
         price: 950,
@@ -8913,7 +8913,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 915,
+        id: 623,
         name: "Hamnet",
         category: "Books",
         price: 850,
@@ -8927,7 +8927,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 916,
+        id: 624,
         name: "Anxious People",
         category: "Books",
         price: 850,
@@ -8941,7 +8941,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 917,
+        id: 625,
         name: "The Midnight Library",
         category: "Books",
         price: 850,
@@ -8955,7 +8955,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 918,
+        id: 626,
         name: "The Paris Apartment",
         category: "Books",
         price: 850,
@@ -8969,7 +8969,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 919,
+        id: 627,
         name: "Sea of Tranquility",
         category: "Books",
         price: 950,
@@ -8983,7 +8983,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 920,
+        id: 628,
         name: "The Martian",
         category: "Books",
         price: 750,
@@ -8997,7 +8997,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 921,
+        id: 629,
         name: "Ready Player One",
         category: "Books",
         price: 850,
@@ -9011,7 +9011,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 922,
+        id: 630,
         name: "Dark Matter",
         category: "Books",
         price: 850,
@@ -9025,7 +9025,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 923,
+        id: 631,
         name: "Recursion",
         category: "Books",
         price: 850,
@@ -9039,7 +9039,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 924,
+        id: 632,
         name: "Killers of the Flower Moon",
         category: "Books",
         price: 950,
@@ -9053,7 +9053,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 925,
+        id: 633,
         name: "The Silent Patient",
         category: "Books",
         price: 850,
@@ -9067,7 +9067,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 926,
+        id: 634,
         name: "The Guest List",
         category: "Books",
         price: 850,
@@ -9081,7 +9081,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 927,
+        id: 635,
         name: "Verity",
         category: "Books",
         price: 850,
@@ -9095,7 +9095,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 928,
+        id: 636,
         name: "It Ends with Us",
         category: "Books",
         price: 850,
@@ -9109,7 +9109,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 929,
+        id: 637,
         name: "Ugly Love",
         category: "Books",
         price: 750,
@@ -9123,7 +9123,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 930,
+        id: 638,
         name: "Seven Husbands of Evelyn Hugo",
         category: "Books",
         price: 950,
@@ -9137,7 +9137,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 931,
+        id: 639,
         name: "Daisy Jones & The Six",
         category: "Books",
         price: 850,
@@ -9151,7 +9151,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 932,
+        id: 640,
         name: "Malibu Rising",
         category: "Books",
         price: 850,
@@ -9165,7 +9165,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 933,
+        id: 641,
         name: "The Great Gatsby",
         category: "Books",
         price: 350,
@@ -9179,7 +9179,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 934,
+        id: 642,
         name: "To Kill a Mockingbird",
         category: "Books",
         price: 450,
@@ -9193,7 +9193,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 935,
+        id: 643,
         name: "Crime and Punishment",
         category: "Books",
         price: 650,
@@ -9207,7 +9207,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 936,
+        id: 644,
         name: "The Brothers Karamazov",
         category: "Books",
         price: 850,
@@ -9221,7 +9221,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 937,
+        id: 645,
         name: "Anna Karenina",
         category: "Books",
         price: 750,
@@ -9235,7 +9235,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 938,
+        id: 646,
         name: "War and Peace",
         category: "Books",
         price: 1450,
@@ -9249,7 +9249,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 939,
+        id: 647,
         name: "The Odyssey",
         category: "Books",
         price: 550,
@@ -9264,7 +9264,7 @@ export const products = [
     },
     // --- TABLETS ---
     {
-        id: 1001,
+        id: 648,
         name: "iPad Pro 12.9 M2",
         category: "Tablets",
         price: 112900,
@@ -9278,7 +9278,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 1002,
+        id: 649,
         name: "Samsung Galaxy Tab S9 Ultra",
         category: "Tablets",
         price: 105000,
@@ -9293,7 +9293,7 @@ export const products = [
     },
     // --- WEARABLES ---
     {
-        id: 1101,
+        id: 650,
         name: "Oura Ring Gen3",
         category: "Watch",
         price: 29999,
@@ -9308,7 +9308,7 @@ export const products = [
     },
     // --- ACCESSORIES ---
     {
-        id: 1201,
+        id: 651,
         name: "Bellroy Slim Sleeve",
         category: "Accessories",
         price: 6500,
@@ -9323,7 +9323,7 @@ export const products = [
     },
     // --- HEALTH ---
     {
-        id: 1301,
+        id: 652,
         name: "Theragun PRO Gen 5",
         category: "Health",
         price: 45000,
@@ -9338,7 +9338,7 @@ export const products = [
     },
     // --- OUTDOORS ---
     {
-        id: 1401,
+        id: 653,
         name: "YETI Tundra 45 Cooler",
         category: "Outdoors",
         price: 35000,
@@ -9353,7 +9353,7 @@ export const products = [
     },
     // --- SPORTS ---
     {
-        id: 1501,
+        id: 654,
         name: "Wilson Evolution Basketball",
         category: "Sports",
         price: 5500,
@@ -9368,7 +9368,7 @@ export const products = [
     },
     // --- TOYS ---
     {
-        id: 1601,
+        id: 655,
         name: "LEGO Star Wars Millennium Falcon",
         category: "Toys",
         price: 75000,
@@ -9377,14 +9377,14 @@ export const products = [
         rating: 4.9,
         reviews: 300,
         brand: "LEGO",
-        image: "https://images.unsplash.com/photo-1585366119957-e5733f399881?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1584030373521-d8195e79529b?w=800&q=80",
         description: "The largest, most detailed LEGO Star Wars model ever.",
         inStock: true
     },
 
     // --- TVs & HOME ENTERTAINMENT ---
     {
-        id: 10001,
+        id: 656,
         name: "Sony Bravia 55\" 4K Smart LED TV",
         category: "TVs",
         price: 64990,
@@ -9398,7 +9398,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10002,
+        id: 657,
         name: "LG 65\" OLED evo C3",
         category: "TVs",
         price: 169990,
@@ -9413,7 +9413,7 @@ export const products = [
         isNew: true
     },
     {
-        id: 10003,
+        id: 658,
         name: "Samsung 55\" QLED 4K",
         category: "TVs",
         price: 89990,
@@ -9427,7 +9427,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10004,
+        id: 659,
         name: "Mi TV 5A 43\" Android",
         category: "TVs",
         price: 24999,
@@ -9441,7 +9441,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10007,
+        id: 660,
         name: "JBL Bar 5.1 Soundbar",
         category: "Audio",
         price: 54999,
@@ -9450,12 +9450,12 @@ export const products = [
         rating: 4.6,
         reviews: 600,
         brand: "JBL",
-        image: "https://images.unsplash.com/photo-1545459720-aac3f949cc56?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&q=80",
         description: "True Wireless Surround with Detachable Speakers.",
         inStock: true
     },
     {
-        id: 10008,
+        id: 661,
         name: "Amazon Fire TV Stick 4K",
         category: "TVs",
         price: 5999,
@@ -9469,7 +9469,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10009,
+        id: 662,
         name: "Marshall Stanmore II",
         category: "Audio",
         price: 34999,
@@ -9485,7 +9485,7 @@ export const products = [
 
     // --- MOBILE ACCESSORIES ---
     {
-        id: 10012,
+        id: 663,
         name: "Mi Power Bank 3i 20000mAh",
         category: "Accessories",
         price: 2149,
@@ -9499,7 +9499,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10013,
+        id: 664,
         name: "Apple 20W USB-C Adapter",
         category: "Accessories",
         price: 1699,
@@ -9513,7 +9513,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10015,
+        id: 665,
         name: "Spigen Tempered Glass (iPhone 15)",
         category: "Accessories",
         price: 999,
@@ -9527,7 +9527,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10017,
+        id: 666,
         name: "Samsung Wireless Charger Pad",
         category: "Accessories",
         price: 2999,
@@ -9541,7 +9541,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10018,
+        id: 667,
         name: "Portronics Car Mobile Holder",
         category: "Accessories",
         price: 399,
@@ -9557,7 +9557,7 @@ export const products = [
 
     // --- COMPUTERS & OFFICE ---
     {
-        id: 10022,
+        id: 668,
         name: "Dell P-Series 24\" Monitor",
         category: "Computers",
         price: 14999,
@@ -9571,7 +9571,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10023,
+        id: 669,
         name: "Logitech MX Keys Wireless",
         category: "Computers",
         price: 9995,
@@ -9585,7 +9585,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10024,
+        id: 670,
         name: "Logitech MX Master 3S",
         category: "Computers",
         price: 8995,
@@ -9599,7 +9599,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10026,
+        id: 671,
         name: "Samsung T7 Shield 1TB SSD",
         category: "Computers",
         price: 8999,
@@ -9613,7 +9613,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10039,
+        id: 672,
         name: "HP LaserJet M1005",
         category: "Office",
         price: 16999,
@@ -9627,7 +9627,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10041,
+        id: 673,
         name: "TP-Link Archer AX73 Router",
         category: "Office",
         price: 9999,
@@ -9643,7 +9643,7 @@ export const products = [
 
     // --- CAMERAS ---
     {
-        id: 10032,
+        id: 674,
         name: "Canon EOS 1500D",
         category: "Cameras",
         price: 41990,
@@ -9657,7 +9657,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10033,
+        id: 675,
         name: "Sony Alpha a7 III Body",
         category: "Cameras",
         price: 156990,
@@ -9671,7 +9671,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10034,
+        id: 676,
         name: "GoPro Hero 12 Black",
         category: "Cameras",
         price: 37990,
@@ -9685,7 +9685,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10037,
+        id: 677,
         name: "Digitek DTR 550 Tripod",
         category: "Cameras",
         price: 1499,
@@ -9701,7 +9701,7 @@ export const products = [
 
     // --- SMART DEVICES ---
     {
-        id: 10045,
+        id: 678,
         name: "Xiaomi Smart Band 8",
         category: "Smart Devices",
         price: 2999,
@@ -9715,7 +9715,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10046,
+        id: 679,
         name: "Ray-Ban Meta Smart Glasses",
         category: "Smart Devices",
         price: 32999,
@@ -9729,7 +9729,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10048,
+        id: 680,
         name: "Meta Quest 3 128GB",
         category: "Smart Devices",
         price: 54999,
@@ -9745,7 +9745,7 @@ export const products = [
 
     // --- HOME APPLIANCES ---
     {
-        id: 10049,
+        id: 681,
         name: "Voltas 1.5 Ton Split AC",
         category: "Home Appliances",
         price: 34990,
@@ -9759,7 +9759,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10050,
+        id: 682,
         name: "Samsung 253L Refrigerator",
         category: "Home Appliances",
         price: 24990,
@@ -9773,7 +9773,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10051,
+        id: 683,
         name: "LG 8Kg Front Load Washing Machine",
         category: "Home Appliances",
         price: 32990,
@@ -9787,7 +9787,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10053,
+        id: 684,
         name: "Dyson Purifier Cool Gen1",
         category: "Home Appliances",
         price: 32900,
@@ -9801,7 +9801,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 10055,
+        id: 685,
         name: "Dyson V15 Detect Vacuum",
         category: "Home Appliances",
         price: 62900,
@@ -9814,7 +9814,7 @@ export const products = [
         description: "Powerful cordless vacuum with laser detect.",
     },
     {
-        id: 9001,
+        id: 686,
         name: "VINTA S-Series Travel Backpack",
         category: "Bags",
         price: 18500,
@@ -9829,7 +9829,7 @@ export const products = [
         isNew: true
     },
     {
-        id: 9002,
+        id: 687,
         name: "Bellroy Tokyo Totepack",
         category: "Bags",
         price: 14900,
@@ -9843,7 +9843,7 @@ export const products = [
         inStock: true
     },
     {
-        id: 9003,
+        id: 688,
         name: "Peak Design Everyday Backpack 20L",
         category: "Bags",
         price: 24500,

@@ -32,8 +32,12 @@ export default async function handler(req, res) {
                 select: { id: true, stock: true, name: true, price: true }
             });
 
-            if (!product || product.stock < item.quantity) {
-                return res.status(400).json({ error: `Insufficient stock for product: ${product?.name || item.id}` });
+            if (!product) {
+                return res.status(404).json({ error: `Product not found: ${item.id}. Your cart may contain outdated items. Please clear your cart and try again.` });
+            }
+
+            if (product.stock < item.quantity) {
+                return res.status(400).json({ error: `Insufficient stock for product: ${product.name}. Available: ${product.stock}` });
             }
 
             calculatedTotal += product.price * item.quantity;
@@ -102,7 +106,8 @@ export default async function handler(req, res) {
             orderId: order.id,
             razorpayOrderId: razorpayOrderId,
             amount: Math.round(order.totalAmount * 100),
-            currency: "INR"
+            currency: "INR",
+            razorpayKeyId: process.env.RAZORPAY_KEY_ID
         });
     } catch (error) {
         console.error('Order creation error:', error);

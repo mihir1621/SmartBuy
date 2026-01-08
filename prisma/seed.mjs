@@ -6,25 +6,31 @@ const prisma = new PrismaClient();
 async function main() {
     console.log('Start seeding...');
 
-    // Clear existing products
+    // Clear existing related data
+    await prisma.orderItem.deleteMany();
+    await prisma.review.deleteMany();
+    await prisma.wishlistItem.deleteMany();
+    await prisma.order.deleteMany();
     await prisma.product.deleteMany();
-    console.log('Deleted existing products');
+    console.log('Deleted existing products and related data');
 
     for (const p of products) {
         await prisma.product.create({
             data: {
+                id: parseInt(p.id),
                 name: p.name,
                 category: p.category,
-                price: p.price,
-                originalPrice: p.originalPrice,
-                discount: p.discount,
-                rating: p.rating,
-                reviews: p.reviews,
-                brand: p.brand,
+                price: parseFloat(p.price),
+                originalPrice: parseFloat(p.originalPrice),
+                discount: parseInt(p.discount || 0),
+                rating: parseFloat(p.rating || 0),
+                reviews: parseInt(p.reviews || 0),
+                brand: p.brand || 'N/A',
                 image: p.image,
                 images: p.images ? p.images : null,
-                description: p.description,
-                inStock: p.inStock,
+                description: p.description || '',
+                stock: 999,
+                inStock: p.inStock !== undefined ? p.inStock : true,
                 isNew: p.isNew || false,
             },
         });
