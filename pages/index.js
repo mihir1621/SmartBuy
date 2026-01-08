@@ -14,34 +14,20 @@ import { Filter, SlidersHorizontal, ChevronDown, X } from "lucide-react";
 import BannerCarousel from "@/components/BannerCarousel";
 import { prisma } from "@/lib/prisma";
 
+// Fetching data from our static source (matching /api/static-products)
 export async function getServerSideProps() {
-  try {
-    const products = await prisma.product.findMany({
-      orderBy: { createdAt: 'desc' },
-      take: 20
-    });
+  // We are using the local data directly for better performance and reliability
+  // This matches the data served by the /api/static-products endpoint
+  const formattedProducts = staticProducts.map(p => ({
+    ...p,
+    description: p.description ? (p.description.length > 150 ? p.description.substring(0, 150) + '...' : p.description) : ''
+  }));
 
-    const serializedProducts = JSON.parse(JSON.stringify(products)).map(p => ({
-      ...p,
-      description: p.description ? (p.description.length > 150 ? p.description.substring(0, 150) + '...' : p.description) : ''
-    }));
-
-    return {
-      props: {
-        initialProducts: serializedProducts,
-      },
-    };
-  } catch (error) {
-    console.error("Database error:", error);
-    return {
-      props: {
-        initialProducts: staticProducts.map(p => ({
-          ...p,
-          description: p.description ? (p.description.length > 150 ? p.description.substring(0, 150) + '...' : p.description) : ''
-        })),
-      },
-    };
-  }
+  return {
+    props: {
+      initialProducts: formattedProducts,
+    },
+  };
 }
 
 export default function Home({ initialProducts }) {
