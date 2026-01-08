@@ -775,7 +775,7 @@ export const products = [
         rating: 4.1,
         reviews: 8000,
         brand: "boAt",
-        image: "https://images.unsplash.com/photo-1572569028738-411a56103324?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=800&q=80",
         description: "ASAP Charge and 40 hour playback.",
         inStock: true
     },
@@ -3196,7 +3196,7 @@ export const products = [
         rating: 4.8,
         reviews: 4500,
         brand: "Microsoft",
-        image: "https://images.unsplash.com/photo-1621259182978-f09e5e2ca09a?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1605906327135-6d1948520745?w=800&q=80",
         description: "The fastest, most powerful Xbox ever.",
         inStock: true
     },
@@ -3448,7 +3448,7 @@ export const products = [
         rating: 4.6,
         reviews: 3000,
         brand: "Logitech",
-        image: "https://images.unsplash.com/photo-1621259182978-f09e5e2ca09a?w=800&q=80", // Tech
+        image: "https://images.unsplash.com/photo-1605906327135-6d1948520745?w=800&q=80", // Tech
         description: "Ultra HD webcam for video conferencing and streaming.",
         inStock: true
     },
@@ -4280,7 +4280,7 @@ export const products = [
         rating: 4.8,
         reviews: 200,
         brand: "Montblanc",
-        image: "https://images.unsplash.com/photo-1598501257912-dfa68c697816?w=800&q=80", // Pen
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80", // Pen
         description: "Luxury ballpoint pen in black precious resin.",
         inStock: true
     },
@@ -4392,7 +4392,7 @@ export const products = [
         rating: 4.6,
         reviews: 800,
         brand: "Matador",
-        image: "https://images.unsplash.com/photo-1610492421919-613d96923485?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
         description: "Ultralight soap case that lets soap dry through the fabric.",
         inStock: true
     },
@@ -4448,7 +4448,7 @@ export const products = [
         rating: 4.8,
         reviews: 400,
         brand: "Snow Peak",
-        image: "https://images.unsplash.com/photo-1622323719007-8ecdf299b922?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1542272454315-4c01d74bed82?w=800&q=80",
         description: "Ultralight titanium camping mug with folding handles.",
         inStock: true
     },
@@ -4476,7 +4476,7 @@ export const products = [
         rating: 4.7,
         reviews: 1100,
         brand: "Black Diamond",
-        image: "https://images.unsplash.com/photo-1588698188179-81bc596d3f2d?w=800&q=80", // Headlamp
+        image: "https://images.unsplash.com/photo-1583394132317-0a701469a9b3?w=800&q=80", // Headlamp
         description: "Powerful and robust waterproof headlamp.",
         inStock: true
     },
@@ -7452,7 +7452,7 @@ export const products = [
         rating: 4.9,
         reviews: 65000,
         brand: "Reckitt",
-        image: "https://images.unsplash.com/photo-1603513492128-ba9bc9b35843?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
         description: "99.9% germ protection for clean and healthy hands.",
         inStock: true
     },
@@ -7844,7 +7844,7 @@ export const products = [
         rating: 4.6,
         reviews: 95000,
         brand: "Patanjali",
-        image: "https://images.unsplash.com/photo-1628133515829-f8fd0409a259?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
         description: "Herbal toothpaste for strong teeth.",
         inStock: true
     },
@@ -9522,7 +9522,7 @@ export const products = [
         rating: 4.6,
         reviews: 1200,
         brand: "Spigen",
-        image: "https://images.unsplash.com/photo-1603539564177-8094a4c21960?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800&q=80",
         description: "9H Hardness with Oleophobic coating.",
         inStock: true
     },
@@ -9536,7 +9536,7 @@ export const products = [
         rating: 4.4,
         reviews: 800,
         brand: "Samsung",
-        image: "https://images.unsplash.com/photo-1628267425121-827cb6b986cc?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?w=800&q=80",
         description: "Fast wireless charging for Galaxy devices.",
         inStock: true
     },
