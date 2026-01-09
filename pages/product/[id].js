@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, ShoppingCart, Truck, ShieldCheck, RotateCcw, Heart, CreditCard, X } from 'lucide-react';
+import { Star, ShoppingCart, Truck, ShieldCheck, RotateCcw, Heart, CreditCard, X, Plus } from 'lucide-react';
 import StoreNavbar from '@/components/StoreNavbar';
 import CartSidebar from '@/components/CartSidebar';
 import { useCart } from '@/context/CartContext';
@@ -17,6 +17,7 @@ import ProductReviews from "@/components/ProductReviews";
 import ProductCard from '@/components/ProductCard';
 import RecentlyViewed from "@/components/RecentlyViewed";
 import EMICalculatorModal from "@/components/EMICalculatorModal";
+import { useRecommendations } from '@/hooks/useRecommendations';
 
 export async function getServerSideProps({ params }) {
     const { id } = params;
@@ -66,6 +67,10 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
     const [showEMIModal, setShowEMIModal] = useState(false);
     const [activeFeature, setActiveFeature] = useState(null);
     const [recentProducts, setRecentProducts] = useState([]);
+
+    // AI Recommendations
+    const { fbtProducts, recommendedProducts } = useRecommendations(product);
+    const bundlePrice = product ? fbtProducts.reduce((acc, p) => acc + p.price, product.price) : 0;
 
     // Handle Recently Viewed Logic
     useEffect(() => {
@@ -345,10 +350,81 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                     </div>
                 </div>
 
+                {/* Frequently Bought Together Section */}
+                {fbtProducts.length > 0 && (
+                    <section className="mb-12 bg-gray-900/50 p-6 rounded-2xl border border-gray-800">
+                        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                            <span className="text-blue-500">✨</span> Frequently Bought Together
+                        </h2>
+                        <div className="flex flex-col lg:flex-row items-center gap-8">
+                            {/* Product Chain */}
+                            <div className="flex flex-wrap items-center justify-center gap-4 flex-1">
+                                {/* Main Product */}
+                                <div className="relative w-32 h-32 bg-gray-800 rounded-xl border border-gray-700 p-2">
+                                    <div className="relative w-full h-full">
+                                        <Image src={product.image} alt={product.name} fill className="object-contain" />
+                                    </div>
+                                    <div className="absolute -bottom-2 -right-2 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                        Main
+                                    </div>
+                                </div>
+
+                                {/* Plus Icons and Other Products */}
+                                {fbtProducts.map((p, i) => (
+                                    <div key={p.id} className="flex items-center gap-4">
+                                        <Plus className="text-gray-600 w-6 h-6" />
+                                        <Link href={`/product/${p.id}`} className="relative w-28 h-28 bg-gray-800 rounded-xl border border-gray-700 p-2 hover:border-blue-500 transition-colors group">
+                                            <div className="relative w-full h-full">
+                                                <Image src={p.image} alt={p.name} fill className="object-contain group-hover:scale-105 transition-transform" />
+                                            </div>
+                                            <div className="absolute top-0 right-0 bg-gray-900/90 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-bl-lg">
+                                                ₹{p.price}
+                                            </div>
+                                        </Link>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Bundle Action */}
+                            <div className="w-full lg:w-72 bg-gray-950 p-5 rounded-xl border border-gray-800 flex flex-col gap-4">
+                                <div className="space-y-1">
+                                    <p className="text-gray-400 text-sm">Total price for {fbtProducts.length + 1} items:</p>
+                                    <p className="text-2xl font-black text-white">₹{bundlePrice.toLocaleString()}</p>
+                                </div>
+                                <button
+                                    onClick={() => {
+                                        addToCart(product);
+                                        fbtProducts.forEach(p => addToCart(p));
+                                    }}
+                                    className="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
+                                >
+                                    Add All to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                )}
+
                 {/* Reviews Section */}
                 <ProductReviews product={product} />
 
-                {/* Related Products */}
+                {/* Recommended For You Section */}
+                {recommendedProducts.length > 0 && (
+                    <section className="mb-12 mt-12">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                                Recommended for You <span className="text-xs font-normal text-gray-400 bg-gray-800 px-2 py-1 rounded-full">Based on your history</span>
+                            </h2>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {recommendedProducts.map((p) => (
+                                <ProductCard key={p.id} product={p} />
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {/* Similar Products */}
                 {
                     relatedProducts.length > 0 && (
                         <section className="mb-12">
