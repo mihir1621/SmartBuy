@@ -53,6 +53,22 @@ export default function AdminDashboard() {
         </AdminLayout>
     );
 
+    if (!statsData || statsData.error) {
+        return (
+            <AdminLayout title="Dashboard Overview">
+                <div className="flex h-[60vh] items-center justify-center flex-col gap-4">
+                    <div className="text-red-500 font-bold text-xl">
+                        {statsData?.error || "Failed to load dashboard data"}
+                    </div>
+                    <p className="text-gray-400">Please make sure you are logged in as an Admin.</p>
+                    <Link href="/auth/signin" className="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-700 transition-colors">
+                        Go to Login
+                    </Link>
+                </div>
+            </AdminLayout>
+        );
+    }
+
     const { stats, chartData, recentOrders } = statsData;
 
     const statsCards = [
@@ -203,9 +219,9 @@ export default function AdminDashboard() {
                                     <div className="text-right">
                                         <p className="font-bold text-white">₹{order.totalAmount.toLocaleString()}</p>
                                         <p className={`text-[10px] font-bold uppercase tracking-tighter ${order.status === 'DELIVERED' ? 'text-emerald-500' :
-                                                order.status === 'PROCESSING' ? 'text-blue-500' :
-                                                    order.status === 'SHIPPED' ? 'text-violet-500' :
-                                                        order.status === 'CANCELLED' ? 'text-red-500' : 'text-amber-500'
+                                            order.status === 'PROCESSING' ? 'text-blue-500' :
+                                                order.status === 'SHIPPED' ? 'text-violet-500' :
+                                                    order.status === 'CANCELLED' ? 'text-red-500' : 'text-amber-500'
                                             }`}>
                                             {order.status}
                                         </p>

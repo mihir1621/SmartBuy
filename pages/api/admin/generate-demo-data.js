@@ -14,7 +14,14 @@ export default async function handler(req, res) {
             console.log('Starting demo data generation...');
 
             // 1. Get some random products to create orders
-            const products = await prisma.product.findMany({ take: 10 });
+            // Explicitly select fields to avoid potential schema mismatch errors (e.g. phantom sellerId)
+            const products = await prisma.product.findMany({
+                take: 10,
+                select: {
+                    id: true,
+                    price: true
+                }
+            });
             if (products.length === 0) {
                 return res.status(400).json({ error: 'No products found. Please seed products first.' });
             }

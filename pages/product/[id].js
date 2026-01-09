@@ -76,7 +76,8 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
     useEffect(() => {
         if (product) {
             const viewed = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
-            const newViewed = [product, ...viewed.filter(p => p.id !== product.id)].slice(0, 10);
+            // Store up to 50 items to keep a longer history locally
+            const newViewed = [product, ...viewed.filter(p => p.id !== product.id)].slice(0, 50);
             localStorage.setItem('recentlyViewed', JSON.stringify(newViewed));
             setRecentProducts(newViewed.filter(p => p.id !== product.id));
         }
