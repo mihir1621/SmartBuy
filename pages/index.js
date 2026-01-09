@@ -49,6 +49,26 @@ export default function Home({ initialProducts }) {
     setMinRating,
     sortOption,
     setSortOption,
+
+    // Advanced Filters
+    selectedRam, setSelectedRam,
+    selectedStorage, setSelectedStorage,
+    selectedSize, setSelectedSize,
+    selectedColor, setSelectedColor,
+    selectedType, setSelectedType,
+    selectedConnectivity, setSelectedConnectivity,
+    selectedMaterial, setSelectedMaterial,
+    selectedResolution, setSelectedResolution,
+
+    availableRam,
+    availableStorage,
+    availableSizes,
+    availableColors,
+    availableTypes,
+    availableConnectivity,
+    availableMaterials,
+    availableResolutions,
+
     availableBrands,
     availableGenders,
     globalMaxPrice
@@ -121,12 +141,39 @@ export default function Home({ initialProducts }) {
                 setMinRating={setMinRating}
                 sortOption={sortOption}
                 setSortOption={setSortOption}
+
+                // Advanced Filters
+                selectedRam={selectedRam} setSelectedRam={setSelectedRam}
+                selectedStorage={selectedStorage} setSelectedStorage={setSelectedStorage}
+                selectedSize={selectedSize} setSelectedSize={setSelectedSize}
+                selectedColor={selectedColor} setSelectedColor={setSelectedColor}
+                selectedType={selectedType} setSelectedType={setSelectedType}
+                selectedConnectivity={selectedConnectivity} setSelectedConnectivity={setSelectedConnectivity}
+                selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial}
+                selectedResolution={selectedResolution} setSelectedResolution={setSelectedResolution}
+                availableRam={availableRam}
+                availableStorage={availableStorage}
+                availableSizes={availableSizes}
+                availableColors={availableColors}
+                availableTypes={availableTypes}
+                availableConnectivity={availableConnectivity}
+                availableMaterials={availableMaterials}
+                availableResolutions={availableResolutions}
+
                 clearAll={() => {
                   setSelectedBrands([]);
                   setPriceRange([0, globalMaxPrice]);
                   setSelectedGender("All");
                   setMinRating(0);
                   setSelectedCategory("All");
+                  setSelectedRam([]);
+                  setSelectedStorage([]);
+                  setSelectedSize([]);
+                  setSelectedColor([]);
+                  setSelectedType([]);
+                  setSelectedConnectivity([]);
+                  setSelectedMaterial([]);
+                  setSelectedResolution([]);
                 }}
               />
             </aside>
@@ -168,11 +215,38 @@ export default function Home({ initialProducts }) {
                     setMinRating={setMinRating}
                     sortOption={sortOption}
                     setSortOption={setSortOption}
+
+                    // Advanced Filters
+                    selectedRam={selectedRam} setSelectedRam={setSelectedRam}
+                    selectedStorage={selectedStorage} setSelectedStorage={setSelectedStorage}
+                    selectedSize={selectedSize} setSelectedSize={setSelectedSize}
+                    selectedColor={selectedColor} setSelectedColor={setSelectedColor}
+                    selectedType={selectedType} setSelectedType={setSelectedType}
+                    selectedConnectivity={selectedConnectivity} setSelectedConnectivity={setSelectedConnectivity}
+                    selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial}
+                    selectedResolution={selectedResolution} setSelectedResolution={setSelectedResolution}
+                    availableRam={availableRam}
+                    availableStorage={availableStorage}
+                    availableSizes={availableSizes}
+                    availableColors={availableColors}
+                    availableTypes={availableTypes}
+                    availableConnectivity={availableConnectivity}
+                    availableMaterials={availableMaterials}
+                    availableResolutions={availableResolutions}
+
                     clearAll={() => {
                       setSelectedBrands([]);
                       setPriceRange([0, globalMaxPrice]);
                       setSelectedGender("All");
                       setMinRating(0);
+                      setSelectedRam([]);
+                      setSelectedStorage([]);
+                      setSelectedSize([]);
+                      setSelectedColor([]);
+                      setSelectedType([]);
+                      setSelectedConnectivity([]);
+                      setSelectedMaterial([]);
+                      setSelectedResolution([]);
                     }}
                   />
                 </motion.div>

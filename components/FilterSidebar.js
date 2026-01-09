@@ -1,6 +1,44 @@
-
-import { Star, X } from 'lucide-react';
+import { Star, X, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
+
+const FilterSection = ({ title, options, selected, onChange }) => {
+    if (!options || options.length === 0) return null;
+
+    return (
+        <div>
+            <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-3 sm:mb-4">{title}</h4>
+            <div className="space-y-1.5 max-h-48 sm:max-h-56 overflow-y-auto pr-2 custom-scrollbar">
+                {options.map((option) => (
+                    <label
+                        key={option}
+                        className={`flex items-center gap-3 p-2 px-2.5 rounded-xl cursor-pointer transition-all border ${selected.includes(option)
+                            ? "bg-blue-500/5 border-blue-500/20 text-blue-400"
+                            : "bg-transparent border-transparent text-gray-400 hover:bg-gray-800/20"
+                            }`}
+                    >
+                        <div className={`relative w-4 h-4 rounded border flex items-center justify-center transition-all shrink-0 ${selected.includes(option) ? "bg-blue-500 border-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.3)]" : "border-gray-700"
+                            }`}>
+                            <input
+                                type="checkbox"
+                                checked={selected.includes(option)}
+                                onChange={() => {
+                                    if (selected.includes(option)) {
+                                        onChange(selected.filter(i => i !== option));
+                                    } else {
+                                        onChange([...selected, option]);
+                                    }
+                                }}
+                                className="absolute inset-0 opacity-0 cursor-pointer"
+                            />
+                            {selected.includes(option) && <Check size={10} className="text-white" />}
+                        </div>
+                        <span className="text-[11px] sm:text-sm font-bold truncate tracking-tight">{option}</span>
+                    </label>
+                ))}
+            </div>
+        </div>
+    );
+};
 
 export default function FilterSidebar({
     selectedCategory,
@@ -17,6 +55,25 @@ export default function FilterSidebar({
     setMinRating,
     sortOption,
     setSortOption,
+
+    // Advanced Filters
+    selectedRam, setSelectedRam,
+    selectedStorage, setSelectedStorage,
+    selectedSize, setSelectedSize,
+    selectedColor, setSelectedColor,
+    selectedType, setSelectedType,
+    selectedConnectivity, setSelectedConnectivity,
+    selectedMaterial, setSelectedMaterial,
+    selectedResolution, setSelectedResolution,
+    availableRam,
+    availableStorage,
+    availableSizes,
+    availableColors,
+    availableTypes,
+    availableConnectivity,
+    availableMaterials,
+    availableResolutions,
+
     clearAll
 }) {
     const handleBrandChange = (brand) => {
@@ -108,7 +165,7 @@ export default function FilterSidebar({
                 </div>
             )}
 
-            {/* Price Filter - Advanced Dual Input */}
+            {/* Price Filter */}
             <div>
                 <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-3 sm:mb-4">Price Range (₹)</h4>
                 <div className="grid grid-cols-2 gap-3 mb-5 sm:mb-6">
@@ -139,11 +196,17 @@ export default function FilterSidebar({
                     onChange={(e) => handlePriceChange(1, e.target.value)}
                     className="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
                 />
-                <div className="flex justify-between mt-2 flex-wrap gap-1">
-                    <span className="text-[9px] font-black text-gray-600 uppercase tracking-tighter">Budget Friendly</span>
-                    <span className="text-[9px] font-black text-gray-600 uppercase tracking-tighter">Premium</span>
-                </div>
             </div>
+
+            {/* Dynamic Advanced Filters */}
+            <FilterSection title="RAM" options={availableRam} selected={selectedRam} onChange={setSelectedRam} />
+            <FilterSection title="Storage" options={availableStorage} selected={selectedStorage} onChange={setSelectedStorage} />
+            <FilterSection title="Size" options={availableSizes} selected={selectedSize} onChange={setSelectedSize} />
+            <FilterSection title="Color" options={availableColors} selected={selectedColor} onChange={setSelectedColor} />
+            <FilterSection title="Type" options={availableTypes} selected={selectedType} onChange={setSelectedType} />
+            <FilterSection title="Connectivity" options={availableConnectivity} selected={selectedConnectivity} onChange={setSelectedConnectivity} />
+            <FilterSection title="Material" options={availableMaterials} selected={selectedMaterial} onChange={setSelectedMaterial} />
+            <FilterSection title="Resolution" options={availableResolutions} selected={selectedResolution} onChange={setSelectedResolution} />
 
             {/* Brand Filter */}
             {showBrandFilter && (
@@ -166,7 +229,7 @@ export default function FilterSidebar({
                                         onChange={() => handleBrandChange(brand)}
                                         className="absolute inset-0 opacity-0 cursor-pointer"
                                     />
-                                    {selectedBrands.includes(brand) && <X size={10} className="text-white" />}
+                                    {selectedBrands.includes(brand) && <Check size={10} className="text-white" />}
                                 </div>
                                 <span className="text-[11px] sm:text-sm font-bold truncate tracking-tight">{brand}</span>
                             </label>
