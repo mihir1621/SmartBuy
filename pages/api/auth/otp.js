@@ -17,8 +17,8 @@ export default async function handler(req, res) {
 
         const cleanPhone = phone ? phone.trim() : '';
 
-        // Hardcoded OTP for demo admin
-        if (cleanPhone === '9999999999') otp = '1234';
+        // Hardcoded OTP for demo admin and seller
+        if (cleanPhone === '9999999999' || cleanPhone === '8888888888') otp = '1234';
 
         // Create a hash to verify this later (Phone + OTP + Secret + Expiry)
         // Expiry = 5 minutes
@@ -29,26 +29,42 @@ export default async function handler(req, res) {
         const fullHash = `${hash}.${expires}`;
 
         try {
-            // Bypass Twilio for demo admin or if no client configured
-            if (client && cleanPhone !== '9999999999') {
-                // Send Real SMS
-                await client.messages.create({
-                    body: `Your SmartBuy Login OTP is: ${otp}`,
-                    from: process.env.TWILIO_PHONE_NUMBER,
-                    to: cleanPhone
-                });
-                console.log(`Sent Real OTP ${otp} to ${cleanPhone}`);
+            // Bypass Twilio for demo admin/seller or if no client configured
+            // ADDED: 8888888888 for Demo Seller
+            if (client && cleanPhone !== '9999999999' && cleanPhone !== '8888888888') {
+                try {
+                    // Send Real SMS
+                    await client.messages.create({
+                        body: `Your SmartBuy Login OTP is: ${otp}`,
+                        from: process.env.TWILIO_PHONE_NUMBER,
+                        to: cleanPhone
+                    });
+                    console.log(`Sent Real OTP ${otp} to ${cleanPhone}`);
+                } catch (twilioError) {
+                    console.error("Twilio failed, falling back to console:", twilioError.message);
+                    // Fallback to console for dev experience even if API fails
+                    console.log('==================================================');
+                    console.log(`[FALLBACK] OTP for ${phone} is: ${otp}`);
+                    console.log('==================================================');
+                }
             } else {
                 // Mock SMS (Log to console)
                 console.log('==================================================');
-                console.log(`[DEV MODE] OTP for ${phone} is: ${otp}`);
+                // Added specific log for our known demo numbers
+                if (cleanPhone === '8888888888') {
+                    console.log(`[DEMO SELLER] OTP for ${phone} is: ${otp}`);
+                } else if (cleanPhone === '9999999999') {
+                    console.log(`[DEMO ADMIN] OTP for ${phone} is: ${otp}`);
+                } else {
+                    console.log(`[DEV MODE] OTP for ${phone} is: ${otp}`);
+                }
                 console.log('==================================================');
             }
 
             res.status(200).json({ success: true, hash: fullHash, message: "OTP sent successfully" });
         } catch (error) {
-            console.error("Twilio Error:", error);
-            res.status(500).json({ success: false, message: "Failed to send SMS" });
+            console.error("Server Error:", error);
+            res.status(500).json({ success: false, message: "Failed to generate OTP" });
         }
     } else {
         res.status(405).json({ message: 'Method not allowed' });

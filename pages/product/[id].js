@@ -22,15 +22,22 @@ import { useRecommendations } from '@/hooks/useRecommendations';
 export async function getServerSideProps({ params }) {
     const { id } = params;
     try {
-        const product = await prisma.product.findUnique({
+        let product = await prisma.product.findUnique({
             where: { id: parseInt(id) },
         });
+
+        // If not found in DB, try Static Data
+        if (!product) {
+            product = staticProducts.find((p) => p.id === parseInt(id));
+        }
 
         if (!product) {
             return { notFound: true };
         }
 
-        const relatedProducts = await prisma.product.findMany({
+        // Fetch related products (DB or Static fallback logic ideally, but simplest is DB-first)
+        // Note: Relation fetching logic is complex to mix. We will fetch "Similar" from DB first.
+        const relatedDb = await prisma.product.findMany({
             where: {
                 category: product.category,
                 NOT: { id: product.id },
@@ -38,14 +45,22 @@ export async function getServerSideProps({ params }) {
             take: 4,
         });
 
+        // If we didn't fill the related quota from DB (e.g. because main product is static and DB is empty), fill from static
+        let finalRelated = JSON.parse(JSON.stringify(relatedDb));
+        if (finalRelated.length < 4) {
+            const staticRelated = staticProducts.filter(p => p.category === product.category && p.id !== product.id && !finalRelated.find(r => r.id === p.id)).slice(0, 4 - finalRelated.length);
+            finalRelated = [...finalRelated, ...staticRelated];
+        }
+
         return {
             props: {
                 initialProduct: JSON.parse(JSON.stringify(product)),
-                initialRelatedProducts: JSON.parse(JSON.stringify(relatedProducts)),
+                initialRelatedProducts: finalRelated,
             },
         };
     } catch (error) {
         console.error("Database error:", error);
+        // Fallback to static on error
         const product = staticProducts.find((p) => p.id === parseInt(id));
         if (!product) return { notFound: true };
         const related = staticProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);

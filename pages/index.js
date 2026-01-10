@@ -14,20 +14,51 @@ import { Filter, SlidersHorizontal, ChevronDown, X } from "lucide-react";
 import BannerCarousel from "@/components/BannerCarousel";
 import { prisma } from "@/lib/prisma";
 
-// Fetching data from our static source (matching /api/static-products)
+// Fetching data from DB and falling back/merging with static
 export async function getServerSideProps() {
-  // We are using the local data directly for better performance and reliability
-  // This matches the data served by the /api/static-products endpoint
-  const formattedProducts = staticProducts.map(p => ({
-    ...p,
-    description: p.description ? (p.description.length > 150 ? p.description.substring(0, 150) + '...' : p.description) : ''
-  }));
+  try {
+    // 1. Fetch active products from Database (Dynamic)
+    const dbProducts = await prisma.product.findMany({
+      where: {
+        inStock: true,
+        stock: { gt: 0 } // Ensure stock > 0 as requested
+      },
+      orderBy: { createdAt: 'desc' }
+    });
 
-  return {
-    props: {
-      initialProducts: formattedProducts,
-    },
-  };
+    // Serialize DB products to handle Date objects
+    const serializedDbProducts = JSON.parse(JSON.stringify(dbProducts));
+
+    // 2. Prepare Static Products (Legacy/Demo)
+    // We filter out any static products that might share an ID with a DB product to avoid conflicts
+    // (Assuming DB is the source of truth)
+    const dbIds = new Set(serializedDbProducts.map(p => p.id));
+    const uniqueStaticProducts = staticProducts.filter(p => !dbIds.has(p.id)).map(p => ({
+      ...p,
+      description: p.description ? (p.description.length > 150 ? p.description.substring(0, 150) + '...' : p.description) : ''
+    }));
+
+    // 3. Merge: Database products first (usually newest)
+    const initialProducts = [...serializedDbProducts, ...uniqueStaticProducts];
+
+    return {
+      props: {
+        initialProducts,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    // Fallback to just static if DB fails
+    const formattedProducts = staticProducts.map(p => ({
+      ...p,
+      description: p.description ? (p.description.length > 150 ? p.description.substring(0, 150) + '...' : p.description) : ''
+    }));
+    return {
+      props: {
+        initialProducts: formattedProducts,
+      },
+    };
+  }
 }
 
 export default function Home({ initialProducts }) {

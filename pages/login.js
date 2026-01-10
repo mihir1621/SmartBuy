@@ -54,6 +54,7 @@ export default function Login() {
 
     // Google Login States
     const [googleEmail, setGoogleEmail] = useState('');
+    const [selectedRole, setSelectedRole] = useState('USER');
 
     useEffect(() => {
         // Preload images for seamless transitions
@@ -116,7 +117,8 @@ export default function Login() {
                 redirect: false,
                 phone: phoneNumber,
                 otp: otpValue,
-                hash: otpHash
+                hash: otpHash,
+                role: selectedRole // Pass selected role
             });
 
             setIsLoading(false);
@@ -125,7 +127,9 @@ export default function Login() {
                 alert(res.error);
             } else {
                 // Success
-                router.push('/');
+                if (selectedRole === 'ADMIN') router.push('/admin');
+                else if (selectedRole === 'SELLER') router.push('/seller');
+                else router.push('/');
             }
         }
     };
@@ -397,6 +401,25 @@ export default function Login() {
                                     onSubmit={handleMobileSubmit}
                                     className="space-y-5"
                                 >
+                                    {/* Role Selection Tabs */}
+                                    {view === 'mobile' && mobileStep === 'phone' && (
+                                        <div className="flex bg-gray-100 p-1 rounded-xl mb-4">
+                                            {['USER', 'SELLER', 'ADMIN'].map((role) => (
+                                                <button
+                                                    key={role}
+                                                    type="button"
+                                                    onClick={() => setSelectedRole(role)}
+                                                    className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${selectedRole === role
+                                                        ? 'bg-white text-blue-600 shadow-sm'
+                                                        : 'text-gray-500 hover:text-gray-700'
+                                                        }`}
+                                                >
+                                                    {role.charAt(0) + role.slice(1).toLowerCase()}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+
                                     {mobileStep === 'phone' ? (
                                         <div>
                                             <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
@@ -422,7 +445,10 @@ export default function Login() {
                                                 <button type="button" onClick={() => setMobileStep('phone')} className="text-gray-500 hover:text-gray-900">
                                                     <ArrowLeft className="w-4 h-4" />
                                                 </button>
-                                                <label className="block text-sm font-medium text-gray-700">Enter OTP</label>
+                                                <div className="flex-1">
+                                                    <label className="block text-sm font-medium text-gray-700">Enter OTP</label>
+                                                    <p className="text-xs text-gray-400">Sent to {phoneNumber}</p>
+                                                </div>
                                             </div>
                                             <div className="flex gap-2 justify-between">
                                                 {otp.map((data, index) => (
