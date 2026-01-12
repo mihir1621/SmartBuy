@@ -44,7 +44,7 @@ export const authOptions = {
 
                     if (!user) {
                         // Create user if doesn't exist
-                        const role = phone === '9999999999' ? 'ADMIN' : 'USER';
+                        const role = phone === '9999999999' ? 'ADMIN' : (phone === '8888888888' ? 'SELLER' : 'USER');
                         user = await prisma.user.create({
                             data: {
                                 phone: phone,

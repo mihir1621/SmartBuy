@@ -17,8 +17,8 @@ export default async function handler(req, res) {
 
         const cleanPhone = phone ? phone.trim() : '';
 
-        // Hardcoded OTP for demo admin
-        if (cleanPhone === '9999999999') otp = '1234';
+        // Hardcoded OTP for demo admin/seller
+        if (cleanPhone === '9999999999' || cleanPhone === '8888888888') otp = '1234';
 
         // Create a hash to verify this later (Phone + OTP + Secret + Expiry)
         // Expiry = 5 minutes
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
 
         try {
             // Bypass Twilio for demo admin or if no client configured
-            if (client && cleanPhone !== '9999999999') {
+            if (client && cleanPhone !== '9999999999' && cleanPhone !== '8888888888') {
                 // Send Real SMS
                 await client.messages.create({
                     body: `Your SmartBuy Login OTP is: ${otp}`,
@@ -47,8 +47,13 @@ export default async function handler(req, res) {
 
             res.status(200).json({ success: true, hash: fullHash, message: "OTP sent successfully" });
         } catch (error) {
-            console.error("Twilio Error:", error);
-            res.status(500).json({ success: false, message: "Failed to send SMS" });
+            console.error("Twilio Error (Falling back to Mock OTP):", error.message);
+            // Fallback: If SMS fails, logging it to console so user can still continue
+            console.log('==================================================');
+            console.log(`[FALLBACK] OTP for ${phone} is: ${otp}`);
+            console.log('==================================================');
+
+            res.status(200).json({ success: true, hash: fullHash, message: "OTP sent (fallback mode)" });
         }
     } else {
         res.status(405).json({ message: 'Method not allowed' });
