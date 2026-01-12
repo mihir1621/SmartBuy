@@ -21,7 +21,7 @@ export const authOptions = {
                 hash: { label: "Hash", type: "text" }
             },
             async authorize(credentials, req) {
-                const { phone, otp, hash, role: requestedRole } = credentials;
+                const { phone, otp, hash } = credentials;
 
                 if (!phone || !otp || !hash) return null;
 
@@ -44,17 +44,12 @@ export const authOptions = {
 
                     if (!user) {
                         // Create user if doesn't exist
-                        // Use requested role if provided (e.g., 'SELLER'), otherwise default to 'USER' or 'ADMIN' based on number
-                        let newRole = requestedRole || 'USER';
-
-                        // Override for specific admin phone
-                        if (phone === '9999999999') newRole = 'ADMIN';
-
+                        const role = phone === '9999999999' ? 'ADMIN' : 'USER';
                         user = await prisma.user.create({
                             data: {
                                 phone: phone,
                                 email: `${phone}@smartbuy.com`, // Fallback email
-                                role: newRole,
+                                role: role,
                                 name: "SmartBuy User"
                             }
                         });

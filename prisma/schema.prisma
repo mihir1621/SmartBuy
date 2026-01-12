@@ -31,8 +31,6 @@ model Product {
   orderItems    OrderItem[]
   reviewsList   Review[]
   wishlistItems WishlistItem[]
-  seller        User?          @relation(fields: [sellerId], references: [id])
-  sellerId      Int?
 }
 
 model User {
@@ -40,12 +38,11 @@ model User {
   name          String?
   email         String?        @unique
   phone         String         @unique
-  role          String         @default("USER") // USER, ADMIN, SELLER
+  role          String         @default("USER") // USER, ADMIN
   createdAt     DateTime       @default(now())
   orders        Order[]
   reviews       Review[]
   wishlist      WishlistItem[]
-  products      Product[]
 }
 
 model Order {
