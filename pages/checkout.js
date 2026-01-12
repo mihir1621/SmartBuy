@@ -109,7 +109,9 @@ export default function Checkout() {
 
             if (!res.ok) {
                 if (res.status === 404) {
-                    alert(data.error || 'Some items in your cart are no longer available. Clearing your cart so you can start fresh.');
+                    alert('Your cart contains items that are no longer available (ID: ' + (data.error?.split(':')[1]?.split('.')[0] || 'Unknown') + '). We have cleared your cart to resolve this compatibility issue. Please add items again.');
+                    // Force clear persistent storage immediately
+                    localStorage.removeItem('smartbuy_cart');
                     clearCart();
                     router.push('/');
                     return;
