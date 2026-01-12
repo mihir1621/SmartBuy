@@ -6,12 +6,9 @@ import {
     Users,
     Settings,
     LogOut,
-    Menu,
-    X,
     ShoppingBag,
     PlusCircle
 } from 'lucide-react';
-import { useState } from 'react';
 
 const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
@@ -22,32 +19,23 @@ const menuItems = [
     { icon: Settings, label: 'Settings', href: '/admin/settings' },
 ];
 
-export default function AdminSidebar() {
+export default function AdminSidebar({ isMobileMenuOpen, setIsMobileMenuOpen }) {
     const router = useRouter();
-    const [isOpen, setIsOpen] = useState(false);
+
+    const handleMenuItemClick = () => {
+        // Close mobile menu when clicking a menu item
+        if (setIsMobileMenuOpen) {
+            setIsMobileMenuOpen(false);
+        }
+    };
 
     return (
         <>
-            {/* Mobile Toggle */}
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="lg:hidden fixed bottom-6 right-6 z-50 p-4 bg-blue-600 rounded-full shadow-2xl text-white hover:scale-110 transition-transform active:scale-95"
-            >
-                {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-
-            {/* Sidebar Overlay */}
-            <div
-                className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity lg:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                    }`}
-                onClick={() => setIsOpen(false)}
-            />
-
             {/* Sidebar Container */}
             <aside className={`
-        fixed top-0 left-0 h-full w-72 bg-gray-900 border-r border-gray-800 z-40
-        transform transition-transform duration-300 lg:translate-x-0
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+        fixed top-0 left-0 h-full w-72 bg-gray-900 border-r border-gray-800 z-50
+        transform transition-transform duration-300 flex flex-col
+        ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
                 <div className="flex flex-col h-full p-6">
                     {/* Logo Section */}
@@ -69,6 +57,7 @@ export default function AdminSidebar() {
                                 <Link
                                     key={item.href}
                                     href={item.href}
+                                    onClick={handleMenuItemClick}
                                     className={`
                     flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-200 group
                     ${isActive

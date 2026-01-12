@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import SellerSidebar from './SellerSidebar';
-import { Bell, Search, User, ShieldAlert, Loader2 } from 'lucide-react';
+import { Bell, Search, User, ShieldAlert, Loader2, Menu, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,7 @@ export default function SellerLayout({ children, title }) {
     const { data: session, status } = useSession();
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState('');
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         if (status === 'unauthenticated') {
@@ -80,13 +81,31 @@ export default function SellerLayout({ children, title }) {
                 <title>{title ? `${title} | Seller Hub` : 'SmartBuy Seller'}</title>
             </Head>
 
-            <SellerSidebar />
+            {/* Mobile Menu Overlay */}
+            {isMobileMenuOpen && (
+                <div
+                    className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                />
+            )}
+
+            <SellerSidebar isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} />
 
             <div className="lg:ml-72 min-h-screen flex flex-col">
                 <header className="h-20 border-b border-gray-800 bg-gray-900/50 backdrop-blur-md sticky top-0 z-30 px-6 lg:px-10 flex items-center justify-between">
-                    <div>
-                        <h2 className="text-xl font-bold tracking-tight">{title || 'Dashboard'}</h2>
-                        <p className="text-xs text-gray-400 font-medium">Store: {session.user.name || 'My Store'}</p>
+                    <div className="flex items-center gap-4">
+                        {/* Mobile Hamburger Menu */}
+                        <button
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            className="lg:hidden p-2 rounded-xl bg-gray-900 border border-gray-800 text-gray-400 hover:text-white hover:bg-gray-800 transition-all"
+                        >
+                            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                        </button>
+
+                        <div>
+                            <h2 className="text-xl font-bold tracking-tight">{title || 'Dashboard'}</h2>
+                            <p className="text-xs text-gray-400 font-medium">Store: {session.user.name || 'My Store'}</p>
+                        </div>
                     </div>
 
                     <div className="flex items-center gap-4 sm:gap-6">

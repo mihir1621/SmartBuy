@@ -5,38 +5,71 @@ import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, User, ArrowRight, Smartphone, Star, ShoppingBag, Truck, ShieldCheck, ArrowLeft, X } from 'lucide-react';
 import { FcGoogle } from 'react-icons/fc';
-import { signIn, getSession } from "next-auth/react";
+import { useAuth } from '@/context/AuthContext';
+import { toast } from 'react-toastify';
+
+
 
 const slides = [
     {
         image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=1287",
         text: "Style is a way to say who you are without having to speak.",
         author: "Ralph Lauren",
-        role: "Fashion Legend"
+        role: "Men's Fashion"
     },
     {
         image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=1287",
         text: "Fashion fades, only style remains the same.",
         author: "Coco Chanel",
-        role: "Icon"
+        role: "Women's Collection"
+    },
+    {
+        image: "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?auto=format&fit=crop&q=80&w=1287",
+        text: "Playful comfort for the little ones who dream big.",
+        author: "SmartBuy Kids",
+        role: "Kids' Wear"
     },
     {
         image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&q=80&w=1287",
-        text: "Shoes transform your body language and attitude. They lift you physically and emotionally.",
+        text: "Shoes transform your body language and attitude.",
         author: "Christian Louboutin",
-        role: "Designer"
+        role: "Footwear"
     },
     {
-        image: "https://images.unsplash.com/photo-1589310243389-96a5483213a8?auto=format&fit=crop&q=80&w=1287",
-        text: "Tradition is not the worship of ashes, but the preservation of fire.",
-        author: "Gustav Mahler",
-        role: "Classic"
+        image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&q=80&w=1287",
+        text: "Time is the ultimate luxury. Spend it well.",
+        author: "Modern Classics",
+        role: "Accessories"
     },
     {
-        image: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&q=80&w=1287",
-        text: "Style has no age limit. Let them dream in colors.",
-        author: "Iris Apfel",
-        role: "Fashion Icon"
+        image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=1287",
+        text: "Dressing well is a form of good manners.",
+        author: "Tom Ford",
+        role: "Men's Formal"
+    },
+    {
+        image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=1287",
+        text: "Elegance is the only beauty that never fades.",
+        author: "Audrey Hepburn",
+        role: "Women's Style"
+    },
+    {
+        image: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?auto=format&fit=crop&q=80&w=1287",
+        text: "Every child is an artist. The problem is how to remain an artist once we grow up.",
+        author: "Pablo Picasso",
+        role: "Kids' Inspiration"
+    },
+    {
+        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=1287",
+        text: "Good shoes take you good places.",
+        author: "SmartBuy Shoes",
+        role: "Active Footwear"
+    },
+    {
+        image: "https://images.unsplash.com/photo-1511556820780-d912e42b4980?auto=format&fit=crop&q=80&w=1287",
+        text: "Accessories are the exclamation point of a woman's outfit.",
+        author: "Michael Kors",
+        role: "Timeless Accessories"
     }
 ];
 
@@ -52,23 +85,29 @@ export default function Login() {
     const [otp, setOtp] = useState(['', '', '', '']);
     const [otpHash, setOtpHash] = useState('');
 
+    // Role Selection State
+    const [selectedRole, setSelectedRole] = useState('customer'); // 'customer', 'admin', 'seller'
+
     // Google Login States
     const [googleEmail, setGoogleEmail] = useState('');
 
     useEffect(() => {
-        // Preload images for seamless transitions
-        slides.forEach((slide) => {
-            const img = new Image();
-            img.src = slide.image;
-        });
-
+        // Continuous Image Rotation Logic (5 seconds)
         const timer = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % slides.length);
         }, 5000);
+
         return () => clearInterval(timer);
     }, []);
 
 
+
+    useEffect(() => {
+        // Preload next image to avoid flicker
+        const nextSlide = (currentSlide + 1) % slides.length;
+        const img = new Image();
+        img.src = slides[nextSlide].image;
+    }, [currentSlide]);
 
     const handleGoogleSubmit = (e) => {
         e.preventDefault();
@@ -124,11 +163,11 @@ export default function Login() {
             if (res?.error) {
                 alert(res.error);
             } else {
-                // Check session to handle redirection
+                // Check session to handle redirection based on role
                 const session = await getSession();
-                if (session?.user?.role === 'ADMIN') {
+                if (session?.user?.role === 'ADMIN' || selectedRole === 'admin') {
                     router.push('/admin');
-                } else if (session?.user?.role === 'SELLER') {
+                } else if (session?.user?.role === 'SELLER' || selectedRole === 'seller') {
                     router.push('/seller');
                 } else {
                     router.push('/');
@@ -185,18 +224,18 @@ export default function Login() {
                 initial={{ x: '-100%' }}
                 animate={{ x: 0 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="hidden lg:relative lg:block w-full lg:w-1/2 bg-gray-900 overflow-hidden"
+                className="hidden lg:relative lg:block w-full lg:w-1/2 bg-white overflow-hidden p-3"
             >
                 <motion.div
                     initial={{ scale: 1.05, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 1.5, ease: "easeOut", delay: 0.4 }}
-                    className="absolute inset-0 z-0"
+                    className="absolute inset-3 z-0 rounded-2xl overflow-hidden"
                 >
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-black/60 mix-blend-multiply z-10" />
 
                     {/* Main Image */}
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence>
                         <motion.img
                             key={currentSlide}
                             initial={{ opacity: 0, scale: 1.1 }}
@@ -297,19 +336,19 @@ export default function Login() {
                 initial={{ x: '100%' }}
                 animate={{ x: 0 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} // Custom bezier for premium feel
-                className="w-full lg:w-1/2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24 bg-white relative z-10"
+                className="w-full lg:w-1/2 flex flex-col justify-center py-6 px-4 sm:px-6 lg:px-16 xl:px-20 bg-white relative z-10"
             >
 
                 {/* Close Button */}
                 <button
                     onClick={() => view === 'login' ? router.push('/') : setView('login')}
-                    className="absolute top-6 right-6 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors z-20"
+                    className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors z-20"
                 >
-                    <X className="w-6 h-6" />
+                    <X className="w-5 h-5" />
                 </button>
 
                 {/* Mobile-only Logo */}
-                <div className="lg:hidden absolute top-8 left-8">
+                <div className="lg:hidden absolute top-6 left-6">
                     <Link href="/">
                         <div className="flex items-center gap-2 cursor-pointer">
                             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
@@ -323,7 +362,7 @@ export default function Login() {
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="mb-6 sm:mb-8 text-center"
+                        className="mb-4 sm:mb-6 text-center"
                     >
                         <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 uppercase">
                             {view === 'login' && 'Welcome'}
@@ -351,8 +390,55 @@ export default function Login() {
                         </p>
                     </motion.div>
 
+                    {/* Role Selector */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="mb-4"
+                    >
+                        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 text-center">Login As</p>
+                        <div className="grid grid-cols-3 gap-2">
+                            <button
+                                onClick={() => setSelectedRole('customer')}
+                                className={`flex items-center justify-center p-2 rounded-xl border-2 transition-all ${selectedRole === 'customer'
+                                    ? 'border-blue-500 bg-blue-50 shadow-sm'
+                                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                                    }`}
+                            >
+                                <span className={`text-xs font-bold ${selectedRole === 'customer' ? 'text-blue-600' : 'text-gray-600'}`}>
+                                    Customer
+                                </span>
+                            </button>
+
+                            <button
+                                onClick={() => setSelectedRole('admin')}
+                                className={`flex items-center justify-center p-2 rounded-xl border-2 transition-all ${selectedRole === 'admin'
+                                    ? 'border-purple-500 bg-purple-50 shadow-sm'
+                                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                                    }`}
+                            >
+                                <span className={`text-xs font-bold ${selectedRole === 'admin' ? 'text-purple-600' : 'text-gray-600'}`}>
+                                    Admin
+                                </span>
+                            </button>
+
+                            <button
+                                onClick={() => setSelectedRole('seller')}
+                                className={`flex items-center justify-center p-2 rounded-xl border-2 transition-all ${selectedRole === 'seller'
+                                    ? 'border-orange-500 bg-orange-50 shadow-sm'
+                                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                                    }`}
+                            >
+                                <span className={`text-xs font-bold ${selectedRole === 'seller' ? 'text-orange-600' : 'text-gray-600'}`}>
+                                    Seller
+                                </span>
+                            </button>
+                        </div>
+                    </motion.div>
+
                     {view !== 'forgot' && view !== 'mobile' && view !== 'google' && (
-                        <div className="mt-6">
+                        <div className="mt-4">
                             <div className="grid grid-cols-2 gap-3">
                                 <motion.button
                                     whileHover={{ y: -2 }}
@@ -362,9 +448,9 @@ export default function Login() {
                                         signIn('google');
                                     }}
                                     disabled={isLoading}
-                                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
                                 >
-                                    <FcGoogle className="h-5 w-5" />
+                                    <FcGoogle className="h-4 w-4" />
                                     <span className="text-gray-600">Google</span>
                                 </motion.button>
 
@@ -372,9 +458,9 @@ export default function Login() {
                                     whileHover={{ y: -2 }}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => setView('mobile')}
-                                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
                                 >
-                                    <Smartphone className="h-5 w-5 text-gray-500" />
+                                    <Smartphone className="h-4 w-4 text-gray-500" />
                                     <span className="text-gray-600">Mobile</span>
                                 </motion.button>
                             </div>
@@ -390,7 +476,7 @@ export default function Login() {
                         </div>
                     )}
 
-                    <div className="mt-8">
+                    <div className="mt-6">
                         <AnimatePresence mode="wait">
 
                             {/* MOBILE LOGIN FORM */}
@@ -402,7 +488,7 @@ export default function Login() {
                                     animate="animate"
                                     exit="exit"
                                     onSubmit={handleMobileSubmit}
-                                    className="space-y-5"
+                                    className="space-y-4"
                                 >
                                     {mobileStep === 'phone' ? (
                                         <div>
@@ -417,7 +503,7 @@ export default function Login() {
                                                     value={phoneNumber}
                                                     onChange={(e) => setPhoneNumber(e.target.value)}
                                                     required
-                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-3 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
+                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
                                                     placeholder="+1 (555) 000-0000"
                                                 />
                                             </div>
@@ -453,7 +539,7 @@ export default function Login() {
                                         whileTap={{ scale: 0.99 }}
                                         type="submit"
                                         disabled={isLoading}
-                                        className="flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-3.5 px-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                                        className="flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 px-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                                     >
                                         {isLoading ? (
                                             <div className="flex items-center gap-2">
@@ -482,10 +568,9 @@ export default function Login() {
                                     animate="animate"
                                     exit="exit"
                                     onSubmit={handleGoogleSubmit}
-                                    className="space-y-5"
+                                    className="space-y-4"
                                 >
                                     <div>
-                                        <label htmlFor="google-email" className="block text-sm font-medium text-gray-700 mb-1">Gmail Address</label>
                                         <div className="relative">
                                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                 <Mail className="h-5 w-5 text-gray-400" />
@@ -496,8 +581,8 @@ export default function Login() {
                                                 value={googleEmail}
                                                 onChange={(e) => setGoogleEmail(e.target.value)}
                                                 required
-                                                className="block w-full rounded-xl border-gray-300 pl-10 py-3 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
-                                                placeholder="example@gmail.com"
+                                                className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
+                                                placeholder="Gmail Address"
                                             />
                                         </div>
                                     </div>
@@ -507,7 +592,7 @@ export default function Login() {
                                         whileTap={{ scale: 0.99 }}
                                         type="submit"
                                         disabled={isLoading}
-                                        className="flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-3.5 px-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                                        className="flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 px-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                                     >
                                         {isLoading ? (
                                             <div className="flex items-center gap-2">
@@ -537,11 +622,10 @@ export default function Login() {
                                     exit="exit"
                                     transition={{ duration: 0.2 }}
                                     onSubmit={handleSubmit}
-                                    className="space-y-5"
+                                    className="space-y-4"
                                 >
                                     {view === 'signup' && (
                                         <div>
-                                            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                                             <div className="relative">
                                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                     <User className="h-5 w-5 text-gray-400" />
@@ -551,15 +635,14 @@ export default function Login() {
                                                     name="name"
                                                     type="text"
                                                     required
-                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-3 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
-                                                    placeholder="John Doe"
+                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
+                                                    placeholder="Full Name"
                                                 />
                                             </div>
                                         </div>
                                     )}
 
                                     <div>
-                                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email address</label>
                                         <div className="relative">
                                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                 <Mail className="h-5 w-5 text-gray-400" />
@@ -569,15 +652,14 @@ export default function Login() {
                                                 name="email"
                                                 type="email"
                                                 required
-                                                className="block w-full rounded-xl border-gray-300 pl-10 py-3 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
-                                                placeholder="you@example.com"
+                                                className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
+                                                placeholder="Email Address"
                                             />
                                         </div>
                                     </div>
 
                                     {view !== 'forgot' && (
                                         <div>
-                                            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
                                             <div className="relative">
                                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                     <Lock className="h-5 w-5 text-gray-400" />
@@ -587,8 +669,8 @@ export default function Login() {
                                                     name="password"
                                                     type="password"
                                                     required
-                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-3 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
-                                                    placeholder="••••••••"
+                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
+                                                    placeholder="Password"
                                                 />
                                             </div>
                                         </div>
@@ -621,7 +703,7 @@ export default function Login() {
                                         whileTap={{ scale: 0.99 }}
                                         type="submit"
                                         disabled={isLoading}
-                                        className="flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-3.5 px-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                                        className="flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 px-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                                     >
                                         {isLoading ? (
                                             <div className="flex items-center gap-2">
@@ -645,7 +727,7 @@ export default function Login() {
                         </AnimatePresence>
 
                         {/* Trust Badges */}
-                        <div className="mt-10 pt-6 border-t border-gray-100 grid grid-cols-3 gap-4 text-center">
+                        <div className="mt-6 pt-4 border-t border-gray-100 grid grid-cols-3 gap-4 text-center">
                             <div className="flex flex-col items-center">
                                 <ShieldCheck className="h-6 w-6 text-gray-400 mb-2" />
                                 <span className="text-xs text-gray-500">Secure Payment</span>

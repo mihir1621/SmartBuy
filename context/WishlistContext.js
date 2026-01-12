@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 const WishlistContext = createContext();
 
@@ -56,6 +57,7 @@ export function WishlistProvider({ children }) {
                 });
                 if (res.ok) {
                     setWishlist(prev => [...prev.filter(p => p.id !== product.id), product]);
+                    toast.success("Added to wishlist!");
                 }
             } catch (error) {
                 console.error("Failed to add to remote wishlist", error);
@@ -63,6 +65,7 @@ export function WishlistProvider({ children }) {
         } else {
             setWishlist((prev) => {
                 if (prev.some(item => item.id === product.id)) return prev;
+                toast.success("Added to wishlist!");
                 return [...prev, product];
             });
         }
@@ -78,12 +81,14 @@ export function WishlistProvider({ children }) {
                 });
                 if (res.ok) {
                     setWishlist(prev => prev.filter(item => item.id !== productId));
+                    toast.info("Removed from wishlist");
                 }
             } catch (error) {
                 console.error("Failed to remove from remote wishlist", error);
             }
         } else {
             setWishlist((prev) => prev.filter((item) => item.id !== productId));
+            toast.info("Removed from wishlist");
         }
     };
 

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Home, Package, ShoppingBag, Settings, LogOut, Store } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 
-export default function SellerSidebar() {
+export default function SellerSidebar({ isMobileMenuOpen, setIsMobileMenuOpen }) {
     const router = useRouter();
 
     const isActive = (path) => router.pathname === path || router.pathname.startsWith(path + '/');
@@ -15,8 +15,16 @@ export default function SellerSidebar() {
         { name: 'Settings', icon: Settings, path: '/seller/settings' },
     ];
 
+    const handleMenuItemClick = () => {
+        // Close mobile menu when clicking a menu item
+        if (setIsMobileMenuOpen) {
+            setIsMobileMenuOpen(false);
+        }
+    };
+
     return (
-        <aside className="fixed left-0 top-0 h-screen w-72 bg-[#0a0a0c] border-r border-gray-800 z-50 hidden lg:flex flex-col transform transition-transform duration-300">
+        <aside className={`fixed left-0 top-0 h-screen w-72 bg-[#0a0a0c] border-r border-gray-800 z-50 flex flex-col transform transition-transform duration-300 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+            }`}>
             {/* Logo Area */}
             <div className="h-20 flex items-center px-8 border-b border-gray-800">
                 <div className="flex items-center gap-3">
@@ -35,7 +43,7 @@ export default function SellerSidebar() {
                 {menuItems.map((item) => {
                     const active = isActive(item.path);
                     return (
-                        <Link key={item.path} href={item.path}>
+                        <Link key={item.path} href={item.path} onClick={handleMenuItemClick}>
                             <div className={`flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all group ${active
                                 ? 'bg-orange-500/10 text-orange-500 font-bold'
                                 : 'text-gray-400 hover:text-white hover:bg-gray-800/50 font-medium'
