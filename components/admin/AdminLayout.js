@@ -17,6 +17,12 @@ export default function AdminLayout({ children, title }) {
         }
     }, [status, router]);
 
+    useEffect(() => {
+        if (status === 'authenticated' && session?.user?.role !== 'ADMIN') {
+            router.push('/login');
+        }
+    }, [status, session, router]);
+
     if (status === 'loading') {
         return (
             <div className="min-h-screen bg-[#0a0a0c] flex items-center justify-center">
@@ -28,29 +34,12 @@ export default function AdminLayout({ children, title }) {
         );
     }
 
+
+
     if (!session || session.user.role !== 'ADMIN') {
         return (
-            <div className="min-h-screen bg-[#0a0a0c] flex items-center justify-center p-6 text-center">
-                <div className="max-w-md space-y-6">
-                    <div className="w-20 h-20 bg-red-500/10 rounded-3xl flex items-center justify-center mx-auto border border-red-500/20 text-red-500 shadow-2xl shadow-red-500/10">
-                        <ShieldAlert size={40} />
-                    </div>
-                    <h1 className="text-2xl font-bold text-white tracking-tight">Access Restricted</h1>
-                    <p className="text-gray-500 font-medium italic">
-                        &quot;Your current account does not have administrative privileges. Please log in with an authorized administrator account to access this panel.&quot;
-                    </p>
-                    <div className="flex flex-col gap-3 pt-4">
-                        <Link href="/" className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 rounded-2xl transition-all">
-                            Back to Home
-                        </Link>
-                        <button
-                            onClick={() => router.push('/login')}
-                            className="text-blue-400 font-bold hover:underline py-2"
-                        >
-                            Sign in as Admin
-                        </button>
-                    </div>
-                </div>
+            <div className="min-h-screen bg-[#0a0a0c] flex items-center justify-center">
+                <Loader2 className="text-blue-500 animate-spin" size={40} />
             </div>
         );
     }

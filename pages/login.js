@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, User, ArrowRight, Smartphone, Star, ShoppingBag, Truck, ShieldCheck, ArrowLeft, X } from 'lucide-react';
 import { FcGoogle } from 'react-icons/fc';
-import { signIn } from "next-auth/react";
+import { signIn, getSession } from "next-auth/react";
 
 const slides = [
     {
@@ -124,8 +124,15 @@ export default function Login() {
             if (res?.error) {
                 alert(res.error);
             } else {
-                // Success
-                router.push('/');
+                // Check session to handle redirection
+                const session = await getSession();
+                if (session?.user?.role === 'ADMIN') {
+                    router.push('/admin');
+                } else if (session?.user?.role === 'SELLER') {
+                    router.push('/seller');
+                } else {
+                    router.push('/');
+                }
             }
         }
     };
