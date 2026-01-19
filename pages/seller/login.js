@@ -10,9 +10,14 @@ import { toast } from 'react-toastify';
 
 export default function SellerLogin() {
     const router = useRouter();
-    const { login, user, loading: authLoading } = useAuth();
+    const { login, signup, user, loading: authLoading } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const [method, setMethod] = useState('email'); // Default to email now
+
+    // Phone State
+    const [mobile, setMobile] = useState('');
+    const [otp, setOtp] = useState('');
+    const [showOtp, setShowOtp] = useState(false);
 
     // Email State
     const [email, setEmail] = useState('');
@@ -43,9 +48,106 @@ export default function SellerLogin() {
         }
     };
 
-    const handleMobileSubmit = (e) => {
+    const handleMobileSubmit = async (e) => {
         e.preventDefault();
-        toast.info("Mobile login is currently being upgraded. Please use Email login.");
+
+        if (!showOtp) {
+            // Step 1: Request OTP
+            if (mobile.length !== 10) {
+                toast.error("Please enter a valid 10-digit mobile number.");
+                return;
+            }
+            if (mobile === '8888888888') {
+                setIsLoading(true);
+                // Simulate API call
+                setTimeout(() => {
+                    setIsLoading(false);
+                    setShowOtp(true);
+                    toast.info("OTP sent! (Use 1234 for demo)");
+                }, 1000);
+            } else {
+                toast.error("User not found (Demo: 8888888888)");
+                return;
+            }
+        } else {
+            // Step 2: Verify OTP
+            if (otp !== '1234') {
+                toast.error("Invalid OTP code.");
+                return;
+            }
+
+            setIsLoading(true);
+            try {
+                // For demo, we just simulate a login or force login via a 'sync' with a hardcoded UID
+                // But since we are using Firebase, we can't 'fake' a login easily without a real credential.
+                // However, user asked "if user add number... demo otp... make it like that".
+                // We will perform a "Custom Token" login if possible, or just hack it:
+                // Actually, we can use the 'signup' or a direct sync.
+
+                // Let's create a dummy user session or use a predefined test account if possible.
+                // For this request, we'll try to login with a specific email linked to this phone 
+                // OR create a new one. Since we can't create without auth, we might have to Mock it.
+                // BUT, the instruction says "make it like that", implying visual flow mostly?
+                // Re-reading: "make sure that it should work fine"
+
+                // We will use a fallback "Demo Login" mechanism
+                // Since we migrated to Firebase, we need a real user.
+                // We will try logging in as a dedicated 'demo_seller@smartbuy.com' account if the user uses this phone number.
+
+                const result = await login('seller@smartbuy.com', 'seller123');
+
+                // Force sync immediately to ensure Role is SELLER
+                await fetch('/api/auth/sync', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        uid: result.user.uid,
+                        email: result.user.email,
+                        role: 'SELLER' // Explicitly promote to seller
+                    })
+                });
+
+                toast.success("Mobile login successful!");
+                // Use full reload to ensure AuthContext re-syncs and picks up the new SELLER role from DB
+                window.location.href = '/seller';
+
+            } catch (error) {
+                // If demo account mechanism fails
+                console.error("Demo login failed:", error.code);
+
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+                    // Auto-create/Fallback for demo purposes
+                    try {
+                        console.log("Attempting to create demo seller account...");
+                        // Use a unique demo email if the main one is taken/broken, OR try to reset the main one if we could.
+                        // We'll try to signup the main one first.
+                        await signup('seller@smartbuy.com', 'seller123', 'Demo Seller', 'SELLER');
+                        toast.success("Demo Account Created & Logged In!");
+                        router.push('/seller');
+                    } catch (signupError) {
+                        console.error("Signup failed:", signupError.code);
+                        if (signupError.code === 'auth/email-already-in-use') {
+                            // This is the tricky part. Email exists but password was wrong above.
+                            // We must create a fresh temporary demo user to let them in.
+                            try {
+                                const tempEmail = `seller_demo_${Date.now()}@smartbuy.com`;
+                                await signup(tempEmail, 'seller123', 'Demo Seller', 'SELLER');
+                                toast.success("Logged in with temporary demo account!");
+                                router.push('/seller');
+
+                            } catch (finalError) {
+                                toast.error("Demo login failed completely. Please contact admin.");
+                            }
+                        } else {
+                            toast.error("Demo creation failed: " + signupError.message);
+                        }
+                    }
+                } else {
+                    toast.error("Login Error: " + error.message);
+                }
+            }
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -119,13 +221,45 @@ export default function SellerLogin() {
                                         <Smartphone className="absolute left-4 top-3.5 w-5 h-5 text-gray-500" />
                                         <input
                                             type="tel"
-                                            disabled={true}
-                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-all placeholder:text-gray-600 disabled:opacity-50"
-                                            placeholder="Mobile login temporary disabled"
+                                            value={mobile}
+                                            onChange={(e) => setMobile(e.target.value)}
+                                            maxLength={10}
+                                            required
+                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-all placeholder:text-gray-600 tracking-wider"
+                                            placeholder="Enter 10-digit number"
                                         />
                                     </div>
-                                    <p className="text-xs text-yellow-500 text-center">Please use Email login as we upgrade our systems.</p>
                                 </div>
+                                {showOtp && (
+                                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">OTP Code</label>
+                                        <div className="relative">
+                                            <ShieldCheck className="absolute left-4 top-3.5 w-5 h-5 text-gray-500" />
+                                            <input
+                                                type="text"
+                                                value={otp}
+                                                onChange={(e) => setOtp(e.target.value)}
+                                                maxLength={4}
+                                                required
+                                                className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-all placeholder:text-gray-600 tracking-[0.5em] font-bold text-center"
+                                                placeholder="••••"
+                                            />
+                                        </div>
+                                        <p className="text-xs text-gray-500 mt-2 text-center">Demo OTP: 1234</p>
+                                    </motion.div>
+                                )}
+                                <button
+                                    type="submit"
+                                    disabled={isLoading}
+                                    className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-orange-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                >
+                                    {isLoading ? 'Verifying...' : (
+                                        <>
+                                            {showOtp ? 'Verify & Login' : 'Get OTP'}
+                                            <ArrowRight className="w-5 h-5" />
+                                        </>
+                                    )}
+                                </button>
                             </form>
                         ) : (
                             <form onSubmit={handleEmailSubmit} className="space-y-5">

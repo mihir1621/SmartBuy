@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Lock, User, ArrowRight, ShoppingBag, Truck, ShieldCheck, X } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, ShoppingBag, Truck, ShieldCheck, X, Smartphone } from 'lucide-react';
 import { FcGoogle } from 'react-icons/fc';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'react-toastify';
@@ -43,6 +43,13 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [selectedRole, setSelectedRole] = useState('customer'); // 'customer', 'admin', 'seller'
+    const [method, setMethod] = useState('email');
+    const [mobile, setMobile] = useState('');
+    const [otp, setOtp] = useState('');
+    const [showOtp, setShowOtp] = useState(false);
+
+    // State to track if the user JUST logged in, to enable auto-redirect
+    const [justLoggedIn, setJustLoggedIn] = useState(false);
 
     // Slideshow Logic
     useEffect(() => {
@@ -52,12 +59,21 @@ export default function Login() {
         return () => clearInterval(timer);
     }, []);
 
-    // If already logged in, show a different view or just let them be (requested behavior is to stop there)
-    // We will just let them see the form, but maybe fill it?
-    // Actually, asking to "stop there" implies they want to see the page.
-    // We will NOT redirect.
+    // Redirect ONLY if user exists AND they just logged in
+    // Redirect ONLY if user exists AND they just logged in
+    useEffect(() => {
+        if (user && justLoggedIn) {
+            handleRedirect(user.role);
+        }
+    }, [user, justLoggedIn, router]);
 
     const handleRedirect = (role) => {
+        const { redirect } = router.query;
+        if (redirect) {
+            router.push(redirect);
+            return;
+        }
+
         if (role === 'admin' || role === 'ADMIN') {
             router.push('/admin');
         } else if (role === 'seller' || role === 'SELLER') {
@@ -73,7 +89,7 @@ export default function Login() {
         try {
             const user = await loginWithGoogle(selectedRole);
             toast.success(`Welcome back, ${user.displayName || 'User'}!`);
-            // Redirect handled by useEffect or explicit here
+            setJustLoggedIn(true);
         } catch (error) {
             console.error(error);
             toast.error(error.message);
@@ -89,10 +105,11 @@ export default function Login() {
             if (view === 'signup') {
                 await signup(email, password, name, selectedRole);
                 toast.success('Account created successfully!');
-                // Auto login happens, useEffect redirects
+                setJustLoggedIn(true);
             } else if (view === 'login') {
                 await login(email, password);
                 toast.success('Logged in successfully!');
+                setJustLoggedIn(true);
             } else if (view === 'forgot') {
                 toast.info('Password reset feature coming soon!'); // Implement sendPasswordResetEmail if needed
             }
@@ -113,6 +130,108 @@ export default function Login() {
             else toast.error(error.message);
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const handleMobileSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!showOtp) {
+            // Step 1: Request OTP
+            if (mobile.length !== 10) {
+                toast.error("Please enter a valid 10-digit mobile number.");
+                return;
+            }
+
+            // Admin Demo
+            if (selectedRole === 'admin' && mobile === '9999999999') {
+                setIsLoading(true);
+                setTimeout(() => {
+                    setIsLoading(false);
+                    setShowOtp(true);
+                    toast.info("OTP sent! (Use 1234 for demo)");
+                }, 1000);
+                return;
+            }
+
+            // Seller Demo (if accessed via this page)
+            if (selectedRole === 'seller' && mobile === '8888888888') {
+                setIsLoading(true);
+                setTimeout(() => {
+                    setIsLoading(false);
+                    setShowOtp(true);
+                    toast.info("OTP sent! (Use 1234 for demo)");
+                }, 1000);
+                return;
+            }
+
+            toast.error("User not found (Demo Only: 9999999999 for Admin)");
+        } else {
+            // Step 2: Verify OTP
+            if (otp !== '1234') {
+                toast.error("Invalid OTP code.");
+                return;
+            }
+
+            setIsLoading(true);
+            try {
+                let targetEmail = '';
+                let targetPass = '';
+                let targetRole = '';
+                let redirectUrl = '';
+
+                if (router.query.redirect) {
+                    redirectUrl = router.query.redirect;
+                }
+
+                if (selectedRole === 'admin') {
+                    targetEmail = 'admin@smartbuy.com';
+                    targetPass = 'admin123';
+                    targetRole = 'ADMIN';
+                    if (!redirectUrl) redirectUrl = '/admin';
+                } else if (selectedRole === 'seller') {
+                    targetEmail = 'seller@smartbuy.com';
+                    targetPass = 'seller123';
+                    targetRole = 'SELLER';
+                    if (!redirectUrl) redirectUrl = '/seller';
+                } else {
+                    throw new Error("Mobile login only supported for Admin/Seller demo.");
+                }
+
+                // Attempt Login
+                let result;
+                try {
+                    result = await login(targetEmail, targetPass);
+                } catch (loginErr) {
+                    // Auto-create if missing
+                    if (loginErr.code === 'auth/user-not-found' || loginErr.code === 'auth/invalid-credential') {
+                        console.log("Creating demo user...");
+                        result = await signup(targetEmail, targetPass, 'Demo User', targetRole);
+                    } else {
+                        throw loginErr;
+                    }
+                }
+
+                // Force Sync Role
+                await fetch('/api/auth/sync', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        uid: result.user ? result.user.uid : result.uid,
+                        email: targetEmail,
+                        role: targetRole
+                    })
+                });
+
+                toast.success("Login successful!");
+                window.location.href = redirectUrl; // Force reload redirect
+
+            } catch (error) {
+                console.error("Mobile Login Fail:", error);
+                toast.error("Login failed: " + error.message);
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
 
@@ -185,23 +304,6 @@ export default function Login() {
 
                 <div className="mx-auto w-full max-w-sm lg:w-96">
                     <div className="mb-6 text-center">
-                        {user ? (
-                            <div className="mb-4 p-4 bg-blue-50 border border-blue-100 rounded-xl">
-                                <p className="text-sm text-blue-800 mb-2">You are logged in as <span className="font-bold">{user.email}</span></p>
-                                <button
-                                    onClick={() => handleRedirect(user.role)}
-                                    className="text-xs font-bold text-white bg-blue-600 px-3 py-1.5 rounded-lg hover:bg-blue-700 transition-colors"
-                                >
-                                    Go to Dashboard
-                                </button>
-                                <button
-                                    onClick={logout}
-                                    className="block mx-auto mt-2 text-xs text-gray-500 hover:text-red-500 hover:underline"
-                                >
-                                    Sign Out
-                                </button>
-                            </div>
-                        ) : null}
                         <h2 className="text-3xl font-black text-gray-900 uppercase">
                             {view === 'login' ? 'Welcome' : view === 'signup' ? 'Create Account' : 'Reset Password'}
                         </h2>
@@ -234,6 +336,22 @@ export default function Login() {
                         </div>
                     </div>
 
+                    {/* Method Toggle */}
+                    <div className="grid grid-cols-2 gap-2 p-1 bg-gray-50 rounded-xl border border-gray-200 mb-6">
+                        <button
+                            onClick={() => setMethod('email')}
+                            className={`py-2 rounded-lg text-xs font-bold transition-all ${method === 'email' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
+                            Email
+                        </button>
+                        <button
+                            onClick={() => setMethod('mobile')}
+                            className={`py-2 rounded-lg text-xs font-bold transition-all ${method === 'mobile' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
+                            Phone Number
+                        </button>
+                    </div>
+
                     <div className="mt-4">
                         <button
                             onClick={handleGoogleSubmit}
@@ -262,67 +380,110 @@ export default function Login() {
                                 initial="initial"
                                 animate="animate"
                                 exit="exit"
-                                onSubmit={handleSubmit}
+                                onSubmit={method === 'mobile' ? handleMobileSubmit : handleSubmit}
                                 className="space-y-4"
                             >
-                                {view === 'signup' && (
-                                    <div>
-                                        <div className="relative">
-                                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <User className="h-5 w-5 text-gray-400" />
+                                {method === 'mobile' ? (
+                                    <>
+                                        <div>
+                                            <div className="relative">
+                                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                    <Smartphone className="h-5 w-5 text-gray-400" />
+                                                </div>
+                                                <input
+                                                    type="tel"
+                                                    value={mobile}
+                                                    onChange={(e) => setMobile(e.target.value)}
+                                                    maxLength={10}
+                                                    required
+                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50"
+                                                    placeholder="10-digit Mobile Number"
+                                                />
                                             </div>
-                                            <input
-                                                type="text"
-                                                value={name}
-                                                onChange={(e) => setName(e.target.value)}
-                                                required
-                                                className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50"
-                                                placeholder="Full Name"
-                                            />
                                         </div>
-                                    </div>
-                                )}
 
-                                <div>
-                                    <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <Mail className="h-5 w-5 text-gray-400" />
-                                        </div>
-                                        <input
-                                            type="email"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            required
-                                            className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50"
-                                            placeholder="Email Address"
-                                        />
-                                    </div>
-                                </div>
-
-                                {view !== 'forgot' && (
-                                    <div>
-                                        <div className="relative">
-                                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <Lock className="h-5 w-5 text-gray-400" />
+                                        {showOtp && (
+                                            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
+                                                <div className="relative">
+                                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                        <ShieldCheck className="h-5 w-5 text-gray-400" />
+                                                    </div>
+                                                    <input
+                                                        type="text"
+                                                        value={otp}
+                                                        onChange={(e) => setOtp(e.target.value)}
+                                                        maxLength={4}
+                                                        required
+                                                        className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 font-bold tracking-widest text-center"
+                                                        placeholder="OTP Code"
+                                                    />
+                                                </div>
+                                                <p className="text-xs text-gray-500 mt-2 text-center">Demo OTP: 1234</p>
+                                            </motion.div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        {view === 'signup' && (
+                                            <div>
+                                                <div className="relative">
+                                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                        <User className="h-5 w-5 text-gray-400" />
+                                                    </div>
+                                                    <input
+                                                        type="text"
+                                                        value={name}
+                                                        onChange={(e) => setName(e.target.value)}
+                                                        required
+                                                        className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50"
+                                                        placeholder="Full Name"
+                                                    />
+                                                </div>
                                             </div>
-                                            <input
-                                                type="password"
-                                                value={password}
-                                                onChange={(e) => setPassword(e.target.value)}
-                                                required
-                                                className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50"
-                                                placeholder="Password"
-                                            />
-                                        </div>
-                                    </div>
-                                )}
+                                        )}
 
-                                {view === 'login' && (
-                                    <div className="flex items-center justify-end">
-                                        <button type="button" onClick={() => setView('forgot')} className="text-sm font-medium text-blue-600 hover:text-blue-500">
-                                            Forgot password?
-                                        </button>
-                                    </div>
+                                        <div>
+                                            <div className="relative">
+                                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                    <Mail className="h-5 w-5 text-gray-400" />
+                                                </div>
+                                                <input
+                                                    type="email"
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    required
+                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50"
+                                                    placeholder="Email Address"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {view !== 'forgot' && (
+                                            <div>
+                                                <div className="relative">
+                                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                        <Lock className="h-5 w-5 text-gray-400" />
+                                                    </div>
+                                                    <input
+                                                        type="password"
+                                                        value={password}
+                                                        onChange={(e) => setPassword(e.target.value)}
+                                                        required
+                                                        className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50"
+                                                        placeholder="Password"
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {view === 'login' && (
+                                            <div className="flex items-center justify-end">
+                                                <button type="button" onClick={() => setView('forgot')} className="text-sm font-medium text-blue-600 hover:text-blue-500">
+                                                    Forgot password?
+                                                </button>
+                                            </div>
+                                        )}
+                                    </>
                                 )}
 
                                 <button
@@ -332,9 +493,15 @@ export default function Login() {
                                 >
                                     {isLoading ? 'Processing...' : (
                                         <div className="flex items-center gap-2">
-                                            {view === 'login' && 'Sign In'}
-                                            {view === 'signup' && 'Sign Up'}
-                                            {view === 'forgot' && 'Reset'}
+                                            {method === 'mobile' ? (
+                                                <>{showOtp ? 'Verify & Login' : 'Get OTP'}</>
+                                            ) : (
+                                                <>
+                                                    {view === 'login' && 'Sign In'}
+                                                    {view === 'signup' && 'Sign Up'}
+                                                    {view === 'forgot' && 'Reset'}
+                                                </>
+                                            )}
                                             <ArrowRight className="h-4 w-4" />
                                         </div>
                                     )}

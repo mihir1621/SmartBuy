@@ -17,7 +17,7 @@ export default function SellerLayout({ children, title }) {
         if (!loading) {
             if (!user) {
                 router.push('/seller/login');
-            } else if (user.role !== 'SELLER' && user.role !== 'seller') {
+            } else if (user.role !== 'SELLER' && user.role !== 'seller' && user.role !== 'ADMIN' && user.role !== 'admin') {
                 // Check both cases just to be safe
                 router.push('/seller/login');
             }
@@ -48,7 +48,7 @@ export default function SellerLayout({ children, title }) {
         );
     }
 
-    if (!user || (user.role !== 'SELLER' && user.role !== 'seller')) {
+    if (!user || (user.role !== 'SELLER' && user.role !== 'seller' && user.role !== 'ADMIN' && user.role !== 'admin')) {
         return (
             <div className="min-h-screen bg-black flex items-center justify-center p-6 text-center">
                 <div className="max-w-md space-y-6">

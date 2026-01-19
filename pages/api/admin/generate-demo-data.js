@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         }
     }
 
-    if (resolvedRole !== 'ADMIN') {
+    if (resolvedRole !== 'ADMIN' && resolvedRole !== 'admin') {
         return res.status(401).json({ error: 'Unauthorized: Admin access required' });
     }
 

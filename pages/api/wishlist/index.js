@@ -2,15 +2,26 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getSessionUserId } from '@/lib/user';
+import { getPrismaUserFromFirebase } from '@/lib/userUtils';
 
 export default async function handler(req, res) {
     let userId = null;
 
     // 1. Try to get userId from Query (GET) or Body (POST) - Firebase Migration Support
-    if (req.query.userId) {
-        userId = req.query.userId;
-    } else if (req.body.userId) {
-        userId = req.body.userId;
+    let firebaseUid = null;
+    let email = null;
+
+    if (req.method === 'GET') {
+        firebaseUid = req.query.userId;
+        email = req.query.email;
+    } else {
+        firebaseUid = req.body.userId;
+        email = req.body.email;
+    }
+
+    if (firebaseUid) {
+        // Resolve to Prisma ID
+        userId = await getPrismaUserFromFirebase(firebaseUid, { email });
     }
 
     // 2. Fallback to NextAuth Session if no direct userId provided

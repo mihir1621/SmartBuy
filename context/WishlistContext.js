@@ -15,7 +15,7 @@ export function WishlistProvider({ children }) {
             if (user) {
                 // Fetch from DB if logged in
                 try {
-                    const res = await fetch(`/api/wishlist?userId=${user.uid}`);
+                    const res = await fetch(`/api/wishlist?userId=${user.uid}&email=${encodeURIComponent(user.email)}`);
                     if (res.ok) {
                         const data = await res.json();
                         setWishlist(data);
@@ -53,7 +53,7 @@ export function WishlistProvider({ children }) {
                 const res = await fetch('/api/wishlist', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ productId: product.id, userId: user.uid })
+                    body: JSON.stringify({ productId: product.id, userId: user.uid, email: user.email })
                 });
                 if (res.ok) {
                     setWishlist(prev => [...prev.filter(p => p.id !== product.id), product]);
@@ -77,7 +77,7 @@ export function WishlistProvider({ children }) {
                 const res = await fetch('/api/wishlist', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ productId, userId: user.uid })
+                    body: JSON.stringify({ productId, userId: user.uid, email: user.email })
                 });
                 if (res.ok) {
                     setWishlist(prev => prev.filter(item => item.id !== productId));

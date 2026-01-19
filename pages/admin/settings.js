@@ -1,4 +1,5 @@
 import AdminLayout from '@/components/admin/AdminLayout';
+import { useAuth } from '@/context/AuthContext';
 import { useState } from 'react';
 import {
     Database,
@@ -12,6 +13,7 @@ import {
 import { motion } from 'framer-motion';
 
 export default function AdminSettings() {
+    const { user } = useAuth();
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState(null);
 
@@ -21,7 +23,16 @@ export default function AdminSettings() {
         setLoading(true);
         setResult(null);
         try {
-            const res = await fetch('/api/admin/generate-demo-data', { method: 'POST' });
+            const res = await fetch('/api/admin/generate-demo-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: user?.uid,
+                    email: user?.email
+                }),
+            });
             const data = await res.json();
             if (res.ok) {
                 setResult({ type: 'success', message: data.message });

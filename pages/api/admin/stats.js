@@ -30,7 +30,11 @@ export default async function handler(req, res) {
         }
     }
 
-    if (resolvedRole !== 'ADMIN') {
+    // RELAXED CHECK for demo: Allow if resolvedRole is 'ADMIN' OR if we just want to allow authenticated users for now
+    // But better to keep strict.
+    // Issue: The previous logic might be failing if getPrismaUserFromFirebase returns null or throws.
+
+    if (resolvedRole !== 'ADMIN' && resolvedRole !== 'admin') {
         return res.status(401).json({ error: 'Unauthorized: Admin access required' });
     }
 

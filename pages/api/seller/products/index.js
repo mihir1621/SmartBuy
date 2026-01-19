@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         }
     }
 
-    if (!resolvedUserId || resolvedRole !== 'SELLER') {
+    if (!resolvedUserId || (resolvedRole !== 'SELLER' && resolvedRole !== 'ADMIN')) {
         return res.status(401).json({ error: 'Unauthorized: Seller access required' });
     }
 

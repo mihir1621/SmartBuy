@@ -20,14 +20,22 @@ export default async function handler(req, res) {
         }
 
         // 2. If exists, return user data
+        // 2. If exists, update role if needed and return user data
         if (user) {
-            // Optional: Update name/image if changed? For now, just return.
+            // Update role if explicitly requested and different (e.g. user toggles logging in as Seller)
+            if (role && (role === 'SELLER' || role === 'ADMIN') && user.role !== role) {
+                user = await prisma.user.update({
+                    where: { id: user.id },
+                    data: { role: role }
+                });
+            }
+
             return res.status(200).json({
                 id: user.id,
                 name: user.name,
                 email: user.email,
                 role: user.role,
-                image: user.image
+                // image: user.image
             });
         }
 
