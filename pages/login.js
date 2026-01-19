@@ -3,12 +3,10 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Lock, User, ArrowRight, Smartphone, Star, ShoppingBag, Truck, ShieldCheck, ArrowLeft, X } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, ShoppingBag, Truck, ShieldCheck, X } from 'lucide-react';
 import { FcGoogle } from 'react-icons/fc';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'react-toastify';
-
-
 
 const slides = [
     {
@@ -28,175 +26,94 @@ const slides = [
         text: "Playful comfort for the little ones who dream big.",
         author: "SmartBuy Kids",
         role: "Kids' Wear"
-    },
-    {
-        image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&q=80&w=1287",
-        text: "Shoes transform your body language and attitude.",
-        author: "Christian Louboutin",
-        role: "Footwear"
-    },
-    {
-        image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&q=80&w=1287",
-        text: "Time is the ultimate luxury. Spend it well.",
-        author: "Modern Classics",
-        role: "Accessories"
-    },
-    {
-        image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=1287",
-        text: "Dressing well is a form of good manners.",
-        author: "Tom Ford",
-        role: "Men's Formal"
-    },
-    {
-        image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=1287",
-        text: "Elegance is the only beauty that never fades.",
-        author: "Audrey Hepburn",
-        role: "Women's Style"
-    },
-    {
-        image: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?auto=format&fit=crop&q=80&w=1287",
-        text: "Every child is an artist. The problem is how to remain an artist once we grow up.",
-        author: "Pablo Picasso",
-        role: "Kids' Inspiration"
-    },
-    {
-        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=1287",
-        text: "Good shoes take you good places.",
-        author: "SmartBuy Shoes",
-        role: "Active Footwear"
-    },
-    {
-        image: "https://images.unsplash.com/photo-1511556820780-d912e42b4980?auto=format&fit=crop&q=80&w=1287",
-        text: "Accessories are the exclamation point of a woman's outfit.",
-        author: "Michael Kors",
-        role: "Timeless Accessories"
     }
 ];
 
 export default function Login() {
     const router = useRouter();
-    const [view, setView] = useState('login'); // 'login', 'signup', 'forgot', 'mobile', 'google'
+    const { login, signup, loginWithGoogle, logout, user } = useAuth();
+
+    // View State
+    const [view, setView] = useState('login'); // 'login', 'signup', 'forgot'
     const [isLoading, setIsLoading] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(0);
 
-    // Mobile Login States
-    const [mobileStep, setMobileStep] = useState('phone'); // 'phone', 'otp'
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [otp, setOtp] = useState(['', '', '', '']);
-    const [otpHash, setOtpHash] = useState('');
-
-    // Role Selection State
+    // Form State
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
     const [selectedRole, setSelectedRole] = useState('customer'); // 'customer', 'admin', 'seller'
 
-    // Google Login States
-    const [googleEmail, setGoogleEmail] = useState('');
-
+    // Slideshow Logic
     useEffect(() => {
-        // Continuous Image Rotation Logic (5 seconds)
         const timer = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % slides.length);
         }, 5000);
-
         return () => clearInterval(timer);
     }, []);
 
+    // If already logged in, show a different view or just let them be (requested behavior is to stop there)
+    // We will just let them see the form, but maybe fill it?
+    // Actually, asking to "stop there" implies they want to see the page.
+    // We will NOT redirect.
 
-
-    useEffect(() => {
-        // Preload next image to avoid flicker
-        const nextSlide = (currentSlide + 1) % slides.length;
-        const img = new Image();
-        img.src = slides[nextSlide].image;
-    }, [currentSlide]);
-
-    const handleGoogleSubmit = (e) => {
-        e.preventDefault();
-        if (googleEmail && googleEmail.includes('@gmail.com')) {
-            setIsLoading(true);
-            // Simulate Google Login
-            setTimeout(() => {
-                setIsLoading(false);
-                alert(`Google Login Successful for ${googleEmail}! (Demo)`);
-            }, 2000);
+    const handleRedirect = (role) => {
+        if (role === 'admin' || role === 'ADMIN') {
+            router.push('/admin');
+        } else if (role === 'seller' || role === 'SELLER') {
+            router.push('/seller');
         } else {
-            alert("Please enter a valid Gmail address.");
+            router.push('/');
         }
     };
 
-    const handleMobileSubmit = async (e) => {
-        e.preventDefault();
-        if (mobileStep === 'phone') {
-            setIsLoading(true);
-            try {
-                const res = await fetch('/api/auth/otp', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone: phoneNumber })
-                });
-                const data = await res.json();
-                if (data.success) {
-                    setOtpHash(data.hash);
-                    setMobileStep('otp');
-                    // Alert for dev mode since user cant see server logs easily
-                    console.log(`Hash: ${data.hash}`);
-                } else {
-                    alert('Failed to send OTP');
-                }
-            } catch (err) {
-                alert('An error occurred sending OTP');
-            } finally {
-                setIsLoading(false);
-            }
-        } else {
-            setIsLoading(true);
-            const otpValue = otp.join("");
-
-            const res = await signIn('credentials', {
-                redirect: false,
-                phone: phoneNumber,
-                otp: otpValue,
-                hash: otpHash
-            });
-
-            setIsLoading(false);
-
-            if (res?.error) {
-                alert(res.error);
-            } else {
-                // Check session to handle redirection based on role
-                const session = await getSession();
-                if (session?.user?.role === 'ADMIN' || selectedRole === 'admin') {
-                    router.push('/admin');
-                } else if (session?.user?.role === 'SELLER' || selectedRole === 'seller') {
-                    router.push('/seller');
-                } else {
-                    router.push('/');
-                }
-            }
-        }
-    };
-
-    const handleOtpChange = (element, index) => {
-        if (isNaN(element.value)) return;
-        setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
-
-        // Focus next input
-        if (element.nextSibling && element.value !== "") {
-            element.nextSibling.focus();
-        }
-    };
-
-    const handleSubmit = (e) => {
+    const handleGoogleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        // Simulate API call
-        setTimeout(() => {
+        try {
+            const user = await loginWithGoogle(selectedRole);
+            toast.success(`Welcome back, ${user.displayName || 'User'}!`);
+            // Redirect handled by useEffect or explicit here
+        } catch (error) {
+            console.error(error);
+            toast.error(error.message);
+        } finally {
             setIsLoading(false);
-            // Handle success based on view
-            if (view === 'login') alert('Logged in successfully (Demo)');
-            if (view === 'signup') alert('Account created successfully (Demo)');
-            if (view === 'forgot') alert('Password reset link sent (Demo)');
-        }, 1500);
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        try {
+            if (view === 'signup') {
+                await signup(email, password, name, selectedRole);
+                toast.success('Account created successfully!');
+                // Auto login happens, useEffect redirects
+            } else if (view === 'login') {
+                await login(email, password);
+                toast.success('Logged in successfully!');
+            } else if (view === 'forgot') {
+                toast.info('Password reset feature coming soon!'); // Implement sendPasswordResetEmail if needed
+            }
+        } catch (error) {
+            console.error(error);
+            // Transform Firebase errors
+            if (error.code === 'auth/wrong-password') toast.error('Invalid password.');
+            else if (error.code === 'auth/user-not-found') toast.error('No user found with this email.');
+            else if (error.code === 'auth/email-already-in-use') toast.error('Email already in use.');
+            else if (error.code === 'auth/configuration-not-found' || error.code === 'auth/operation-not-allowed') {
+                const projectId = "smartbuy-c1da0"; // Hardcoded from config
+                toast.error(`Configuration Error: Enable "Email/Password" in Firebase Console for project: ${projectId}.`, {
+                    autoClose: 10000,
+                    className: "font-bold"
+                });
+                console.error("FIREBASE CONFIG ERROR: Go to https://console.firebase.google.com/project/" + projectId + "/authentication/providers and enable Email/Password");
+            }
+            else toast.error(error.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const formVariants = {
@@ -205,36 +122,21 @@ export default function Login() {
         exit: { opacity: 0, x: -20 },
     };
 
-    const fadeInUp = {
-        initial: { opacity: 0, y: 20 },
-        animate: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-    };
-
     return (
-
         <div className="min-h-screen bg-white flex overflow-hidden">
             <Head>
-                <title>
-                    {view === 'login' ? 'Sign In' : view === 'signup' ? 'Join SmartBuy' : 'Reset Password'} - SmartBuy
-                </title>
+                <title>{view === 'login' ? 'Sign In' : 'Join'} - SmartBuy</title>
             </Head>
 
             {/* Left Side - Image & Content */}
             <motion.div
                 initial={{ x: '-100%' }}
                 animate={{ x: 0 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.8 }}
                 className="hidden lg:relative lg:block w-full lg:w-1/2 bg-white overflow-hidden p-3"
             >
-                <motion.div
-                    initial={{ scale: 1.05, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 1.5, ease: "easeOut", delay: 0.4 }}
-                    className="absolute inset-3 z-0 rounded-2xl overflow-hidden"
-                >
+                <div className="absolute inset-3 z-0 rounded-2xl overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-black/60 mix-blend-multiply z-10" />
-
-                    {/* Main Image */}
                     <AnimatePresence>
                         <motion.img
                             key={currentSlide}
@@ -247,87 +149,23 @@ export default function Login() {
                             alt="Fashion vibe"
                         />
                     </AnimatePresence>
-                </motion.div>
+                </div>
 
                 <div className="relative z-20 flex h-full flex-col justify-between p-12 text-white">
                     <Link href="/">
                         <div className="flex items-center gap-3 cursor-pointer">
-                            <motion.div
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.6, duration: 0.5 }}
-                                className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/30"
-                            >
+                            <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/30">
                                 <span className="text-white font-bold text-xl">S</span>
-                            </motion.div>
-                            <motion.span
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.7, duration: 0.5 }}
-                                className="font-bold text-2xl tracking-tight"
-                            >
-                                SmartBuy
-                            </motion.span>
+                            </div>
+                            <span className="font-bold text-2xl tracking-tight">SmartBuy</span>
                         </div>
                     </Link>
 
-                    <motion.div
-                        variants={fadeInUp}
-                        initial="initial"
-                        animate="animate"
-                        transition={{ delay: 0.8 }}
-                        className="max-w-md"
-                    >
-                        <div className="mb-6 flex gap-1">
-                            {[...Array(5)].map((_, i) => (
-                                <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                            ))}
-                        </div>
-
-                        <div className="h-32 mb-8">
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={currentSlide}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    transition={{ duration: 0.7 }}
-                                >
-                                    <h3 className="text-3xl font-medium leading-tight mb-4">
-                                        &quot;{slides[currentSlide].text}&quot;
-                                    </h3>
-                                    <div>
-                                        <p className="font-bold text-lg">{slides[currentSlide].author}</p>
-                                        <p className="text-white/70">{slides[currentSlide].role}</p>
-                                    </div>
-                                </motion.div>
-                            </AnimatePresence>
-                        </div>
-
-                        {/* Dots indicator */}
-                        <div className="flex gap-2">
-                            {slides.map((_, i) => (
-                                <button
-                                    key={i}
-                                    onClick={() => setCurrentSlide(i)}
-                                    className={`h-1.5 rounded-full transition-all duration-300 ${i === currentSlide ? 'w-8 bg-white' : 'w-2 bg-white/40'}`}
-                                />
-                            ))}
-                        </div>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1 }}
-                        className="flex justify-between items-end text-sm text-white/60"
-                    >
-                        <p>© 2025 SmartBuy Inc.</p>
-                        <div className="flex gap-4">
-                            <a href="#" className="hover:text-white transition-colors">Privacy</a>
-                            <a href="#" className="hover:text-white transition-colors">Terms</a>
-                        </div>
-                    </motion.div>
+                    <div className="max-w-md">
+                        <h3 className="text-3xl font-medium leading-tight mb-4">&quot;{slides[currentSlide].text}&quot;</h3>
+                        <p className="font-bold text-lg">{slides[currentSlide].author}</p>
+                        <p className="text-white/70">{slides[currentSlide].role}</p>
+                    </div>
                 </div>
             </motion.div>
 
@@ -335,395 +173,173 @@ export default function Login() {
             <motion.div
                 initial={{ x: '100%' }}
                 animate={{ x: 0 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} // Custom bezier for premium feel
+                transition={{ duration: 0.8 }}
                 className="w-full lg:w-1/2 flex flex-col justify-center py-6 px-4 sm:px-6 lg:px-16 xl:px-20 bg-white relative z-10"
             >
-
-                {/* Close Button */}
                 <button
-                    onClick={() => view === 'login' ? router.push('/') : setView('login')}
-                    className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors z-20"
+                    onClick={() => router.push('/')}
+                    className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 rounded-full transition-colors z-20"
                 >
                     <X className="w-5 h-5" />
                 </button>
 
-                {/* Mobile-only Logo */}
-                <div className="lg:hidden absolute top-6 left-6">
-                    <Link href="/">
-                        <div className="flex items-center gap-2 cursor-pointer">
-                            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-lg">S</span>
+                <div className="mx-auto w-full max-w-sm lg:w-96">
+                    <div className="mb-6 text-center">
+                        {user ? (
+                            <div className="mb-4 p-4 bg-blue-50 border border-blue-100 rounded-xl">
+                                <p className="text-sm text-blue-800 mb-2">You are logged in as <span className="font-bold">{user.email}</span></p>
+                                <button
+                                    onClick={() => handleRedirect(user.role)}
+                                    className="text-xs font-bold text-white bg-blue-600 px-3 py-1.5 rounded-lg hover:bg-blue-700 transition-colors"
+                                >
+                                    Go to Dashboard
+                                </button>
+                                <button
+                                    onClick={logout}
+                                    className="block mx-auto mt-2 text-xs text-gray-500 hover:text-red-500 hover:underline"
+                                >
+                                    Sign Out
+                                </button>
                             </div>
-                        </div>
-                    </Link>
-                </div>
-
-                <div className="mx-auto w-full max-w-[340px] sm:max-w-sm lg:w-96">
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mb-4 sm:mb-6 text-center"
-                    >
-                        <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 uppercase">
-                            {view === 'login' && 'Welcome'}
-                            {view === 'signup' && 'Create account'}
-                            {view === 'forgot' && 'Reset pass'}
-                            {view === 'mobile' && 'Mobile Sign In'}
-                            {view === 'google' && 'Google Sign In'}
+                        ) : null}
+                        <h2 className="text-3xl font-black text-gray-900 uppercase">
+                            {view === 'login' ? 'Welcome' : view === 'signup' ? 'Create Account' : 'Reset Password'}
                         </h2>
-                        <p className="mt-2 text-[11px] sm:text-sm text-gray-500 font-bold uppercase tracking-wider">
-                            {view === 'login' && (
-                                <>New here? <button onClick={() => setView('signup')} className="text-blue-600 hover:text-blue-500 transition-colors">Join Now</button></>
-                            )}
-                            {view === 'signup' && (
-                                <>Have an account? <button onClick={() => setView('login')} className="text-blue-600 hover:text-blue-500 transition-colors">Log in</button></>
-                            )}
-                            {view === 'forgot' && (
-                                <>Remember? <button onClick={() => setView('login')} className="text-blue-600 hover:text-blue-500 transition-colors">Return</button></>
-                            )}
-                            {view === 'mobile' && (
-                                <>Prefer email? <button onClick={() => setView('login')} className="text-blue-600 hover:text-blue-500 transition-colors">Email Login</button></>
-                            )}
-                            {view === 'google' && (
-                                <>Prefer email? <button onClick={() => setView('login')} className="text-blue-600 hover:text-blue-500 transition-colors">Email Login</button></>
+                        <p className="mt-2 text-sm text-gray-500 font-bold uppercase tracking-wider">
+                            {view === 'login' ? (
+                                <>New here? <button onClick={() => setView('signup')} className="text-blue-600 hover:text-blue-500">Join Now</button></>
+                            ) : (
+                                <>Have an account? <button onClick={() => setView('login')} className="text-blue-600 hover:text-blue-500">Log in</button></>
                             )}
                         </p>
-                    </motion.div>
+                    </div>
 
                     {/* Role Selector */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="mb-4"
-                    >
+                    <div className="mb-4">
                         <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 text-center">Login As</p>
                         <div className="grid grid-cols-3 gap-2">
-                            <button
-                                onClick={() => setSelectedRole('customer')}
-                                className={`flex items-center justify-center p-2 rounded-xl border-2 transition-all ${selectedRole === 'customer'
-                                    ? 'border-blue-500 bg-blue-50 shadow-sm'
-                                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                                    }`}
-                            >
-                                <span className={`text-xs font-bold ${selectedRole === 'customer' ? 'text-blue-600' : 'text-gray-600'}`}>
-                                    Customer
-                                </span>
-                            </button>
-
-                            <button
-                                onClick={() => setSelectedRole('admin')}
-                                className={`flex items-center justify-center p-2 rounded-xl border-2 transition-all ${selectedRole === 'admin'
-                                    ? 'border-purple-500 bg-purple-50 shadow-sm'
-                                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                                    }`}
-                            >
-                                <span className={`text-xs font-bold ${selectedRole === 'admin' ? 'text-purple-600' : 'text-gray-600'}`}>
-                                    Admin
-                                </span>
-                            </button>
-
-                            <button
-                                onClick={() => setSelectedRole('seller')}
-                                className={`flex items-center justify-center p-2 rounded-xl border-2 transition-all ${selectedRole === 'seller'
-                                    ? 'border-orange-500 bg-orange-50 shadow-sm'
-                                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                                    }`}
-                            >
-                                <span className={`text-xs font-bold ${selectedRole === 'seller' ? 'text-orange-600' : 'text-gray-600'}`}>
-                                    Seller
-                                </span>
-                            </button>
+                            {['customer', 'admin', 'seller'].map((role) => (
+                                <button
+                                    key={role}
+                                    type="button"
+                                    onClick={() => setSelectedRole(role)}
+                                    className={`flex items-center justify-center p-2 rounded-xl border-2 transition-all ${selectedRole === role
+                                        ? 'border-blue-500 bg-blue-50 shadow-sm text-blue-600'
+                                        : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-600'
+                                        }`}
+                                >
+                                    <span className="text-xs font-bold capitalize">{role}</span>
+                                </button>
+                            ))}
                         </div>
-                    </motion.div>
+                    </div>
 
-                    {view !== 'forgot' && view !== 'mobile' && view !== 'google' && (
-                        <div className="mt-4">
-                            <div className="grid grid-cols-2 gap-3">
-                                <motion.button
-                                    whileHover={{ y: -2 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    onClick={() => {
-                                        setIsLoading(true);
-                                        signIn('google');
-                                    }}
-                                    disabled={isLoading}
-                                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                                >
-                                    <FcGoogle className="h-4 w-4" />
-                                    <span className="text-gray-600">Google</span>
-                                </motion.button>
+                    <div className="mt-4">
+                        <button
+                            onClick={handleGoogleSubmit}
+                            disabled={isLoading}
+                            className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-all duration-200"
+                        >
+                            <FcGoogle className="h-4 w-4" />
+                            <span>Continue with Google</span>
+                        </button>
 
-                                <motion.button
-                                    whileHover={{ y: -2 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    onClick={() => setView('mobile')}
-                                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                                >
-                                    <Smartphone className="h-4 w-4 text-gray-500" />
-                                    <span className="text-gray-600">Mobile</span>
-                                </motion.button>
+                        <div className="relative mt-8">
+                            <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                                <div className="w-full border-t border-gray-100" />
                             </div>
-
-                            <div className="relative mt-8">
-                                <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                                    <div className="w-full border-t border-gray-100" />
-                                </div>
-                                <div className="relative flex justify-center text-sm">
-                                    <span className="bg-white px-4 text-gray-400 font-medium">Or continue with email</span>
-                                </div>
+                            <div className="relative flex justify-center text-sm">
+                                <span className="bg-white px-4 text-gray-400 font-medium">Or continue with email</span>
                             </div>
                         </div>
-                    )}
+                    </div>
 
                     <div className="mt-6">
                         <AnimatePresence mode="wait">
-
-                            {/* MOBILE LOGIN FORM */}
-                            {view === 'mobile' ? (
-                                <motion.form
-                                    key="mobile"
-                                    variants={formVariants}
-                                    initial="initial"
-                                    animate="animate"
-                                    exit="exit"
-                                    onSubmit={handleMobileSubmit}
-                                    className="space-y-4"
-                                >
-                                    {mobileStep === 'phone' ? (
-                                        <div>
-                                            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                                            <div className="relative">
-                                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                    <Smartphone className="h-5 w-5 text-gray-400" />
-                                                </div>
-                                                <input
-                                                    id="phone"
-                                                    type="tel"
-                                                    value={phoneNumber}
-                                                    onChange={(e) => setPhoneNumber(e.target.value)}
-                                                    required
-                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
-                                                    placeholder="+1 (555) 000-0000"
-                                                />
-                                            </div>
-                                            <p className="mt-2 text-xs text-gray-500">We will send you a one-time SMS to verify your number.</p>
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <div className="flex items-center gap-2 mb-4">
-                                                <button type="button" onClick={() => setMobileStep('phone')} className="text-gray-500 hover:text-gray-900">
-                                                    <ArrowLeft className="w-4 h-4" />
-                                                </button>
-                                                <label className="block text-sm font-medium text-gray-700">Enter OTP</label>
-                                            </div>
-                                            <div className="flex gap-2 justify-between">
-                                                {otp.map((data, index) => (
-                                                    <input
-                                                        key={index}
-                                                        type="text"
-                                                        name="otp"
-                                                        maxLength="1"
-                                                        value={data}
-                                                        onChange={e => handleOtpChange(e.target, index)}
-                                                        className="w-12 h-12 text-center text-xl font-semibold rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-gray-50"
-                                                        onFocus={e => e.target.select()}
-                                                    />
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    <motion.button
-                                        whileHover={{ scale: 1.01 }}
-                                        whileTap={{ scale: 0.99 }}
-                                        type="submit"
-                                        disabled={isLoading}
-                                        className="flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 px-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-                                    >
-                                        {isLoading ? (
-                                            <div className="flex items-center gap-2">
-                                                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                                </svg>
-                                                <span>Processing...</span>
-                                            </div>
-                                        ) : (
-                                            <div className="flex items-center gap-2">
-                                                {mobileStep === 'phone' ? 'Get OTP' : 'Verify & Login'}
-                                                <ArrowRight className="h-4 w-4" />
-                                            </div>
-                                        )}
-                                    </motion.button>
-                                </motion.form>
-
-                            ) : view === 'google' ? (
-
-                                /* GOOGLE LOGIN FORM */
-                                <motion.form
-                                    key="google"
-                                    variants={formVariants}
-                                    initial="initial"
-                                    animate="animate"
-                                    exit="exit"
-                                    onSubmit={handleGoogleSubmit}
-                                    className="space-y-4"
-                                >
+                            <motion.form
+                                key={view}
+                                variants={formVariants}
+                                initial="initial"
+                                animate="animate"
+                                exit="exit"
+                                onSubmit={handleSubmit}
+                                className="space-y-4"
+                            >
+                                {view === 'signup' && (
                                     <div>
                                         <div className="relative">
                                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <Mail className="h-5 w-5 text-gray-400" />
+                                                <User className="h-5 w-5 text-gray-400" />
                                             </div>
                                             <input
-                                                id="google-email"
-                                                type="email"
-                                                value={googleEmail}
-                                                onChange={(e) => setGoogleEmail(e.target.value)}
+                                                type="text"
+                                                value={name}
+                                                onChange={(e) => setName(e.target.value)}
                                                 required
-                                                className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
-                                                placeholder="Gmail Address"
+                                                className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50"
+                                                placeholder="Full Name"
                                             />
                                         </div>
                                     </div>
+                                )}
 
-                                    <motion.button
-                                        whileHover={{ scale: 1.01 }}
-                                        whileTap={{ scale: 0.99 }}
-                                        type="submit"
-                                        disabled={isLoading}
-                                        className="flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 px-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-                                    >
-                                        {isLoading ? (
-                                            <div className="flex items-center gap-2">
-                                                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                                </svg>
-                                                <span>Processing...</span>
-                                            </div>
-                                        ) : (
-                                            <div className="flex items-center gap-2">
-                                                <span>Continue with Google</span>
-                                                <ArrowRight className="h-4 w-4" />
-                                            </div>
-                                        )}
-                                    </motion.button>
-                                </motion.form>
-
-                            ) : (
-
-                                /* EMAIL/PASSWORD FORMS */
-                                <motion.form
-                                    key={view}
-                                    variants={formVariants}
-                                    initial="initial"
-                                    animate="animate"
-                                    exit="exit"
-                                    transition={{ duration: 0.2 }}
-                                    onSubmit={handleSubmit}
-                                    className="space-y-4"
-                                >
-                                    {view === 'signup' && (
-                                        <div>
-                                            <div className="relative">
-                                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                    <User className="h-5 w-5 text-gray-400" />
-                                                </div>
-                                                <input
-                                                    id="name"
-                                                    name="name"
-                                                    type="text"
-                                                    required
-                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
-                                                    placeholder="Full Name"
-                                                />
-                                            </div>
+                                <div>
+                                    <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <Mail className="h-5 w-5 text-gray-400" />
                                         </div>
-                                    )}
+                                        <input
+                                            type="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            required
+                                            className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50"
+                                            placeholder="Email Address"
+                                        />
+                                    </div>
+                                </div>
 
+                                {view !== 'forgot' && (
                                     <div>
                                         <div className="relative">
                                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <Mail className="h-5 w-5 text-gray-400" />
+                                                <Lock className="h-5 w-5 text-gray-400" />
                                             </div>
                                             <input
-                                                id="email"
-                                                name="email"
-                                                type="email"
+                                                type="password"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
                                                 required
-                                                className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
-                                                placeholder="Email Address"
+                                                className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50"
+                                                placeholder="Password"
                                             />
                                         </div>
                                     </div>
+                                )}
 
-                                    {view !== 'forgot' && (
-                                        <div>
-                                            <div className="relative">
-                                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                    <Lock className="h-5 w-5 text-gray-400" />
-                                                </div>
-                                                <input
-                                                    id="password"
-                                                    name="password"
-                                                    type="password"
-                                                    required
-                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 transition-colors hover:bg-white"
-                                                    placeholder="Password"
-                                                />
-                                            </div>
+                                {view === 'login' && (
+                                    <div className="flex items-center justify-end">
+                                        <button type="button" onClick={() => setView('forgot')} className="text-sm font-medium text-blue-600 hover:text-blue-500">
+                                            Forgot password?
+                                        </button>
+                                    </div>
+                                )}
+
+                                <button
+                                    type="submit"
+                                    disabled={isLoading}
+                                    className="flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 px-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all duration-200"
+                                >
+                                    {isLoading ? 'Processing...' : (
+                                        <div className="flex items-center gap-2">
+                                            {view === 'login' && 'Sign In'}
+                                            {view === 'signup' && 'Sign Up'}
+                                            {view === 'forgot' && 'Reset'}
+                                            <ArrowRight className="h-4 w-4" />
                                         </div>
                                     )}
-
-                                    {view === 'login' && (
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center">
-                                                <input
-                                                    id="remember-me"
-                                                    name="remember-me"
-                                                    type="checkbox"
-                                                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-600"
-                                                />
-                                                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-600">
-                                                    Remember me
-                                                </label>
-                                            </div>
-
-                                            <div className="text-sm">
-                                                <button type="button" onClick={() => setView('forgot')} className="font-medium text-blue-600 hover:text-blue-500">
-                                                    Forgot password?
-                                                </button>
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    <motion.button
-                                        whileHover={{ scale: 1.01 }}
-                                        whileTap={{ scale: 0.99 }}
-                                        type="submit"
-                                        disabled={isLoading}
-                                        className="flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 px-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-                                    >
-                                        {isLoading ? (
-                                            <div className="flex items-center gap-2">
-                                                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                                </svg>
-                                                <span>Processing...</span>
-                                            </div>
-                                        ) : (
-                                            <div className="flex items-center gap-2">
-                                                {view === 'login' && 'Sign in to Account'}
-                                                {view === 'signup' && 'Create Account'}
-                                                {view === 'forgot' && 'Reset Password'}
-                                                <ArrowRight className="h-4 w-4" />
-                                            </div>
-                                        )}
-                                    </motion.button>
-                                </motion.form>
-                            )}
+                                </button>
+                            </motion.form>
                         </AnimatePresence>
 
                         {/* Trust Badges */}

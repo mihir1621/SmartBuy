@@ -4,14 +4,31 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getSessionUserId } from '@/lib/user';
 
 export default async function handler(req, res) {
-    const session = await getServerSession(req, res, authOptions);
+    let userId = null;
 
-    if (!session) {
-        return res.status(401).json({ error: 'Not authenticated' });
+    // 1. Try to get userId from Query (GET) or Body (POST) - Firebase Migration Support
+    if (req.query.userId) {
+        userId = req.query.userId;
+    } else if (req.body.userId) {
+        userId = req.body.userId;
     }
 
-    const userId = await getSessionUserId(session);
-    if (!userId) return res.status(401).json({ error: 'User not found' });
+    // 2. Fallback to NextAuth Session if no direct userId provided
+    if (!userId) {
+        try {
+            const session = await getServerSession(req, res, authOptions);
+            if (session) {
+                userId = await getSessionUserId(session);
+            }
+        } catch (e) {
+            // Ignore session errors if we are migrating
+            console.warn("Session check failed, possibly due to migration", e);
+        }
+    }
+
+    if (!userId) {
+        return res.status(401).json({ error: 'Not authenticated', details: 'No userId provided' });
+    }
 
     if (req.method === 'GET') {
         try {

@@ -2,29 +2,28 @@ import Head from 'next/head';
 import Image from 'next/image';
 import AdminSidebar from './AdminSidebar';
 import { Bell, Search, User, ShieldAlert, Loader2, Menu, X } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export default function AdminLayout({ children, title }) {
-    const { data: session, status } = useSession();
+    const { user, loading } = useAuth();
     const router = useRouter();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
-        if (status === 'unauthenticated') {
-            router.push('/login?callbackUrl=' + encodeURIComponent(router.asPath));
+        if (!loading) {
+            if (!user) {
+                router.push('/login?callbackUrl=' + encodeURIComponent(router.asPath));
+            } else if (user.role !== 'ADMIN' && user.role !== 'admin') {
+                router.push('/login');
+            }
         }
-    }, [status, router]);
+    }, [user, loading, router]);
 
-    useEffect(() => {
-        if (status === 'authenticated' && session?.user?.role !== 'ADMIN') {
-            router.push('/login');
-        }
-    }, [status, session, router]);
 
-    if (status === 'loading') {
+    if (loading) {
         return (
             <div className="min-h-screen bg-[#0a0a0c] flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
@@ -37,7 +36,7 @@ export default function AdminLayout({ children, title }) {
 
 
 
-    if (!session || session.user.role !== 'ADMIN') {
+    if (!user || (user.role !== 'ADMIN' && user.role !== 'admin')) {
         return (
             <div className="min-h-screen bg-[#0a0a0c] flex items-center justify-center">
                 <Loader2 className="text-blue-500 animate-spin" size={40} />
@@ -74,7 +73,7 @@ export default function AdminLayout({ children, title }) {
 
                         <div>
                             <h2 className="text-xl font-bold tracking-tight">{title || 'Dashboard'}</h2>
-                            <p className="text-xs text-gray-400 font-medium">Welcome back, {session.user.name || 'Admin'}</p>
+                            <p className="text-xs text-gray-400 font-medium">Welcome back, {user.name || 'Admin'}</p>
                         </div>
                     </div>
 
@@ -96,15 +95,15 @@ export default function AdminLayout({ children, title }) {
 
                             <div className="flex items-center gap-3 ml-2 group cursor-pointer">
                                 <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-gray-700 to-gray-600 border border-gray-600 flex items-center justify-center text-gray-200 group-hover:scale-105 transition-transform overflow-hidden">
-                                    {session.user.image ? (
-                                        <Image src={session.user.image} alt="Admin" fill className="object-cover" />
+                                    {user.image || user.photoURL ? (
+                                        <Image src={user.image || user.photoURL} alt="Admin" fill className="object-cover" />
                                     ) : (
                                         <User size={20} />
                                     )}
                                 </div>
                                 <div className="hidden sm:block">
-                                    <p className="text-sm font-bold leading-tight group-hover:text-blue-400 transition-colors capitalize">{session.user.name}</p>
-                                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">{session.user.role}</p>
+                                    <p className="text-sm font-bold leading-tight group-hover:text-blue-400 transition-colors capitalize">{user.name || user.displayName}</p>
+                                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">{user.role}</p>
                                 </div>
                             </div>
                         </div>

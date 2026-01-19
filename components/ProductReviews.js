@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { Star, ThumbsUp, MessageSquare, Plus, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ProductReviews({ product: initialProduct }) {
-    const { data: session } = useSession();
+    const { user } = useAuth();
     const [product, setProduct] = useState(initialProduct);
     const [activeTab, setActiveTab] = useState("reviews");
     const [reviews, setReviews] = useState([]);
@@ -36,7 +36,7 @@ export default function ProductReviews({ product: initialProduct }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!session) {
+        if (!user) {
             alert("Please login to write a review");
             return;
         }
@@ -49,7 +49,10 @@ export default function ProductReviews({ product: initialProduct }) {
                 body: JSON.stringify({
                     productId: initialProduct.id,
                     rating: newReview.rating,
-                    comment: newReview.comment
+                    comment: newReview.comment,
+                    userId: user.uid,
+                    userEmail: user.email,
+                    userName: user.name || user.displayName
                 })
             });
 
@@ -59,7 +62,7 @@ export default function ProductReviews({ product: initialProduct }) {
                 setShowForm(false);
                 setNewReview({ rating: 5, comment: "" });
 
-                // Opitonally update local product rating count
+                // Optionally update local product rating count
                 setProduct(prev => ({
                     ...prev,
                     reviews: prev.reviews + 1
@@ -162,7 +165,7 @@ export default function ProductReviews({ product: initialProduct }) {
                                     >
                                         <h3 className="font-bold text-lg mb-4 text-white">Share your thoughts</h3>
                                         <div className="space-y-4">
-                                            {!session && (
+                                            {!user && (
                                                 <p className="text-yellow-500 text-sm">Please sign in to submit a review.</p>
                                             )}
                                             <div>
@@ -172,7 +175,7 @@ export default function ProductReviews({ product: initialProduct }) {
                                                         <button
                                                             key={star}
                                                             type="button"
-                                                            disabled={!session}
+                                                            disabled={!user}
                                                             onClick={() => setNewReview({ ...newReview, rating: star })}
                                                             className={`p-1 ${newReview.rating >= star ? 'text-yellow-400' : 'text-gray-600'}`}
                                                         >
@@ -183,11 +186,11 @@ export default function ProductReviews({ product: initialProduct }) {
                                             </div>
                                             <div>
                                                 <label className="block text-sm font-medium mb-1 text-gray-300">Review</label>
-                                                <textarea required disabled={!session || submitting} rows="3" className="w-full px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-500 disabled:opacity-50" placeholder="What did you like or dislike?" value={newReview.comment} onChange={e => setNewReview({ ...newReview, comment: e.target.value })}></textarea>
+                                                <textarea required disabled={!user || submitting} rows="3" className="w-full px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-500 disabled:opacity-50" placeholder="What did you like or dislike?" value={newReview.comment} onChange={e => setNewReview({ ...newReview, comment: e.target.value })}></textarea>
                                             </div>
                                             <div className="flex justify-end gap-3">
                                                 <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-gray-400 hover:text-white">Cancel</button>
-                                                <button type="submit" disabled={!session || submitting} className="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 disabled:bg-gray-700 flex items-center gap-2">
+                                                <button type="submit" disabled={!user || submitting} className="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 disabled:bg-gray-700 flex items-center gap-2">
                                                     {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                                                     Submit Review
                                                 </button>

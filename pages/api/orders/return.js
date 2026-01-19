@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getSessionUserId } from "@/lib/user";
+import { getPrismaUserFromFirebase } from "@/lib/userUtils";
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -10,13 +11,33 @@ export default async function handler(req, res) {
     }
 
     try {
-        const session = await getServerSession(req, res, authOptions);
-        if (!session) {
-            return res.status(401).json({ error: 'Please login to submit a return request' });
+        const { orderId, returnType, returnReason, returnComments, returnImages, userId: firebaseUid, email: userEmail } = req.body;
+
+        let userId = null;
+        let resolvedEmail = null;
+
+        // 1. Try Firebase Auth
+        if (firebaseUid) {
+            try {
+                userId = await getPrismaUserFromFirebase(firebaseUid, { email: userEmail });
+                resolvedEmail = userEmail;
+            } catch (e) {
+                console.error("Firebase auth resolution failed", e);
+            }
         }
 
-        const userId = await getSessionUserId(session);
-        const { orderId, returnType, returnReason, returnComments, returnImages } = req.body;
+        // 2. Fallback to NextAuth
+        if (!userId) {
+            const session = await getServerSession(req, res, authOptions);
+            if (session) {
+                userId = await getSessionUserId(session);
+                resolvedEmail = session.user.email;
+            }
+        }
+
+        if (!userId && !resolvedEmail) {
+            return res.status(401).json({ error: 'Please login to submit a return request' });
+        }
 
         if (!orderId || !returnType || !returnReason) {
             return res.status(400).json({ error: 'Missing required fields' });
@@ -30,7 +51,10 @@ export default async function handler(req, res) {
             return res.status(404).json({ error: 'Order not found' });
         }
 
-        if (order.userId !== userId) {
+        // Check ownership
+        const isOwner = (order.userId && order.userId === userId) || (resolvedEmail && order.customerEmail === resolvedEmail);
+
+        if (!isOwner) {
             return res.status(403).json({ error: 'Unauthorized' });
         }
 

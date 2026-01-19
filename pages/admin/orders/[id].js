@@ -1,6 +1,7 @@
 import AdminLayout from '@/components/admin/AdminLayout';
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
+import { useAuth } from '@/context/AuthContext';
 import {
     ChevronLeft,
     Truck,
@@ -27,6 +28,7 @@ const statusColors = {
 };
 
 export default function OrderDetails() {
+    const { user } = useAuth();
     const router = useRouter();
     const { id } = router.query;
     const [order, setOrder] = useState(null);
@@ -34,9 +36,9 @@ export default function OrderDetails() {
     const [updating, setUpdating] = useState(false);
 
     const fetchOrder = useCallback(async () => {
-        if (!id) return;
+        if (!id || !user) return; // Wait for user
         try {
-            const res = await fetch(`/api/admin/orders/${id}`);
+            const res = await fetch(`/api/admin/orders/${id}?userId=${user.uid}&email=${encodeURIComponent(user.email)}`);
             const data = await res.json();
             if (res.ok) {
                 setOrder(data);
@@ -49,11 +51,11 @@ export default function OrderDetails() {
         } finally {
             setLoading(false);
         }
-    }, [id, router]);
+    }, [id, router, user]);
 
     useEffect(() => {
-        fetchOrder();
-    }, [fetchOrder]);
+        if (user && id) fetchOrder();
+    }, [fetchOrder, user, id]);
 
     const updateStatus = async (newStatus) => {
         setUpdating(true);
@@ -61,7 +63,11 @@ export default function OrderDetails() {
             const res = await fetch(`/api/admin/orders/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: newStatus })
+                body: JSON.stringify({
+                    status: newStatus,
+                    userId: user?.uid,
+                    email: user?.email
+                })
             });
             if (res.ok) {
                 fetchOrder();

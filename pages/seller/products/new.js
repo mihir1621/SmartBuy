@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/context/AuthContext';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -7,6 +8,7 @@ import { Save, X, Upload, ChevronLeft, DollarSign, Tag, Box, AlertCircle, CheckC
 import SellerLayout from '@/components/seller/SellerLayout';
 
 export default function NewProduct() {
+    const { user } = useAuth();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -76,7 +78,9 @@ export default function NewProduct() {
                 body: JSON.stringify({
                     ...formData,
                     discount: discount > 0 ? discount : 0,
-                    originalPrice: formData.originalPrice || (formData.price * 1.2) // Fallback
+                    originalPrice: formData.originalPrice || (formData.price * 1.2), // Fallback
+                    userId: user?.uid,
+                    email: user?.email
                 })
             });
 
@@ -265,7 +269,7 @@ export default function NewProduct() {
                             <div className="space-y-4">
                                 <div className="relative aspect-square bg-black border-2 border-dashed border-gray-700 rounded-2xl flex flex-col items-center justify-center p-4 overflow-hidden group">
                                     {previewImage ? (
-                                        <img src={previewImage} alt="Preview" className="absolute inset-0 w-full h-full object-cover" />
+                                        <Image src={previewImage} alt="Preview" fill className="object-cover" />
                                     ) : (
                                         <div className="text-center text-gray-500">
                                             <Upload className="mx-auto w-10 h-10 mb-2 opacity-50" />

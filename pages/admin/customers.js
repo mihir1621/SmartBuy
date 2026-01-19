@@ -1,5 +1,6 @@
 import AdminLayout from '@/components/admin/AdminLayout';
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/context/AuthContext';
 import {
     Users,
     Search,
@@ -16,25 +17,26 @@ import {
 import { motion } from 'framer-motion';
 
 export default function AdminCustomers() {
+    const { user } = useAuth();
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
 
     useEffect(() => {
-        fetchCustomers();
-    }, []);
+        const fetchCustomers = async () => {
+            try {
+                const res = await fetch(`/api/admin/customers?userId=${user?.uid}&email=${encodeURIComponent(user?.email || '')}`);
+                const data = await res.json();
+                setCustomers(data);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const fetchCustomers = async () => {
-        try {
-            const res = await fetch('/api/admin/customers');
-            const data = await res.json();
-            setCustomers(data);
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    };
+        if (user) fetchCustomers();
+    }, [user]);
 
     const filteredCustomers = customers.filter(c =>
         (c.name?.toLowerCase().includes(search.toLowerCase()) || '') ||

@@ -1,23 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { Save, Lock, User, Store, Mail, Phone, CreditCard } from 'lucide-react';
 import SellerLayout from '@/components/seller/SellerLayout';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/context/AuthContext';
 
 export default function SellerSettings() {
-    const { data: session } = useSession();
+    const { user } = useAuth();
     const [activeTab, setActiveTab] = useState('profile');
     const [isLoading, setIsLoading] = useState(false);
 
-    // Mock initial data
+    // Initial data - will be updated when user loads
     const [profileData, setProfileData] = useState({
-        storeName: session?.user?.name || 'My Store',
-        email: session?.user?.email || '',
-        phone: session?.user?.phone || '8888888888',
+        storeName: 'My Store',
+        email: '',
+        phone: '8888888888',
         gst: '27AAAAA0000A1Z5',
         address: '123, Business Park, Mumbai, Maharashtra'
     });
+
+    useEffect(() => {
+        if (user) {
+            setProfileData(prev => ({
+                ...prev,
+                storeName: user.name || user.displayName || 'My Store',
+                email: user.email || '',
+                phone: user.phoneNumber || prev.phone
+            }));
+        }
+    }, [user]);
 
     const handleSave = (e) => {
         e.preventDefault();
@@ -164,7 +175,7 @@ export default function SellerSettings() {
                                             <label className="block text-sm font-medium text-gray-400 mb-2">Account Holder Name</label>
                                             <input
                                                 type="text"
-                                                defaultValue={session?.user?.name || "SmartBuy Seller"}
+                                                defaultValue={user?.name || "SmartBuy Seller"}
                                                 className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none"
                                             />
                                         </div>

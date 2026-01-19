@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useEffect, useState } from 'react';
 import {
     onAuthStateChanged,
@@ -9,8 +8,7 @@ import {
     GoogleAuthProvider,
     updateProfile
 } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase';
+import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/router';
 
 const AuthContext = createContext();
@@ -20,26 +18,42 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
+    const syncUserWithBackend = async (firebaseUser, role = null) => {
+        try {
+            const res = await fetch('/api/auth/sync', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    uid: firebaseUser.uid,
+                    email: firebaseUser.email,
+                    name: firebaseUser.displayName,
+                    image: firebaseUser.photoURL,
+                    role: role // Optional, mostly for new creations
+                })
+            });
+            if (res.ok) {
+                const dbUser = await res.json();
+                return { ...firebaseUser, ...dbUser };
+            }
+            console.error("Failed to sync user with backend");
+            return firebaseUser;
+        } catch (e) {
+            console.error("Auth Sync Error", e);
+            return firebaseUser;
+        }
+    };
+
     useEffect(() => {
+        if (!auth) {
+            setLoading(false);
+            return;
+        }
+
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
             if (firebaseUser) {
-                try {
-                    // Fetch user role and additional data from Firestore
-                    const userDocRef = doc(db, "users", firebaseUser.uid);
-                    const userDoc = await getDoc(userDocRef);
-
-                    if (userDoc.exists()) {
-                        const userData = userDoc.data();
-                        setUser({ ...firebaseUser, ...userData });
-                    } else {
-                        // If user exists in Auth but not in Firestore (e.g. fresh Google Login that wasn't handled yet)
-                        // We might handle this in the login component, or basic fallback here
-                        setUser(firebaseUser);
-                    }
-                } catch (error) {
-                    console.error("Error fetching user data:", error);
-                    setUser(firebaseUser);
-                }
+                // Sync with backend to get Role and ID
+                const syncedUser = await syncUserWithBackend(firebaseUser);
+                setUser(syncedUser);
             } else {
                 setUser(null);
             }
@@ -59,20 +73,9 @@ export function AuthProvider({ children }) {
 
         await updateProfile(newUser, { displayName: name });
 
-        // Create User Document
-        await setDoc(doc(db, "users", newUser.uid), {
-            id: newUser.uid,
-            name: name,
-            email: email,
-            role: role,
-            createdAt: new Date().toISOString(),
-            cart: [],
-            wishlist: []
-        });
-
-        // Force refresh user state
-        const userDoc = await getDoc(doc(db, "users", newUser.uid));
-        setUser({ ...newUser, ...userDoc.data() });
+        // Force Backend Sync/Create
+        const syncedUser = await syncUserWithBackend(newUser, role);
+        setUser(syncedUser);
 
         return newUser;
     };
@@ -82,22 +85,8 @@ export function AuthProvider({ children }) {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
-        // Check if user exists
-        const userDocRef = doc(db, "users", user.uid);
-        const userDoc = await getDoc(userDocRef);
-
-        if (!userDoc.exists()) {
-            // Create new user if first time
-            await setDoc(userDocRef, {
-                id: user.uid,
-                name: user.displayName,
-                email: user.email,
-                role: role,
-                createdAt: new Date().toISOString(),
-                cart: [],
-                wishlist: []
-            });
-        }
+        // Sync with backend (will create if first time)
+        await syncUserWithBackend(user, role);
 
         return user;
     };

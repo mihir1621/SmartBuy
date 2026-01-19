@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Home, Package, ShoppingBag, Settings, LogOut, Store } from 'lucide-react';
-import { signOut } from 'next-auth/react';
+import { useAuth } from '@/context/AuthContext';
 
 export default function SellerSidebar({ isMobileMenuOpen, setIsMobileMenuOpen }) {
     const router = useRouter();
+    const { logout } = useAuth();
 
     const isActive = (path) => router.pathname === path || router.pathname.startsWith(path + '/');
 
@@ -60,7 +61,7 @@ export default function SellerSidebar({ isMobileMenuOpen, setIsMobileMenuOpen })
             {/* Logout */}
             <div className="p-4 border-t border-gray-800">
                 <button
-                    onClick={() => signOut({ callbackUrl: '/' })}
+                    onClick={() => logout()}
                     className="flex items-center gap-3 px-4 py-3.5 w-full rounded-xl text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-all font-medium group"
                 >
                     <LogOut size={20} className="group-hover:text-red-400 transition-colors" />

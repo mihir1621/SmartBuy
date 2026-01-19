@@ -4,50 +4,50 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Plus, Search, Filter, MoreVertical, Edit, Trash2, Tag, Box, Star } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 import SellerLayout from '@/components/seller/SellerLayout';
 
 export default function SellerProducts() {
+    const { user } = useAuth();
     const router = useRouter(); // Import useRouter
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
 
-    const fetchProducts = async () => {
-        setIsLoading(true);
-        try {
-            // 1. Try Local Storage first (Best for immediate feedback)
-            const localData = localStorage.getItem('seller_products');
-            let localProducts = [];
-            if (localData) {
-                localProducts = JSON.parse(localData);
-            }
+    useEffect(() => {
+        const fetchProducts = async () => {
+            setIsLoading(true);
+            try {
+                // 1. Try Local Storage first (Best for immediate feedback)
+                const localData = localStorage.getItem('seller_products');
+                let localProducts = [];
+                if (localData) {
+                    localProducts = JSON.parse(localData);
+                }
 
-            // 2. Fetch from API (Source of Truth)
-            const res = await fetch('/api/seller/products');
-            if (res.ok) {
-                const apiProducts = await res.json();
-
-                // Merge logic: If local has items not in API (temp IDs), keep them. 
-                // Prioritize API for real IDs.
-                // For simplicity in this demo, we'll trust API but fallback to local if API is empty or error.
-
-                if (apiProducts.length > 0) {
-                    setProducts(apiProducts);
+                // 2. Fetch from API (Source of Truth)
+                const res = await fetch(`/api/seller/products?userId=${user?.uid}&email=${encodeURIComponent(user?.email || '')}`);
+                if (res.ok) {
+                    const apiProducts = await res.json();
+                    if (apiProducts.length > 0) {
+                        setProducts(apiProducts);
+                    } else {
+                        setProducts(localProducts);
+                    }
                 } else {
                     setProducts(localProducts);
                 }
-            } else {
-                setProducts(localProducts);
+            } catch (error) {
+                console.error("Error fetching products", error);
+                const localData = localStorage.getItem('seller_products');
+                if (localData) setProducts(JSON.parse(localData));
+            } finally {
+                setIsLoading(false);
             }
-        } catch (error) {
-            console.error("Error fetching products", error);
-            // Fallback
-            const localData = localStorage.getItem('seller_products');
-            if (localData) setProducts(JSON.parse(localData));
-        } finally {
-            setIsLoading(false);
-        }
-    };
+        };
+
+        if (user) fetchProducts();
+    }, [user]);
 
     useEffect(() => {
         if (router.query.search) {
@@ -55,9 +55,6 @@ export default function SellerProducts() {
         }
     }, [router.query.search]);
 
-    useEffect(() => {
-        fetchProducts();
-    }, []);
 
     const handleDelete = async (id) => {
         if (!confirm('Are you sure you want to delete this product?')) return;

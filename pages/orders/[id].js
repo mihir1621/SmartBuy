@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/context/AuthContext';
 import StoreNavbar from '@/components/StoreNavbar';
 import Footer from '@/components/Footer';
 import {
@@ -45,8 +45,9 @@ const returnReasonOptions = [
     "Other"
 ];
 
+
 export default function UserOrderDetails() {
-    const { data: session, status } = useSession();
+    const { user, loading: authLoading } = useAuth();
     const router = useRouter();
     const { id } = router.query;
     const [order, setOrder] = useState(null);
@@ -62,7 +63,7 @@ export default function UserOrderDetails() {
 
     const fetchOrder = useCallback(async () => {
         try {
-            const res = await fetch(`/api/orders/${id}`);
+            const res = await fetch(`/api/orders/${id}?userId=${user?.uid}&email=${encodeURIComponent(user?.email)}`);
             const data = await res.json();
             if (res.ok) {
                 setOrder(data);
@@ -75,12 +76,12 @@ export default function UserOrderDetails() {
         } finally {
             setLoading(false);
         }
-    }, [id, router]);
+    }, [id, router, user]);
 
     useEffect(() => {
-        if (status === 'unauthenticated') router.push('/login');
-        if (id) fetchOrder();
-    }, [id, status, fetchOrder, router]);
+        if (!authLoading && !user) router.push('/login');
+        if (id && user) fetchOrder();
+    }, [id, user, authLoading, fetchOrder, router]);
 
     const handleDownloadInvoice = async () => {
         if (!order) return;
@@ -215,7 +216,9 @@ export default function UserOrderDetails() {
                     returnType: returnForm.type,
                     returnReason: returnForm.reason,
                     returnComments: returnForm.comments,
-                    returnImages: [] // Image upload logic would go here
+                    returnImages: [],
+                    userId: user.uid,
+                    email: user.email
                 })
             });
             const data = await res.json();

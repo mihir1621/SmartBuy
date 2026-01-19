@@ -1,21 +1,21 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useAuth } from './AuthContext';
 import { toast } from 'react-toastify';
 
 const WishlistContext = createContext();
 
 export function WishlistProvider({ children }) {
-    const { data: session } = useSession();
+    const { user } = useAuth();
     const [wishlist, setWishlist] = useState([]);
     const [isInitialized, setIsInitialized] = useState(false);
 
     // Initial Load
     useEffect(() => {
         const initWishlist = async () => {
-            if (session) {
+            if (user) {
                 // Fetch from DB if logged in
                 try {
-                    const res = await fetch('/api/wishlist');
+                    const res = await fetch(`/api/wishlist?userId=${user.uid}`);
                     if (res.ok) {
                         const data = await res.json();
                         setWishlist(data);
@@ -38,22 +38,22 @@ export function WishlistProvider({ children }) {
         };
 
         initWishlist();
-    }, [session]);
+    }, [user]);
 
     // Save to local storage ONLY if NOT logged in
     useEffect(() => {
-        if (isInitialized && !session && typeof window !== 'undefined') {
+        if (isInitialized && !user && typeof window !== 'undefined') {
             localStorage.setItem('smartbuy_wishlist', JSON.stringify(wishlist));
         }
-    }, [wishlist, isInitialized, session]);
+    }, [wishlist, isInitialized, user]);
 
     const addToWishlist = async (product) => {
-        if (session) {
+        if (user) {
             try {
                 const res = await fetch('/api/wishlist', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ productId: product.id })
+                    body: JSON.stringify({ productId: product.id, userId: user.uid })
                 });
                 if (res.ok) {
                     setWishlist(prev => [...prev.filter(p => p.id !== product.id), product]);
@@ -72,12 +72,12 @@ export function WishlistProvider({ children }) {
     };
 
     const removeFromWishlist = async (productId) => {
-        if (session) {
+        if (user) {
             try {
                 const res = await fetch('/api/wishlist', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ productId })
+                    body: JSON.stringify({ productId, userId: user.uid })
                 });
                 if (res.ok) {
                     setWishlist(prev => prev.filter(item => item.id !== productId));

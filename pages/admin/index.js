@@ -1,5 +1,6 @@
 import AdminLayout from '@/components/admin/AdminLayout';
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/context/AuthContext';
 import {
     TrendingUp,
     Users,
@@ -26,24 +27,29 @@ const Tooltip = dynamic(() => import('recharts').then(mod => mod.Tooltip), { ssr
 const ResponsiveContainer = dynamic(() => import('recharts').then(mod => mod.ResponsiveContainer), { ssr: false });
 
 export default function AdminDashboard() {
+    const { user } = useAuth();
     const [statsData, setStatsData] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchStats();
-    }, []);
+        const fetchStats = async () => {
+            try {
+                const res = await fetch(`/api/admin/stats?userId=${user?.uid}&email=${encodeURIComponent(user?.email || '')}`);
+                const data = await res.json();
+                setStatsData(data);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const fetchStats = async () => {
-        try {
-            const res = await fetch('/api/admin/stats');
-            const data = await res.json();
-            setStatsData(data);
-        } catch (err) {
-            console.error(err);
-        } finally {
+        if (user) {
+            fetchStats();
+        } else if (!loading && !user) {
             setLoading(false);
         }
-    };
+    }, [user, loading]);
 
     if (loading) return (
         <AdminLayout title="Dashboard Overview">

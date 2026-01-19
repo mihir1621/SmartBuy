@@ -2,8 +2,10 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getSessionUserId } from '@/lib/user';
+import { getPrismaUserFromFirebase } from '@/lib/userUtils';
 
 export default async function handler(req, res) {
+    // GET Handler
     if (req.method === 'GET') {
         const { productId } = req.query;
         if (!productId) return res.status(400).json({ error: 'Product ID required' });
@@ -21,31 +23,56 @@ export default async function handler(req, res) {
         }
     }
 
+    // POST Handler
     if (req.method === 'POST') {
-        const session = await getServerSession(req, res, authOptions);
-        if (!session) return res.status(401).json({ error: 'Please login to write a review' });
+        const { productId, rating, comment, userId: firebaseUid, userEmail, userName } = req.body;
 
-        const { productId, rating, comment } = req.body;
         if (!productId || !rating || !comment) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
-        try {
-            const userId = await getSessionUserId(session);
-            if (!userId) return res.status(401).json({ error: 'User not found' });
+        // Resolve Prisma User ID
+        let prismaUserId = null;
+        if (firebaseUid) {
+            try {
+                prismaUserId = await getPrismaUserFromFirebase(firebaseUid, {
+                    email: userEmail,
+                    name: userName
+                });
+            } catch (e) {
+                console.error("Firebase user resolution failed", e);
+            }
+        }
 
-            // Re-fetch product to update its rating info (simplified)
+        // Fallback to NextAuth if no proper firebase resolution
+        if (!prismaUserId) {
+            try {
+                const session = await getServerSession(req, res, authOptions);
+                if (session) {
+                    prismaUserId = await getSessionUserId(session);
+                }
+            } catch (e) {
+                // Ignore
+            }
+        }
+
+        if (!prismaUserId) {
+            return res.status(401).json({ error: 'Please login to write a review' });
+        }
+
+        try {
+            // Create review
             const review = await prisma.review.create({
                 data: {
                     rating: parseInt(rating),
                     comment,
-                    userId,
+                    userId: prismaUserId, // Use the INT id
                     productId: parseInt(productId)
                 },
                 include: { user: true }
             });
 
-            // Update product average rating (simplified)
+            // Update product average rating
             const allReviews = await prisma.review.findMany({
                 where: { productId: parseInt(productId) }
             });

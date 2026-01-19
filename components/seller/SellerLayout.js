@@ -2,27 +2,27 @@ import Head from 'next/head';
 import Image from 'next/image';
 import SellerSidebar from './SellerSidebar';
 import { Bell, Search, User, ShieldAlert, Loader2, Menu, X } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export default function SellerLayout({ children, title }) {
-    const { data: session, status } = useSession();
+    const { user, loading } = useAuth();
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState('');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
-        if (status === 'unauthenticated') {
-            router.push('/seller/login');
-        } else if (status === 'authenticated' && session?.user?.role !== 'SELLER') {
-            // If logged in but not a seller (e.g. USER or ADMIN), redirect or show error.
-            // For smoother flow, maybe redirect to seller registration or generic login.
-            // But strict requirement says "only useful for seller", so redirecting to seller login logic check.
-            router.push('/seller/login');
+        if (!loading) {
+            if (!user) {
+                router.push('/seller/login');
+            } else if (user.role !== 'SELLER' && user.role !== 'seller') {
+                // Check both cases just to be safe
+                router.push('/seller/login');
+            }
         }
-    }, [status, session, router]);
+    }, [user, loading, router]);
 
     useEffect(() => {
         // Sync search bar with URL query if present (only on products page to avoid confusion)
@@ -37,7 +37,7 @@ export default function SellerLayout({ children, title }) {
         }
     };
 
-    if (status === 'loading') {
+    if (loading) {
         return (
             <div className="min-h-screen bg-black flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
@@ -48,7 +48,7 @@ export default function SellerLayout({ children, title }) {
         );
     }
 
-    if (!session || session.user.role !== 'SELLER') {
+    if (!user || (user.role !== 'SELLER' && user.role !== 'seller')) {
         return (
             <div className="min-h-screen bg-black flex items-center justify-center p-6 text-center">
                 <div className="max-w-md space-y-6">
@@ -104,7 +104,7 @@ export default function SellerLayout({ children, title }) {
 
                         <div>
                             <h2 className="text-xl font-bold tracking-tight">{title || 'Dashboard'}</h2>
-                            <p className="text-xs text-gray-400 font-medium">Store: {session.user.name || 'My Store'}</p>
+                            <p className="text-xs text-gray-400 font-medium">Store: {user.name || 'My Store'}</p>
                         </div>
                     </div>
 
@@ -129,15 +129,15 @@ export default function SellerLayout({ children, title }) {
 
                             <div className="flex items-center gap-3 ml-2 group cursor-pointer">
                                 <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-gray-800 to-gray-700 border border-gray-700 flex items-center justify-center text-gray-200 group-hover:scale-105 transition-transform overflow-hidden">
-                                    {session.user.image ? (
-                                        <Image src={session.user.image} alt="Seller" fill className="object-cover" />
+                                    {user.image || user.photoURL ? (
+                                        <Image src={user.image || user.photoURL} alt="Seller" fill className="object-cover" />
                                     ) : (
                                         <User size={20} />
                                     )}
                                 </div>
                                 <div className="hidden sm:block">
-                                    <p className="text-sm font-bold leading-tight group-hover:text-orange-400 transition-colors capitalize">{session.user.name}</p>
-                                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">{session.user.role}</p>
+                                    <p className="text-sm font-bold leading-tight group-hover:text-orange-400 transition-colors capitalize">{user.name || user.displayName}</p>
+                                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">{user.role}</p>
                                 </div>
                             </div>
                         </div>

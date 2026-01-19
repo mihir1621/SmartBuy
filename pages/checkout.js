@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useCart } from '@/context/CartContext';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/context/AuthContext';
 import { motion } from 'framer-motion';
 import { CreditCard, Truck, ShieldCheck, Lock, ChevronRight } from 'lucide-react';
 import StoreNavbar from '@/components/StoreNavbar';
@@ -22,7 +22,7 @@ const loadRazorpayScript = () => {
 };
 
 export default function Checkout() {
-    const { data: session } = useSession();
+    const { user } = useAuth();
     const { cart, cartTotal, clearCart } = useCart();
     const router = useRouter();
     const [formData, setFormData] = useState({
@@ -36,17 +36,17 @@ export default function Checkout() {
     });
 
     useEffect(() => {
-        if (session?.user) {
-            const nameParts = session.user.name ? session.user.name.split(' ') : ['', ''];
+        if (user) {
+            const nameParts = user.displayName ? user.displayName.split(' ') : (user.name ? user.name.split(' ') : ['', '']);
             setFormData(prev => ({
                 ...prev,
                 firstName: nameParts[0] || '',
                 lastName: nameParts.slice(1).join(' ') || '',
-                email: session.user.email || prev.email,
-                phone: session.user.phone || prev.phone || ''
+                email: user.email || prev.email,
+                phone: user.phoneNumber || prev.phone || '' // Firebase user has phoneNumber
             }));
         }
-    }, [session]);
+    }, [user]);
     const [isProcessing, setIsProcessing] = useState(false);
     const [paymentStep, setPaymentStep] = useState(''); // '', 'creating', 'payment', 'verifying'
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('RAZORPAY'); // 'RAZORPAY', 'COD', 'EMI'
@@ -101,7 +101,8 @@ export default function Checkout() {
                     customerInfo: formData,
                     items: cart,
                     paymentMethod: selectedPaymentMethod === 'COD' ? 'COD' : 'RAZORPAY',
-                    totalAmount: cartTotal // Prices are already inclusive of GST
+                    totalAmount: cartTotal,
+                    userId: user?.uid // Pass Firebase UID
                 })
             });
 

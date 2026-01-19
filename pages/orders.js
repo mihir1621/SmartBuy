@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/router';
 import StoreNavbar from '@/components/StoreNavbar';
 import Footer from '@/components/Footer';
@@ -9,6 +9,8 @@ import { ShoppingBag, Package, ChevronRight, Clock, CheckCircle, Truck, XCircle,
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+
+// ... (keep statusIcons and statusClasses constants as they are unless they need to be moved down? No, they are outside the component, so I must start from line 1 if I want to be safe, or just targeted replacement)
 
 const statusIcons = {
     'PENDING': <Clock className="w-4 h-4 text-amber-500" />,
@@ -31,7 +33,7 @@ const statusClasses = {
 };
 
 export default function OrderHistory() {
-    const { data: session, status } = useSession();
+    const { user, loading: authLoading } = useAuth();
     const router = useRouter();
     const [activeTab, setActiveTab] = useState('ALL');
     const [searchTerm, setSearchTerm] = useState('');
@@ -39,8 +41,11 @@ export default function OrderHistory() {
     const [loading, setLoading] = useState(true);
 
     const fetchOrders = useCallback(async () => {
+        if (!user) return;
         try {
-            const res = await fetch('/api/orders/history');
+            // Note: API endpoint might need to be consistent with client side auth now
+            // But for now keeping the existing call - backend might need update to verify firebase token
+            const res = await fetch(`/api/orders/history?userId=${user.id || user.uid}&email=${encodeURIComponent(user.email)}`);
             const data = await res.json();
             if (res.ok) {
                 setOrders(data);
@@ -50,15 +55,17 @@ export default function OrderHistory() {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [user]);
 
     useEffect(() => {
-        if (status === 'unauthenticated') {
-            router.push('/login');
-        } else if (status === 'authenticated') {
-            fetchOrders();
+        if (!authLoading) {
+            if (!user) {
+                router.push('/login');
+            } else {
+                fetchOrders();
+            }
         }
-    }, [status, router, fetchOrders]);
+    }, [user, authLoading, router, fetchOrders]);
 
     const filteredOrders = orders.filter(order => {
         // Tab Filtering

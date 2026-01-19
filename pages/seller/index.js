@@ -3,10 +3,10 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { ShoppingBag, Package, TrendingUp, DollarSign, Plus, ArrowRight, AlertTriangle } from 'lucide-react';
 import SellerLayout from '@/components/seller/SellerLayout';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/context/AuthContext';
 
 export default function SellerDashboard() {
-    const { data: session } = useSession();
+    const { user } = useAuth();
     const [stats, setStats] = useState({
         orders: 0,
         products: 0,
@@ -37,7 +37,7 @@ export default function SellerDashboard() {
             {/* Welcome Section */}
             <div className="mb-10">
                 <h1 className="text-3xl font-black text-white mb-2">
-                    Hello, {session?.user?.name || 'Seller'} 👋
+                    Hello, {user?.name || user?.displayName || 'Seller'} 👋
                 </h1>
                 <p className="text-gray-400">Here&apos;s what&apos;s happening with your store today.</p>
             </div>

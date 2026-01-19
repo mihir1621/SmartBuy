@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getSessionUserId } from '@/lib/user';
+import { getPrismaUserFromFirebase } from '@/lib/userUtils';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -11,14 +12,32 @@ export default async function handler(req, res) {
 
     try {
         const session = await getServerSession(req, res, authOptions);
-        const { customerInfo, items, totalAmount } = req.body;
+        const { customerInfo, items, totalAmount, userId: firebaseUid } = req.body;
 
         if (!items || items.length === 0) {
             return res.status(400).json({ error: 'Cart is empty' });
         }
 
         // Safer User ID resolution
-        const userId = await getSessionUserId(session);
+        let userId = null;
+
+        // 1. Try Firebase Auth
+        if (firebaseUid) {
+            try {
+                userId = await getPrismaUserFromFirebase(firebaseUid, {
+                    name: `${customerInfo.firstName} ${customerInfo.lastName || ''}`.trim(),
+                    email: customerInfo.email,
+                    phone: customerInfo.phone
+                });
+            } catch (e) {
+                console.error("Firebase auth resolution failed in order creation", e);
+            }
+        }
+
+        // 2. Fallback to NextAuth
+        if (!userId && session) {
+            userId = await getSessionUserId(session);
+        }
 
         console.log('Creating order for:', customerInfo.email);
 
@@ -86,7 +105,7 @@ export default async function handler(req, res) {
                     paymentStatus: 'UNPAID',
                     paymentMethod: req.body.paymentMethod || 'N/A',
                     razorpayOrderId: razorpayOrderId,
-                    userId: userId,
+                    userId: userId, // Can be null if guest
                     shippingAddress: `${customerInfo.address}, ${customerInfo.city || ''}, ${customerInfo.postalCode || ''}`.trim(),
                     items: {
                         create: items.map(item => ({

@@ -1,6 +1,7 @@
 import AdminLayout from '@/components/admin/AdminLayout';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useAuth } from '@/context/AuthContext';
 import {
     ShoppingBag,
     Search,
@@ -24,26 +25,27 @@ const statusColors = {
 };
 
 export default function AdminOrders() {
+    const { user } = useAuth();
     const router = useRouter();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
 
     useEffect(() => {
-        fetchOrders();
-    }, []);
+        const fetchOrders = async () => {
+            try {
+                const res = await fetch(`/api/admin/orders?userId=${user?.uid}&email=${encodeURIComponent(user?.email || '')}`);
+                const data = await res.json();
+                setOrders(data);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const fetchOrders = async () => {
-        try {
-            const res = await fetch('/api/admin/orders');
-            const data = await res.json();
-            setOrders(data);
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    };
+        if (user) fetchOrders();
+    }, [user]);
 
     const filteredOrders = orders.filter(o =>
         o.customerName.toLowerCase().includes(search.toLowerCase()) ||

@@ -2,9 +2,10 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getSessionUserId } from "@/lib/user";
+import { getPrismaUserFromFirebase } from "@/lib/userUtils";
 
 export default async function handler(req, res) {
-    const { id } = req.query;
+    const { id, userId: queryUserId, email: queryEmail } = req.query;
 
     if (req.method !== 'GET') {
         res.setHeader('Allow', ['GET']);
@@ -12,14 +13,40 @@ export default async function handler(req, res) {
     }
 
     try {
-        const session = await getServerSession(req, res, authOptions);
-        if (!session) {
+        let userId = null;
+        let userEmail = null;
+        let isAdmin = false;
+
+        // 1. Try Firebase Auth via Query Params
+        if (queryUserId) {
+            try {
+                userId = await getPrismaUserFromFirebase(queryUserId, { email: queryEmail });
+                userEmail = queryEmail;
+                // Basic Admin Check (Insecure: Client claims role? No. We need to fetch role from DB using userId)
+                if (userId) {
+                    const dbUser = await prisma.user.findUnique({ where: { id: userId } });
+                    if (dbUser && dbUser.role === 'ADMIN') isAdmin = true;
+                }
+            } catch (e) {
+                console.error("Firebase auth resolution failed", e);
+            }
+        }
+
+        // 2. Fallback to NextAuth
+        if (!userId) {
+            const session = await getServerSession(req, res, authOptions);
+            if (session) {
+                userId = await getSessionUserId(session);
+                userEmail = session.user.email;
+                isAdmin = session.user.role === 'ADMIN';
+            }
+        }
+
+        if (!userId && !userEmail) {
             return res.status(401).json({ error: 'Please login to view order details' });
         }
 
-        const userId = await getSessionUserId(session);
         const orderId = parseInt(id);
-
         if (isNaN(orderId)) {
             return res.status(400).json({ error: 'Invalid Order ID' });
         }
@@ -40,9 +67,11 @@ export default async function handler(req, res) {
             return res.status(404).json({ error: 'Order not found' });
         }
 
-        // Check ownership (unless admin)
-        const isAdmin = session.user.role === 'ADMIN';
-        if (!isAdmin && order.userId !== userId) {
+        // Check ownership
+        const isOwner = (order.userId && order.userId === userId) ||
+            (userEmail && order.customerEmail === userEmail);
+
+        if (!isAdmin && !isOwner) {
             return res.status(403).json({ error: 'You do not have permission to view this order' });
         }
 
