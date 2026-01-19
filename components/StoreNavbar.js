@@ -80,13 +80,59 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
         recognition.start();
 
         recognition.onresult = (event) => {
-            const transcript = event.results[0][0].transcript;
-            setSearchQuery(transcript);
-            if (onSearch) onSearch(transcript);
+            const transcript = event.results[0][0].transcript.toLowerCase().trim();
+
+            // Short command handling
+            if (['cart', 'open cart', 'view cart', 'my cart'].includes(transcript)) {
+                setIsCartOpen(true);
+                return;
+            }
+            if (['checkout', 'go to checkout', 'buy now'].includes(transcript)) {
+                router.push('/checkout');
+                return;
+            }
+            if (['login', 'sign in', 'log in', 'signin'].includes(transcript)) {
+                router.push('/login');
+                return;
+            }
+            if (['profile', 'my profile', 'account', 'my account', 'orders', 'my orders'].includes(transcript)) {
+                router.push('/orders');
+                return;
+            }
+            if (['home', 'go home', 'homepage', 'main page'].includes(transcript)) {
+                router.push('/');
+                return;
+            }
+            if (['wishlist', 'my wishlist', 'favorites'].includes(transcript)) {
+                router.push('/wishlist');
+                return;
+            }
+
+            // Natural Language Processing for Search
+            // Remove common conversational prefixes to improve search quality
+            let finalSearchTerm = event.results[0][0].transcript;
+            const lowerTranscript = finalSearchTerm.toLowerCase();
+
+            const prefixes = ['search for ', 'search ', 'show me ', 'find ', 'look for ', 'get me '];
+            for (const prefix of prefixes) {
+                if (lowerTranscript.startsWith(prefix)) {
+                    // Preserve original casing of the search term itself if possible, 
+                    // though for search checks we usually lowercase. 
+                    // Let's just slice based on length.
+                    finalSearchTerm = finalSearchTerm.slice(prefix.length);
+                    break;
+                }
+            }
+
+            setSearchQuery(finalSearchTerm);
+            if (onSearch) onSearch(finalSearchTerm);
         };
 
         recognition.onerror = (event) => {
             console.error("Speech recognition error", event.error);
+            if (event.error === 'not-allowed') {
+                alert("Microphone access denied. Please allow permission to use voice search.");
+            }
         };
     };
 
