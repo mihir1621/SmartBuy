@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import { ShoppingBag, Search, X, User, Camera, Heart, MapPin, Loader2, Clock } from 'lucide-react';
+import { ShoppingBag, Search, X, User, Camera, Heart, MapPin, Loader2, Clock, Mic } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { useLocation } from '@/context/LocationContext';
@@ -66,6 +66,30 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
         if (onSearch) onSearch(e.target.value);
     };
 
+    const handleVoiceSearch = () => {
+        if (!('webkitSpeechRecognition' in window)) {
+            alert("Voice search is not supported in this browser.");
+            return;
+        }
+
+        const recognition = new window.webkitSpeechRecognition();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.start();
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            setSearchQuery(transcript);
+            if (onSearch) onSearch(transcript);
+        };
+
+        recognition.onerror = (event) => {
+            console.error("Speech recognition error", event.error);
+        };
+    };
+
     return (
         <>
             <AnnouncementBar />
@@ -103,7 +127,10 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                     placeholder="Search..."
                                     className="w-full pl-2 sm:pl-3 pr-7 sm:pr-8 py-1.5 bg-gray-900 border border-gray-700 rounded-lg focus:bg-black focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all text-[12px] sm:text-sm text-white outline-none shadow-sm placeholder-gray-500"
                                 />
-                                <div className="absolute right-0 top-0 h-full flex items-center pr-1 sm:pr-1.5">
+                                <div className="absolute right-0 top-0 h-full flex items-center pr-1 sm:pr-1.5 gap-1">
+                                    <button onClick={handleVoiceSearch} className="text-gray-400 p-1 hover:text-white transition-colors">
+                                        <Mic className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                    </button>
                                     <button className="text-gray-400 p-1">
                                         <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                     </button>
@@ -128,6 +155,13 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                         title="Search by image"
                                     >
                                         <Camera className="w-4 h-4" />
+                                    </button>
+                                    <button
+                                        onClick={handleVoiceSearch}
+                                        className="p-1.5 text-gray-400 hover:text-blue-600 transition-colors"
+                                        title="Search by voice"
+                                    >
+                                        <Mic className="w-4 h-4" />
                                     </button>
                                     <button className="bg-gray-100 text-black p-1.5 rounded-md hover:bg-blue-500 hover:text-white transition-all">
                                         <Search className="w-4 h-4" />
