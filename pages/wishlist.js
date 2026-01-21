@@ -10,10 +10,14 @@ import Footer from '@/components/Footer';
 import { useWishlist } from '@/context/WishlistContext';
 import { useCart } from '@/context/CartContext';
 
+import { WishlistSkeleton } from '@/components/skeletons/PageSkeletons';
+
 export default function Wishlist() {
-    const { wishlist, removeFromWishlist } = useWishlist();
+    const { wishlist, removeFromWishlist, isInitialized } = useWishlist();
     const { addToCart } = useCart();
     const [searchQuery, setSearchQuery] = useState("");
+
+    if (!isInitialized) return <WishlistSkeleton />;
 
     return (
         <div className="min-h-screen bg-black flex flex-col text-white">

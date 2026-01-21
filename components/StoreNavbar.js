@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import { ShoppingBag, Search, X, User, Camera, Heart, MapPin, Loader2, Clock, Mic } from 'lucide-react';
+import { ShoppingBag, Search, X, User, Camera, Heart, MapPin, Loader2, Clock, Mic, HelpCircle, ChevronLeft, ChevronRight, LogOut, ChevronDown, Settings, Package } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { useLocation } from '@/context/LocationContext';
@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 
 
 export default function StoreNavbar({ onSearch, categories = [], selectedCategory, setSelectedCategory }) {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     const { setIsCartOpen, cartCount } = useCart();
     const { wishlist } = useWishlist();
     const { location, detectLocation, updateLocation } = useLocation();
@@ -20,6 +20,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
     const [showLocationModal, setShowLocationModal] = useState(false);
     const [locationSearch, setLocationSearch] = useState("");
     const [isDetecting, setIsDetecting] = useState(false);
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
     const fileInputRef = useRef(null);
     const router = useRouter();
 
@@ -64,6 +65,12 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
     const handleSearch = (e) => {
         setSearchQuery(e.target.value);
         if (onSearch) onSearch(e.target.value);
+    };
+
+    const handleLogout = () => {
+        logout();
+        setIsProfileOpen(false);
+        router.push('/');
     };
 
     const handleVoiceSearch = () => {
@@ -134,6 +141,20 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                 alert("Microphone access denied. Please allow permission to use voice search.");
             }
         };
+    };
+
+    const scrollContainerRef = useRef(null);
+
+    const scrollLeft = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+        }
+    };
+
+    const scrollRight = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+        }
     };
 
     return (
@@ -225,18 +246,67 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
 
                         <div className="flex items-center gap-1 sm:gap-1.5">
                             {user ? (
-                                <div className="flex items-center gap-1 sm:gap-1.5">
-                                    <Link href="/orders" className="p-1 sm:p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
-                                        <ShoppingBag className="w-4 h-4" />
-                                        <span className="text-xs font-semibold hidden lg:block">My Orders</span>
-                                    </Link>
-                                    <div className="h-4 w-px bg-gray-800 mx-0.5 sm:mx-1 hidden lg:block" />
-                                    <div className="p-1 sm:p-1.5 text-blue-400 font-bold text-xs flex items-center gap-1.5">
-                                        <User className="w-4 h-4" />
-                                        <span className="hidden lg:block truncate max-w-[80px]">
-                                            {user.displayName || user.name || 'User'}
-                                        </span>
-                                    </div>
+                                <div className="relative">
+                                    <button
+                                        onClick={() => setIsProfileOpen(!isProfileOpen)}
+                                        className="flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all"
+                                    >
+                                        <div className="p-1 sm:p-1.5 text-blue-400 font-bold text-xs flex items-center gap-1.5">
+                                            <User className="w-4 h-4" />
+                                            <span className="hidden lg:block truncate max-w-[80px]">
+                                                {user.displayName || user.name || 'User'}
+                                            </span>
+                                            <ChevronDown className={`w-3 h-3 transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} />
+                                        </div>
+                                    </button>
+
+                                    <AnimatePresence>
+                                        {isProfileOpen && (
+                                            <>
+                                                <div
+                                                    className="fixed inset-0 z-40"
+                                                    onClick={() => setIsProfileOpen(false)}
+                                                />
+                                                <motion.div
+                                                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                    className="absolute right-0 top-full mt-2 w-56 bg-gray-900 border border-gray-800 rounded-xl shadow-xl z-50 overflow-hidden"
+                                                >
+                                                    <div className="p-4 border-b border-gray-800">
+                                                        <p className="text-sm font-bold text-white truncate">{user.displayName || user.name || 'User'}</p>
+                                                        <p className="text-xs text-gray-400 truncate">{user.email}</p>
+                                                    </div>
+                                                    <div className="p-1">
+                                                        <Link href="/orders" className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 rounded-lg transition-colors" onClick={() => setIsProfileOpen(false)}>
+                                                            <Package className="w-4 h-4" />
+                                                            Track Orders
+                                                        </Link>
+                                                        <Link href="/wishlist" className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 rounded-lg transition-colors" onClick={() => setIsProfileOpen(false)}>
+                                                            <Heart className="w-4 h-4" />
+                                                            Wishlist
+                                                        </Link>
+                                                        <Link href="/addresses" className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 rounded-lg transition-colors" onClick={() => setIsProfileOpen(false)}>
+                                                            <MapPin className="w-4 h-4" />
+                                                            Addresses
+                                                        </Link>
+                                                        <Link href="/support" className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 rounded-lg transition-colors" onClick={() => setIsProfileOpen(false)}>
+                                                            <HelpCircle className="w-4 h-4" />
+                                                            Help Center
+                                                        </Link>
+                                                        <div className="h-px bg-gray-800 my-1" />
+                                                        <button
+                                                            onClick={handleLogout}
+                                                            className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                                                        >
+                                                            <LogOut className="w-4 h-4" />
+                                                            Sign Out
+                                                        </button>
+                                                    </div>
+                                                </motion.div>
+                                            </>
+                                        )}
+                                    </AnimatePresence>
                                 </div>
                             ) : (
                                 <Link href="/login" className="p-1 sm:p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
@@ -272,17 +342,19 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
 
 
                 {/* Compact Sub-nav */}
-                <div className="bg-black border-t border-gray-800 py-1.5 overflow-hidden">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex items-center gap-6 overflow-x-auto no-scrollbar scroll-smooth">
-                            <Link
-                                href="/orders"
-                                className={`flex items-center gap-1.5 py-1 text-[11px] font-black uppercase tracking-widest whitespace-nowrap transition-all ${router.pathname === '/orders' ? 'text-blue-400 border-b-2 border-blue-500' : 'text-gray-400 hover:text-white'}`}
-                            >
-                                <Clock className="w-3.5 h-3.5" />
-                                Track Orders
-                            </Link>
-                            <div className="w-px h-4 bg-gray-800 shrink-0" />
+                <div className="bg-black border-t border-gray-800 py-1.5 overflow-hidden group/nav">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                        <button
+                            onClick={scrollLeft}
+                            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 p-1 rounded-full text-gray-400 hover:text-white block"
+                        >
+                            <ChevronLeft className="w-4 h-4" />
+                        </button>
+
+                        <div
+                            ref={scrollContainerRef}
+                            className="flex items-center gap-6 overflow-x-auto no-scrollbar scroll-smooth px-6"
+                        >
                             {categories.map((cat) => (
                                 <Link
                                     key={cat}
@@ -293,6 +365,13 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                 </Link>
                             ))}
                         </div>
+
+                        <button
+                            onClick={scrollRight}
+                            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 p-1 rounded-full text-gray-400 hover:text-white block"
+                        >
+                            <ChevronRight className="w-4 h-4" />
+                        </button>
                     </div>
                 </div>
             </nav>

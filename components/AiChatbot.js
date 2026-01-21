@@ -1,8 +1,10 @@
 
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { MessageCircle, X, Send, Sparkles, Bot, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useChatbotFlow } from '../hooks/useChatbotFlow';
+import { useCart } from '@/context/CartContext';
 
 // Internal component for the dynamic AI face
 const AiAssistantIcon = () => {
@@ -113,6 +115,10 @@ export default function AiChatbot({
     globalMaxPrice = 100000,
     resetFilters
 }) {
+    const router = useRouter();
+    const { isCartOpen } = useCart();
+
+    // Strictly render only on Home page
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
         { text: "Hi! I'm your AI Shopping Assistant. Looking for something specific? Try 'Running shoes under 5000' or 'Red party dress'.", isBot: true }
@@ -145,6 +151,12 @@ export default function AiChatbot({
         }, 4000);
         return () => clearInterval(interval);
     }, []);
+
+    // Strictly render only on Home page
+    if (router.pathname !== '/') return null;
+
+    // Also hide if cart sidebar is open (to prevent overlap)
+    if (isCartOpen) return null;
 
     const processQuery = (rawInput) => {
         // 1. Reset previous filters to start fresh

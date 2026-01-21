@@ -13,11 +13,13 @@ import { prisma } from '@/lib/prisma';
 
 import Link from 'next/link';
 import Footer from '@/components/Footer';
+import { useAuth } from '@/context/AuthContext';
 import ProductReviews from "@/components/ProductReviews";
 import ProductCard from '@/components/ProductCard';
 import RecentlyViewed from "@/components/RecentlyViewed";
 import EMICalculatorModal from "@/components/EMICalculatorModal";
 import { useRecommendations } from '@/hooks/useRecommendations';
+import { ProductDetailSkeleton } from '@/components/skeletons/PageSkeletons';
 
 export async function getServerSideProps({ params }) {
     const { id } = params;
@@ -63,6 +65,26 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
     const relatedProducts = initialRelatedProducts;
     const { addToCart } = useCart();
     const { toggleWishlist, isInWishlist } = useWishlist();
+    const { user } = useAuth();
+    const router = useRouter();
+    const handleAuthRedirect = (path) => {
+        // Redirect to login with returnUrl
+        router.push(`/login?redirect=${encodeURIComponent(path)}`);
+    };
+    const handleAddToCart = (productItem) => {
+        if (!user) {
+            handleAuthRedirect(`/product/${productItem.id}`);
+            return;
+        }
+        addToCart(productItem);
+    };
+    const handleCheckout = (productItem) => {
+        if (!user) {
+            handleAuthRedirect(`/product/${productItem.id}`);
+            return;
+        }
+        router.push('/checkout');
+    };
     const [selectedImage, setSelectedImage] = useState(0);
     const [showEMIModal, setShowEMIModal] = useState(false);
     const [activeFeature, setActiveFeature] = useState(null);
@@ -97,7 +119,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
         }
     }, [product, selectedImage]);
 
-    if (!product) return <div>Loading...</div>;
+    if (!product) return <ProductDetailSkeleton />;
 
     const handleImgError = (idx) => {
         const newThumbs = [...thumbs];
@@ -325,7 +347,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                         <motion.button
                                             whileTap={isInStock ? { scale: 0.98 } : {}}
                                             disabled={!isInStock}
-                                            onClick={() => addToCart(product)}
+                                            onClick={() => handleAddToCart(product)}
                                             className={`flex-1 font-black py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base uppercase tracking-widest ${isInStock
                                                 ? "bg-white text-black hover:bg-gray-100"
                                                 : "bg-gray-800 text-gray-600 cursor-not-allowed"

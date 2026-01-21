@@ -34,10 +34,10 @@ export default function Footer() {
                     <div className="col-span-1">
                         <h3 className="text-white font-black text-xs sm:text-sm uppercase tracking-[0.2em] mb-4 sm:mb-6">Support</h3>
                         <ul className="space-y-3 sm:space-y-4 text-[11px] sm:text-sm font-bold">
-                            <li><Link href="#" className="text-gray-500 hover:text-white transition-colors">Help Center</Link></li>
+                            <li><Link href="/support" className="text-gray-500 hover:text-white transition-colors">Help Center</Link></li>
                             <li><Link href="/orders" className="text-gray-500 hover:text-white transition-colors">Track Order</Link></li>
-                            <li><Link href="#" className="text-gray-500 hover:text-white transition-colors">Returns</Link></li>
-                            <li><Link href="#" className="text-gray-500 hover:text-white transition-colors">Warranty</Link></li>
+                            <li><Link href="/support" className="text-gray-500 hover:text-white transition-colors">Returns</Link></li>
+                            <li><Link href="/support" className="text-gray-500 hover:text-white transition-colors">Warranty</Link></li>
                         </ul>
                     </div>
 

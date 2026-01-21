@@ -4,6 +4,9 @@ import Image from 'next/image';
 import { ShoppingCart, Heart, Star } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/router';
+import useRequireAuth from '@/hooks/useRequireAuth';
 
 export default function ProductCard({ product }) {
     const { addToCart } = useCart();
@@ -16,6 +19,17 @@ export default function ProductCard({ product }) {
     const discountPercentage = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
 
     const [imgSrc, setImgSrc] = useState(product.image);
+
+    useRequireAuth();
+    const { user } = useAuth();
+    const router = useRouter();
+    const handleAddToCart = (productItem) => {
+        if (!user) {
+            router.replace(`/login?redirect=${encodeURIComponent(router.asPath)}`);
+            return;
+        }
+        addToCart(productItem);
+    };
 
     return (
         <Link href={`/product/${product.id}`} className="group block h-full">
@@ -101,7 +115,7 @@ export default function ProductCard({ product }) {
                             onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                addToCart(product);
+                                handleAddToCart(product);
                             }}
                             className={`w-full text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 rounded-lg transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 ${isInStock
                                 ? "bg-white hover:bg-gray-200 text-black shadow-lg shadow-white/5"

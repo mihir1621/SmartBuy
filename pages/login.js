@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -59,15 +59,7 @@ export default function Login() {
         return () => clearInterval(timer);
     }, []);
 
-    // Redirect ONLY if user exists AND they just logged in
-    // Redirect ONLY if user exists AND they just logged in
-    useEffect(() => {
-        if (user && justLoggedIn) {
-            handleRedirect(user.role);
-        }
-    }, [user, justLoggedIn, router]);
-
-    const handleRedirect = (role) => {
+    const handleRedirect = useCallback((role) => {
         const { redirect } = router.query;
         if (redirect) {
             router.push(redirect);
@@ -81,7 +73,14 @@ export default function Login() {
         } else {
             router.push('/');
         }
-    };
+    }, [router]);
+
+    // Redirect ONLY if user exists AND they just logged in
+    useEffect(() => {
+        if (user && justLoggedIn) {
+            handleRedirect(user.role);
+        }
+    }, [user, justLoggedIn, handleRedirect]);
 
     const handleGoogleSubmit = async (e) => {
         e.preventDefault();
