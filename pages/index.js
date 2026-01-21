@@ -13,6 +13,7 @@ import { useProductSystem } from "@/hooks/useProductSystem";
 import { Filter, SlidersHorizontal, ChevronDown, X } from "lucide-react";
 import BannerCarousel from "@/components/BannerCarousel";
 import { prisma } from "@/lib/prisma";
+import AiChatbot from "@/components/AiChatbot";
 
 // Fetching data from our static source (matching /api/static-products)
 export async function getServerSideProps() {
@@ -257,9 +258,20 @@ export default function Home({ initialProducts }) {
             <div className="lg:col-span-3">
               {/* Sorting Bar */}
               <div className="flex justify-between items-center mb-6 gap-4">
-                <h2 className="text-lg sm:text-xl font-bold text-white truncate">
-                  {selectedCategory === "All" ? (searchQuery ? `Results for "${searchQuery}"` : "All Products") : selectedCategory}
-                </h2>
+                <div className="flex items-center gap-3 overflow-hidden">
+                  <h2 className="text-lg sm:text-xl font-bold text-white truncate">
+                    {selectedCategory === "All" ? (searchQuery ? `Results for "${searchQuery}"` : "All Products") : selectedCategory}
+                  </h2>
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="text-gray-400 hover:text-white transition-colors p-1"
+                      title="Clear Search"
+                    >
+                      <X size={20} />
+                    </button>
+                  )}
+                </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
                   <span className="text-sm text-gray-400 hidden sm:inline">Sort by:</span>
                   <div className="relative">
@@ -353,6 +365,26 @@ export default function Home({ initialProducts }) {
         </div>
       </main>
       <Footer />
+
+      {/* AI Chatbot Integration */}
+      <AiChatbot
+        onSearch={setSearchQuery}
+        onCategorySelect={setSelectedCategory}
+        onPriceSelect={setPriceRange}
+        onGenderSelect={setSelectedGender}
+        onBrandSelect={setSelectedBrands}
+        categories={categories}
+        brands={availableBrands}
+        genders={availableGenders}
+        globalMaxPrice={globalMaxPrice}
+        resetFilters={() => {
+          setSelectedBrands([]);
+          setPriceRange([0, globalMaxPrice]);
+          setSelectedGender("All");
+          setSelectedCategory("All");
+          setSearchQuery("");
+        }}
+      />
     </div>
   );
 }
