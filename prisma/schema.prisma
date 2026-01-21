@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = "mysql://avnadmin:AVNS_k_BWki3ZEZI7Gpb8kTc@smartbuy-mihirchaudhari1621-ddd4.d.aivencloud.com:25694/defaultdb?ssl-mode=REQUIRED"
 }
 
 model Product {
