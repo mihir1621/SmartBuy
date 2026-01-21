@@ -66,13 +66,13 @@ export default function AdminProducts({ initialProducts }) {
                 {/* Actions Bar */}
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gray-900/50 p-6 rounded-3xl border border-gray-800">
                     <div className="relative w-full sm:w-96 group">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-500 transition-colors" size={18} />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-white transition-colors" size={18} />
                         <input
                             type="text"
                             placeholder="Search products by name, brand..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-gray-200"
+                            className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-white/50 transition-all text-gray-200"
                         />
                     </div>
 
@@ -81,7 +81,7 @@ export default function AdminProducts({ initialProducts }) {
                             <Filter size={18} />
                             Filter
                         </button>
-                        <Link href="/admin/products/new" className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition-all active:scale-95">
+                        <Link href="/admin/products/new" className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-white hover:bg-gray-200 text-black font-bold py-3.5 px-6 rounded-2xl shadow-lg shadow-white/10 transition-all active:scale-95">
                             <Plus size={20} />
                             Add Product
                         </Link>
@@ -123,7 +123,7 @@ export default function AdminProducts({ initialProducts }) {
                                                         />
                                                     </div>
                                                     <div>
-                                                        <p className="font-bold text-white leading-tight group-hover:text-blue-400 transition-colors">{product.name}</p>
+                                                        <p className="font-bold text-white leading-tight group-hover:text-gray-300 transition-colors">{product.name}</p>
                                                         <p className="text-xs text-gray-500 mt-1 font-medium">{product.brand}</p>
                                                     </div>
                                                 </div>
@@ -136,24 +136,24 @@ export default function AdminProducts({ initialProducts }) {
                                             <td className="px-6 py-5">
                                                 <div className="font-bold text-white">₹{product.price.toLocaleString()}</div>
                                                 {product.discount > 0 && (
-                                                    <div className="text-[10px] text-emerald-500 font-bold">-{product.discount}% OFF</div>
+                                                    <div className="text-[10px] text-white font-bold">-{product.discount}% OFF</div>
                                                 )}
                                             </td>
                                             <td className="px-6 py-5">
                                                 {product.inStock ? (
-                                                    <div className="flex items-center gap-2 text-emerald-500">
-                                                        <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+                                                    <div className="flex items-center gap-2 text-white">
+                                                        <div className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
                                                         <span className="text-xs font-bold uppercase">In Stock</span>
                                                     </div>
                                                 ) : (
-                                                    <div className="flex items-center gap-2 text-red-500">
-                                                        <div className="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
+                                                    <div className="flex items-center gap-2 text-gray-500">
+                                                        <div className="w-2 h-2 rounded-full bg-gray-500 shadow-[0_0_8px_rgba(107,114,128,0.5)]" />
                                                         <span className="text-xs font-bold uppercase">Out of Stock</span>
                                                     </div>
                                                 )}
                                             </td>
                                             <td className="px-6 py-5">
-                                                <div className="flex items-center gap-1 font-bold text-amber-400">
+                                                <div className="flex items-center gap-1 font-bold text-white">
                                                     <Star size={14} fill="currentColor" />
                                                     <span>{product.rating}</span>
                                                 </div>
@@ -164,12 +164,12 @@ export default function AdminProducts({ initialProducts }) {
                                                     <Link href={`/product/${product.id}`} target="_blank" className="p-2.5 rounded-xl bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 transition-all">
                                                         <Eye size={16} />
                                                     </Link>
-                                                    <Link href={`/admin/products/edit/${product.id}`} className="p-2.5 rounded-xl bg-blue-500/10 text-blue-400 hover:bg-blue-600 hover:text-white transition-all">
+                                                    <Link href={`/admin/products/edit/${product.id}`} className="p-2.5 rounded-xl bg-white/10 text-white hover:bg-white/20 hover:text-white transition-all">
                                                         <Edit3 size={16} />
                                                     </Link>
                                                     <button
                                                         onClick={() => handleDelete(product.id)}
-                                                        className="p-2.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-600 hover:text-white transition-all"
+                                                        className="p-2.5 rounded-xl bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white transition-all"
                                                     >
                                                         <Trash2 size={16} />
                                                     </button>

@@ -37,7 +37,7 @@ export default function EditProduct({ initialProduct }) {
                     animate={{ opacity: 1, y: 0 }}
                     className="mb-10 flex items-center gap-4"
                 >
-                    <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-xl shadow-amber-500/10">
+                    <div className="w-14 h-14 bg-gradient-to-br from-gray-700 to-black rounded-2xl flex items-center justify-center shadow-xl shadow-white/10">
                         <Edit size={28} className="text-white" />
                     </div>
                     <div>

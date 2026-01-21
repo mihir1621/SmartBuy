@@ -39,7 +39,7 @@ export default function OrderSuccess() {
             <div className="min-h-screen bg-black flex flex-col">
                 <StoreNavbar />
                 <div className="flex-grow flex items-center justify-center">
-                    <Clock className="animate-spin text-blue-500 w-10 h-10" />
+                    <Clock className="animate-spin text-white w-10 h-10" />
                 </div>
                 <Footer />
             </div>
@@ -54,7 +54,7 @@ export default function OrderSuccess() {
             <StoreNavbar />
 
             <main className="flex-grow flex items-center justify-center p-4 relative overflow-hidden">
-                <Confetti numberOfPieces={200} recycle={false} gravity={0.1} colors={['#3b82f6', '#1e40af', '#ffffff']} />
+                <Confetti numberOfPieces={200} recycle={false} gravity={0.1} colors={['#ffffff', '#a3a3a3', '#525252']} />
 
                 <div className="max-w-xl w-full relative z-10">
                     <motion.div
@@ -67,9 +67,9 @@ export default function OrderSuccess() {
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                            className="w-20 h-20 sm:w-28 sm:h-28 bg-blue-600/10 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8 border border-blue-500/20"
+                            className="w-20 h-20 sm:w-28 sm:h-28 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8 border border-white/20"
                         >
-                            <CheckCircle className="w-10 h-10 sm:w-14 sm:h-14 text-blue-500" />
+                            <CheckCircle className="w-10 h-10 sm:w-14 sm:h-14 text-white" />
                         </motion.div>
 
                         <h1 className="text-3xl sm:text-4xl font-black text-white mb-3 sm:mb-4 tracking-tight">Success!</h1>
@@ -81,7 +81,7 @@ export default function OrderSuccess() {
                         <div className="bg-gray-950/50 rounded-[1.5rem] sm:rounded-3xl p-6 sm:p-8 mb-8 sm:mb-10 text-left border border-gray-800/50 backdrop-blur-sm">
                             <div className="flex justify-between mb-3 sm:mb-4 gap-2">
                                 <span className="text-gray-500 font-bold uppercase text-[9px] sm:text-[10px] tracking-[0.2em] shrink-0">Order Ref</span>
-                                <span className="text-blue-400 font-black text-xs sm:text-sm truncate">#ORD-{order?.id || id || '---'}</span>
+                                <span className="text-white font-black text-xs sm:text-sm truncate">#ORD-{order?.id || id || '---'}</span>
                             </div>
                             <div className="flex justify-between mb-3 sm:mb-4 gap-2">
                                 <span className="text-gray-500 font-bold uppercase text-[9px] sm:text-[10px] tracking-[0.2em] shrink-0">Purchased</span>
@@ -111,8 +111,8 @@ export default function OrderSuccess() {
                         </div>
 
                         {/* Decorative Glow */}
-                        <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-500/10 blur-[80px] rounded-full" />
-                        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-blue-500/5 blur-[80px] rounded-full" />
+                        <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/10 blur-[80px] rounded-full" />
+                        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-white/5 blur-[80px] rounded-full" />
                     </motion.div>
                 </div>
             </main>

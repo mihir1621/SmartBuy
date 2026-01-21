@@ -12,7 +12,7 @@ export default function NewProduct() {
                     animate={{ opacity: 1, y: 0 }}
                     className="mb-10 flex items-center gap-4"
                 >
-                    <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-500/10">
+                    <div className="w-14 h-14 bg-gradient-to-br from-gray-700 to-black rounded-2xl flex items-center justify-center shadow-xl shadow-white/10">
                         <PackagePlus size={28} className="text-white" />
                     </div>
                     <div>

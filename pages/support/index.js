@@ -111,9 +111,9 @@ export default function SupportPage() {
 
     const getStatusColor = (status) => {
         switch (status.toLowerCase()) {
-            case 'open': return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
-            case 'in progress': return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20';
-            case 'resolved': return 'bg-green-500/10 text-green-400 border-green-500/20';
+            case 'open': return 'bg-white/10 text-white border-white/20';
+            case 'in progress': return 'bg-white/10 text-white border-white/20';
+            case 'resolved': return 'bg-white/10 text-white border-white/20';
             default: return 'bg-gray-500/10 text-gray-400 border-gray-500/20';
         }
     };
@@ -135,7 +135,7 @@ export default function SupportPage() {
 
                         <button
                             onClick={() => setActiveTab('create')}
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'create' ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'create' ? 'bg-white text-black shadow-lg shadow-white/20' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
                         >
                             <MessageSquare size={18} />
                             <span className="font-medium">Raise a Ticket</span>
@@ -143,7 +143,7 @@ export default function SupportPage() {
 
                         <button
                             onClick={() => setActiveTab('history')}
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'history' ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'history' ? 'bg-white text-black shadow-lg shadow-white/20' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
                         >
                             <FileText size={18} />
                             <span className="font-medium">My Tickets</span>
@@ -181,9 +181,9 @@ export default function SupportPage() {
                                                 <button
                                                     key={cat.id}
                                                     onClick={() => handleCategorySelect(cat)}
-                                                    className="flex items-start gap-4 p-4 rounded-xl bg-gray-800/50 border border-gray-700 hover:border-blue-500/50 hover:bg-gray-800 transition-all text-left group"
+                                                    className="flex items-start gap-4 p-4 rounded-xl bg-gray-800/50 border border-gray-700 hover:border-white/50 hover:bg-gray-800 transition-all text-left group"
                                                 >
-                                                    <div className="p-2.5 bg-gray-700/50 rounded-lg group-hover:bg-blue-500/20 group-hover:text-blue-400 transition-colors">
+                                                    <div className="p-2.5 bg-gray-700/50 rounded-lg group-hover:bg-white/20 group-hover:text-white transition-colors">
                                                         <cat.icon size={20} />
                                                     </div>
                                                     <div>
@@ -212,10 +212,10 @@ export default function SupportPage() {
                                             <ArrowLeft size={16} /> Back to Categories
                                         </button>
 
-                                        <div className="flex items-center gap-3 mb-6 p-4 bg-blue-900/20 border border-blue-900/50 rounded-xl">
-                                            <selectedCategory.icon className="text-blue-400" size={24} />
+                                        <div className="flex items-center gap-3 mb-6 p-4 bg-white/10 border border-white/20 rounded-xl">
+                                            <selectedCategory.icon className="text-white" size={24} />
                                             <div>
-                                                <span className="text-xs text-blue-300 uppercase font-bold tracking-wider">Selected Category</span>
+                                                <span className="text-xs text-gray-300 uppercase font-bold tracking-wider">Selected Category</span>
                                                 <h2 className="text-lg font-bold text-white">{selectedCategory.label}</h2>
                                             </div>
                                         </div>
@@ -229,7 +229,7 @@ export default function SupportPage() {
                                                     value={formData.subject}
                                                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                                                     placeholder="Brief summary of the issue"
-                                                    className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                                                    className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-white focus:border-transparent outline-none transition-all"
                                                 />
                                             </div>
 
@@ -241,7 +241,7 @@ export default function SupportPage() {
                                                         value={formData.orderId}
                                                         onChange={(e) => setFormData({ ...formData, orderId: e.target.value })}
                                                         placeholder="e.g., ORD-123456"
-                                                        className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                                                        className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-white focus:border-transparent outline-none transition-all"
                                                     />
                                                 </div>
                                             )}
@@ -254,7 +254,7 @@ export default function SupportPage() {
                                                     value={formData.description}
                                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                                     placeholder="Please describe your issue in detail..."
-                                                    className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                                                    className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-white focus:border-transparent outline-none transition-all resize-none"
                                                 />
                                             </div>
 
@@ -262,7 +262,7 @@ export default function SupportPage() {
                                                 <button
                                                     type="submit"
                                                     disabled={isLoading}
-                                                    className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-blue-900/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    className="w-full bg-white hover:bg-gray-200 text-black font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-white/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                                                 >
                                                     {isLoading ? (
                                                         <>
@@ -288,8 +288,8 @@ export default function SupportPage() {
                                         animate={{ opacity: 1, scale: 1 }}
                                         className="flex flex-col items-center text-center py-8"
                                     >
-                                        <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mb-6">
-                                            <CheckCircle className="text-green-500 w-10 h-10" />
+                                        <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mb-6">
+                                            <CheckCircle className="text-white w-10 h-10" />
                                         </div>
                                         <h2 className="text-2xl font-bold text-white mb-2">Ticket Created Successfully!</h2>
                                         <p className="text-gray-400 max-w-md mb-8">
@@ -299,7 +299,7 @@ export default function SupportPage() {
                                         <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6 w-full max-w-md mb-8 text-left">
                                             <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-700">
                                                 <span className="text-gray-400 text-sm">Ticket ID</span>
-                                                <span className="font-mono font-bold text-blue-400">{createdTicket.id}</span>
+                                                <span className="font-mono font-bold text-white">{createdTicket.id}</span>
                                             </div>
                                             <div className="space-y-3">
                                                 <div>
@@ -322,7 +322,7 @@ export default function SupportPage() {
                                             </button>
                                             <button
                                                 onClick={resetForm}
-                                                className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors font-medium shadow-lg shadow-blue-900/20"
+                                                className="px-6 py-2.5 bg-white hover:bg-gray-200 text-black rounded-lg transition-colors font-medium shadow-lg shadow-white/20"
                                             >
                                                 Raise Another
                                             </button>
@@ -356,7 +356,7 @@ export default function SupportPage() {
                                         <p className="text-gray-500 text-sm mb-6">You haven&apos;t raised any support tickets yet.</p>
                                         <button
                                             onClick={() => setActiveTab('create')}
-                                            className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors text-sm font-medium"
+                                            className="px-5 py-2 bg-white hover:bg-gray-200 text-black rounded-lg transition-colors text-sm font-medium"
                                         >
                                             Raise a Ticket
                                         </button>

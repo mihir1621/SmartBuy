@@ -54,7 +54,7 @@ export default function AdminDashboard() {
     if (loading) return (
         <AdminLayout title="Dashboard Overview">
             <div className="flex h-[60vh] items-center justify-center">
-                <Clock className="animate-spin text-blue-500 w-10 h-10" />
+                <Clock className="animate-spin text-white w-10 h-10" />
             </div>
         </AdminLayout>
     );
@@ -63,11 +63,11 @@ export default function AdminDashboard() {
         return (
             <AdminLayout title="Dashboard Overview">
                 <div className="flex h-[60vh] items-center justify-center flex-col gap-4">
-                    <div className="text-red-500 font-bold text-xl">
+                    <div className="text-white font-bold text-xl">
                         {statsData?.error || "Failed to load dashboard data"}
                     </div>
                     <p className="text-gray-400">Please make sure you are logged in as an Admin.</p>
-                    <Link href="/auth/signin" className="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-700 transition-colors">
+                    <Link href="/auth/signin" className="bg-white text-black px-6 py-2 rounded-lg font-bold hover:bg-gray-200 transition-colors">
                         Go to Login
                     </Link>
                 </div>
@@ -84,7 +84,7 @@ export default function AdminDashboard() {
             change: '+12.5%',
             isPositive: true,
             icon: DollarSign,
-            color: 'from-blue-500 to-indigo-600'
+            color: 'from-gray-800 to-gray-900'
         },
         {
             label: 'Total Orders',
@@ -92,7 +92,7 @@ export default function AdminDashboard() {
             change: '+18.2%',
             isPositive: true,
             icon: ShoppingBag,
-            color: 'from-emerald-500 to-teal-600'
+            color: 'from-gray-800 to-gray-900'
         },
         {
             label: 'Total Customers',
@@ -100,7 +100,7 @@ export default function AdminDashboard() {
             change: '+5.4%',
             isPositive: true,
             icon: Users,
-            color: 'from-violet-500 to-purple-600'
+            color: 'from-gray-800 to-gray-900'
         },
         {
             label: 'Active Products',
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
             change: '-2.1%',
             isPositive: false,
             icon: Package,
-            color: 'from-amber-500 to-orange-600'
+            color: 'from-gray-800 to-gray-900'
         },
     ];
 
@@ -123,13 +123,13 @@ export default function AdminDashboard() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1 }}
-                            className="bg-gray-900 border border-gray-800 rounded-3xl p-6 relative overflow-hidden group hover:border-gray-700 transition-all hover:shadow-2xl hover:shadow-blue-500/5 shadow-sm"
+                            className="bg-gray-900 border border-gray-800 rounded-3xl p-6 relative overflow-hidden group hover:border-gray-700 transition-all hover:shadow-2xl hover:shadow-white/5 shadow-sm"
                         >
                             <div className="flex justify-between items-start mb-4">
                                 <div className={`p-3 rounded-2xl bg-gradient-to-br ${stat.color} shadow-lg shadow-black/20 group-hover:scale-110 transition-transform`}>
                                     <stat.icon className="text-white" size={24} />
                                 </div>
-                                <div className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-full ${stat.isPositive ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'
+                                <div className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-full ${stat.isPositive ? 'bg-white/10 text-white' : 'bg-white/10 text-white'
                                     }`}>
                                     {stat.isPositive ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
                                     {stat.change}
@@ -165,8 +165,8 @@ export default function AdminDashboard() {
                                 <AreaChart data={chartData}>
                                     <defs>
                                         <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
-                                            <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                                            <stop offset="5%" stopColor="#ffffff" stopOpacity={0.3} />
+                                            <stop offset="95%" stopColor="#ffffff" stopOpacity={0} />
                                         </linearGradient>
                                     </defs>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1f2937" />
@@ -186,12 +186,12 @@ export default function AdminDashboard() {
                                     />
                                     <Tooltip
                                         contentStyle={{ backgroundColor: '#111827', borderColor: '#1f2937', borderRadius: '12px', color: '#fff' }}
-                                        itemStyle={{ color: '#3b82f6' }}
+                                        itemStyle={{ color: '#ffffff' }}
                                     />
                                     <Area
                                         type="monotone"
                                         dataKey="total"
-                                        stroke="#3b82f6"
+                                        stroke="#ffffff"
                                         strokeWidth={4}
                                         fillOpacity={1}
                                         fill="url(#colorTotal)"
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
                     <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-sm">
                         <div className="flex justify-between items-center mb-8">
                             <h3 className="text-xl font-bold text-white">Recent Orders</h3>
-                            <Link href="/admin/orders" className="text-blue-400 text-xs font-bold flex items-center gap-1 hover:underline">
+                            <Link href="/admin/orders" className="text-white text-xs font-bold flex items-center gap-1 hover:underline">
                                 View All <ExternalLink size={12} />
                             </Link>
                         </div>
@@ -214,20 +214,20 @@ export default function AdminDashboard() {
                             {recentOrders.map((order, idx) => (
                                 <div key={order.id} className="flex items-center justify-between group">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-gray-800 border border-gray-700 rounded-2xl flex items-center justify-center text-gray-400 group-hover:bg-blue-600/10 group-hover:text-blue-400 transition-all border border-transparent shadow-sm group-hover:border-blue-500/20">
+                                        <div className="w-12 h-12 bg-gray-800 border border-gray-700 rounded-2xl flex items-center justify-center text-gray-400 group-hover:bg-white/10 group-hover:text-white transition-all border border-transparent shadow-sm group-hover:border-white/20">
                                             {order.status === 'DELIVERED' ? <CheckCircle size={20} /> : <Clock size={20} />}
                                         </div>
                                         <div>
-                                            <p className="font-bold text-white group-hover:text-blue-400 transition-colors leading-tight truncate max-w-[120px]">{order.customerName}</p>
+                                            <p className="font-bold text-white group-hover:text-gray-300 transition-colors leading-tight truncate max-w-[120px]">{order.customerName}</p>
                                             <p className="text-xs text-gray-500 mt-0.5">#ORD-{order.id} • {new Date(order.createdAt).toLocaleDateString()}</p>
                                         </div>
                                     </div>
                                     <div className="text-right">
                                         <p className="font-bold text-white">₹{order.totalAmount.toLocaleString()}</p>
-                                        <p className={`text-[10px] font-bold uppercase tracking-tighter ${order.status === 'DELIVERED' ? 'text-emerald-500' :
-                                            order.status === 'PROCESSING' ? 'text-blue-500' :
-                                                order.status === 'SHIPPED' ? 'text-violet-500' :
-                                                    order.status === 'CANCELLED' ? 'text-red-500' : 'text-amber-500'
+                                        <p className={`text-[10px] font-bold uppercase tracking-tighter ${order.status === 'DELIVERED' ? 'text-white' :
+                                            order.status === 'PROCESSING' ? 'text-white' :
+                                                order.status === 'SHIPPED' ? 'text-white' :
+                                                    order.status === 'CANCELLED' ? 'text-white' : 'text-white'
                                             }`}>
                                             {order.status}
                                         </p>

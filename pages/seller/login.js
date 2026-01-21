@@ -158,7 +158,7 @@ export default function SellerLogin() {
 
             {/* Left Side - Hero */}
             <div className="hidden lg:flex w-1/2 relative bg-gray-900 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-900/40 to-black/80 z-10" />
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black z-10" />
                 <Image
                     src="https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?auto=format&fit=crop&q=80&w=1287"
                     className="object-cover"
@@ -168,7 +168,7 @@ export default function SellerLogin() {
                 />
                 <div className="relative z-20 flex flex-col justify-between p-16 h-full text-white">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center font-bold text-xl">S</div>
+                        <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center font-bold text-xl text-black">S</div>
                         <span className="text-2xl font-bold">SmartBuy Seller</span>
                     </div>
                     <div>
@@ -189,7 +189,7 @@ export default function SellerLogin() {
 
                 <div className="w-full max-w-md space-y-8">
                     <div className="text-center">
-                        <div className="w-16 h-16 bg-gradient-to-tr from-orange-500 to-red-600 rounded-2xl mx-auto flex items-center justify-center shadow-2xl shadow-orange-500/20 mb-6">
+                        <div className="w-16 h-16 bg-gradient-to-tr from-gray-800 to-black rounded-2xl mx-auto flex items-center justify-center shadow-2xl shadow-white/5 mb-6 border border-gray-700">
                             <Store className="w-8 h-8 text-white" />
                         </div>
                         <h2 className="text-3xl font-black text-white mb-2">Seller Portal</h2>
@@ -225,7 +225,7 @@ export default function SellerLogin() {
                                             onChange={(e) => setMobile(e.target.value)}
                                             maxLength={10}
                                             required
-                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-all placeholder:text-gray-600 tracking-wider"
+                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-white focus:ring-1 focus:ring-white outline-none transition-all placeholder:text-gray-600 tracking-wider"
                                             placeholder="Enter 10-digit number"
                                         />
                                     </div>
@@ -241,7 +241,7 @@ export default function SellerLogin() {
                                                 onChange={(e) => setOtp(e.target.value)}
                                                 maxLength={4}
                                                 required
-                                                className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-all placeholder:text-gray-600 tracking-[0.5em] font-bold text-center"
+                                                className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-white focus:ring-1 focus:ring-white outline-none transition-all placeholder:text-gray-600 tracking-[0.5em] font-bold text-center"
                                                 placeholder="••••"
                                             />
                                         </div>
@@ -251,7 +251,7 @@ export default function SellerLogin() {
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-orange-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                    className="w-full bg-white hover:bg-gray-200 text-black font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-white/10 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                 >
                                     {isLoading ? 'Verifying...' : (
                                         <>
@@ -272,7 +272,7 @@ export default function SellerLogin() {
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             required
-                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-orange-500 outline-none transition-all placeholder:text-gray-600"
+                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-white outline-none transition-all placeholder:text-gray-600"
                                             placeholder="seller@smartbuy.com"
                                         />
                                     </div>
@@ -286,7 +286,7 @@ export default function SellerLogin() {
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             required
-                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-orange-500 outline-none transition-all"
+                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-white outline-none transition-all"
                                             placeholder="••••••••"
                                         />
                                     </div>
@@ -294,7 +294,7 @@ export default function SellerLogin() {
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-orange-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                    className="w-full bg-white hover:bg-gray-200 text-black font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-white/10 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                 >
                                     {isLoading ? 'Logging in...' : (
                                         <>
@@ -309,7 +309,7 @@ export default function SellerLogin() {
 
                     <div className="text-center">
                         <p className="text-gray-500 text-sm">
-                            New Seller? <Link href="/register-seller" className="text-orange-500 font-bold hover:underline">Apply here</Link>
+                            New Seller? <Link href="/register-seller" className="text-white font-bold hover:underline">Apply here</Link>
                         </p>
                     </div>
                 </div>

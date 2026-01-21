@@ -124,7 +124,7 @@ export default function NewProduct() {
                         <button
                             onClick={handleSubmit}
                             disabled={isLoading}
-                            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-2.5 rounded-xl shadow-lg shadow-blue-500/20 flex items-center gap-2 transition-all disabled:opacity-50"
+                            className="bg-white hover:bg-gray-200 text-black font-bold px-8 py-2.5 rounded-xl shadow-lg shadow-white/10 flex items-center gap-2 transition-all disabled:opacity-50"
                         >
                             {isLoading ? 'Publishing...' : (
                                 <>
@@ -142,7 +142,7 @@ export default function NewProduct() {
                         {/* Basic Info */}
                         <div className="bg-gray-900 border border-gray-800 rounded-3xl p-6 md:p-8">
                             <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                                <Tag size={20} className="text-blue-500" />
+                                <Tag size={20} className="text-white" />
                                 Basic Information
                             </h3>
 
@@ -154,7 +154,7 @@ export default function NewProduct() {
                                         name="name"
                                         value={formData.name}
                                         onChange={handleInputChange}
-                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
                                         placeholder="e.g. Wireless Noise Cancelling Headphones"
                                     />
                                 </div>
@@ -166,7 +166,7 @@ export default function NewProduct() {
                                             name="brand"
                                             value={formData.brand}
                                             onChange={handleInputChange}
-                                            className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none transition-all"
+                                            className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none transition-all"
                                             placeholder="e.g. Sony"
                                         />
                                     </div>
@@ -176,7 +176,7 @@ export default function NewProduct() {
                                             name="category"
                                             value={formData.category}
                                             onChange={handleInputChange}
-                                            className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none transition-all"
+                                            className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none transition-all"
                                         >
                                             <option value="Electronics">Electronics</option>
                                             <option value="Fashion">Fashion</option>
@@ -193,7 +193,7 @@ export default function NewProduct() {
                                         value={formData.description}
                                         onChange={handleInputChange}
                                         rows={4}
-                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none transition-all"
+                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none transition-all"
                                         placeholder="Detailed description of the product..."
                                     />
                                 </div>
@@ -203,7 +203,7 @@ export default function NewProduct() {
                         {/* Pricing & Inventory */}
                         <div className="bg-gray-900 border border-gray-800 rounded-3xl p-6 md:p-8">
                             <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                                <DollarSign size={20} className="text-emerald-500" />
+                                <DollarSign size={20} className="text-white" />
                                 Pricing & Inventory
                             </h3>
 
@@ -215,7 +215,7 @@ export default function NewProduct() {
                                         name="price"
                                         value={formData.price}
                                         onChange={handleInputChange}
-                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all font-mono"
+                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white focus:ring-1 focus:ring-white outline-none transition-all font-mono"
                                         placeholder="0.00"
                                     />
                                 </div>
@@ -226,14 +226,14 @@ export default function NewProduct() {
                                         name="originalPrice"
                                         value={formData.originalPrice}
                                         onChange={handleInputChange}
-                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-emerald-500 outline-none transition-all font-mono"
+                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none transition-all font-mono"
                                         placeholder="0.00"
                                     />
                                 </div>
 
                                 {discount > 0 && (
                                     <div className="md:col-span-2">
-                                        <div className="bg-emerald-900/20 border border-emerald-900 rounded-xl p-4 flex items-center gap-3 text-emerald-400">
+                                        <div className="bg-white/10 border border-white/20 rounded-xl p-4 flex items-center gap-3 text-white">
                                             <Tag size={18} />
                                             <span className="font-medium">Calculated Discount: <span className="font-bold text-white">{discount}% OFF</span></span>
                                         </div>
@@ -249,7 +249,7 @@ export default function NewProduct() {
                                             name="stock"
                                             value={formData.stock}
                                             onChange={handleInputChange}
-                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-blue-500 outline-none transition-all font-mono"
+                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-white outline-none transition-all font-mono"
                                             placeholder="100"
                                         />
                                     </div>
@@ -262,7 +262,7 @@ export default function NewProduct() {
                     <div className="space-y-6">
                         <div className="bg-gray-900 border border-gray-800 rounded-3xl p-6">
                             <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                                <Upload size={20} className="text-purple-500" />
+                                <Upload size={20} className="text-white" />
                                 Product Image
                             </h3>
 
@@ -284,7 +284,7 @@ export default function NewProduct() {
                                         type="text"
                                         value={formData.image}
                                         onChange={handleImageChange}
-                                        className="w-full bg-black border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:border-purple-500 outline-none"
+                                        className="w-full bg-black border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:border-white outline-none"
                                         placeholder="https://..."
                                     />
                                     <p className="text-[10px] text-gray-500 mt-2">
@@ -294,12 +294,12 @@ export default function NewProduct() {
                             </div>
                         </div>
 
-                        <div className="bg-blue-900/10 border border-blue-900/30 rounded-3xl p-6">
+                        <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
                             <div className="flex items-start gap-3">
-                                <AlertCircle className="w-5 h-5 text-blue-400 mt-0.5" />
+                                <AlertCircle className="w-5 h-5 text-white mt-0.5" />
                                 <div>
-                                    <h4 className="text-sm font-bold text-blue-400 mb-1">Seller Tip</h4>
-                                    <p className="text-xs text-blue-300/70 leading-relaxed">
+                                    <h4 className="text-sm font-bold text-white mb-1">Seller Tip</h4>
+                                    <p className="text-xs text-gray-400 leading-relaxed">
                                         Adding a discount (Original Price &gt; Selling Price) significantly increases conversion rates.
                                     </p>
                                 </div>

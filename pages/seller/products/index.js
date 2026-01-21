@@ -83,7 +83,7 @@ export default function SellerProducts() {
                         placeholder="Search products..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full bg-gray-900 border border-gray-800 rounded-2xl pl-12 pr-4 py-3 text-white focus:border-blue-500 outline-none"
+                        className="w-full bg-gray-900 border border-gray-800 rounded-2xl pl-12 pr-4 py-3 text-white focus:border-white outline-none"
                     />
                 </div>
                 <div className="flex gap-3 w-full sm:w-auto">
@@ -91,7 +91,7 @@ export default function SellerProducts() {
                         <Filter size={18} />
                         Filter
                     </button>
-                    <Link href="/seller/products/new" className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl flex items-center gap-2 shadow-lg shadow-blue-500/20">
+                    <Link href="/seller/products/new" className="px-6 py-3 bg-white hover:bg-gray-200 text-black font-bold rounded-2xl flex items-center gap-2 shadow-lg shadow-white/10">
                         <Plus size={20} />
                         Add Product
                     </Link>
@@ -100,7 +100,7 @@ export default function SellerProducts() {
 
             {isLoading ? (
                 <div className="text-center py-20">
-                    <div className="animate-spin w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                    <div className="animate-spin w-10 h-10 border-4 border-white border-t-transparent rounded-full mx-auto mb-4"></div>
                     <p className="text-gray-500">Loading your inventory...</p>
                 </div>
             ) : filteredProducts.length === 0 ? (
@@ -108,7 +108,7 @@ export default function SellerProducts() {
                     <Box className="w-16 h-16 text-gray-600 mx-auto mb-4" />
                     <h3 className="text-xl font-bold text-white mb-2">No Products Found</h3>
                     <p className="text-gray-500 mb-6">Start building your catalog by adding your first product.</p>
-                    <Link href="/seller/products/new" className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl inline-flex items-center gap-2">
+                    <Link href="/seller/products/new" className="px-8 py-3 bg-white hover:bg-gray-200 text-black font-bold rounded-xl inline-flex items-center gap-2">
                         <Plus size={20} />
                         Add New Product
                     </Link>
@@ -128,7 +128,7 @@ export default function SellerProducts() {
                                 <div className="flex-1 min-w-0">
                                     <div className="flex justify-between items-start">
                                         <div>
-                                            <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400 bg-blue-400/10 px-2 py-0.5 rounded-full mb-2 inline-block">
+                                            <span className="text-[10px] font-bold uppercase tracking-wider text-white bg-white/10 px-2 py-0.5 rounded-full mb-2 inline-block">
                                                 {product.category}
                                             </span>
                                             <h3 className="text-white font-bold truncate pr-4">{product.name}</h3>
@@ -145,7 +145,7 @@ export default function SellerProducts() {
                                         </div>
                                         <div className="text-right">
                                             <p className="text-xs text-gray-500 mb-1">Stock</p>
-                                            <p className={`text-sm font-bold ${product.stock > 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                                            <p className={`text-sm font-bold ${product.stock > 0 ? 'text-white' : 'text-gray-500'}`}>
                                                 {product.stock > 0 ? `${product.stock} Units` : 'Out of Stock'}
                                             </p>
                                         </div>
@@ -156,13 +156,13 @@ export default function SellerProducts() {
                             {/* Stats Row */}
                             <div className="mt-5 pt-4 border-t border-gray-800 grid grid-cols-2 gap-4">
                                 <div className="flex items-center gap-2 text-gray-400 text-xs font-medium">
-                                    <Tag size={14} className="text-purple-400" />
+                                    <Tag size={14} className="text-white" />
                                     <span>
                                         {product.discount > 0 ? `${product.discount}% Off` : 'No Offer'}
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-2 text-gray-400 text-xs font-medium justify-end">
-                                    <Star size={14} className="text-yellow-400" />
+                                    <Star size={14} className="text-white" />
                                     <span>{product.rating || 0} ({product.reviews || 0})</span>
                                 </div>
                             </div>
@@ -174,7 +174,7 @@ export default function SellerProducts() {
                                 </button>
                                 <button
                                     onClick={() => handleDelete(product.id)}
-                                    className="px-3 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-xl flex items-center justify-center"
+                                    className="px-3 py-2 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-xl flex items-center justify-center"
                                 >
                                     <Trash2 size={14} />
                                 </button>

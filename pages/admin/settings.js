@@ -58,7 +58,7 @@ export default function AdminSettings() {
                     <div className="flex items-start justify-between relative z-10">
                         <div className="space-y-4">
                             <div className="flex items-center gap-3">
-                                <div className="p-3 bg-blue-600/10 text-blue-500 rounded-2xl border border-blue-500/20">
+                                <div className="p-3 bg-white/10 text-white rounded-2xl border border-white/20">
                                     <Database size={24} />
                                 </div>
                                 <h3 className="text-xl font-bold text-white">Development Tools</h3>
@@ -73,13 +73,13 @@ export default function AdminSettings() {
                                 <button
                                     onClick={generateDemoData}
                                     disabled={loading}
-                                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white font-bold py-4 px-8 rounded-2xl shadow-xl shadow-blue-500/20 transition-all active:scale-95 min-w-[200px] justify-center"
+                                    className="flex items-center gap-2 bg-white hover:bg-gray-200 disabled:bg-gray-700 text-black font-bold py-4 px-8 rounded-2xl shadow-xl shadow-white/10 transition-all active:scale-95 min-w-[200px] justify-center"
                                 >
                                     {loading ? <Loader2 size={20} className="animate-spin" /> : <Zap size={20} />}
                                     {loading ? 'Generating...' : 'Generate Demo Data'}
                                 </button>
 
-                                <div className="flex items-center gap-2 text-amber-500 bg-amber-500/10 px-4 py-2 rounded-xl border border-amber-500/20 text-xs font-bold uppercase tracking-wider">
+                                <div className="flex items-center gap-2 text-white bg-white/10 px-4 py-2 rounded-xl border border-white/20 text-xs font-bold uppercase tracking-wider">
                                     <TriangleAlert size={14} />
                                     Safe for development only
                                 </div>
@@ -90,8 +90,8 @@ export default function AdminSettings() {
                                     initial={{ opacity: 0, x: -10 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     className={`mt-6 p-4 rounded-2xl border flex items-center gap-3 font-bold text-sm ${result.type === 'success'
-                                        ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                                        : 'bg-red-500/10 border-red-500/20 text-red-400'
+                                        ? 'bg-white/10 border-white/20 text-white'
+                                        : 'bg-white/10 border-white/20 text-white'
                                         }`}
                                 >
                                     {result.type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
@@ -106,7 +106,7 @@ export default function AdminSettings() {
                     </div>
 
                     {/* Decorative Glow */}
-                    <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-500/5 blur-[100px] rounded-full" />
+                    <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/5 blur-[100px] rounded-full" />
                 </motion.div>
 
                 {/* Placeholder for other settings */}

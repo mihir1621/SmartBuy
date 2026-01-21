@@ -29,11 +29,11 @@ export default function SellerSidebar({ isMobileMenuOpen, setIsMobileMenuOpen })
             {/* Logo Area */}
             <div className="h-20 flex items-center px-8 border-b border-gray-800">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-tr from-orange-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
+                    <div className="w-10 h-10 bg-gradient-to-tr from-gray-700 to-black rounded-xl flex items-center justify-center shadow-lg shadow-white/20">
                         <Store className="text-white w-6 h-6" />
                     </div>
                     <div>
-                        <h1 className="text-white font-black text-xl tracking-tight">Seller<span className="text-orange-500">Hub</span></h1>
+                        <h1 className="text-white font-black text-xl tracking-tight">Seller<span className="text-white">Hub</span></h1>
                     </div>
                 </div>
             </div>
@@ -46,12 +46,12 @@ export default function SellerSidebar({ isMobileMenuOpen, setIsMobileMenuOpen })
                     return (
                         <Link key={item.path} href={item.path} onClick={handleMenuItemClick}>
                             <div className={`flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all group ${active
-                                ? 'bg-orange-500/10 text-orange-500 font-bold'
+                                ? 'bg-white/10 text-white font-bold'
                                 : 'text-gray-400 hover:text-white hover:bg-gray-800/50 font-medium'
                                 }`}>
-                                <item.icon size={20} className={active ? 'text-orange-500' : 'text-gray-500 group-hover:text-white transition-colors'} />
+                                <item.icon size={20} className={active ? 'text-white' : 'text-gray-500 group-hover:text-white transition-colors'} />
                                 <span>{item.name}</span>
-                                {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-orange-500" />}
+                                {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white" />}
                             </div>
                         </Link>
                     );
@@ -62,9 +62,9 @@ export default function SellerSidebar({ isMobileMenuOpen, setIsMobileMenuOpen })
             <div className="p-4 border-t border-gray-800">
                 <button
                     onClick={() => logout()}
-                    className="flex items-center gap-3 px-4 py-3.5 w-full rounded-xl text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-all font-medium group"
+                    className="flex items-center gap-3 px-4 py-3.5 w-full rounded-xl text-gray-400 hover:text-white hover:bg-white/10 transition-all font-medium group"
                 >
-                    <LogOut size={20} className="group-hover:text-red-400 transition-colors" />
+                    <LogOut size={20} className="group-hover:text-white transition-colors" />
                     <span>Sign Out</span>
                 </button>
             </div>

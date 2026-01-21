@@ -23,10 +23,10 @@ export default function SellerOrders() {
 
     const getStatusColor = (status) => {
         switch (status) {
-            case 'PENDING': return 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20';
-            case 'SHIPPED': return 'text-blue-400 bg-blue-400/10 border-blue-400/20';
-            case 'DELIVERED': return 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20';
-            case 'CANCELLED': return 'text-red-400 bg-red-400/10 border-red-400/20';
+            case 'PENDING': return 'text-white bg-white/10 border-white/20';
+            case 'SHIPPED': return 'text-white bg-white/10 border-white/20';
+            case 'DELIVERED': return 'text-white bg-white/10 border-white/20';
+            case 'CANCELLED': return 'text-white bg-white/10 border-white/20';
             default: return 'text-gray-400 bg-gray-400/10 border-gray-400/20';
         }
     };
@@ -39,7 +39,7 @@ export default function SellerOrders() {
                     <input
                         type="text"
                         placeholder="Search by Order ID or Customer..."
-                        className="w-full bg-gray-900 border border-gray-800 rounded-2xl pl-12 pr-4 py-3 text-white focus:border-blue-500 outline-none"
+                        className="w-full bg-gray-900 border border-gray-800 rounded-2xl pl-12 pr-4 py-3 text-white focus:border-white outline-none"
                     />
                 </div>
                 <button className="px-4 py-3 bg-gray-900 border border-gray-800 rounded-2xl text-gray-400 hover:text-white flex items-center gap-2">
@@ -50,7 +50,7 @@ export default function SellerOrders() {
 
             {loading ? (
                 <div className="text-center py-20">
-                    <div className="animate-spin w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                    <div className="animate-spin w-10 h-10 border-4 border-white border-t-transparent rounded-full mx-auto mb-4"></div>
                     <p className="text-gray-500">Loading orders...</p>
                 </div>
             ) : orders.length === 0 ? (

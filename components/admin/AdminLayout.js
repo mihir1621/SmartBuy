@@ -27,7 +27,7 @@ export default function AdminLayout({ children, title }) {
         return (
             <div className="min-h-screen bg-[#0a0a0c] flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
-                    <Loader2 className="text-blue-500 animate-spin" size={40} />
+                    <Loader2 className="text-white animate-spin" size={40} />
                     <p className="text-gray-500 font-bold animate-pulse text-sm uppercase tracking-widest">Verifying Admin Session...</p>
                 </div>
             </div>
@@ -39,7 +39,7 @@ export default function AdminLayout({ children, title }) {
     if (!user || (user.role !== 'ADMIN' && user.role !== 'admin')) {
         return (
             <div className="min-h-screen bg-[#0a0a0c] flex items-center justify-center">
-                <Loader2 className="text-blue-500 animate-spin" size={40} />
+                <Loader2 className="text-white animate-spin" size={40} />
             </div>
         );
     }
@@ -78,7 +78,7 @@ export default function AdminLayout({ children, title }) {
                     </div>
 
                     <div className="flex items-center gap-4 sm:gap-6">
-                        <div className="hidden md:flex items-center bg-gray-800 border border-gray-700 rounded-xl px-4 py-2 gap-3 focus-within:ring-2 focus-within:ring-blue-500/50 transition-all">
+                        <div className="hidden md:flex items-center bg-gray-800 border border-gray-700 rounded-xl px-4 py-2 gap-3 focus-within:ring-2 focus-within:ring-white/50 transition-all">
                             <Search size={18} className="text-gray-500" />
                             <input
                                 type="text"
@@ -90,7 +90,7 @@ export default function AdminLayout({ children, title }) {
                         <div className="flex items-center gap-2 sm:gap-3 border-l border-gray-800 pl-4 sm:pl-6">
                             <button className="p-2.5 rounded-xl bg-gray-800 border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-700 transition-all relative">
                                 <Bell size={20} />
-                                <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-gray-900" />
+                                <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-white rounded-full border-2 border-gray-900" />
                             </button>
 
                             <div className="flex items-center gap-3 ml-2 group cursor-pointer">
@@ -102,7 +102,7 @@ export default function AdminLayout({ children, title }) {
                                     )}
                                 </div>
                                 <div className="hidden sm:block">
-                                    <p className="text-sm font-bold leading-tight group-hover:text-blue-400 transition-colors capitalize">{user.name || user.displayName}</p>
+                                    <p className="text-sm font-bold leading-tight group-hover:text-white transition-colors capitalize">{user.name || user.displayName}</p>
                                     <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">{user.role}</p>
                                 </div>
                             </div>

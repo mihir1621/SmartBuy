@@ -41,7 +41,7 @@ export default function SellerLayout({ children, title }) {
         return (
             <div className="min-h-screen bg-black flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
-                    <Loader2 className="text-orange-500 animate-spin" size={40} />
+                    <Loader2 className="text-white animate-spin" size={40} />
                     <p className="text-gray-500 font-bold animate-pulse text-sm uppercase tracking-widest">Loading Seller Hub...</p>
                 </div>
             </div>
@@ -62,7 +62,7 @@ export default function SellerLayout({ children, title }) {
                     <div className="flex flex-col gap-3 pt-4">
                         <button
                             onClick={() => router.push('/seller/login')}
-                            className="bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 rounded-2xl transition-all"
+                            className="bg-white hover:bg-gray-200 text-black font-bold py-4 rounded-2xl transition-all"
                         >
                             Log in as Seller
                         </button>
@@ -109,7 +109,7 @@ export default function SellerLayout({ children, title }) {
                     </div>
 
                     <div className="flex items-center gap-4 sm:gap-6">
-                        <div className="hidden md:flex items-center bg-gray-900 border border-gray-800 rounded-xl px-4 py-2 gap-3 focus-within:ring-2 focus-within:ring-orange-500/50 transition-all">
+                        <div className="hidden md:flex items-center bg-gray-900 border border-gray-800 rounded-xl px-4 py-2 gap-3 focus-within:ring-2 focus-within:ring-white/50 transition-all">
                             <Search size={18} className="text-gray-500" />
                             <input
                                 type="text"
@@ -124,7 +124,7 @@ export default function SellerLayout({ children, title }) {
                         <div className="flex items-center gap-2 sm:gap-3 border-l border-gray-800 pl-4 sm:pl-6">
                             <button className="p-2.5 rounded-xl bg-gray-900 border border-gray-800 text-gray-400 hover:text-white hover:bg-gray-800 transition-all relative">
                                 <Bell size={20} />
-                                <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-orange-500 rounded-full border-2 border-gray-900" />
+                                <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-white rounded-full border-2 border-gray-900" />
                             </button>
 
                             <div className="flex items-center gap-3 ml-2 group cursor-pointer">
@@ -136,7 +136,7 @@ export default function SellerLayout({ children, title }) {
                                     )}
                                 </div>
                                 <div className="hidden sm:block">
-                                    <p className="text-sm font-bold leading-tight group-hover:text-orange-400 transition-colors capitalize">{user.name || user.displayName}</p>
+                                    <p className="text-sm font-bold leading-tight group-hover:text-white transition-colors capitalize">{user.name || user.displayName}</p>
                                     <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">{user.role}</p>
                                 </div>
                             </div>

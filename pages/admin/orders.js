@@ -17,11 +17,11 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 
 const statusColors = {
-    'PENDING': 'text-amber-500 bg-amber-500/10',
-    'PROCESSING': 'text-blue-500 bg-blue-500/10',
-    'SHIPPED': 'text-violet-500 bg-violet-500/10',
-    'DELIVERED': 'text-emerald-500 bg-emerald-500/10',
-    'CANCELLED': 'text-red-500 bg-red-500/10',
+    'PENDING': 'text-white bg-white/10',
+    'PROCESSING': 'text-white bg-white/10',
+    'SHIPPED': 'text-white bg-white/10',
+    'DELIVERED': 'text-white bg-white/10',
+    'CANCELLED': 'text-white bg-white/10',
 };
 
 export default function AdminOrders() {
@@ -57,13 +57,13 @@ export default function AdminOrders() {
             <div className="space-y-6">
                 <div className="flex flex-col sm:row justify-between items-center gap-4 bg-gray-900/50 p-6 rounded-3xl border border-gray-800">
                     <div className="relative w-full sm:w-96 group">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-500 transition-colors" size={18} />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-white transition-colors" size={18} />
                         <input
                             type="text"
                             placeholder="Search by ID or customer name..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-gray-200"
+                            className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-white/50 transition-all text-gray-200"
                         />
                     </div>
 
@@ -93,7 +93,7 @@ export default function AdminOrders() {
                                 <tr>
                                     <td colSpan="7" className="px-6 py-20 text-center">
                                         <div className="flex flex-col items-center gap-3">
-                                            <Clock className="animate-spin text-blue-500" size={32} />
+                                            <Clock className="animate-spin text-white" size={32} />
                                             <p className="text-gray-500 font-bold">Loading Orders...</p>
                                         </div>
                                     </td>
@@ -107,7 +107,7 @@ export default function AdminOrders() {
                             ) : (
                                 filteredOrders.map((order) => (
                                     <tr key={order.id} className="hover:bg-gray-800/30 transition-colors group">
-                                        <td className="px-6 py-5 font-bold text-blue-400">#ORD-{order.id}</td>
+                                        <td className="px-6 py-5 font-bold text-white">#ORD-{order.id}</td>
                                         <td className="px-6 py-5">
                                             <p className="font-bold text-white">{order.customerName}</p>
                                             <p className="text-xs text-gray-500">{order.customerPhone}</p>
@@ -123,7 +123,7 @@ export default function AdminOrders() {
                                         <td className="px-6 py-5 text-right">
                                             <button
                                                 onClick={() => router.push(`/admin/orders/${order.id}`)}
-                                                className="p-2.5 rounded-xl bg-gray-800 text-gray-400 hover:text-white transition-all hover:bg-blue-600/20 hover:text-blue-400 border border-transparent hover:border-blue-500/30"
+                                                className="p-2.5 rounded-xl bg-gray-800 text-gray-400 hover:text-white transition-all hover:bg-white/10 border border-transparent hover:border-white/30"
                                             >
                                                 <Eye size={18} />
                                             </button>

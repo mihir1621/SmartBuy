@@ -49,13 +49,13 @@ export default function AdminCustomers() {
             <div className="space-y-6">
                 <div className="flex flex-col sm:row justify-between items-center gap-4 bg-gray-900/50 p-6 rounded-3xl border border-gray-800">
                     <div className="relative w-full sm:w-96 group">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-500 transition-colors" size={18} />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-white transition-colors" size={18} />
                         <input
                             type="text"
                             placeholder="Search by name, email or phone..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-gray-200"
+                            className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-white/50 transition-all text-gray-200"
                         />
                     </div>
                 </div>
@@ -87,18 +87,18 @@ export default function AdminCustomers() {
                                 key={customer.id}
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                className="bg-gray-900 border border-gray-800 rounded-3xl p-6 hover:border-blue-500/30 transition-all group relative overflow-hidden"
+                                className="bg-gray-900 border border-gray-800 rounded-3xl p-6 hover:border-white/30 transition-all group relative overflow-hidden"
                             >
                                 <div className="flex items-start justify-between mb-6">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-16 h-16 bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-2xl flex items-center justify-center text-gray-500 group-hover:text-blue-400 group-hover:border-blue-500/20 transition-all shadow-inner">
+                                        <div className="w-16 h-16 bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-2xl flex items-center justify-center text-gray-500 group-hover:text-white group-hover:border-white/20 transition-all shadow-inner">
                                             <UserIcon size={32} />
                                         </div>
                                         <div>
                                             <div className="flex items-center gap-2">
                                                 <h3 className="font-bold text-white text-lg leading-tight">{customer.name || 'Anonymous User'}</h3>
                                                 {customer.role === 'ADMIN' && (
-                                                    <ShieldCheck size={16} className="text-blue-400" />
+                                                    <ShieldCheck size={16} className="text-white" />
                                                 )}
                                             </div>
                                             <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mt-1">{customer.role}</p>
@@ -126,18 +126,18 @@ export default function AdminCustomers() {
 
                                 <div className="mt-6 pt-6 border-t border-gray-800 flex items-center justify-between">
                                     <div className="flex items-center gap-2">
-                                        <ShoppingBag size={16} className="text-emerald-500" />
+                                        <ShoppingBag size={16} className="text-white" />
                                         <span className="text-xs font-bold text-gray-400 uppercase tracking-tighter">
                                             {customer.orders?.length || 0} Total Orders
                                         </span>
                                     </div>
-                                    <button className="text-[10px] font-bold text-blue-400 uppercase tracking-widest hover:underline">
+                                    <button className="text-[10px] font-bold text-white uppercase tracking-widest hover:underline">
                                         View Details
                                     </button>
                                 </div>
 
                                 {/* Decorative glow */}
-                                <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full" />
+                                <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white/5 blur-3xl rounded-full" />
                             </motion.div>
                         ))
                     )}

@@ -20,11 +20,11 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const statusColors = {
-    'PENDING': 'text-amber-500 bg-amber-500/10 border-amber-500/20',
-    'PROCESSING': 'text-blue-500 bg-blue-500/10 border-blue-500/20',
-    'SHIPPED': 'text-violet-500 bg-violet-500/10 border-violet-500/20',
-    'DELIVERED': 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20',
-    'CANCELLED': 'text-red-500 bg-red-500/10 border-red-500/20',
+    'PENDING': 'text-white bg-white/10 border-white/20',
+    'PROCESSING': 'text-white bg-white/10 border-white/20',
+    'SHIPPED': 'text-white bg-white/10 border-white/20',
+    'DELIVERED': 'text-white bg-white/10 border-white/20',
+    'CANCELLED': 'text-white bg-white/10 border-white/20',
 };
 
 export default function OrderDetails() {
@@ -82,7 +82,7 @@ export default function OrderDetails() {
     if (loading) return (
         <AdminLayout title="Loading Order...">
             <div className="flex h-[60vh] items-center justify-center">
-                <Clock className="animate-spin text-blue-500 w-10 h-10" />
+                <Clock className="animate-spin text-white w-10 h-10" />
             </div>
         </AdminLayout>
     );
@@ -106,7 +106,7 @@ export default function OrderDetails() {
                         <button className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 px-4 py-2.5 rounded-xl border border-gray-700 transition-all text-sm font-medium">
                             <Printer className="w-4 h-4" /> Print Invoice
                         </button>
-                        <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 px-4 py-2.5 rounded-xl transition-all text-sm font-bold text-white shadow-lg shadow-blue-500/20">
+                        <button className="flex items-center gap-2 bg-white hover:bg-gray-200 px-4 py-2.5 rounded-xl transition-all text-sm font-bold text-black shadow-lg shadow-white/10">
                             <Download className="w-4 h-4" /> Export JSON
                         </button>
                     </div>
@@ -136,7 +136,7 @@ export default function OrderDetails() {
                                             onClick={() => updateStatus(s)}
                                             disabled={updating || order.status === s}
                                             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${order.status === s
-                                                ? 'bg-blue-500 text-white cursor-default scale-105'
+                                                ? 'bg-white text-black cursor-default scale-105'
                                                 : 'bg-gray-800 text-gray-400 hover:bg-gray-700 active:scale-95'
                                                 }`}
                                         >
@@ -151,10 +151,10 @@ export default function OrderDetails() {
                         <div className="bg-gray-900 border border-gray-800 rounded-3xl overflow-hidden shadow-xl">
                             <div className="p-6 border-b border-gray-800 flex justify-between items-center bg-gray-950/20">
                                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                                    <ShoppingBag className="w-5 h-5 text-blue-500" />
+                                    <ShoppingBag className="w-5 h-5 text-white" />
                                     Order Items
                                 </h3>
-                                <span className="bg-gray-800 text-blue-400 text-xs font-bold px-3 py-1 rounded-full border border-blue-500/20">
+                                <span className="bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-full border border-white/20">
                                     {order.items.length} Products
                                 </span>
                             </div>
@@ -212,12 +212,12 @@ export default function OrderDetails() {
                                 <User className="w-4 h-4" /> Customer Details
                             </h4>
                             <div className="flex items-center gap-4 p-3 bg-gray-950/40 rounded-2xl border border-gray-800">
-                                <div className="w-12 h-12 bg-blue-500/10 text-blue-500 rounded-full flex items-center justify-center font-bold text-lg border border-blue-500/20 uppercase">
+                                <div className="w-12 h-12 bg-white/10 text-white rounded-full flex items-center justify-center font-bold text-lg border border-white/20 uppercase">
                                     {order.customerName.charAt(0)}
                                 </div>
                                 <div>
                                     <p className="font-bold text-white">{order.customerName}</p>
-                                    <p className="text-xs text-blue-400 font-medium cursor-pointer hover:underline">View Profile</p>
+                                    <p className="text-xs text-gray-400 font-medium cursor-pointer hover:underline">View Profile</p>
                                 </div>
                             </div>
                             <div className="space-y-3 px-1">
@@ -249,9 +249,9 @@ export default function OrderDetails() {
                             <h4 className="text-sm font-bold uppercase tracking-widest text-gray-500 flex items-center gap-2">
                                 <CreditCard className="w-4 h-4" /> Payment Info
                             </h4>
-                            <div className="flex justify-between items-center p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
-                                <span className="text-emerald-500 text-xs font-bold uppercase tracking-wider">Status</span>
-                                <span className="flex items-center gap-1.5 text-emerald-500 font-bold text-sm">
+                            <div className="flex justify-between items-center p-3 bg-white/10 border border-white/20 rounded-2xl">
+                                <span className="text-white text-xs font-bold uppercase tracking-wider">Status</span>
+                                <span className="flex items-center gap-1.5 text-white font-bold text-sm">
                                     <CheckCircle size={14} /> {order.paymentStatus}
                                 </span>
                             </div>

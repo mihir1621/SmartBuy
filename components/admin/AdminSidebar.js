@@ -40,7 +40,7 @@ export default function AdminSidebar({ isMobileMenuOpen, setIsMobileMenuOpen }) 
                 <div className="flex flex-col h-full p-6">
                     {/* Logo Section */}
                     <div className="flex items-center gap-3 mb-10 px-2">
-                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
+                        <div className="w-10 h-10 bg-gradient-to-br from-gray-700 to-black rounded-xl flex items-center justify-center shadow-lg shadow-white/20">
                             <Package className="text-white" size={24} />
                         </div>
                         <div>
@@ -61,15 +61,15 @@ export default function AdminSidebar({ isMobileMenuOpen, setIsMobileMenuOpen }) 
                                     className={`
                     flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-200 group
                     ${isActive
-                                            ? 'bg-blue-600/10 text-blue-400 border border-blue-500/20 shadow-[0_0_20px_rgba(59,130,246,0.1)]'
+                                            ? 'bg-white/10 text-white border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.1)]'
                                             : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200'
                                         }
                   `}
                                 >
-                                    <item.icon size={20} className={isActive ? 'text-blue-400' : 'group-hover:scale-110 transition-transform'} />
+                                    <item.icon size={20} className={isActive ? 'text-white' : 'group-hover:scale-110 transition-transform'} />
                                     <span className="font-semibold">{item.label}</span>
                                     {isActive && (
-                                        <div className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
+                                        <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
                                     )}
                                 </Link>
                             );
@@ -80,7 +80,7 @@ export default function AdminSidebar({ isMobileMenuOpen, setIsMobileMenuOpen }) 
                     <div className="mt-auto border-t border-gray-800 pt-6">
                         <Link
                             href="/"
-                            className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-red-500/10 hover:text-red-400 transition-colors group"
+                            className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-white/10 hover:text-white transition-colors group"
                         >
                             <LogOut size={20} className="group-hover:-translate-x-1 transition-transform" />
                             <span className="font-semibold">Exit Admin</span>

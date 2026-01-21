@@ -62,7 +62,7 @@ export default function SellerSettings() {
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium text-sm ${activeTab === tab.id
-                                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+                                    ? 'bg-white text-black shadow-lg shadow-white/10'
                                     : 'text-gray-400 hover:text-white hover:bg-gray-800'
                                     }`}
                             >
@@ -80,11 +80,11 @@ export default function SellerSettings() {
                                     <h3 className="text-lg font-bold text-white mb-6">Store Details</h3>
 
                                     <div className="flex items-center gap-6 mb-8">
-                                        <div className="w-20 h-20 rounded-full bg-gray-800 border-2 border-dashed border-gray-600 flex items-center justify-center text-gray-500 cursor-pointer hover:border-blue-500 hover:text-blue-500 transition-all">
+                                        <div className="w-20 h-20 rounded-full bg-gray-800 border-2 border-dashed border-gray-600 flex items-center justify-center text-gray-500 cursor-pointer hover:border-white hover:text-white transition-all">
                                             <User size={32} />
                                         </div>
                                         <div>
-                                            <button type="button" className="text-sm font-bold text-blue-500 hover:text-blue-400">Change Logo</button>
+                                            <button type="button" className="text-sm font-bold text-white hover:text-gray-300">Change Logo</button>
                                             <p className="text-xs text-gray-500 mt-1">Recommended: 400x400px</p>
                                         </div>
                                     </div>
@@ -97,7 +97,7 @@ export default function SellerSettings() {
                                                 <input
                                                     type="text"
                                                     defaultValue={profileData.storeName}
-                                                    className="w-full bg-black border border-gray-700 rounded-xl pl-12 pr-4 py-3 text-white focus:border-blue-500 outline-none"
+                                                    className="w-full bg-black border border-gray-700 rounded-xl pl-12 pr-4 py-3 text-white focus:border-white outline-none"
                                                 />
                                             </div>
                                         </div>
@@ -106,7 +106,7 @@ export default function SellerSettings() {
                                             <input
                                                 type="text"
                                                 defaultValue={profileData.gst}
-                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none uppercase font-mono"
+                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none uppercase font-mono"
                                             />
                                         </div>
                                         <div>
@@ -116,7 +116,7 @@ export default function SellerSettings() {
                                                 <input
                                                     type="email"
                                                     defaultValue={profileData.email}
-                                                    className="w-full bg-black border border-gray-700 rounded-xl pl-12 pr-4 py-3 text-white focus:border-blue-500 outline-none"
+                                                    className="w-full bg-black border border-gray-700 rounded-xl pl-12 pr-4 py-3 text-white focus:border-white outline-none"
                                                 />
                                             </div>
                                         </div>
@@ -127,7 +127,7 @@ export default function SellerSettings() {
                                                 <input
                                                     type="tel"
                                                     defaultValue={profileData.phone}
-                                                    className="w-full bg-black border border-gray-700 rounded-xl pl-12 pr-4 py-3 text-white focus:border-blue-500 outline-none"
+                                                    className="w-full bg-black border border-gray-700 rounded-xl pl-12 pr-4 py-3 text-white focus:border-white outline-none"
                                                 />
                                             </div>
                                         </div>
@@ -136,7 +136,7 @@ export default function SellerSettings() {
                                             <textarea
                                                 rows={3}
                                                 defaultValue={profileData.address}
-                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none"
+                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none"
                                             />
                                         </div>
                                     </div>
@@ -145,7 +145,7 @@ export default function SellerSettings() {
                                         <button
                                             type="submit"
                                             disabled={isLoading}
-                                            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3 rounded-xl flex items-center gap-2 transition-all disabled:opacity-50"
+                                            className="bg-white hover:bg-gray-200 text-black font-bold px-8 py-3 rounded-xl flex items-center gap-2 transition-all disabled:opacity-50"
                                         >
                                             {isLoading ? 'Saving...' : (
                                                 <>
@@ -160,9 +160,9 @@ export default function SellerSettings() {
                             {activeTab === 'payment' && (
                                 <form onSubmit={handleSave} className="space-y-6">
                                     <h3 className="text-lg font-bold text-white mb-6">Bank Account Details</h3>
-                                    <div className="bg-blue-900/10 border border-blue-900/30 rounded-2xl p-4 mb-6 flex gap-3">
-                                        <div className="p-2 bg-blue-500/10 rounded-lg h-fit">
-                                            <CreditCard size={20} className="text-blue-400" />
+                                    <div className="bg-white/5 border border-white/10 rounded-2xl p-4 mb-6 flex gap-3">
+                                        <div className="p-2 bg-white/10 rounded-lg h-fit">
+                                            <CreditCard size={20} className="text-white" />
                                         </div>
                                         <div>
                                             <h4 className="font-bold text-white text-sm">Payout Account</h4>
@@ -176,7 +176,7 @@ export default function SellerSettings() {
                                             <input
                                                 type="text"
                                                 defaultValue={user?.name || "SmartBuy Seller"}
-                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none"
+                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none"
                                             />
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
@@ -185,7 +185,7 @@ export default function SellerSettings() {
                                                 <input
                                                     type="text"
                                                     placeholder="HDFC Bank"
-                                                    className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none"
+                                                    className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none"
                                                 />
                                             </div>
                                             <div>
@@ -193,7 +193,7 @@ export default function SellerSettings() {
                                                 <input
                                                     type="text"
                                                     placeholder="HDFC0001234"
-                                                    className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none uppercase"
+                                                    className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none uppercase"
                                                 />
                                             </div>
                                         </div>
@@ -202,7 +202,7 @@ export default function SellerSettings() {
                                             <input
                                                 type="password"
                                                 defaultValue="123456789012"
-                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none font-mono"
+                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none font-mono"
                                             />
                                         </div>
                                     </div>
@@ -211,7 +211,7 @@ export default function SellerSettings() {
                                         <button
                                             type="submit"
                                             disabled={isLoading}
-                                            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3 rounded-xl flex items-center gap-2 transition-all disabled:opacity-50"
+                                            className="bg-white hover:bg-gray-200 text-black font-bold px-8 py-3 rounded-xl flex items-center gap-2 transition-all disabled:opacity-50"
                                         >
                                             {isLoading ? 'Verifying...' : 'Save Bank Details'}
                                         </button>
@@ -228,7 +228,7 @@ export default function SellerSettings() {
                                             <input
                                                 type="password"
                                                 placeholder="••••••••"
-                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none"
+                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none"
                                             />
                                         </div>
                                         <div>
@@ -236,7 +236,7 @@ export default function SellerSettings() {
                                             <input
                                                 type="password"
                                                 placeholder="••••••••"
-                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none"
+                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none"
                                             />
                                         </div>
                                         <div>
@@ -244,7 +244,7 @@ export default function SellerSettings() {
                                             <input
                                                 type="password"
                                                 placeholder="••••••••"
-                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none"
+                                                className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none"
                                             />
                                         </div>
                                     </div>
@@ -253,7 +253,7 @@ export default function SellerSettings() {
                                         <button
                                             type="submit"
                                             disabled={isLoading}
-                                            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3 rounded-xl flex items-center gap-2 transition-all disabled:opacity-50"
+                                            className="bg-white hover:bg-gray-200 text-black font-bold px-8 py-3 rounded-xl flex items-center gap-2 transition-all disabled:opacity-50"
                                         >
                                             {isLoading ? 'Updating...' : 'Update Password'}
                                         </button>
