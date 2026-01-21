@@ -30,8 +30,8 @@ export default function Wishlist() {
 
             <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full">
                 <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-12">
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-red-500/10 rounded-2xl flex items-center justify-center border border-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.1)]">
-                        <Heart className="w-6 h-6 sm:w-7 sm:h-7 text-red-500 fill-red-500" />
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                        <Heart className="w-6 h-6 sm:w-7 sm:h-7 text-white fill-white" />
                     </div>
                     <div>
                         <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight uppercase">My Wishlist</h1>
@@ -67,7 +67,7 @@ export default function Wishlist() {
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.95 }}
-                                    className="bg-gray-900/40 rounded-3xl border border-gray-800/50 overflow-hidden flex flex-col group relative hover:border-blue-500/30 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/5"
+                                    className="bg-gray-900/40 rounded-3xl border border-gray-800/50 overflow-hidden flex flex-col group relative hover:border-white/30 transition-all duration-500 hover:shadow-2xl hover:shadow-white/5"
                                 >
                                     <div className="relative aspect-[4/5] bg-gray-950 overflow-hidden">
                                         <Image
@@ -83,7 +83,7 @@ export default function Wishlist() {
                                                 e.preventDefault();
                                                 removeFromWishlist(product.id);
                                             }}
-                                            className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 sm:p-2.5 bg-black/60 backdrop-blur-md rounded-xl text-gray-400 hover:text-red-500 transition-all shadow-xl z-20 hover:scale-110"
+                                            className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 sm:p-2.5 bg-black/60 backdrop-blur-md rounded-xl text-gray-400 hover:text-white transition-all shadow-xl z-20 hover:scale-110"
                                         >
                                             <Trash2 className="w-4 h-4 sm:w-5 sm:h-5" />
                                         </button>
@@ -91,7 +91,7 @@ export default function Wishlist() {
 
                                     <div className="p-4 sm:p-6 flex flex-col flex-1">
                                         <div className="flex justify-between items-start mb-2 gap-2">
-                                            <div className="text-[9px] sm:text-[10px] font-black text-blue-500 uppercase tracking-[0.2em] truncate">{product.category}</div>
+                                            <div className="text-[9px] sm:text-[10px] font-black text-white uppercase tracking-[0.2em] truncate">{product.category}</div>
                                         </div>
                                         <Link href={`/product/${product.id}`} className="block">
                                             <h3 className="text-sm sm:text-base font-bold text-gray-100 mb-2 line-clamp-1 hover:text-white transition-colors tracking-tight">

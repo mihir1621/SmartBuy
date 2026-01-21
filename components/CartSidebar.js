@@ -32,9 +32,9 @@ export default function CartSidebar() {
                         {/* Header */}
                         <div className="p-4 sm:p-5 border-b border-gray-800 flex items-center justify-between bg-gray-900/95 backdrop-blur-md">
                             <div className="flex items-center gap-2">
-                                <ShoppingBag className="w-5 h-5 text-blue-500" />
+                                <ShoppingBag className="w-5 h-5 text-white" />
                                 <h2 className="text-lg sm:text-xl font-black text-white uppercase tracking-tight">Your Cart</h2>
-                                <span className="bg-blue-500 text-white text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-full">
+                                <span className="bg-white text-black text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-full">
                                     {cart.length}
                                 </span>
                             </div>
@@ -102,13 +102,13 @@ export default function CartSidebar() {
                                                         <Plus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                                                     </button>
                                                 </div>
-                                                <span className="font-black text-blue-500 text-xs sm:text-sm">₹{(item.price * item.quantity).toLocaleString()}</span>
+                                                <span className="font-black text-white text-xs sm:text-sm">₹{(item.price * item.quantity).toLocaleString()}</span>
                                             </div>
                                         </div>
 
                                         <button
                                             onClick={() => removeFromCart(item.id)}
-                                            className="self-start p-1.5 text-gray-600 hover:text-red-500 transition-colors"
+                                            className="self-start p-1.5 text-gray-600 hover:text-white transition-colors"
                                         >
                                             <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                         </button>
@@ -127,11 +127,11 @@ export default function CartSidebar() {
                                     </div>
                                     <div className="flex justify-between text-gray-500 text-[11px] sm:text-sm font-bold uppercase tracking-wider">
                                         <span>Shipping</span>
-                                        <span className="text-emerald-500 font-black">Free</span>
+                                        <span className="text-white font-black">Free</span>
                                     </div>
                                     <div className="flex justify-between text-white font-black text-lg sm:text-xl pt-3 sm:pt-4 border-t border-gray-800">
                                         <span>Total</span>
-                                        <span className="text-blue-500 drop-shadow-[0_0_8px_rgba(59,130,246,0.3)]">₹{cartTotal.toLocaleString()}</span>
+                                        <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">₹{cartTotal.toLocaleString()}</span>
                                     </div>
                                 </div>
 

@@ -176,7 +176,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                         <div className="hidden lg:flex flex-col justify-center ml-2 cursor-pointer hover:bg-gray-800 px-2 py-1 rounded-lg transition-all border border-transparent hover:border-gray-700" onClick={() => setShowLocationModal(true)}>
                             <span className="text-gray-400 text-[8px] uppercase font-bold leading-none mb-0.5">Deliver to</span>
                             <div className="flex items-center gap-1 font-semibold text-gray-100 text-xs leading-none">
-                                <MapPin className="w-3 h-3 text-blue-500" />
+                                <MapPin className="w-3 h-3 text-white" />
                                 <span className="truncate max-w-[80px]">{location?.city || "Select"}</span>
                             </div>
                         </div>
@@ -192,7 +192,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                     value={searchQuery}
                                     onChange={handleSearch}
                                     placeholder="Search..."
-                                    className="w-full pl-2 sm:pl-3 pr-7 sm:pr-8 py-1.5 bg-gray-900 border border-gray-700 rounded-lg focus:bg-black focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all text-[12px] sm:text-sm text-white outline-none shadow-sm placeholder-gray-500"
+                                    className="w-full pl-2 sm:pl-3 pr-7 sm:pr-8 py-1.5 bg-gray-900 border border-gray-700 rounded-lg focus:bg-black focus:ring-1 focus:ring-white focus:border-white transition-all text-[12px] sm:text-sm text-white outline-none shadow-sm placeholder-gray-500"
                                 />
                                 <div className="absolute right-0 top-0 h-full flex items-center pr-1 sm:pr-1.5 gap-1">
                                     <button onClick={handleVoiceSearch} className="text-gray-400 p-1 hover:text-white transition-colors">
@@ -213,24 +213,24 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                     value={searchQuery}
                                     onChange={handleSearch}
                                     placeholder="Search products..."
-                                    className="w-full pl-3 pr-20 py-1.5 bg-gray-900 border border-gray-700 rounded-lg focus:bg-black focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm text-white outline-none shadow-sm placeholder-gray-500"
+                                    className="w-full pl-3 pr-20 py-1.5 bg-gray-900 border border-gray-700 rounded-lg focus:bg-black focus:ring-1 focus:ring-white focus:border-white transition-all text-sm text-white outline-none shadow-sm placeholder-gray-500"
                                 />
                                 <div className="absolute right-0 top-0 h-full flex items-center pr-1.5 gap-1">
                                     <button
                                         onClick={() => fileInputRef.current?.click()}
-                                        className="p-1.5 text-gray-400 hover:text-blue-600 transition-colors"
+                                        className="p-1.5 text-gray-400 hover:text-white transition-colors"
                                         title="Search by image"
                                     >
                                         <Camera className="w-4 h-4" />
                                     </button>
                                     <button
                                         onClick={handleVoiceSearch}
-                                        className="p-1.5 text-gray-400 hover:text-blue-600 transition-colors"
+                                        className="p-1.5 text-gray-400 hover:text-white transition-colors"
                                         title="Search by voice"
                                     >
                                         <Mic className="w-4 h-4" />
                                     </button>
-                                    <button className="bg-gray-100 text-black p-1.5 rounded-md hover:bg-blue-500 hover:text-white transition-all">
+                                    <button className="bg-gray-100 text-black p-1.5 rounded-md hover:bg-white hover:text-black transition-all">
                                         <Search className="w-4 h-4" />
                                     </button>
                                 </div>
@@ -251,7 +251,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                         onClick={() => setIsProfileOpen(!isProfileOpen)}
                                         className="flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all"
                                     >
-                                        <div className="p-1 sm:p-1.5 text-blue-400 font-bold text-xs flex items-center gap-1.5">
+                                        <div className="p-1 sm:p-1.5 text-gray-300 font-bold text-xs flex items-center gap-1.5">
                                             <User className="w-4 h-4" />
                                             <span className="hidden lg:block truncate max-w-[80px]">
                                                 {user.displayName || user.name || 'User'}
@@ -297,7 +297,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                                         <div className="h-px bg-gray-800 my-1" />
                                                         <button
                                                             onClick={handleLogout}
-                                                            className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                                                            className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-400 hover:bg-white/10 rounded-lg transition-colors"
                                                         >
                                                             <LogOut className="w-4 h-4" />
                                                             Sign Out
@@ -316,7 +316,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                             )}
 
                             <Link href="/wishlist" className="relative p-1 sm:p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
-                                <Heart className={`w-4 h-4 ${wishlist.length > 0 ? 'text-red-500 fill-red-500' : ''}`} />
+                                <Heart className={`w-4 h-4 ${wishlist.length > 0 ? 'text-white fill-white' : ''}`} />
                                 <span className="text-xs font-semibold hidden lg:block">Wishlist</span>
                             </Link>
 
@@ -328,7 +328,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                 <div className="relative">
                                     <ShoppingBag className="w-4 h-4" />
                                     {cartCount > 0 && (
-                                        <span className="absolute -top-2 -right-2 bg-red-600 text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center text-white">
+                                        <span className="absolute -top-2 -right-2 bg-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center text-black">
                                             {cartCount}
                                         </span>
                                     )}
@@ -359,7 +359,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                 <Link
                                     key={cat}
                                     href={`/?category=${cat}`}
-                                    className={`py-1 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors ${selectedCategory === cat ? 'text-blue-400 border-b-2 border-blue-500' : 'text-gray-400 hover:text-white'}`}
+                                    className={`py-1 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors ${selectedCategory === cat ? 'text-white border-b-2 border-white' : 'text-gray-400 hover:text-white'}`}
                                 >
                                     {cat}
                                 </Link>
@@ -424,7 +424,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                             placeholder="Enter city..."
                                             value={locationSearch}
                                             onChange={(e) => setLocationSearch(e.target.value)}
-                                            className="w-full pl-9 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:bg-black focus:ring-1 focus:ring-blue-500 transition-all text-sm text-white outline-none placeholder-gray-500"
+                                            className="w-full pl-9 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:bg-black focus:ring-1 focus:ring-white transition-all text-sm text-white outline-none placeholder-gray-500"
                                         />
                                     </div>
 
@@ -435,7 +435,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                                 onClick={() => handleCitySelect(item)}
                                                 className="w-full p-2.5 text-left hover:bg-gray-800 rounded-lg transition-all border border-transparent group"
                                             >
-                                                <p className="font-semibold text-sm text-gray-200 group-hover:text-blue-400">{item.city}</p>
+                                                <p className="font-semibold text-sm text-gray-200 group-hover:text-white">{item.city}</p>
                                                 <p className="text-[10px] text-gray-500 font-medium uppercase">{item.state}</p>
                                             </button>
                                         ))}

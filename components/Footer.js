@@ -49,9 +49,9 @@ export default function Footer() {
                             <input
                                 type="email"
                                 placeholder="Email address"
-                                className="bg-gray-800/50 border border-gray-700 text-white text-xs sm:text-sm px-4 py-2.5 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 w-full transition-all"
+                                className="bg-gray-800/50 border border-gray-700 text-white text-xs sm:text-sm px-4 py-2.5 rounded-xl outline-none focus:ring-2 focus:ring-white/20 focus:border-white w-full transition-all"
                             />
-                            <button className="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-blue-700 transition-all active:scale-95 shadow-lg shadow-blue-500/20 shrink-0">
+                            <button className="bg-white text-black px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gray-200 transition-all active:scale-95 shadow-lg shadow-white/20 shrink-0">
                                 Join
                             </button>
                         </form>

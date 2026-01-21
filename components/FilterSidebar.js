@@ -12,11 +12,11 @@ const FilterSection = ({ title, options, selected, onChange }) => {
                     <label
                         key={option}
                         className={`flex items-center gap-3 p-2 px-2.5 rounded-xl cursor-pointer transition-all border ${selected.includes(option)
-                            ? "bg-blue-500/5 border-blue-500/20 text-blue-400"
+                            ? "bg-white/5 border-white/20 text-white"
                             : "bg-transparent border-transparent text-gray-400 hover:bg-gray-800/20"
                             }`}
                     >
-                        <div className={`relative w-4 h-4 rounded border flex items-center justify-center transition-all shrink-0 ${selected.includes(option) ? "bg-blue-500 border-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.3)]" : "border-gray-700"
+                        <div className={`relative w-4 h-4 rounded border flex items-center justify-center transition-all shrink-0 ${selected.includes(option) ? "bg-white border-white shadow-[0_0_8px_rgba(255,255,255,0.3)]" : "border-gray-700"
                             }`}>
                             <input
                                 type="checkbox"
@@ -107,7 +107,7 @@ export default function FilterSidebar({
                 <h3 className="text-lg sm:text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 uppercase tracking-tight">Filters</h3>
                 <button
                     onClick={clearAll}
-                    className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-blue-500 hover:text-blue-400 transition-colors"
+                    className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-white hover:text-gray-300 transition-colors"
                 >
                     Clear All
                 </button>
@@ -120,7 +120,7 @@ export default function FilterSidebar({
                     <select
                         value={sortOption}
                         onChange={(e) => setSortOption(e.target.value)}
-                        className="w-full bg-gray-950 border border-gray-800 rounded-xl sm:rounded-2xl py-2.5 sm:py-3 px-4 text-xs sm:text-sm text-gray-200 appearance-none focus:border-blue-500 outline-none cursor-pointer transition-all"
+                        className="w-full bg-gray-950 border border-gray-800 rounded-xl sm:rounded-2xl py-2.5 sm:py-3 px-4 text-xs sm:text-sm text-gray-200 appearance-none focus:border-white outline-none cursor-pointer transition-all"
                     >
                         <option value="popularity">Popularity</option>
                         <option value="newest">Newest Arrivals</option>
@@ -128,7 +128,7 @@ export default function FilterSidebar({
                         <option value="price-desc">Price: High to Low</option>
                         <option value="rating">Top Rated</option>
                     </select>
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 group-hover:text-blue-400 transition-colors">
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 group-hover:text-white transition-colors">
                         <Star size={12} className="rotate-90" />
                     </div>
                 </div>
@@ -136,9 +136,9 @@ export default function FilterSidebar({
 
             {/* Current Context */}
             {selectedCategory !== 'All' && (
-                <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl sm:rounded-2xl p-2.5 sm:p-3 flex items-center justify-between">
+                <div className="bg-white/5 border border-white/20 rounded-xl sm:rounded-2xl p-2.5 sm:p-3 flex items-center justify-between">
                     <div className="min-w-0">
-                        <p className="text-[9px] font-black text-blue-500 uppercase tracking-widest mb-0.5">Category</p>
+                        <p className="text-[9px] font-black text-white uppercase tracking-widest mb-0.5">Category</p>
                         <p className="text-xs sm:text-sm font-bold text-gray-100 truncate">{selectedCategory}</p>
                     </div>
                 </div>
@@ -175,7 +175,7 @@ export default function FilterSidebar({
                             type="number"
                             value={priceRange[0]}
                             onChange={(e) => handlePriceChange(0, e.target.value)}
-                            className="w-full bg-gray-950/50 border border-gray-800 rounded-xl py-2 px-3 text-xs sm:text-sm text-gray-100 focus:border-blue-500 outline-none transition-colors"
+                            className="w-full bg-gray-950/50 border border-gray-800 rounded-xl py-2 px-3 text-xs sm:text-sm text-gray-100 focus:border-white outline-none transition-colors"
                         />
                     </div>
                     <div className="space-y-1">
@@ -184,7 +184,7 @@ export default function FilterSidebar({
                             type="number"
                             value={priceRange[1]}
                             onChange={(e) => handlePriceChange(1, e.target.value)}
-                            className="w-full bg-gray-950/50 border border-gray-800 rounded-xl py-2 px-3 text-xs sm:text-sm text-gray-100 focus:border-blue-500 outline-none transition-colors"
+                            className="w-full bg-gray-950/50 border border-gray-800 rounded-xl py-2 px-3 text-xs sm:text-sm text-gray-100 focus:border-white outline-none transition-colors"
                         />
                     </div>
                 </div>
@@ -194,7 +194,7 @@ export default function FilterSidebar({
                     max={globalMaxPrice}
                     value={priceRange[1]}
                     onChange={(e) => handlePriceChange(1, e.target.value)}
-                    className="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                    className="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-white"
                 />
             </div>
 
@@ -217,11 +217,11 @@ export default function FilterSidebar({
                             <label
                                 key={brand}
                                 className={`flex items-center gap-3 p-2 px-2.5 rounded-xl cursor-pointer transition-all border ${selectedBrands.includes(brand)
-                                    ? "bg-blue-500/5 border-blue-500/20 text-blue-400"
+                                    ? "bg-white/5 border-white/20 text-white"
                                     : "bg-transparent border-transparent text-gray-400 hover:bg-gray-800/20"
                                     }`}
                             >
-                                <div className={`relative w-4 h-4 rounded border flex items-center justify-center transition-all shrink-0 ${selectedBrands.includes(brand) ? "bg-blue-500 border-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.3)]" : "border-gray-700"
+                                <div className={`relative w-4 h-4 rounded border flex items-center justify-center transition-all shrink-0 ${selectedBrands.includes(brand) ? "bg-white border-white shadow-[0_0_8px_rgba(255,255,255,0.3)]" : "border-gray-700"
                                     }`}>
                                     <input
                                         type="checkbox"
@@ -247,7 +247,7 @@ export default function FilterSidebar({
                             key={rating}
                             onClick={() => setMinRating(rating === minRating ? 0 : rating)}
                             className={`flex flex-col items-center gap-1.5 p-2.5 sm:p-3 rounded-2xl border transition-all ${minRating === rating
-                                ? "bg-yellow-400/5 border-yellow-400/30 ring-1 ring-yellow-400/10"
+                                ? "bg-white/5 border-white/30 ring-1 ring-white/10"
                                 : "bg-gray-950 border-gray-800/80 hover:border-gray-600"
                                 }`}
                         >
@@ -255,7 +255,7 @@ export default function FilterSidebar({
                                 {[...Array(5)].map((_, i) => (
                                     <Star
                                         key={i}
-                                        className={`w-2.5 h-2.5 sm:w-3 sm:h-3 ${i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-800'}`}
+                                        className={`w-2.5 h-2.5 sm:w-3 sm:h-3 ${i < rating ? 'text-white fill-white' : 'text-gray-800'}`}
                                     />
                                 )) || null}
                             </div>

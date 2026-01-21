@@ -76,7 +76,7 @@ export default function Addresses() {
             <div className="min-h-screen bg-black flex flex-col">
                 <StoreNavbar />
                 <div className="flex-grow flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
                 </div>
                 <Footer />
             </div>
@@ -93,11 +93,11 @@ export default function Addresses() {
             <main className="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
                 <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8 sm:mb-10">
                     <div className="flex items-center gap-3 sm:gap-4">
-                        <div className="p-3 sm:p-4 bg-blue-500/10 rounded-2xl border border-blue-500/20">
-                            <MapPin className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500" />
+                        <div className="p-3 sm:p-4 bg-white/10 rounded-2xl border border-white/20">
+                            <MapPin className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                         </div>
                         <div>
-                            <h1 className="text-2xl sm:text-3xl font-black tracking-tight underline decoration-blue-500/30 decoration-4 underline-offset-8">My Addresses</h1>
+                            <h1 className="text-2xl sm:text-3xl font-black tracking-tight underline decoration-white/30 decoration-4 underline-offset-8">My Addresses</h1>
                             <p className="text-gray-500 mt-1 sm:mt-2 font-medium text-xs sm:text-base">Manage your saved delivery addresses</p>
                         </div>
                     </div>
@@ -129,7 +129,7 @@ export default function Addresses() {
                                             type="text"
                                             value={newAddress.name}
                                             onChange={(e) => setNewAddress({ ...newAddress, name: e.target.value })}
-                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
                                             placeholder="John Doe"
                                         />
                                     </div>
@@ -140,7 +140,7 @@ export default function Addresses() {
                                             type="tel"
                                             value={newAddress.phone}
                                             onChange={(e) => setNewAddress({ ...newAddress, phone: e.target.value })}
-                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
                                             placeholder="+91 98765 43210"
                                         />
                                     </div>
@@ -151,7 +151,7 @@ export default function Addresses() {
                                             type="text"
                                             value={newAddress.street}
                                             onChange={(e) => setNewAddress({ ...newAddress, street: e.target.value })}
-                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
                                             placeholder="Flat, House no., Building, Company, Apartment"
                                         />
                                     </div>
@@ -162,7 +162,7 @@ export default function Addresses() {
                                             type="text"
                                             value={newAddress.city}
                                             onChange={(e) => setNewAddress({ ...newAddress, city: e.target.value })}
-                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
                                             placeholder="Mumbai"
                                         />
                                     </div>
@@ -173,7 +173,7 @@ export default function Addresses() {
                                             type="text"
                                             value={newAddress.state}
                                             onChange={(e) => setNewAddress({ ...newAddress, state: e.target.value })}
-                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
                                             placeholder="Maharashtra"
                                         />
                                     </div>
@@ -184,7 +184,7 @@ export default function Addresses() {
                                             type="text"
                                             value={newAddress.zip}
                                             onChange={(e) => setNewAddress({ ...newAddress, zip: e.target.value })}
-                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
                                             placeholder="400001"
                                         />
                                     </div>
@@ -194,14 +194,14 @@ export default function Addresses() {
                                             <button
                                                 type="button"
                                                 onClick={() => setNewAddress({ ...newAddress, type: 'Home' })}
-                                                className={`flex-1 py-2.5 rounded-lg text-sm font-bold border transition-all ${newAddress.type === 'Home' ? 'bg-blue-500/10 border-blue-500 text-blue-400' : 'bg-gray-950 border-gray-800 text-gray-400 hover:border-gray-700'}`}
+                                                className={`flex-1 py-2.5 rounded-lg text-sm font-bold border transition-all ${newAddress.type === 'Home' ? 'bg-white/10 border-white text-white' : 'bg-gray-950 border-gray-800 text-gray-400 hover:border-gray-700'}`}
                                             >
                                                 Home
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => setNewAddress({ ...newAddress, type: 'Work' })}
-                                                className={`flex-1 py-2.5 rounded-lg text-sm font-bold border transition-all ${newAddress.type === 'Work' ? 'bg-blue-500/10 border-blue-500 text-blue-400' : 'bg-gray-950 border-gray-800 text-gray-400 hover:border-gray-700'}`}
+                                                className={`flex-1 py-2.5 rounded-lg text-sm font-bold border transition-all ${newAddress.type === 'Work' ? 'bg-white/10 border-white text-white' : 'bg-gray-950 border-gray-800 text-gray-400 hover:border-gray-700'}`}
                                             >
                                                 Work
                                             </button>
@@ -211,7 +211,7 @@ export default function Addresses() {
                                 <div className="mt-8 flex justify-end">
                                     <button
                                         type="submit"
-                                        className="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-500 transition-all shadow-lg shadow-blue-500/20 active:scale-95"
+                                        className="bg-white text-black px-8 py-3 rounded-xl font-bold hover:bg-gray-200 transition-all shadow-lg shadow-white/20 active:scale-95"
                                     >
                                         Save Address
                                     </button>
@@ -228,16 +228,16 @@ export default function Addresses() {
                             key={addr.id}
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className={`relative p-6 rounded-2xl border transition-all group ${addr.isDefault ? 'bg-blue-500/5 border-blue-500/30' : 'bg-gray-900/50 border-gray-800 hover:border-gray-700'}`}
+                            className={`relative p-6 rounded-2xl border transition-all group ${addr.isDefault ? 'bg-white/5 border-white/30' : 'bg-gray-900/50 border-gray-800 hover:border-gray-700'}`}
                         >
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center gap-2">
-                                    <span className={`p-2 rounded-lg ${addr.type === 'Home' ? 'bg-purple-500/10 text-purple-400' : 'bg-orange-500/10 text-orange-400'}`}>
+                                    <span className={`p-2 rounded-lg ${addr.type === 'Home' ? 'bg-white/10 text-white' : 'bg-white/10 text-white'}`}>
                                         {addr.type === 'Home' ? <Home className="w-4 h-4" /> : <Briefcase className="w-4 h-4" />}
                                     </span>
                                     <span className="font-bold text-sm bg-gray-800 px-2 py-1 rounded text-gray-300">{addr.type}</span>
                                     {addr.isDefault && (
-                                        <span className="text-[10px] font-black uppercase tracking-widest bg-blue-500 text-white px-2 py-1 rounded">Default</span>
+                                        <span className="text-[10px] font-black uppercase tracking-widest bg-white text-black px-2 py-1 rounded">Default</span>
                                     )}
                                 </div>
                                 <div className="flex gap-2">
@@ -252,7 +252,7 @@ export default function Addresses() {
                                     )}
                                     <button
                                         onClick={() => handleRemoveAddress(addr.id)}
-                                        className="p-2 text-gray-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                                        className="p-2 text-gray-500 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
                                         title="Remove Address"
                                     >
                                         <Trash2 className="w-4 h-4" />

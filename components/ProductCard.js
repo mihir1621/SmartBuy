@@ -33,7 +33,7 @@ export default function ProductCard({ product }) {
 
     return (
         <Link href={`/product/${product.id}`} className="group block h-full">
-            <div className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:shadow-lg hover:border-blue-900 transition-all duration-300 relative h-full flex flex-col">
+            <div className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:shadow-lg hover:border-gray-600 transition-all duration-300 relative h-full flex flex-col">
                 {/* Image Container */}
                 <div className="relative aspect-[4/5] overflow-hidden bg-gray-800">
                     <Image
@@ -53,8 +53,8 @@ export default function ProductCard({ product }) {
                             toggleWishlist(product);
                         }}
                         className={`absolute top-2 right-2 p-1.5 rounded-full backdrop-blur-sm transition-all shadow-sm ${isWishlisted
-                            ? 'bg-red-900/50 text-red-400'
-                            : 'bg-black/50 text-gray-300 hover:bg-black hover:text-red-400'
+                            ? 'bg-white/20 text-white'
+                            : 'bg-black/50 text-gray-300 hover:bg-black hover:text-white'
                             }`}
                     >
                         <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
@@ -62,7 +62,7 @@ export default function ProductCard({ product }) {
 
                     {/* Discount Badge */}
                     {discountPercentage > 0 && (
-                        <div className="absolute top-2 left-2 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                        <div className="absolute top-2 left-2 bg-white text-black text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
                             {discountPercentage}% OFF
                         </div>
                     )}
@@ -78,7 +78,7 @@ export default function ProductCard({ product }) {
 
                     {/* Low Stock Badge */}
                     {isInStock && product.stock > 0 && product.stock < 10 && (
-                        <div className="absolute bottom-2 left-2 bg-amber-500 text-black text-[9px] font-black px-2 py-0.5 rounded shadow-lg animate-pulse">
+                        <div className="absolute bottom-2 left-2 bg-gray-200 text-black text-[9px] font-black px-2 py-0.5 rounded shadow-lg animate-pulse">
                             ONLY {product.stock} LEFT!
                         </div>
                     )}
@@ -89,14 +89,14 @@ export default function ProductCard({ product }) {
                     {/* Brand & Rating */}
                     <div className="flex justify-between items-start mb-1 sm:mb-1.5">
                         <span className="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider truncate pr-1 sm:pr-2">{product.brand}</span>
-                        <div className="flex items-center gap-0.5 sm:gap-1 bg-green-900/30 px-1 sm:px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold text-green-400 border border-green-900 shrink-0">
+                        <div className="flex items-center gap-0.5 sm:gap-1 bg-gray-800 px-1 sm:px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold text-gray-300 border border-gray-700 shrink-0">
                             <span>{product.rating}</span>
                             <Star className="w-2 sm:w-2.5 h-2 sm:h-2.5 fill-current" />
                         </div>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xs sm:text-sm font-medium text-white line-clamp-2 mb-1.5 sm:mb-2 group-hover:text-blue-400 transition-colors leading-snug">
+                    <h3 className="text-xs sm:text-sm font-medium text-white line-clamp-2 mb-1.5 sm:mb-2 group-hover:text-gray-300 transition-colors leading-snug">
                         {product.name}
                     </h3>
 

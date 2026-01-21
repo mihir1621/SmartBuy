@@ -11,7 +11,7 @@ const standardBanners = [
         image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Laptop/Tech
         title: "Next Gen Electronics",
         subtitle: "Upgrade to the latest Tech today",
-        color: "bg-purple-600",
+        color: "bg-white text-black",
         badge: "Featured",
         link: "/?category=Electronics"
     },
@@ -20,7 +20,7 @@ const standardBanners = [
         image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Fashion
         title: "Fashion Festival",
         subtitle: "Trendiest Styles for Men & Women",
-        color: "bg-pink-600",
+        color: "bg-white text-black",
         badge: "Trending",
         link: "/?category=Menswear"
     },
@@ -29,7 +29,7 @@ const standardBanners = [
         image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Interior
         title: "Home Makeover",
         subtitle: "Premium Decor & Furniture",
-        color: "bg-orange-600",
+        color: "bg-white text-black",
         badge: "New Arrivals",
         link: "/?category=Home"
     }
@@ -43,7 +43,7 @@ const dailyOffers = [
         image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Headphones
         title: "Sunday Chill Deals",
         subtitle: "Premium Audio Gear for your Weekend",
-        color: "bg-indigo-500",
+        color: "bg-white text-black",
         badge: "Deal of the Day",
         link: "/?category=Audio"
     },
@@ -53,7 +53,7 @@ const dailyOffers = [
         image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Fitness
         title: "Monday Motivation",
         subtitle: "Get 40% Off on Sportswear & Fitness Trackers",
-        color: "bg-red-600",
+        color: "bg-white text-black",
         badge: "Deal of the Day",
         link: "/?category=Menswear"
     },
@@ -63,7 +63,7 @@ const dailyOffers = [
         image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Tech
         title: "Tech Tuesday",
         subtitle: "Massive Discounts on Laptops & Accessories",
-        color: "bg-blue-600",
+        color: "bg-white text-black",
         badge: "Deal of the Day",
         link: "/?category=Laptops"
     },
@@ -73,7 +73,7 @@ const dailyOffers = [
         image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Wardrobe
         title: "Wardrobe Wednesday",
         subtitle: "Mid-week Fashion Refresh Starts Here",
-        color: "bg-emerald-600",
+        color: "bg-white text-black",
         badge: "Deal of the Day",
         link: "/?category=Menswear"
     },
@@ -83,7 +83,7 @@ const dailyOffers = [
         image: "https://images.unsplash.com/photo-1550009158-9ebf69173e03?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Electronics
         title: "Thunder Thursday",
         subtitle: "Flash Sales on Electronics & Gadgets",
-        color: "bg-yellow-600",
+        color: "bg-white text-black",
         badge: "Deal of the Day",
         link: "/?category=Electronics"
     },
@@ -93,7 +93,7 @@ const dailyOffers = [
         image: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Party/Dress
         title: "Fashion Friday",
         subtitle: "Party Wear Special - Flat 50% Off",
-        color: "bg-rose-600",
+        color: "bg-white text-black",
         badge: "Deal of the Day",
         link: "/?category=Menswear"
     },
@@ -103,7 +103,7 @@ const dailyOffers = [
         image: "https://images.unsplash.com/photo-1558002038-1091a166111c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Smart Home
         title: "Super Saturday",
         subtitle: "Everything for your Smart Home",
-        color: "bg-cyan-600",
+        color: "bg-white text-black",
         badge: "Deal of the Day",
         link: "/?category=Home"
     }

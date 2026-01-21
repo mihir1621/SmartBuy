@@ -254,7 +254,7 @@ export default function Login() {
                 className="hidden lg:relative lg:block w-full lg:w-1/2 bg-white overflow-hidden p-3"
             >
                 <div className="absolute inset-3 z-0 rounded-2xl overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-black/60 mix-blend-multiply z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900/40 to-black/60 mix-blend-multiply z-10" />
                     <AnimatePresence>
                         <motion.img
                             key={currentSlide}
@@ -308,9 +308,9 @@ export default function Login() {
                         </h2>
                         <p className="mt-2 text-sm text-gray-500 font-bold uppercase tracking-wider">
                             {view === 'login' ? (
-                                <>New here? <button onClick={() => setView('signup')} className="text-blue-600 hover:text-blue-500">Join Now</button></>
+                                <>New here? <button onClick={() => setView('signup')} className="text-black hover:text-gray-700 underline">Join Now</button></>
                             ) : (
-                                <>Have an account? <button onClick={() => setView('login')} className="text-blue-600 hover:text-blue-500">Log in</button></>
+                                <>Have an account? <button onClick={() => setView('login')} className="text-black hover:text-gray-700 underline">Log in</button></>
                             )}
                         </p>
                     </div>
@@ -325,7 +325,7 @@ export default function Login() {
                                     type="button"
                                     onClick={() => setSelectedRole(role)}
                                     className={`flex items-center justify-center p-2 rounded-xl border-2 transition-all ${selectedRole === role
-                                        ? 'border-blue-500 bg-blue-50 shadow-sm text-blue-600'
+                                        ? 'border-black bg-gray-100 shadow-sm text-black'
                                         : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-600'
                                         }`}
                                 >
@@ -339,13 +339,13 @@ export default function Login() {
                     <div className="grid grid-cols-2 gap-2 p-1 bg-gray-50 rounded-xl border border-gray-200 mb-6">
                         <button
                             onClick={() => setMethod('email')}
-                            className={`py-2 rounded-lg text-xs font-bold transition-all ${method === 'email' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                            className={`py-2 rounded-lg text-xs font-bold transition-all ${method === 'email' ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
                         >
                             Email
                         </button>
                         <button
                             onClick={() => setMethod('mobile')}
-                            className={`py-2 rounded-lg text-xs font-bold transition-all ${method === 'mobile' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                            className={`py-2 rounded-lg text-xs font-bold transition-all ${method === 'mobile' ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
                         >
                             Phone Number
                         </button>
@@ -395,7 +395,7 @@ export default function Login() {
                                                     onChange={(e) => setMobile(e.target.value)}
                                                     maxLength={10}
                                                     required
-                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50"
+                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-black focus:ring-black sm:text-sm bg-gray-50/50"
                                                     placeholder="10-digit Mobile Number"
                                                 />
                                             </div>
@@ -413,7 +413,7 @@ export default function Login() {
                                                         onChange={(e) => setOtp(e.target.value)}
                                                         maxLength={4}
                                                         required
-                                                        className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50 font-bold tracking-widest text-center"
+                                                        className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-black focus:ring-black sm:text-sm bg-gray-50/50 font-bold tracking-widest text-center"
                                                         placeholder="OTP Code"
                                                     />
                                                 </div>
@@ -434,7 +434,7 @@ export default function Login() {
                                                         value={name}
                                                         onChange={(e) => setName(e.target.value)}
                                                         required
-                                                        className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-50/50"
+                                                        className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-black focus:ring-black sm:text-sm bg-gray-50/50"
                                                         placeholder="Full Name"
                                                     />
                                                 </div>
@@ -477,7 +477,7 @@ export default function Login() {
 
                                         {view === 'login' && (
                                             <div className="flex items-center justify-end">
-                                                <button type="button" onClick={() => setView('forgot')} className="text-sm font-medium text-blue-600 hover:text-blue-500">
+                                                <button type="button" onClick={() => setView('forgot')} className="text-sm font-medium text-black hover:text-gray-700">
                                                     Forgot password?
                                                 </button>
                                             </div>
@@ -488,7 +488,7 @@ export default function Login() {
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 px-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all duration-200"
+                                    className="flex w-full justify-center rounded-xl bg-black py-2.5 px-3 text-sm font-semibold text-white shadow-lg shadow-gray-500/30 hover:shadow-gray-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black transition-all duration-200"
                                 >
                                     {isLoading ? 'Processing...' : (
                                         <div className="flex items-center gap-2">

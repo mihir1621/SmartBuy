@@ -221,7 +221,7 @@ export default function Checkout() {
                         <h1 className="text-2xl font-bold text-white mb-4">Your cart is empty</h1>
                         <button
                             onClick={() => router.push('/')}
-                            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                            className="bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors"
                         >
                             Start Shopping
                         </button>
@@ -248,7 +248,7 @@ export default function Checkout() {
                         {/* Shipping Details */}
                         <div className="bg-gray-900 rounded-2xl shadow-sm border border-gray-800 p-5 sm:p-6">
                             <h2 className="text-lg sm:text-xl font-bold text-white mb-5 flex items-center gap-2">
-                                <Truck className="w-5 h-5 text-blue-500" />
+                                <Truck className="w-5 h-5 text-white" />
                                 Shipping Information
                             </h2>
                             <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -260,7 +260,7 @@ export default function Checkout() {
                                         value={formData.firstName}
                                         onChange={handleInputChange}
                                         required
-                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none text-white text-sm transition-all"
+                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-white/20 focus:border-white outline-none text-white text-sm transition-all"
                                         placeholder="John"
                                     />
                                 </div>
@@ -271,7 +271,7 @@ export default function Checkout() {
                                         name="lastName"
                                         value={formData.lastName}
                                         onChange={handleInputChange}
-                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none text-white text-sm transition-all"
+                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-white/20 focus:border-white outline-none text-white text-sm transition-all"
                                         placeholder="Doe"
                                     />
                                 </div>
@@ -283,7 +283,7 @@ export default function Checkout() {
                                         value={formData.email}
                                         onChange={handleInputChange}
                                         required
-                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none text-white text-sm transition-all"
+                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-white/20 focus:border-white outline-none text-white text-sm transition-all"
                                         placeholder="john@example.com"
                                     />
                                 </div>
@@ -294,7 +294,7 @@ export default function Checkout() {
                                         name="phone"
                                         value={formData.phone}
                                         onChange={handleInputChange}
-                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none text-white text-sm transition-all"
+                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-white/20 focus:border-white outline-none text-white text-sm transition-all"
                                         placeholder="+91 00000 00000"
                                     />
                                 </div>
@@ -306,7 +306,7 @@ export default function Checkout() {
                                         value={formData.address}
                                         onChange={handleInputChange}
                                         required
-                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none text-white text-sm transition-all"
+                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-white/20 focus:border-white outline-none text-white text-sm transition-all"
                                         placeholder="123 Main St"
                                     />
                                 </div>
@@ -317,7 +317,7 @@ export default function Checkout() {
                                         name="city"
                                         value={formData.city}
                                         onChange={handleInputChange}
-                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none text-white text-sm transition-all"
+                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-white/20 focus:border-white outline-none text-white text-sm transition-all"
                                         placeholder="New York"
                                     />
                                 </div>
@@ -328,7 +328,7 @@ export default function Checkout() {
                                         name="postalCode"
                                         value={formData.postalCode}
                                         onChange={handleInputChange}
-                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none text-white text-sm transition-all"
+                                        className="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-white/20 focus:border-white outline-none text-white text-sm transition-all"
                                         placeholder="10001"
                                     />
                                 </div>
@@ -338,7 +338,7 @@ export default function Checkout() {
                         {/* Payment Method */}
                         <div className="bg-gray-900 rounded-2xl shadow-sm border border-gray-800 p-5 sm:p-6">
                             <h2 className="text-lg sm:text-xl font-bold text-white mb-5 flex items-center gap-2">
-                                <CreditCard className="w-5 h-5 text-blue-500" />
+                                <CreditCard className="w-5 h-5 text-white" />
                                 Payment Method
                             </h2>
                             <div className="space-y-4">
@@ -346,15 +346,15 @@ export default function Checkout() {
                                     {/* Razorpay Option */}
                                     <div
                                         onClick={() => setSelectedPaymentMethod('RAZORPAY')}
-                                        className={`flex items-center gap-3 sm:gap-4 p-4 sm:p-5 border rounded-2xl transition-all cursor-pointer ${selectedPaymentMethod === 'RAZORPAY' ? 'border-blue-500 bg-blue-900/10' : 'border-gray-800 bg-gray-900 hover:border-gray-700'}`}
+                                        className={`flex items-center gap-3 sm:gap-4 p-4 sm:p-5 border rounded-2xl transition-all cursor-pointer ${selectedPaymentMethod === 'RAZORPAY' ? 'border-white bg-white/10' : 'border-gray-800 bg-gray-900 hover:border-gray-700'}`}
                                     >
-                                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg shrink-0 ${selectedPaymentMethod === 'RAZORPAY' ? 'bg-blue-500 shadow-blue-500/20' : 'bg-gray-800'}`}>
-                                            <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg shrink-0 ${selectedPaymentMethod === 'RAZORPAY' ? 'bg-white shadow-white/20' : 'bg-gray-800'}`}>
+                                            <CreditCard className={`w-5 h-5 sm:w-6 sm:h-6 ${selectedPaymentMethod === 'RAZORPAY' ? 'text-black' : 'text-white'}`} />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center justify-between gap-2 overflow-hidden">
                                                 <span className="font-black text-xs sm:text-sm text-white uppercase tracking-wider truncate">Online Payment</span>
-                                                {selectedPaymentMethod === 'RAZORPAY' && <div className="text-[8px] sm:text-[10px] font-black tracking-widest text-emerald-400 bg-emerald-900/30 px-2 py-0.5 rounded border border-emerald-800/50 uppercase shrink-0">Active</div>}
+                                                {selectedPaymentMethod === 'RAZORPAY' && <div className="text-[8px] sm:text-[10px] font-black tracking-widest text-white bg-gray-800 px-2 py-0.5 rounded border border-gray-700 uppercase shrink-0">Active</div>}
                                             </div>
                                             <p className="text-[11px] sm:text-sm text-gray-500 mt-1 font-medium truncate">UPI, Cards, Wallets.</p>
                                         </div>
@@ -363,15 +363,15 @@ export default function Checkout() {
                                     {/* EMI Option */}
                                     <div
                                         onClick={() => setSelectedPaymentMethod('EMI')}
-                                        className={`flex items-center gap-3 sm:gap-4 p-4 sm:p-5 border rounded-2xl transition-all cursor-pointer ${selectedPaymentMethod === 'EMI' ? 'border-blue-500 bg-blue-900/10' : 'border-gray-800 bg-gray-900 hover:border-gray-700'}`}
+                                        className={`flex items-center gap-3 sm:gap-4 p-4 sm:p-5 border rounded-2xl transition-all cursor-pointer ${selectedPaymentMethod === 'EMI' ? 'border-white bg-white/10' : 'border-gray-800 bg-gray-900 hover:border-gray-700'}`}
                                     >
-                                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg shrink-0 ${selectedPaymentMethod === 'EMI' ? 'bg-purple-600 shadow-purple-500/20' : 'bg-gray-800'}`}>
-                                            <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg shrink-0 ${selectedPaymentMethod === 'EMI' ? 'bg-white shadow-white/20' : 'bg-gray-800'}`}>
+                                            <CreditCard className={`w-5 h-5 sm:w-6 sm:h-6 ${selectedPaymentMethod === 'EMI' ? 'text-black' : 'text-white'}`} />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center justify-between gap-2 overflow-hidden">
                                                 <span className="font-black text-xs sm:text-sm text-white uppercase tracking-wider truncate">EMI / Buy Now Pay Later</span>
-                                                {selectedPaymentMethod === 'EMI' && <div className="text-[8px] sm:text-[10px] font-black tracking-widest text-blue-400 bg-blue-900/30 px-2 py-0.5 rounded border border-blue-800/50 uppercase shrink-0">Flexible</div>}
+                                                {selectedPaymentMethod === 'EMI' && <div className="text-[8px] sm:text-[10px] font-black tracking-widest text-white bg-gray-800 px-2 py-0.5 rounded border border-gray-700 uppercase shrink-0">Flexible</div>}
                                             </div>
                                             <p className="text-[11px] sm:text-sm text-gray-500 mt-1 font-medium truncate">Monthly installments.</p>
                                         </div>
@@ -380,15 +380,15 @@ export default function Checkout() {
                                     {/* COD Option */}
                                     <div
                                         onClick={() => setSelectedPaymentMethod('COD')}
-                                        className={`flex items-center gap-3 sm:gap-4 p-4 sm:p-5 border rounded-2xl transition-all cursor-pointer ${selectedPaymentMethod === 'COD' ? 'border-blue-500 bg-blue-900/10' : 'border-gray-800 bg-gray-900 hover:border-gray-700'}`}
+                                        className={`flex items-center gap-3 sm:gap-4 p-4 sm:p-5 border rounded-2xl transition-all cursor-pointer ${selectedPaymentMethod === 'COD' ? 'border-white bg-white/10' : 'border-gray-800 bg-gray-900 hover:border-gray-700'}`}
                                     >
-                                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg shrink-0 ${selectedPaymentMethod === 'COD' ? 'bg-amber-600 shadow-amber-500/20' : 'bg-gray-800'}`}>
-                                            <Truck className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg shrink-0 ${selectedPaymentMethod === 'COD' ? 'bg-white shadow-white/20' : 'bg-gray-800'}`}>
+                                            <Truck className={`w-5 h-5 sm:w-6 sm:h-6 ${selectedPaymentMethod === 'COD' ? 'text-black' : 'text-white'}`} />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center justify-between gap-2 overflow-hidden">
                                                 <span className="font-black text-xs sm:text-sm text-white uppercase tracking-wider truncate">Cash on Delivery</span>
-                                                {selectedPaymentMethod === 'COD' && <div className="text-[8px] sm:text-[10px] font-black tracking-widest text-amber-400 bg-amber-900/30 px-2 py-0.5 rounded border border-amber-800/50 uppercase shrink-0">Verified</div>}
+                                                {selectedPaymentMethod === 'COD' && <div className="text-[8px] sm:text-[10px] font-black tracking-widest text-white bg-gray-800 px-2 py-0.5 rounded border border-gray-700 uppercase shrink-0">Verified</div>}
                                             </div>
                                             <p className="text-[11px] sm:text-sm text-gray-500 mt-1 font-medium truncate">Pay cash at doorstep.</p>
                                         </div>
@@ -422,7 +422,7 @@ export default function Checkout() {
                                         <div className="flex-1 min-w-0">
                                             <h3 className="text-xs sm:text-sm font-bold text-white line-clamp-1">{item.name}</h3>
                                             <p className="text-[10px] sm:text-xs text-gray-500 mb-1 font-bold uppercase tracking-widest">Qty: {item.quantity}</p>
-                                            <p className="text-xs sm:text-sm font-black text-blue-500">₹{(item.price * item.quantity).toLocaleString()}</p>
+                                            <p className="text-xs sm:text-sm font-black text-white">₹{(item.price * item.quantity).toLocaleString()}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -440,7 +440,7 @@ export default function Checkout() {
                                         </div>
                                         <div className="flex justify-between text-gray-400 text-xs sm:text-sm">
                                             <span>Shipping</span>
-                                            <span className="text-emerald-500 font-bold uppercase text-[10px] tracking-widest">Free</span>
+                                            <span className="text-white font-bold uppercase text-[10px] tracking-widest">Free</span>
                                         </div>
                                         {gstDetails.cgst > 0 && (
                                             <div className="flex justify-between text-gray-500 text-[10px] sm:text-xs">
@@ -462,7 +462,7 @@ export default function Checkout() {
                                         )}
                                         <div className="flex justify-between text-white font-black text-lg sm:text-xl pt-3.5 sm:pt-4 border-t border-gray-800">
                                             <span>Total</span>
-                                            <span className="text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.3)]">₹{cartTotal.toLocaleString()}</span>
+                                            <span className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">₹{cartTotal.toLocaleString()}</span>
                                         </div>
                                     </div>
                                 );
@@ -486,7 +486,7 @@ export default function Checkout() {
                                                 initial={{ x: '-100%' }}
                                                 animate={{ x: '100%' }}
                                                 transition={{ repeat: Infinity, duration: 1 }}
-                                                className="w-12 h-full bg-blue-500"
+                                                className="w-12 h-full bg-white"
                                             />
                                         </div>
                                     </div>
@@ -498,7 +498,7 @@ export default function Checkout() {
                             </button>
 
                             <div className="flex items-center justify-center gap-2 mt-4 text-[10px] text-gray-500 font-bold uppercase tracking-widest">
-                                <Lock className="w-3 h-3 text-emerald-500" />
+                                <Lock className="w-3 h-3 text-white" />
                                 Secure Checkout
                             </div>
                         </div>

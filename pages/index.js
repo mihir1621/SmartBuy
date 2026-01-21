@@ -148,7 +148,7 @@ export default function Home({ initialProducts }) {
                   <select
                     value={sortOption}
                     onChange={(e) => setSortOption(e.target.value)}
-                    className="appearance-none bg-gray-900 border border-gray-800 text-gray-300 py-1.5 sm:py-2 pl-3 sm:pl-4 pr-7 sm:pr-8 rounded-lg text-xs sm:text-sm font-medium focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
+                    className="appearance-none bg-gray-900 border border-gray-800 text-gray-300 py-1.5 sm:py-2 pl-3 sm:pl-4 pr-7 sm:pr-8 rounded-lg text-xs sm:text-sm font-medium focus:outline-none focus:ring-1 focus:ring-white cursor-pointer"
                   >
                     <option value="popularity">Popularity</option>
                     <option value="newest">Newest Arrivals</option>
@@ -165,7 +165,7 @@ export default function Home({ initialProducts }) {
             {(selectedCategory !== "All" || selectedBrands.length > 0 || minRating > 0 || selectedGender !== "All") && (
               <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6">
                 {selectedCategory !== "All" && (
-                  <button onClick={() => setSelectedCategory("All")} className="flex items-center gap-1.5 sm:gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-blue-500/20 transition-all">
+                  <button onClick={() => setSelectedCategory("All")} className="flex items-center gap-1.5 sm:gap-2 bg-white/10 border border-white/20 text-white px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-white/20 transition-all">
                     {selectedCategory} <X size={10} className="sm:size-[12px]" />
                   </button>
                 )}
@@ -180,7 +180,7 @@ export default function Home({ initialProducts }) {
                   </button>
                 ))}
                 {minRating > 0 && (
-                  <button onClick={() => setMinRating(0)} className="flex items-center gap-1.5 sm:gap-2 bg-yellow-400/10 border border-yellow-400/20 text-yellow-500 px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-yellow-400/20 transition-all">
+                  <button onClick={() => setMinRating(0)} className="flex items-center gap-1.5 sm:gap-2 bg-white/10 border border-white/20 text-white px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-white/20 transition-all">
                     {minRating}+ Stars <X size={10} className="sm:size-[12px]" />
                   </button>
                 )}
@@ -195,7 +195,7 @@ export default function Home({ initialProducts }) {
                     <div className="flex items-center gap-2 sm:gap-4">
                       <h2 className="text-xl sm:text-2xl font-bold text-white relative whitespace-nowrap">
                         {category}
-                        <span className="absolute -bottom-1.5 sm:-bottom-2 left-0 w-1/3 h-0.5 sm:h-1 bg-blue-500 rounded-full"></span>
+                        <span className="absolute -bottom-1.5 sm:-bottom-2 left-0 w-1/3 h-0.5 sm:h-1 bg-white rounded-full"></span>
                       </h2>
                       <div className="h-px bg-gray-800 flex-grow mt-1 sm:mt-1"></div>
                     </div>

@@ -14,23 +14,23 @@ import { OrderSkeleton } from '@/components/skeletons/PageSkeletons';
 // ... (keep statusIcons and statusClasses constants as they are unless they need to be moved down? No, they are outside the component, so I must start from line 1 if I want to be safe, or just targeted replacement)
 
 const statusIcons = {
-    'PENDING': <Clock className="w-4 h-4 text-amber-500" />,
-    'PROCESSING': <Package className="w-4 h-4 text-blue-500" />,
-    'SHIPPED': <Truck className="w-4 h-4 text-violet-500" />,
-    'DELIVERED': <CheckCircle className="w-4 h-4 text-emerald-500" />,
-    'CANCELLED': <XCircle className="w-4 h-4 text-red-500" />,
-    'RETURN_REQUESTED': <RefreshCcw className="w-4 h-4 text-blue-400" />,
-    'REFUND_REQUESTED': <RotateCcw className="w-4 h-4 text-blue-400" />,
+    'PENDING': <Clock className="w-4 h-4 text-white" />,
+    'PROCESSING': <Package className="w-4 h-4 text-white" />,
+    'SHIPPED': <Truck className="w-4 h-4 text-white" />,
+    'DELIVERED': <CheckCircle className="w-4 h-4 text-white" />,
+    'CANCELLED': <XCircle className="w-4 h-4 text-white" />,
+    'RETURN_REQUESTED': <RefreshCcw className="w-4 h-4 text-white" />,
+    'REFUND_REQUESTED': <RotateCcw className="w-4 h-4 text-white" />,
 };
 
 const statusClasses = {
-    'PENDING': 'bg-amber-500/10 text-amber-500 border-amber-500/20',
-    'PROCESSING': 'bg-blue-500/10 text-blue-500 border-blue-500/20',
-    'SHIPPED': 'bg-violet-500/10 text-violet-500 border-violet-500/20',
-    'DELIVERED': 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
-    'CANCELLED': 'bg-red-500/10 text-red-500 border-red-500/20',
-    'RETURN_REQUESTED': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-    'REFUND_REQUESTED': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+    'PENDING': 'bg-white/10 text-white border-white/20',
+    'PROCESSING': 'bg-white/10 text-white border-white/20',
+    'SHIPPED': 'bg-white/10 text-white border-white/20',
+    'DELIVERED': 'bg-white/10 text-white border-white/20',
+    'CANCELLED': 'bg-white/10 text-white border-white/20',
+    'RETURN_REQUESTED': 'bg-white/10 text-white border-white/20',
+    'REFUND_REQUESTED': 'bg-white/10 text-white border-white/20',
 };
 
 export default function OrderHistory() {
@@ -107,11 +107,11 @@ export default function OrderHistory() {
             <main className="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
                 <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 sm:mb-10">
                     <div className="flex items-center gap-3 sm:gap-4">
-                        <div className="p-3 sm:p-4 bg-blue-500/10 rounded-2xl border border-blue-500/20">
-                            <ShoppingBag className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500" />
+                        <div className="p-3 sm:p-4 bg-white/10 rounded-2xl border border-white/20">
+                            <ShoppingBag className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                         </div>
                         <div>
-                            <h1 className="text-2xl sm:text-3xl font-black tracking-tight underline decoration-blue-500/30 decoration-4 underline-offset-8">My Orders</h1>
+                            <h1 className="text-2xl sm:text-3xl font-black tracking-tight underline decoration-white/30 decoration-4 underline-offset-8">My Orders</h1>
                             <p className="text-gray-500 mt-1 sm:mt-2 font-medium text-xs sm:text-base">Manage and track your recent purchases</p>
                         </div>
                     </div>
@@ -123,7 +123,7 @@ export default function OrderHistory() {
                             placeholder="Find an order..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-800 rounded-xl focus:ring-1 focus:ring-blue-500 outline-none text-sm transition-all"
+                            className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-800 rounded-xl focus:ring-1 focus:ring-white outline-none text-sm transition-all"
                         />
                     </div>
                 </div>
@@ -177,7 +177,7 @@ export default function OrderHistory() {
                                         </div>
                                         <div className="space-y-1">
                                             <p className="text-[9px] sm:text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Total Paid</p>
-                                            <p className="font-black text-lg sm:text-xl text-blue-500">₹{order.totalAmount.toLocaleString()}</p>
+                                            <p className="font-black text-lg sm:text-xl text-white">₹{order.totalAmount.toLocaleString()}</p>
                                         </div>
                                         <div className="space-y-1.5 sm:space-y-2">
                                             <p className="text-[9px] sm:text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Track Status</p>

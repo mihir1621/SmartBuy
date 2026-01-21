@@ -155,7 +155,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                     onClick={() => toggleWishlist(product)}
                                     className="absolute top-3 sm:top-4 right-3 sm:right-4 p-2.5 sm:p-3 bg-black/50 backdrop-blur-sm rounded-full shadow-sm hover:scale-110 transition-transform z-10"
                                 >
-                                    <Heart className={`w-5 sm:w-6 h-5 sm:h-6 ${isWishlisted ? 'text-red-500 fill-red-500' : 'text-gray-300'}`} />
+                                    <Heart className={`w-5 sm:w-6 h-5 sm:h-6 ${isWishlisted ? 'text-white fill-white' : 'text-gray-300'}`} />
                                 </button>
                             </div>
                             {/* Thumbnail strip */}
@@ -183,7 +183,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                         <div className="flex flex-col">
                             <div className="mb-4 sm:mb-6 border-b border-gray-800 pb-4 sm:pb-6">
                                 <div className="flex items-center justify-between mb-2">
-                                    <span className="text-blue-400 font-bold text-[10px] sm:text-xs set-caps tracking-wider bg-blue-900/30 px-2.5 sm:px-3 py-1 rounded-full uppercase">
+                                    <span className="text-white font-bold text-[10px] sm:text-xs set-caps tracking-wider bg-gray-800 px-2.5 sm:px-3 py-1 rounded-full uppercase">
                                         {product.category}
                                     </span>
                                 </div>
@@ -192,13 +192,13 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                 {product.brand && <p className="text-gray-400 font-medium text-sm sm:text-base mb-3 sm:mb-4 tracking-wide">by <span className="text-gray-300 font-bold">{product.brand}</span></p>}
 
                                 <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                                    <div className="flex items-center gap-1 bg-yellow-900/20 px-2 py-0.5 rounded border border-yellow-900/30">
+                                    <div className="flex items-center gap-1 bg-gray-800 px-2 py-0.5 rounded border border-gray-700">
                                         <span className="font-bold text-gray-200 text-xs sm:text-sm mr-0.5 sm:mr-1">{product.rating}</span>
                                         {[...Array(5)].map((_, i) => (
                                             <Star
                                                 key={i}
                                                 className={`w-3 sm:w-4 h-3 sm:h-4 ${i < Math.floor(product.rating)
-                                                    ? 'text-yellow-400 fill-yellow-400'
+                                                    ? 'text-white fill-white'
                                                     : 'text-gray-800'
                                                     }`}
                                             />
@@ -214,7 +214,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                     {product.originalPrice > product.price && (
                                         <>
                                             <span className="text-base sm:text-lg text-gray-500 line-through decoration-gray-600">₹{product.originalPrice.toLocaleString()}</span>
-                                            <span className="bg-green-500/10 text-green-400 px-2 py-0.5 rounded-lg text-xs sm:text-sm font-black border border-green-500/20">SAVE {Math.round((1 - product.price / product.originalPrice) * 100)}%</span>
+                                            <span className="bg-white/10 text-white px-2 py-0.5 rounded-lg text-xs sm:text-sm font-black border border-white/20">SAVE {Math.round((1 - product.price / product.originalPrice) * 100)}%</span>
                                         </>
                                     )}
                                 </div>
@@ -249,7 +249,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                                 <ul className="space-y-1.5 sm:space-y-2">
                                                     {activeFeature.points.map((point, index) => (
                                                         <li key={index} className="flex items-start gap-2.5 text-[11px] sm:text-sm text-gray-400 font-medium leading-relaxed">
-                                                            <div className="w-1 h-1 rounded-full bg-blue-500 mt-1.5 sm:mt-2 flex-shrink-0" />
+                                                            <div className="w-1 h-1 rounded-full bg-white mt-1.5 sm:mt-2 flex-shrink-0" />
                                                             <span>{point}</span>
                                                         </li>
                                                     ))}
@@ -266,7 +266,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                                 <button
                                                     onClick={() => setActiveFeature({
                                                         title: "Free Delivery",
-                                                        icon: <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />,
+                                                        icon: <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-white" />,
                                                         points: [
                                                             "Free delivery on all orders above ₹499",
                                                             "Standard delivery: 3-5 business days",
@@ -281,7 +281,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                                 <button
                                                     onClick={() => setActiveFeature({
                                                         title: "2 Year Warranty",
-                                                        icon: <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />,
+                                                        icon: <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-white" />,
                                                         points: [
                                                             "Covers manufacturing defects & hardware failures",
                                                             "Valid for 2 years from date of purchase",
@@ -296,7 +296,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                                 <button
                                                     onClick={() => setActiveFeature({
                                                         title: "7 Day Returns",
-                                                        icon: <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400" />,
+                                                        icon: <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 text-white" />,
                                                         points: [
                                                             "Returns accepted within 7 days of delivery",
                                                             "Item must be unused with original tags intact",
@@ -330,16 +330,16 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-auto pt-6 border-t border-gray-800">
                                 <div className="w-full">
                                     <div className="flex items-center gap-2.5 mb-4">
-                                        <div className={`h-2 w-2 rounded-full ${isInStock ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-red-500'}`} />
-                                        <span className={`text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] ${isInStock ? 'text-emerald-500' : 'text-red-500'}`}>
+                                        <div className={`h-2 w-2 rounded-full ${isInStock ? 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]' : 'bg-gray-500'}`} />
+                                        <span className={`text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] ${isInStock ? 'text-white' : 'text-gray-400'}`}>
                                             {isInStock ? 'In Stock — Ships Today' : 'Out of Stock'}
                                         </span>
                                     </div>
 
                                     {isInStock && product.stock > 0 && product.stock < 10 && (
-                                        <div className="bg-amber-500/10 border border-amber-500/20 p-2.5 sm:p-3 rounded-xl mb-4 flex items-center gap-3">
-                                            <div className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" />
-                                            <p className="text-amber-500 text-[10px] sm:text-xs font-black uppercase tracking-wider">Hurry! Only {product.stock} items remaining</p>
+                                        <div className="bg-white/10 border border-white/20 p-2.5 sm:p-3 rounded-xl mb-4 flex items-center gap-3">
+                                            <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                                            <p className="text-white text-[10px] sm:text-xs font-black uppercase tracking-wider">Hurry! Only {product.stock} items remaining</p>
                                         </div>
                                     )}
 
@@ -360,7 +360,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                             whileTap={isInStock ? { scale: 0.98 } : {}}
                                             disabled={!isInStock}
                                             className={`flex-1 font-black py-4 rounded-xl transition-all shadow-lg text-sm sm:text-base uppercase tracking-widest ${isInStock
-                                                ? "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-500/20"
+                                                ? "bg-white text-black hover:bg-gray-200 shadow-white/20"
                                                 : "bg-gray-900 text-gray-700 border border-gray-800 cursor-not-allowed"
                                                 }`}
                                         >
@@ -377,7 +377,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                 {fbtProducts.length > 0 && (
                     <section className="mb-12 bg-gray-900/50 p-6 rounded-2xl border border-gray-800">
                         <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                            <span className="text-blue-500">✨</span> Frequently Bought Together
+                            <span className="text-white">✨</span> Frequently Bought Together
                         </h2>
                         <div className="flex flex-col lg:flex-row items-center gap-8">
                             {/* Product Chain */}
@@ -387,7 +387,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                     <div className="relative w-full h-full">
                                         <Image src={product.image} alt={product.name} fill className="object-contain" />
                                     </div>
-                                    <div className="absolute -bottom-2 -right-2 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    <div className="absolute -bottom-2 -right-2 bg-white text-black text-[10px] font-bold px-2 py-0.5 rounded-full">
                                         Main
                                     </div>
                                 </div>
@@ -396,7 +396,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                 {fbtProducts.map((p, i) => (
                                     <div key={p.id} className="flex items-center gap-4">
                                         <Plus className="text-gray-600 w-6 h-6" />
-                                        <Link href={`/product/${p.id}`} className="relative w-28 h-28 bg-gray-800 rounded-xl border border-gray-700 p-2 hover:border-blue-500 transition-colors group">
+                                        <Link href={`/product/${p.id}`} className="relative w-28 h-28 bg-gray-800 rounded-xl border border-gray-700 p-2 hover:border-white transition-colors group">
                                             <div className="relative w-full h-full">
                                                 <Image src={p.image} alt={p.name} fill className="object-contain group-hover:scale-105 transition-transform" />
                                             </div>
