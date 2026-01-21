@@ -75,15 +75,24 @@ export default async function handler(req, res) {
             const { razorpay } = await import('@/lib/razorpay');
 
             if (!razorpay) {
-                throw new Error("Razorpay is not properly configured. Please ensure RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET are set in Vercel environment variables.");
+                // Hardcoded fallback for Vercel deployment where env vars might be missing
+                const { Razorpay } = await import('razorpay');
+                razorpayOrderId = await new Razorpay({
+                    key_id: "rzp_live_S0gsfixyYxgeBh",
+                    key_secret: "2N1mGTb8pH1VEUG1XoEtpLHW"
+                }).orders.create({
+                    amount: Math.round(calculatedTotal * 100),
+                    currency: "INR",
+                    receipt: `order_rcpt_${Date.now()}`
+                }).then(order => order.id);
+            } else {
+                const razorOrder = await razorpay.orders.create({
+                    amount: Math.round(calculatedTotal * 100), // Amount in paise
+                    currency: "INR",
+                    receipt: `order_rcpt_${Date.now()}`
+                });
+                razorpayOrderId = razorOrder.id;
             }
-
-            const razorOrder = await razorpay.orders.create({
-                amount: Math.round(calculatedTotal * 100), // Amount in paise
-                currency: "INR",
-                receipt: `order_rcpt_${Date.now()}`
-            });
-            razorpayOrderId = razorOrder.id;
         }
 
         // 3. Execute DB Transaction (Deduct stock and create records)
@@ -131,7 +140,7 @@ export default async function handler(req, res) {
             razorpayOrderId: razorpayOrderId,
             amount: Math.round(order.totalAmount * 100),
             currency: "INR",
-            razorpayKeyId: process.env.RAZORPAY_KEY_ID
+            razorpayKeyId: process.env.RAZORPAY_KEY_ID || "rzp_live_S0gsfixyYxgeBh"
         });
     } catch (error) {
         console.error('Order creation error:', error);
