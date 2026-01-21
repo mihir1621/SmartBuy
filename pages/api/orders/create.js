@@ -73,6 +73,11 @@ export default async function handler(req, res) {
 
         if (useRazorpay) {
             const { razorpay } = await import('@/lib/razorpay');
+
+            if (!razorpay) {
+                throw new Error("Razorpay is not properly configured. Please ensure RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET are set in Vercel environment variables.");
+            }
+
             const razorOrder = await razorpay.orders.create({
                 amount: Math.round(calculatedTotal * 100), // Amount in paise
                 currency: "INR",
