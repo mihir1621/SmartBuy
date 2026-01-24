@@ -126,6 +126,13 @@ export default function Login() {
                 });
                 console.error("FIREBASE CONFIG ERROR: Go to https://console.firebase.google.com/project/" + projectId + "/authentication/providers and enable Email/Password");
             }
+            else if (error.code === 'auth/unauthorized-domain') {
+                const currentDomain = window.location.hostname;
+                toast.error(`Domain Unauthorized: Add "${currentDomain}" to Firebase Console > Auth > Settings > Authorized Domains`, {
+                    autoClose: 15000,
+                    className: "font-bold"
+                });
+            }
             else toast.error(error.message);
         } finally {
             setIsLoading(false);
