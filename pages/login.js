@@ -87,12 +87,24 @@ export default function Login() {
         setIsLoading(true);
         try {
             const user = await loginWithGoogle(selectedRole);
+            if (!user) {
+                // Redirecting...
+                return;
+            }
             toast.success(`Welcome back, ${user.displayName || 'User'}!`);
             setJustLoggedIn(true);
         } catch (error) {
             console.error(error);
             toast.error(error.message);
         } finally {
+            // Only stop loading if we got a user or error. 
+            // If redirecting, we might want to keep loading or just let the page unload.
+            // But for safety, we can stop loading state if we returned early? 
+            // Actually if redirecting, the page will unload soon. 
+            // But if it takes time, user might click again. 
+            // Let's keep isLoading true if redirecting? 
+            // We can't know for sure here easily. 
+            // Safest to just always set false so UI is responsive if redirect fails silently (rare).
             setIsLoading(false);
         }
     };

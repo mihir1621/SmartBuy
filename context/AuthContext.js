@@ -5,11 +5,14 @@ import {
     createUserWithEmailAndPassword,
     signOut,
     signInWithPopup,
+    signInWithRedirect,
+    getRedirectResult,
     GoogleAuthProvider,
     updateProfile
 } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 const AuthContext = createContext();
 
@@ -49,6 +52,24 @@ export function AuthProvider({ children }) {
             return;
         }
 
+        // Handle Redirect Result (Fallback from Popup Blocked)
+        getRedirectResult(auth).then(async (result) => {
+            if (result && result.user) {
+                console.log("Redirect Login Success");
+                const role = sessionStorage.getItem('auth_role_pending') || 'customer';
+                sessionStorage.removeItem('auth_role_pending');
+
+                const syncedUser = await syncUserWithBackend(result.user, role);
+                setUser(syncedUser);
+                toast.success(`Welcome back, ${syncedUser.displayName || 'User'}!`);
+            }
+        }).catch((error) => {
+            console.error("Redirect Auth Error:", error);
+            if (error.code !== 'auth/redirect-cancelled-by-user') {
+                toast.error("Login failed: " + error.message);
+            }
+        });
+
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
             if (firebaseUser) {
                 // Sync with backend to get Role and ID
@@ -82,13 +103,23 @@ export function AuthProvider({ children }) {
 
     const loginWithGoogle = async (role = 'customer') => {
         const provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
 
-        // Sync with backend (will create if first time)
-        await syncUserWithBackend(user, role);
+            // Sync with backend (will create if first time)
+            await syncUserWithBackend(user, role);
 
-        return user;
+            return user;
+        } catch (error) {
+            if (error.code === 'auth/popup-blocked' || error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
+                console.warn("Popup blocked, falling back to redirect...");
+                sessionStorage.setItem('auth_role_pending', role);
+                await signInWithRedirect(auth, provider);
+                return null; // Will redirect
+            }
+            throw error;
+        }
     };
 
     const logout = async () => {
