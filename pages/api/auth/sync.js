@@ -13,10 +13,18 @@ export default async function handler(req, res) {
     }
 
     try {
-        // 1. Try to find user by email
+        // 1. Try to find user by email with retry
         let user = null;
         if (email) {
-            user = await prisma.user.findUnique({ where: { email } });
+            for (let i = 0; i < 3; i++) {
+                try {
+                    user = await prisma.user.findUnique({ where: { email } });
+                    break;
+                } catch (e) {
+                    if (i === 2) throw e;
+                    await new Promise(r => setTimeout(r, 500));
+                }
+            }
         }
 
         // 2. If exists, return user data
