@@ -11,14 +11,16 @@ export default async function handler(req, res) {
     }
 
     // Retry helper for DB operations
-    const runWithRetry = async (fn, retries = 3) => {
+    const runWithRetry = async (fn, retries = 5) => {
+        const delays = [2000, 5000, 10000, 10000, 10000];
         for (let i = 0; i < retries; i++) {
             try {
                 return await fn();
             } catch (error) {
                 if (i === retries - 1) throw error;
-                console.warn(`DB Operation failed, retrying (${i + 1}/${retries})...`, error.message);
-                await new Promise(res => setTimeout(res, 1000 * (i + 1))); // Exponential backoff
+                const waitTime = delays[i] || 10000;
+                console.warn(`DB Operation failed, retrying (${i + 1}/${retries}) in ${waitTime}ms...`, error.message);
+                await new Promise(res => setTimeout(res, waitTime));
             }
         }
     };
