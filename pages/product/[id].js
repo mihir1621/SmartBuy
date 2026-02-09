@@ -129,7 +129,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
     };
 
     return (
-        <div className="min-h-screen bg-black text-white flex flex-col">
+        <div className="min-h-screen bg-background text-foreground flex flex-col transition-colors duration-300">
             <Head>
                 <title>{product.name} | SmartBuy</title>
             </Head>
@@ -138,11 +138,11 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
             <CartSidebar />
 
             <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 w-full">
-                <div className="bg-gray-900 rounded-2xl shadow-sm border border-gray-800 overflow-hidden mb-8 sm:mb-12">
+                <div className="bg-surface rounded-2xl shadow-sm border border-border overflow-hidden mb-8 sm:mb-12">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 p-4 sm:p-8">
                         {/* Image Gallery */}
                         <div className="space-y-4">
-                            <div className="relative aspect-square bg-gray-800 rounded-xl overflow-hidden group">
+                            <div className="relative aspect-square bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden group border border-border">
                                 <Image
                                     src={mainImg || product.image}
                                     alt={product.name}
@@ -153,9 +153,9 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                 />
                                 <button
                                     onClick={() => toggleWishlist(product)}
-                                    className="absolute top-3 sm:top-4 right-3 sm:right-4 p-2.5 sm:p-3 bg-black/50 backdrop-blur-sm rounded-full shadow-sm hover:scale-110 transition-transform z-10"
+                                    className="absolute top-3 sm:top-4 right-3 sm:right-4 p-2.5 sm:p-3 bg-background/50 backdrop-blur-sm rounded-full shadow-sm hover:scale-110 transition-transform z-10 border border-border"
                                 >
-                                    <Heart className={`w-5 sm:w-6 h-5 sm:h-6 ${isWishlisted ? 'text-white fill-white' : 'text-gray-300'}`} />
+                                    <Heart className={`w-5 sm:w-6 h-5 sm:h-6 ${isWishlisted ? 'text-red-500 fill-red-500' : 'text-foreground'}`} />
                                 </button>
                             </div>
                             {/* Thumbnail strip */}
@@ -164,7 +164,7 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                     <button
                                         key={idx}
                                         onClick={() => setSelectedImage(idx)}
-                                        className={`relative w-16 sm:w-20 h-16 sm:h-20 rounded-lg overflow-hidden border-2 flex-shrink-0 transition-all ${selectedImage === idx ? 'border-white ring-2 ring-gray-700' : 'border-transparent opacity-70 hover:opacity-100'
+                                        className={`relative w-16 sm:w-20 h-16 sm:h-20 rounded-lg overflow-hidden border-2 flex-shrink-0 transition-all ${selectedImage === idx ? 'border-foreground ring-2 ring-gray-300 dark:ring-gray-700' : 'border-transparent opacity-70 hover:opacity-100'
                                             }`}
                                     >
                                         <Image
@@ -181,47 +181,47 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
 
                         {/* Product Info */}
                         <div className="flex flex-col">
-                            <div className="mb-4 sm:mb-6 border-b border-gray-800 pb-4 sm:pb-6">
+                            <div className="mb-4 sm:mb-6 border-b border-border pb-4 sm:pb-6">
                                 <div className="flex items-center justify-between mb-2">
-                                    <span className="text-white font-bold text-[10px] sm:text-xs set-caps tracking-wider bg-gray-800 px-2.5 sm:px-3 py-1 rounded-full uppercase">
+                                    <span className="text-background bg-foreground font-bold text-[10px] sm:text-xs set-caps tracking-wider px-2.5 sm:px-3 py-1 rounded-full uppercase">
                                         {product.category}
                                     </span>
                                 </div>
 
-                                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1.5 sm:mb-2 leading-tight">{product.name}</h1>
-                                {product.brand && <p className="text-gray-400 font-medium text-sm sm:text-base mb-3 sm:mb-4 tracking-wide">by <span className="text-gray-300 font-bold">{product.brand}</span></p>}
+                                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1.5 sm:mb-2 leading-tight">{product.name}</h1>
+                                {product.brand && <p className="text-gray-500 font-medium text-sm sm:text-base mb-3 sm:mb-4 tracking-wide">by <span className="text-foreground font-bold">{product.brand}</span></p>}
 
                                 <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                                    <div className="flex items-center gap-1 bg-gray-800 px-2 py-0.5 rounded border border-gray-700">
-                                        <span className="font-bold text-gray-200 text-xs sm:text-sm mr-0.5 sm:mr-1">{product.rating}</span>
+                                    <div className="flex items-center gap-1 bg-surface-dark bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded border border-border">
+                                        <span className="font-bold text-foreground text-xs sm:text-sm mr-0.5 sm:mr-1">{product.rating}</span>
                                         {[...Array(5)].map((_, i) => (
                                             <Star
                                                 key={i}
                                                 className={`w-3 sm:w-4 h-3 sm:h-4 ${i < Math.floor(product.rating)
-                                                    ? 'text-white fill-white'
-                                                    : 'text-gray-800'
+                                                    ? 'text-yellow-500 fill-yellow-500'
+                                                    : 'text-gray-300 dark:text-gray-700'
                                                     }`}
                                             />
                                         ))}
                                     </div>
-                                    <span className="text-[10px] sm:text-sm text-gray-500 border-l border-gray-800 pl-3 sm:pl-4 uppercase tracking-widest font-bold">
+                                    <span className="text-[10px] sm:text-sm text-gray-500 border-l border-border pl-3 sm:pl-4 uppercase tracking-widest font-bold">
                                         {product.reviews} reviews
                                     </span>
                                 </div>
 
                                 <div className="flex items-baseline gap-3 sm:gap-4">
-                                    <span className="text-3xl sm:text-4xl font-black text-white">₹{product.price.toLocaleString()}</span>
+                                    <span className="text-3xl sm:text-4xl font-black text-foreground">₹{product.price.toLocaleString()}</span>
                                     {product.originalPrice > product.price && (
                                         <>
-                                            <span className="text-base sm:text-lg text-gray-500 line-through decoration-gray-600">₹{product.originalPrice.toLocaleString()}</span>
-                                            <span className="bg-white/10 text-white px-2 py-0.5 rounded-lg text-xs sm:text-sm font-black border border-white/20">SAVE {Math.round((1 - product.price / product.originalPrice) * 100)}%</span>
+                                            <span className="text-base sm:text-lg text-gray-500 line-through decoration-gray-400">₹{product.originalPrice.toLocaleString()}</span>
+                                            <span className="bg-red-500/10 text-red-600 px-2 py-0.5 rounded-lg text-xs sm:text-sm font-black border border-red-200 dark:border-red-900/30">SAVE {Math.round((1 - product.price / product.originalPrice) * 100)}%</span>
                                         </>
                                     )}
                                 </div>
                             </div>
 
                             <div className="space-y-6 sm:space-y-8 flex-1">
-                                <p className="text-gray-400 leading-relaxed text-sm sm:text-base font-medium">{product.description}</p>
+                                <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm sm:text-base font-medium">{product.description}</p>
 
                                 {/* Features & Terms */}
                                 <div className="min-h-[120px] sm:min-h-[140px]">
@@ -232,24 +232,24 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                                 initial={{ opacity: 0, scale: 0.98 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 exit={{ opacity: 0, scale: 0.98 }}
-                                                className="bg-gray-950/50 p-4 sm:p-6 rounded-2xl border border-gray-800 relative h-full backdrop-blur-sm"
+                                                className="bg-surface p-4 sm:p-6 rounded-2xl border border-border relative h-full backdrop-blur-sm"
                                             >
                                                 <button
                                                     onClick={() => setActiveFeature(null)}
-                                                    className="absolute top-4 right-4 p-1.5 hover:bg-gray-800 rounded-full transition-colors"
+                                                    className="absolute top-4 right-4 p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
                                                 >
-                                                    <X className="w-4 h-4 text-gray-400" />
+                                                    <X className="w-4 h-4 text-gray-500" />
                                                 </button>
 
                                                 <div className="flex items-center gap-3 mb-3 sm:mb-4">
                                                     {activeFeature.icon}
-                                                    <h3 className="font-bold text-white text-sm sm:text-base uppercase tracking-widest">{activeFeature.title}</h3>
+                                                    <h3 className="font-bold text-foreground text-sm sm:text-base uppercase tracking-widest">{activeFeature.title}</h3>
                                                 </div>
 
                                                 <ul className="space-y-1.5 sm:space-y-2">
                                                     {activeFeature.points.map((point, index) => (
-                                                        <li key={index} className="flex items-start gap-2.5 text-[11px] sm:text-sm text-gray-400 font-medium leading-relaxed">
-                                                            <div className="w-1 h-1 rounded-full bg-white mt-1.5 sm:mt-2 flex-shrink-0" />
+                                                        <li key={index} className="flex items-start gap-2.5 text-[11px] sm:text-sm text-gray-500 font-medium leading-relaxed">
+                                                            <div className="w-1 h-1 rounded-full bg-foreground mt-1.5 sm:mt-2 flex-shrink-0" />
                                                             <span>{point}</span>
                                                         </li>
                                                     ))}
@@ -266,53 +266,53 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                                 <button
                                                     onClick={() => setActiveFeature({
                                                         title: "Free Delivery",
-                                                        icon: <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-white" />,
+                                                        icon: <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />,
                                                         points: [
                                                             "Free delivery on all orders above ₹499",
                                                             "Standard delivery: 3-5 business days",
                                                             "Express delivery options available at checkout"
                                                         ]
                                                     })}
-                                                    className="flex flex-col sm:flex-row items-center sm:items-center gap-2 sm:gap-3 text-[10px] sm:text-sm text-gray-400 bg-gray-950/40 p-3 sm:p-3 rounded-xl border border-gray-800/50 hover:bg-gray-800/50 hover:border-gray-700 transition-all font-bold uppercase tracking-widest"
+                                                    className="flex flex-col sm:flex-row items-center sm:items-center gap-2 sm:gap-3 text-[10px] sm:text-sm text-gray-500 bg-surface p-3 sm:p-3 rounded-xl border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-all font-bold uppercase tracking-widest"
                                                 >
-                                                    <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />
+                                                    <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" />
                                                     <span>Free Delivery</span>
                                                 </button>
                                                 <button
                                                     onClick={() => setActiveFeature({
                                                         title: "2 Year Warranty",
-                                                        icon: <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-white" />,
+                                                        icon: <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />,
                                                         points: [
                                                             "Covers manufacturing defects & hardware failures",
                                                             "Valid for 2 years from date of purchase",
                                                             "Excludes accidental & physical damage"
                                                         ]
                                                     })}
-                                                    className="flex flex-col sm:flex-row items-center sm:items-center gap-2 sm:gap-3 text-[10px] sm:text-sm text-gray-400 bg-gray-950/40 p-3 sm:p-3 rounded-xl border border-gray-800/50 hover:bg-gray-800/50 hover:border-gray-700 transition-all font-bold uppercase tracking-widest"
+                                                    className="flex flex-col sm:flex-row items-center sm:items-center gap-2 sm:gap-3 text-[10px] sm:text-sm text-gray-500 bg-surface p-3 sm:p-3 rounded-xl border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-all font-bold uppercase tracking-widest"
                                                 >
-                                                    <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />
+                                                    <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" />
                                                     <span>2 Yr Warranty</span>
                                                 </button>
                                                 <button
                                                     onClick={() => setActiveFeature({
                                                         title: "7 Day Returns",
-                                                        icon: <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 text-white" />,
+                                                        icon: <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />,
                                                         points: [
                                                             "Returns accepted within 7 days of delivery",
                                                             "Item must be unused with original tags intact",
                                                             "Refund processed within 3 working days of pickup"
                                                         ]
                                                     })}
-                                                    className="flex flex-col sm:flex-row items-center sm:items-center gap-2 sm:gap-3 text-[10px] sm:text-sm text-gray-400 bg-gray-950/40 p-3 sm:p-3 rounded-xl border border-gray-800/50 hover:bg-gray-800/50 hover:border-gray-700 transition-all font-bold uppercase tracking-widest"
+                                                    className="flex flex-col sm:flex-row items-center sm:items-center gap-2 sm:gap-3 text-[10px] sm:text-sm text-gray-500 bg-surface p-3 sm:p-3 rounded-xl border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-all font-bold uppercase tracking-widest"
                                                 >
-                                                    <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />
+                                                    <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" />
                                                     <span>7 Day Returns</span>
                                                 </button>
                                                 <button
                                                     onClick={() => setShowEMIModal(true)}
-                                                    className="flex flex-col sm:flex-row items-center sm:items-center gap-2 sm:gap-3 text-[10px] sm:text-sm text-gray-400 bg-gray-950/40 p-3 sm:p-3 rounded-xl border border-gray-800/50 hover:bg-gray-800/50 hover:border-gray-700 transition-all font-bold uppercase tracking-widest"
+                                                    className="flex flex-col sm:flex-row items-center sm:items-center gap-2 sm:gap-3 text-[10px] sm:text-sm text-gray-500 bg-surface p-3 sm:p-3 rounded-xl border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-all font-bold uppercase tracking-widest"
                                                 >
-                                                    <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />
+                                                    <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" />
                                                     <span className="underline decoration-dotted underline-offset-2">Buy with EMI</span>
                                                 </button>
                                             </motion.div>
@@ -327,19 +327,19 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                             />
 
                             {/* Actions */}
-                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-auto pt-6 border-t border-gray-800">
+                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-auto pt-6 border-t border-border">
                                 <div className="w-full">
                                     <div className="flex items-center gap-2.5 mb-4">
-                                        <div className={`h-2 w-2 rounded-full ${isInStock ? 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]' : 'bg-gray-500'}`} />
-                                        <span className={`text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] ${isInStock ? 'text-white' : 'text-gray-400'}`}>
+                                        <div className={`h-2 w-2 rounded-full ${isInStock ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' : 'bg-gray-400'}`} />
+                                        <span className={`text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] ${isInStock ? 'text-green-600 dark:text-green-400' : 'text-gray-500'}`}>
                                             {isInStock ? 'In Stock — Ships Today' : 'Out of Stock'}
                                         </span>
                                     </div>
 
                                     {isInStock && product.stock > 0 && product.stock < 10 && (
-                                        <div className="bg-white/10 border border-white/20 p-2.5 sm:p-3 rounded-xl mb-4 flex items-center gap-3">
-                                            <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                                            <p className="text-white text-[10px] sm:text-xs font-black uppercase tracking-wider">Hurry! Only {product.stock} items remaining</p>
+                                        <div className="bg-red-500/5 border border-red-500/20 p-2.5 sm:p-3 rounded-xl mb-4 flex items-center gap-3">
+                                            <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
+                                            <p className="text-red-600 dark:text-red-400 text-[10px] sm:text-xs font-black uppercase tracking-wider">Hurry! Only {product.stock} items remaining</p>
                                         </div>
                                     )}
 
@@ -349,8 +349,8 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                             disabled={!isInStock}
                                             onClick={() => handleAddToCart(product)}
                                             className={`flex-1 font-black py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base uppercase tracking-widest ${isInStock
-                                                ? "bg-white text-black hover:bg-gray-100"
-                                                : "bg-gray-800 text-gray-600 cursor-not-allowed"
+                                                ? "bg-foreground text-background hover:opacity-90 active:scale-95"
+                                                : "bg-gray-200 dark:bg-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed"
                                                 }`}
                                         >
                                             <ShoppingCart className="w-5 h-5" />
@@ -360,8 +360,8 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                             whileTap={isInStock ? { scale: 0.98 } : {}}
                                             disabled={!isInStock}
                                             className={`flex-1 font-black py-4 rounded-xl transition-all shadow-lg text-sm sm:text-base uppercase tracking-widest ${isInStock
-                                                ? "bg-white text-black hover:bg-gray-200 shadow-white/20"
-                                                : "bg-gray-900 text-gray-700 border border-gray-800 cursor-not-allowed"
+                                                ? "bg-surface text-foreground border border-border hover:bg-gray-50 dark:hover:bg-gray-800"
+                                                : "bg-surface text-gray-400 border border-border cursor-not-allowed"
                                                 }`}
                                         >
                                             {isInStock ? "Checkout Now" : "Unavailable"}
@@ -375,19 +375,19 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
 
                 {/* Frequently Bought Together Section */}
                 {fbtProducts.length > 0 && (
-                    <section className="mb-12 bg-gray-900/50 p-6 rounded-2xl border border-gray-800">
-                        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                            <span className="text-white">✨</span> Frequently Bought Together
+                    <section className="mb-12 bg-surface p-6 rounded-2xl border border-border transition-colors duration-300">
+                        <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
+                            <span className="text-foreground">✨</span> Frequently Bought Together
                         </h2>
                         <div className="flex flex-col lg:flex-row items-center gap-8">
                             {/* Product Chain */}
                             <div className="flex flex-wrap items-center justify-center gap-4 flex-1">
                                 {/* Main Product */}
-                                <div className="relative w-32 h-32 bg-gray-800 rounded-xl border border-gray-700 p-2">
+                                <div className="relative w-32 h-32 bg-background rounded-xl border border-border p-2">
                                     <div className="relative w-full h-full">
                                         <Image src={product.image} alt={product.name} fill className="object-contain" />
                                     </div>
-                                    <div className="absolute -bottom-2 -right-2 bg-white text-black text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    <div className="absolute -bottom-2 -right-2 bg-foreground text-background text-[10px] font-bold px-2 py-0.5 rounded-full">
                                         Main
                                     </div>
                                 </div>
@@ -395,12 +395,12 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                                 {/* Plus Icons and Other Products */}
                                 {fbtProducts.map((p, i) => (
                                     <div key={p.id} className="flex items-center gap-4">
-                                        <Plus className="text-gray-600 w-6 h-6" />
-                                        <Link href={`/product/${p.id}`} className="relative w-28 h-28 bg-gray-800 rounded-xl border border-gray-700 p-2 hover:border-white transition-colors group">
+                                        <Plus className="text-gray-400 w-6 h-6" />
+                                        <Link href={`/product/${p.id}`} className="relative w-28 h-28 bg-background rounded-xl border border-border p-2 hover:border-foreground transition-all group">
                                             <div className="relative w-full h-full">
                                                 <Image src={p.image} alt={p.name} fill className="object-contain group-hover:scale-105 transition-transform" />
                                             </div>
-                                            <div className="absolute top-0 right-0 bg-gray-900/90 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-bl-lg">
+                                            <div className="absolute top-0 right-0 bg-foreground/90 text-background text-[10px] font-bold px-1.5 py-0.5 rounded-bl-lg">
                                                 ₹{p.price}
                                             </div>
                                         </Link>
@@ -409,17 +409,17 @@ export default function ProductDetail({ initialProduct, initialRelatedProducts }
                             </div>
 
                             {/* Bundle Action */}
-                            <div className="w-full lg:w-72 bg-gray-950 p-5 rounded-xl border border-gray-800 flex flex-col gap-4">
+                            <div className="w-full lg:w-72 bg-surface p-5 rounded-xl border border-border flex flex-col gap-4 shadow-sm">
                                 <div className="space-y-1">
-                                    <p className="text-gray-400 text-sm">Total price for {fbtProducts.length + 1} items:</p>
-                                    <p className="text-2xl font-black text-white">₹{bundlePrice.toLocaleString()}</p>
+                                    <p className="text-gray-500 text-sm">Total price for {fbtProducts.length + 1} items:</p>
+                                    <p className="text-2xl font-black text-foreground">₹{bundlePrice.toLocaleString()}</p>
                                 </div>
                                 <button
                                     onClick={() => {
                                         addToCart(product);
                                         fbtProducts.forEach(p => addToCart(p));
                                     }}
-                                    className="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
+                                    className="w-full bg-foreground text-background font-bold py-3 rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2"
                                 >
                                     Add All to Cart
                                 </button>

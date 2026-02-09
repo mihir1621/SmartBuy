@@ -162,22 +162,22 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
         <>
             <AnnouncementBar />
 
-            <nav className="sticky top-0 z-30 bg-black/90 backdrop-blur-md shadow-sm border-b border-gray-800">
+            <nav className="sticky top-0 z-30 bg-background/90 backdrop-blur-md shadow-sm border-b border-border transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-14 gap-4">
                         {/* Logo */}
                         <Link href="/" className="flex-shrink-0 flex items-center gap-2 group">
-                            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center transition-all group-hover:scale-105">
-                                <span className="text-black font-bold text-lg">S</span>
+                            <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center transition-all group-hover:scale-105">
+                                <span className="text-background font-bold text-lg">S</span>
                             </div>
-                            <span className="font-bold text-xl tracking-tight text-white hidden sm:block">SmartBuy</span>
+                            <span className="font-bold text-xl tracking-tight text-foreground hidden sm:block">SmartBuy</span>
                         </Link>
 
                         {/* Location Selector (Desktop) */}
-                        <div className="hidden lg:flex flex-col justify-center ml-2 cursor-pointer hover:bg-gray-800 px-2 py-1 rounded-lg transition-all border border-transparent hover:border-gray-700" onClick={() => setShowLocationModal(true)}>
-                            <span className="text-gray-400 text-[8px] uppercase font-bold leading-none mb-0.5">Deliver to</span>
-                            <div className="flex items-center gap-1 font-semibold text-gray-100 text-xs leading-none">
-                                <MapPin className="w-3 h-3 text-white" />
+                        <div className="hidden lg:flex flex-col justify-center ml-2 cursor-pointer hover:bg-surface px-2 py-1 rounded-lg transition-all border border-transparent hover:border-border" onClick={() => setShowLocationModal(true)}>
+                            <span className="text-gray-500 text-[8px] uppercase font-bold leading-none mb-0.5">Deliver to</span>
+                            <div className="flex items-center gap-1 font-semibold text-foreground text-xs leading-none">
+                                <MapPin className="w-3 h-3 text-foreground" />
                                 <span className="truncate max-w-[80px]">{location?.city || "Select"}</span>
                             </div>
                         </div>
@@ -193,13 +193,13 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                     value={searchQuery}
                                     onChange={handleSearch}
                                     placeholder="Search..."
-                                    className="w-full pl-2 sm:pl-3 pr-7 sm:pr-8 py-1.5 bg-gray-900 border border-gray-700 rounded-lg focus:bg-black focus:ring-1 focus:ring-white focus:border-white transition-all text-[12px] sm:text-sm text-white outline-none shadow-sm placeholder-gray-500"
+                                    className="w-full pl-2 sm:pl-3 pr-7 sm:pr-8 py-1.5 bg-surface border border-border rounded-lg focus:bg-background focus:ring-1 focus:ring-foreground focus:border-foreground transition-all text-[12px] sm:text-sm text-foreground outline-none shadow-sm placeholder-gray-500"
                                 />
                                 <div className="absolute right-0 top-0 h-full flex items-center pr-1 sm:pr-1.5 gap-1">
-                                    <button onClick={handleVoiceSearch} className="text-gray-400 p-1 hover:text-white transition-colors">
+                                    <button onClick={handleVoiceSearch} className="text-gray-500 p-1 hover:text-foreground transition-colors">
                                         <Mic className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                     </button>
-                                    <button className="text-gray-400 p-1">
+                                    <button className="text-gray-500 p-1">
                                         <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                     </button>
                                 </div>
@@ -214,24 +214,24 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                     value={searchQuery}
                                     onChange={handleSearch}
                                     placeholder="Search products..."
-                                    className="w-full pl-3 pr-20 py-1.5 bg-gray-900 border border-gray-700 rounded-lg focus:bg-black focus:ring-1 focus:ring-white focus:border-white transition-all text-sm text-white outline-none shadow-sm placeholder-gray-500"
+                                    className="w-full pl-3 pr-20 py-1.5 bg-surface border border-border rounded-lg focus:bg-background focus:ring-1 focus:ring-foreground focus:border-foreground transition-all text-sm text-foreground outline-none shadow-sm placeholder-gray-500"
                                 />
                                 <div className="absolute right-0 top-0 h-full flex items-center pr-1.5 gap-1">
                                     <button
                                         onClick={() => fileInputRef.current?.click()}
-                                        className="p-1.5 text-gray-400 hover:text-white transition-colors"
+                                        className="p-1.5 text-gray-500 hover:text-foreground transition-colors"
                                         title="Search by image"
                                     >
                                         <Camera className="w-4 h-4" />
                                     </button>
                                     <button
                                         onClick={handleVoiceSearch}
-                                        className="p-1.5 text-gray-400 hover:text-white transition-colors"
+                                        className="p-1.5 text-gray-500 hover:text-foreground transition-colors"
                                         title="Search by voice"
                                     >
                                         <Mic className="w-4 h-4" />
                                     </button>
-                                    <button className="bg-gray-100 text-black p-1.5 rounded-md hover:bg-white hover:text-black transition-all">
+                                    <button className="bg-foreground text-background p-1.5 rounded-md hover:opacity-90 transition-all shadow-sm">
                                         <Search className="w-4 h-4" />
                                     </button>
                                 </div>
@@ -247,18 +247,45 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
 
                         <div className="flex items-center gap-1 sm:gap-1.5">
                             <ThemeToggle />
+
+                            <Link href="/wishlist" className="relative p-1 sm:p-1.5 text-foreground hover:bg-surface rounded-lg transition-all flex items-center gap-1.5">
+                                <Heart className={`w-4 h-4 ${wishlist.length > 0 ? 'text-red-500 fill-red-500' : ''}`} />
+                                <span className="text-xs font-semibold hidden lg:block">Wishlist</span>
+                            </Link>
+
+                            <motion.button
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => setIsCartOpen(true)}
+                                className="p-1 sm:p-1.5 px-2 sm:px-3 bg-foreground text-background rounded-lg hover:opacity-90 transition-all flex items-center gap-1 sm:gap-1.5 shadow-sm"
+                            >
+                                <div className="relative">
+                                    <ShoppingBag className="w-4 h-4" />
+                                    {cartCount > 0 && (
+                                        <span className="absolute -top-2 -right-2 bg-red-500 text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center text-white ring-2 ring-background">
+                                            {cartCount}
+                                        </span>
+                                    )}
+                                </div>
+                                <span className="text-xs font-bold hidden lg:block">Cart</span>
+                            </motion.button>
+
                             {user ? (
                                 <div className="relative">
                                     <button
                                         onClick={() => setIsProfileOpen(!isProfileOpen)}
-                                        className="flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all"
+                                        className="flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 text-gray-600 dark:text-gray-300 hover:bg-surface rounded-lg transition-all"
                                     >
-                                        <div className="p-1 sm:p-1.5 text-gray-300 font-bold text-xs flex items-center gap-1.5">
+                                        <div className="p-1 sm:p-1.5 font-bold text-xs flex items-center gap-1.5">
                                             <User className="w-4 h-4" />
                                             <span className="hidden lg:block truncate max-w-[80px]">
                                                 {user.displayName || user.name || 'User'}
                                             </span>
-                                            <ChevronDown className={`w-3 h-3 transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} />
+                                            <motion.div
+                                                animate={{ rotate: isProfileOpen ? 180 : 0 }}
+                                                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                            >
+                                                <ChevronDown className="w-3 h-3" />
+                                            </motion.div>
                                         </div>
                                     </button>
 
@@ -273,33 +300,33 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                                                    className="absolute right-0 top-full mt-2 w-56 bg-gray-900 border border-gray-800 rounded-xl shadow-xl z-50 overflow-hidden"
+                                                    className="absolute right-0 top-full mt-2 w-56 bg-surface border border-border rounded-xl shadow-xl z-50 overflow-hidden"
                                                 >
-                                                    <div className="p-4 border-b border-gray-800">
-                                                        <p className="text-sm font-bold text-white truncate">{user.displayName || user.name || 'User'}</p>
-                                                        <p className="text-xs text-gray-400 truncate">{user.email}</p>
+                                                    <div className="p-4 border-b border-border">
+                                                        <p className="text-sm font-bold text-foreground truncate">{user.displayName || user.name || 'User'}</p>
+                                                        <p className="text-xs text-gray-500 truncate">{user.email}</p>
                                                     </div>
                                                     <div className="p-1">
-                                                        <Link href="/orders" className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 rounded-lg transition-colors" onClick={() => setIsProfileOpen(false)}>
+                                                        <Link href="/orders" className="flex items-center gap-3 px-3 py-2 text-sm text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" onClick={() => setIsProfileOpen(false)}>
                                                             <Package className="w-4 h-4" />
                                                             Track Orders
                                                         </Link>
-                                                        <Link href="/wishlist" className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 rounded-lg transition-colors" onClick={() => setIsProfileOpen(false)}>
+                                                        <Link href="/wishlist" className="flex items-center gap-3 px-3 py-2 text-sm text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" onClick={() => setIsProfileOpen(false)}>
                                                             <Heart className="w-4 h-4" />
                                                             Wishlist
                                                         </Link>
-                                                        <Link href="/addresses" className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 rounded-lg transition-colors" onClick={() => setIsProfileOpen(false)}>
+                                                        <Link href="/addresses" className="flex items-center gap-3 px-3 py-2 text-sm text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" onClick={() => setIsProfileOpen(false)}>
                                                             <MapPin className="w-4 h-4" />
                                                             Addresses
                                                         </Link>
-                                                        <Link href="/support" className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 rounded-lg transition-colors" onClick={() => setIsProfileOpen(false)}>
+                                                        <Link href="/support" className="flex items-center gap-3 px-3 py-2 text-sm text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" onClick={() => setIsProfileOpen(false)}>
                                                             <HelpCircle className="w-4 h-4" />
                                                             Help Center
                                                         </Link>
-                                                        <div className="h-px bg-gray-800 my-1" />
+                                                        <div className="h-px bg-border my-1" />
                                                         <button
                                                             onClick={handleLogout}
-                                                            className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-400 hover:bg-white/10 rounded-lg transition-colors"
+                                                            className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-colors"
                                                         >
                                                             <LogOut className="w-4 h-4" />
                                                             Sign Out
@@ -311,32 +338,11 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                     </AnimatePresence>
                                 </div>
                             ) : (
-                                <Link href="/login" className="p-1 sm:p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
+                                <Link href="/login" className="p-1 sm:p-1.5 text-foreground hover:bg-surface rounded-lg transition-all flex items-center gap-1.5">
                                     <User className="w-4 h-4" />
                                     <span className="text-xs font-semibold hidden lg:block">Sign In</span>
                                 </Link>
                             )}
-
-                            <Link href="/wishlist" className="relative p-1 sm:p-1.5 text-gray-300 hover:bg-gray-800 rounded-lg transition-all flex items-center gap-1.5">
-                                <Heart className={`w-4 h-4 ${wishlist.length > 0 ? 'text-white fill-white' : ''}`} />
-                                <span className="text-xs font-semibold hidden lg:block">Wishlist</span>
-                            </Link>
-
-                            <motion.button
-                                whileTap={{ scale: 0.98 }}
-                                onClick={() => setIsCartOpen(true)}
-                                className="p-1 sm:p-1.5 px-2 sm:px-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-all flex items-center gap-1 sm:gap-1.5"
-                            >
-                                <div className="relative">
-                                    <ShoppingBag className="w-4 h-4" />
-                                    {cartCount > 0 && (
-                                        <span className="absolute -top-2 -right-2 bg-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center text-black">
-                                            {cartCount}
-                                        </span>
-                                    )}
-                                </div>
-                                <span className="text-xs font-bold hidden lg:block">Cart</span>
-                            </motion.button>
                         </div>
                     </div>
                 </div>
@@ -344,11 +350,11 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
 
 
                 {/* Compact Sub-nav */}
-                <div className="bg-black border-t border-gray-800 py-1.5 overflow-hidden group/nav">
+                <div className="bg-surface border-t border-border py-1.5 overflow-hidden group/nav">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                         <button
                             onClick={scrollLeft}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 p-1 rounded-full text-gray-400 hover:text-white block"
+                            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-background/80 p-1 rounded-full text-foreground hover:shadow-md block border border-border"
                         >
                             <ChevronLeft className="w-4 h-4" />
                         </button>
@@ -361,7 +367,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                 <Link
                                     key={cat}
                                     href={`/?category=${cat}`}
-                                    className={`py-1 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors ${selectedCategory === cat ? 'text-white border-b-2 border-white' : 'text-gray-400 hover:text-white'}`}
+                                    className={`py-1 text-[10px] font-extrabold uppercase tracking-widest whitespace-nowrap transition-all border-b-2 ${selectedCategory === cat ? 'text-foreground border-foreground' : 'text-gray-500 border-transparent hover:text-foreground'}`}
                                 >
                                     {cat}
                                 </Link>
@@ -370,7 +376,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
 
                         <button
                             onClick={scrollRight}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 p-1 rounded-full text-gray-400 hover:text-white block"
+                            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-background/80 p-1 rounded-full text-foreground hover:shadow-md block border border-border"
                         >
                             <ChevronRight className="w-4 h-4" />
                         </button>
@@ -389,17 +395,17 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setShowLocationModal(false)}
-                            className="absolute inset-0 bg-gray-900/40 backdrop-blur-sm"
+                            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
                         />
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
-                            className="relative bg-gray-900 rounded-2xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col border border-gray-800"
+                            className="relative bg-background rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden flex flex-col border border-border"
                         >
-                            <div className="px-6 py-4 flex justify-between items-center border-b border-gray-800">
-                                <h3 className="font-bold text-base text-white">Delivery Address</h3>
-                                <button onClick={() => setShowLocationModal(false)} className="p-1.5 hover:bg-gray-800 rounded-full transition-colors">
+                            <div className="px-6 py-4 flex justify-between items-center border-b border-border">
+                                <h3 className="font-bold text-base text-foreground">Delivery Address</h3>
+                                <button onClick={() => setShowLocationModal(false)} className="p-1.5 hover:bg-surface rounded-full transition-colors">
                                     <X className="w-4 h-4 text-gray-400" />
                                 </button>
                             </div>
@@ -408,14 +414,14 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                 <button
                                     onClick={handleDetectLocation}
                                     disabled={isDetecting}
-                                    className="w-full flex items-center justify-center gap-2 bg-white text-black font-bold py-2.5 rounded-lg hover:bg-gray-200 transition-all shadow-sm active:scale-98 disabled:opacity-50 text-sm"
+                                    className="w-full flex items-center justify-center gap-2 bg-foreground text-background font-bold py-2.5 rounded-lg hover:opacity-90 transition-all shadow-sm active:scale-98 disabled:opacity-50 text-sm"
                                 >
                                     {isDetecting ? <Loader2 className="w-4 h-4 animate-spin" /> : <MapPin className="w-4 h-4" />}
                                     {isDetecting ? "Detecting..." : "Detect Location"}
                                 </button>
 
-                                <div className="relative h-px bg-gray-800 my-1">
-                                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-3 bg-gray-900 text-[9px] font-bold text-gray-500 uppercase tracking-widest">Or Search</span>
+                                <div className="relative h-px bg-border my-1">
+                                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-3 bg-background text-[9px] font-bold text-gray-500 uppercase tracking-widest">Or Search</span>
                                 </div>
 
                                 <div className="flex flex-col gap-3">
@@ -426,7 +432,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                             placeholder="Enter city..."
                                             value={locationSearch}
                                             onChange={(e) => setLocationSearch(e.target.value)}
-                                            className="w-full pl-9 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:bg-black focus:ring-1 focus:ring-white transition-all text-sm text-white outline-none placeholder-gray-500"
+                                            className="w-full pl-9 pr-4 py-2 bg-surface border border-border rounded-lg focus:bg-background focus:ring-1 focus:ring-foreground transition-all text-sm text-foreground outline-none placeholder-gray-500"
                                         />
                                     </div>
 
@@ -435,9 +441,9 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                             <button
                                                 key={index}
                                                 onClick={() => handleCitySelect(item)}
-                                                className="w-full p-2.5 text-left hover:bg-gray-800 rounded-lg transition-all border border-transparent group"
+                                                className="w-full p-2.5 text-left hover:bg-surface rounded-lg transition-all border border-transparent group"
                                             >
-                                                <p className="font-semibold text-sm text-gray-200 group-hover:text-white">{item.city}</p>
+                                                <p className="font-semibold text-sm text-foreground group-hover:text-primary">{item.city}</p>
                                                 <p className="text-[10px] text-gray-500 font-medium uppercase">{item.state}</p>
                                             </button>
                                         ))}
@@ -454,8 +460,9 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
                 .custom-scrollbar::-webkit-scrollbar { width: 4px; }
                 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-                .custom-scrollbar::-webkit-scrollbar-thumb { background: #F1F1F1; border-radius: 10px; }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #E5E7EB; }
+                .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+                .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
             `}</style>
         </>
     );

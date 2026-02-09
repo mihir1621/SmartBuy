@@ -1,4 +1,4 @@
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider, useTheme } from "next-themes";
 import "../styles/globals.css";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -7,10 +7,39 @@ import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { LocationProvider } from "@/context/LocationContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { HomeSkeleton, ProductDetailSkeleton, GenericSkeleton, OrderSkeleton, WishlistSkeleton } from "@/components/skeletons/PageSkeletons";
+
+function ThemeWrapper({ children, loading, getSkeleton }) {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  return (
+    <div className="relative min-h-screen flex flex-col font-sans text-gray-900 dark:text-gray-100 bg-background overflow-hidden">
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.div
+          key={mounted ? theme : 'initial'}
+          initial={{ clipPath: 'circle(0% at 50% 50%)' }}
+          animate={{ clipPath: 'circle(150% at 50% 50%)' }}
+          transition={{
+            duration: 0.6,
+            ease: [0.19, 1, 0.22, 1] // Custom snappy expo ease
+          }}
+          className="flex-grow flex flex-col w-full"
+        >
+          {loading ? getSkeleton() : children}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -41,7 +70,6 @@ export default function App({ Component, pageProps }) {
 
   const getSkeleton = () => {
     if (!targetPath) return <GenericSkeleton />;
-    // Handle query parameters by checking the base path
     const path = targetPath.split('?')[0];
 
     if (path === '/') return <HomeSkeleton />;
@@ -59,9 +87,9 @@ export default function App({ Component, pageProps }) {
         <LocationProvider>
           <WishlistProvider>
             <CartProvider>
-              <div className="relative min-h-screen flex flex-col font-sans text-gray-900 dark:text-gray-100 bg-[var(--background)] transition-colors duration-300">
-                {loading ? getSkeleton() : <Component {...pageProps} />}
-              </div>
+              <ThemeWrapper loading={loading} getSkeleton={getSkeleton}>
+                <Component {...pageProps} />
+              </ThemeWrapper>
               <ToastContainer position="bottom-right" autoClose={3000} theme="colored" />
             </CartProvider>
           </WishlistProvider>

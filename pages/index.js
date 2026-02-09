@@ -104,7 +104,7 @@ export default function Home({ initialProducts }) {
 
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
       <Head>
         <title>SmartBuy | Premium Online Shopping</title>
         <meta name="description" content="Shop the best brands in Fashion, Electronics, Home & More." />
@@ -129,13 +129,13 @@ export default function Home({ initialProducts }) {
             {/* Sorting Bar */}
             <div className="flex justify-between items-center mb-6 gap-4">
               <div className="flex items-center gap-3 overflow-hidden">
-                <h2 className="text-lg sm:text-xl font-bold text-white truncate">
+                <h2 className="text-lg sm:text-xl font-bold text-foreground truncate">
                   {selectedCategory === "All" ? (searchQuery ? `Results for "${searchQuery}"` : "All Products") : selectedCategory}
                 </h2>
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="text-gray-400 hover:text-white transition-colors p-1"
+                    className="text-gray-500 hover:text-foreground transition-colors p-1"
                     title="Clear Search"
                   >
                     <X size={20} />
@@ -143,12 +143,12 @@ export default function Home({ initialProducts }) {
                 )}
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
-                <span className="text-sm text-gray-400 hidden sm:inline">Sort by:</span>
+                <span className="text-sm text-gray-500 hidden sm:inline">Sort by:</span>
                 <div className="relative">
                   <select
                     value={sortOption}
                     onChange={(e) => setSortOption(e.target.value)}
-                    className="appearance-none bg-gray-900 border border-gray-800 text-gray-300 py-1.5 sm:py-2 pl-3 sm:pl-4 pr-7 sm:pr-8 rounded-lg text-xs sm:text-sm font-medium focus:outline-none focus:ring-1 focus:ring-white cursor-pointer"
+                    className="appearance-none bg-surface border border-border text-foreground py-1.5 sm:py-2 pl-3 sm:pl-4 pr-7 sm:pr-8 rounded-lg text-xs sm:text-sm font-medium focus:outline-none focus:ring-1 focus:ring-foreground cursor-pointer"
                   >
                     <option value="popularity">Popularity</option>
                     <option value="newest">Newest Arrivals</option>
@@ -165,22 +165,22 @@ export default function Home({ initialProducts }) {
             {(selectedCategory !== "All" || selectedBrands.length > 0 || minRating > 0 || selectedGender !== "All") && (
               <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6">
                 {selectedCategory !== "All" && (
-                  <button onClick={() => setSelectedCategory("All")} className="flex items-center gap-1.5 sm:gap-2 bg-white/10 border border-white/20 text-white px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-white/20 transition-all">
+                  <button onClick={() => setSelectedCategory("All")} className="flex items-center gap-1.5 sm:gap-2 bg-surface border border-border text-foreground px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-gray-200 dark:hover:bg-gray-800 transition-all">
                     {selectedCategory} <X size={10} className="sm:size-[12px]" />
                   </button>
                 )}
                 {selectedGender !== "All" && (
-                  <button onClick={() => setSelectedGender("All")} className="flex items-center gap-1.5 sm:gap-2 bg-gray-800 border border-gray-700 text-gray-300 px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-gray-700 transition-all">
+                  <button onClick={() => setSelectedGender("All")} className="flex items-center gap-1.5 sm:gap-2 bg-surface border border-border text-foreground px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-gray-200 dark:hover:bg-gray-800 transition-all">
                     {selectedGender} <X size={10} className="sm:size-[12px]" />
                   </button>
                 )}
                 {selectedBrands.map(brand => (
-                  <button key={brand} onClick={() => setSelectedBrands(selectedBrands.filter(b => b !== brand))} className="flex items-center gap-1.5 sm:gap-2 bg-gray-800 border border-gray-700 text-gray-300 px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-gray-700 transition-all">
+                  <button key={brand} onClick={() => setSelectedBrands(selectedBrands.filter(b => b !== brand))} className="flex items-center gap-1.5 sm:gap-2 bg-surface border border-border text-foreground px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-gray-200 dark:hover:bg-gray-800 transition-all">
                     {brand} <X size={10} className="sm:size-[12px]" />
                   </button>
                 ))}
                 {minRating > 0 && (
-                  <button onClick={() => setMinRating(0)} className="flex items-center gap-1.5 sm:gap-2 bg-white/10 border border-white/20 text-white px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-white/20 transition-all">
+                  <button onClick={() => setMinRating(0)} className="flex items-center gap-1.5 sm:gap-2 bg-background border border-border text-foreground px-2.5 sm:px-3 py-1 sm:1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-surface transition-all">
                     {minRating}+ Stars <X size={10} className="sm:size-[12px]" />
                   </button>
                 )}
@@ -193,11 +193,11 @@ export default function Home({ initialProducts }) {
                 {displayedCategories.map((category) => (
                   <section key={category} className="space-y-3 sm:space-y-4">
                     <div className="flex items-center gap-2 sm:gap-4">
-                      <h2 className="text-xl sm:text-2xl font-bold text-white relative whitespace-nowrap">
+                      <h2 className="text-xl sm:text-2xl font-bold text-foreground relative whitespace-nowrap">
                         {category}
-                        <span className="absolute -bottom-1.5 sm:-bottom-2 left-0 w-1/3 h-0.5 sm:h-1 bg-white rounded-full"></span>
+                        <span className="absolute -bottom-1.5 sm:-bottom-2 left-0 w-1/3 h-0.5 sm:h-1 bg-foreground rounded-full"></span>
                       </h2>
-                      <div className="h-px bg-gray-800 flex-grow mt-1 sm:mt-1"></div>
+                      <div className="h-px bg-border flex-grow mt-1 sm:mt-1"></div>
                     </div>
 
                     <motion.div
@@ -212,10 +212,10 @@ export default function Home({ initialProducts }) {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-12 sm:py-20 bg-gray-900 rounded-xl border border-gray-800 px-4">
+              <div className="text-center py-12 sm:py-20 bg-surface rounded-xl border border-border px-4 transition-colors duration-300">
                 <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🔍</div>
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">No results found</h3>
-                <p className="text-gray-400 text-base sm:text-lg mb-4 sm:mb-6">Try adjusting your filters or search terms.</p>
+                <h3 className="text-lg sm:text-xl font-bold text-foreground mb-1 sm:mb-2">No results found</h3>
+                <p className="text-gray-500 text-base sm:text-lg mb-4 sm:mb-6">Try adjusting your filters or search terms.</p>
                 <button
                   onClick={() => {
                     setSelectedCategory("All");
@@ -224,7 +224,7 @@ export default function Home({ initialProducts }) {
                     setPriceRange([0, globalMaxPrice]);
                     setSelectedGender("All");
                   }}
-                  className="px-5 sm:px-6 py-2 bg-white text-black rounded-lg hover:bg-gray-200 font-medium transition-colors text-sm sm:text-base"
+                  className="px-5 sm:px-6 py-2 bg-foreground text-background rounded-lg hover:opacity-90 font-medium transition-all text-sm sm:text-base border border-border"
                 >
                   Clear all filters
                 </button>
