@@ -10,6 +10,19 @@ export default async function handler(req, res) {
         return res.status(405).end(`Method ${req.method} Not Allowed`);
     }
 
+    // Retry helper for DB operations
+    const runWithRetry = async (fn, retries = 3) => {
+        for (let i = 0; i < retries; i++) {
+            try {
+                return await fn();
+            } catch (error) {
+                if (i === retries - 1) throw error;
+                console.warn(`DB Operation failed, retrying (${i + 1}/${retries})...`, error.message);
+                await new Promise(res => setTimeout(res, 1000 * (i + 1))); // Exponential backoff
+            }
+        }
+    };
+
     try {
         const session = await getServerSession(req, res, authOptions);
         const { customerInfo, items, totalAmount, userId: firebaseUid } = req.body;
@@ -46,10 +59,10 @@ export default async function handler(req, res) {
         const productsToUpdate = [];
 
         for (const item of items) {
-            const product = await prisma.product.findUnique({
+            const product = await runWithRetry(() => prisma.product.findUnique({
                 where: { id: parseInt(item.id) },
                 select: { id: true, stock: true, name: true, price: true }
-            });
+            }));
 
             if (!product) {
                 return res.status(404).json({ error: `Product not found: ${item.id}. Your cart may contain outdated items. Please clear your cart and try again.` });
@@ -96,7 +109,7 @@ export default async function handler(req, res) {
         }
 
         // 3. Execute DB Transaction (Deduct stock and create records)
-        const order = await prisma.$transaction(async (tx) => {
+        const order = await runWithRetry(() => prisma.$transaction(async (tx) => {
             // Update stock
             for (const p of productsToUpdate) {
                 await tx.product.update({
@@ -131,8 +144,8 @@ export default async function handler(req, res) {
                 }
             });
         }, {
-            timeout: 10000 // 10 seconds timeout for the DB transaction
-        });
+            timeout: 25000 // Increased timeout for the DB transaction
+        }));
 
         res.status(201).json({
             message: 'Order created successfully',
