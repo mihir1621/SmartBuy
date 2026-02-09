@@ -8,5 +8,6 @@ module.exports = {
   theme: {
     extend: {}, // Customize theme here
   },
+  darkMode: 'class',
   plugins: [], // Add Tailwind plugins if needed
 };

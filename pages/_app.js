@@ -1,3 +1,4 @@
+import { ThemeProvider } from "next-themes";
 import "../styles/globals.css";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -53,17 +54,19 @@ export default function App({ Component, pageProps }) {
   };
 
   return (
-    <AuthProvider>
-      <LocationProvider>
-        <WishlistProvider>
-          <CartProvider>
-            <div className="relative min-h-screen flex flex-col font-sans text-gray-900">
-              {loading ? getSkeleton() : <Component {...pageProps} />}
-            </div>
-            <ToastContainer position="bottom-right" autoClose={3000} />
-          </CartProvider>
-        </WishlistProvider>
-      </LocationProvider>
-    </AuthProvider>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <AuthProvider>
+        <LocationProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <div className="relative min-h-screen flex flex-col font-sans text-gray-900 dark:text-gray-100 bg-[var(--background)] transition-colors duration-300">
+                {loading ? getSkeleton() : <Component {...pageProps} />}
+              </div>
+              <ToastContainer position="bottom-right" autoClose={3000} theme="colored" />
+            </CartProvider>
+          </WishlistProvider>
+        </LocationProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }

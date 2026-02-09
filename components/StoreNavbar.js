@@ -9,6 +9,7 @@ import AnnouncementBar from './AnnouncementBar';
 import { useState, useEffect, useRef } from 'react';
 import { INDIAN_CITIES } from '@/data/indianCities';
 import { useRouter } from 'next/router';
+import ThemeToggle from './ThemeToggle';
 
 
 export default function StoreNavbar({ onSearch, categories = [], selectedCategory, setSelectedCategory }) {
@@ -245,6 +246,7 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                         </div>
 
                         <div className="flex items-center gap-1 sm:gap-1.5">
+                            <ThemeToggle />
                             {user ? (
                                 <div className="relative">
                                     <button
