@@ -65,7 +65,16 @@ export function AuthProvider({ children }) {
             }
         }).catch((error) => {
             console.error("Redirect Auth Error:", error);
-            if (error.code !== 'auth/redirect-cancelled-by-user') {
+            if (error.code === 'auth/unauthorized-domain') {
+                // Try to get domain safely
+                let currentDomain = "YOUR_DOMAIN";
+                if (typeof window !== "undefined") currentDomain = window.location.hostname;
+
+                toast.error(`DOMAIN UNAUTHORIZED: Go to Firebase Console > Auth > Settings > add "${currentDomain}"`, {
+                    autoClose: 20000,
+                    className: "font-bold border-2 border-red-500 bg-red-50 text-red-900"
+                });
+            } else if (error.code !== 'auth/redirect-cancelled-by-user') {
                 toast.error("Login failed: " + error.message);
             }
         });
