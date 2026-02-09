@@ -60,15 +60,26 @@ export default async function handler(req, res) {
         if (role === 'SELLER') assignedRole = 'SELLER';
         if (role === 'ADMIN') assignedRole = 'ADMIN'; // Allowing for demo/dev purposes
 
-        const newUser = await prisma.user.create({
-            data: {
-                name: name || 'New User',
-                email: email,
-                role: assignedRole,
-                // image: image || null, // Image field does not exist in User schema
-                phone: `uid_${uid}`, // Temporary placeholder for unique phone if schema requires it
+        const newUser = await (async () => {
+            for (let i = 0; i < 3; i++) {
+                try {
+                    return await prisma.user.create({
+                        data: {
+                            name: name || 'New User',
+                            email: email,
+                            role: assignedRole,
+                            phone: `uid_${uid}`,
+                        }
+                    });
+                } catch (e) {
+                    if (e.code === 'P2002') { // Unique constraint failed (race condition)
+                        return await prisma.user.findUnique({ where: { email } });
+                    }
+                    if (i === 2) throw e;
+                    await new Promise(r => setTimeout(r, 500));
+                }
             }
-        });
+        })();
 
         return res.status(201).json({
             id: newUser.id,
