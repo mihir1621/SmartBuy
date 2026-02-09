@@ -61,10 +61,20 @@ export default async function handler(req, res) {
         const productsToUpdate = [];
 
         for (const item of items) {
-            const product = await runWithRetry(() => prisma.product.findUnique({
-                where: { id: parseInt(item.id) },
-                select: { id: true, stock: true, name: true, price: true }
-            }));
+            let product;
+            // Retry product lookup manually to avoid context issues with helper wrapper
+            for (let i = 0; i < 5; i++) {
+                try {
+                    product = await prisma.product.findUnique({
+                        where: { id: parseInt(item.id) },
+                        select: { id: true, stock: true, name: true, price: true }
+                    });
+                    break;
+                } catch (e) {
+                    if (i === 4) throw e;
+                    await new Promise(r => setTimeout(r, 2000 * (i + 1))); // 2s, 4s, 6s...
+                }
+            }
 
             if (!product) {
                 return res.status(404).json({ error: `Product not found: ${item.id}. Your cart may contain outdated items. Please clear your cart and try again.` });
