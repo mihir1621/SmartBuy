@@ -56,6 +56,15 @@ export default function Login() {
         const timer = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % slides.length);
         }, 5000);
+
+        // Debugging Helper for Firebase Domains
+        if (typeof window !== 'undefined') {
+            const currentDomain = window.location.hostname;
+            console.log("%c FIREBASE DOMAIN CHECK ", "background: #222; color: #bada55; font-size: 20px;");
+            console.log(`Current Domain: "${currentDomain}"`);
+            console.log("Ensure this EXACT string is in Firebase Console > Authentication > Settings > Authorized Domains");
+        }
+
         return () => clearInterval(timer);
     }, []);
 

@@ -145,6 +145,16 @@ export function AuthProvider({ children }) {
                 }
                 return null; // Will redirect
             }
+            // Catch unauthorized domain on Popup flow too
+            if (error.code === 'auth/unauthorized-domain') {
+                let currentDomain = "UNKNOWN";
+                if (typeof window !== "undefined") currentDomain = window.location.hostname;
+                toast.error(`UNAUTHORIZED: You must add "${currentDomain}" to Firebase Console!`, {
+                    autoClose: false,
+                    className: "font-bold border-4 border-red-600 bg-white text-red-900",
+                });
+                console.error(`FIREBASE: ADD THIS DOMAIN: ${currentDomain}`);
+            }
             throw error;
         }
     };
