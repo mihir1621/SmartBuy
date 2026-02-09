@@ -67,13 +67,17 @@ export function AuthProvider({ children }) {
             console.error("Redirect Auth Error:", error);
             if (error.code === 'auth/unauthorized-domain') {
                 // Try to get domain safely
-                let currentDomain = "YOUR_DOMAIN";
+                let currentDomain = "UNKNOWN";
                 if (typeof window !== "undefined") currentDomain = window.location.hostname;
 
-                toast.error(`DOMAIN UNAUTHORIZED: Go to Firebase Console > Auth > Settings > add "${currentDomain}"`, {
-                    autoClose: 20000,
-                    className: "font-bold border-2 border-red-500 bg-red-50 text-red-900"
+                console.error(`FIREBASE DOMAIN ERROR: You must add "${currentDomain}" to your Authorized Domains list.`);
+                console.error(`Go here to fix: https://console.firebase.google.com/project/${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'YOUR_PROJECT_ID'}/authentication/settings`);
+
+                toast.error(`UNAUTHORIZED: You must add "${currentDomain}" to Firebase Console! Check Console for link.`, {
+                    autoClose: false,
+                    className: "font-bold border-4 border-red-600 bg-white text-red-900"
                 });
+
             } else if (error.code !== 'auth/redirect-cancelled-by-user') {
                 toast.error("Login failed: " + error.message);
             }
@@ -124,7 +128,21 @@ export function AuthProvider({ children }) {
             if (error.code === 'auth/popup-blocked' || error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
                 console.warn("Popup blocked, falling back to redirect...");
                 sessionStorage.setItem('auth_role_pending', role);
-                await signInWithRedirect(auth, provider);
+                try {
+                    await signInWithRedirect(auth, provider);
+                } catch (redirectError) {
+                    console.error("Redirect Init Error:", redirectError);
+                    if (redirectError.code === 'auth/unauthorized-domain') {
+                        let currentDomain = "UNKNOWN";
+                        if (typeof window !== "undefined") currentDomain = window.location.hostname;
+                        toast.error(`UNAUTHORIZED: You must add "${currentDomain}" to Firebase Console!`, {
+                            autoClose: false,
+                            className: "font-bold border-4 border-red-600 bg-white text-red-900",
+                        });
+                        console.error(`FIREBASE: ADD THIS DOMAIN: ${currentDomain}`);
+                    }
+                    throw redirectError;
+                }
                 return null; // Will redirect
             }
             throw error;
