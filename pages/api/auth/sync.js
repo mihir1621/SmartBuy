@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+import { withRetry } from '@/lib/db-retry';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -16,26 +17,23 @@ export default async function handler(req, res) {
         // 1. Try to find user by email with retry
         let user = null;
         if (email) {
-            for (let i = 0; i < 3; i++) {
-                try {
-                    user = await prisma.user.findUnique({ where: { email } });
-                    break;
-                } catch (e) {
-                    if (i === 2) throw e;
-                    await new Promise(r => setTimeout(r, 500));
-                }
-            }
+            user = await withRetry(
+                () => prisma.user.findUnique({ where: { email } }),
+                { operationName: 'Find User by Email' }
+            );
         }
 
-        // 2. If exists, return user data
         // 2. If exists, update role if needed and return user data
         if (user) {
             // Update role if explicitly requested and different (e.g. user toggles logging in as Seller)
             if (role && (role === 'SELLER' || role === 'ADMIN') && user.role !== role) {
-                user = await prisma.user.update({
-                    where: { id: user.id },
-                    data: { role: role }
-                });
+                user = await withRetry(
+                    () => prisma.user.update({
+                        where: { id: user.id },
+                        data: { role: role }
+                    }),
+                    { operationName: 'Update User Role' }
+                );
             }
 
             return res.status(200).json({
@@ -60,8 +58,9 @@ export default async function handler(req, res) {
         if (role === 'SELLER') assignedRole = 'SELLER';
         if (role === 'ADMIN') assignedRole = 'ADMIN'; // Allowing for demo/dev purposes
 
-        const newUser = await (async () => {
-            for (let i = 0; i < 3; i++) {
+        // Create user with retry and handle race conditions
+        const newUser = await withRetry(
+            async () => {
                 try {
                     return await prisma.user.create({
                         data: {
@@ -72,14 +71,15 @@ export default async function handler(req, res) {
                         }
                     });
                 } catch (e) {
+                    // Handle race condition: user was created by another request
                     if (e.code === 'P2002') { // Unique constraint failed (race condition)
                         return await prisma.user.findUnique({ where: { email } });
                     }
-                    if (i === 2) throw e;
-                    await new Promise(r => setTimeout(r, 500));
+                    throw e;
                 }
-            }
-        })();
+            },
+            { operationName: 'Create User' }
+        );
 
         return res.status(201).json({
             id: newUser.id,
@@ -91,6 +91,9 @@ export default async function handler(req, res) {
 
     } catch (error) {
         console.error('Auth Sync Error:', error);
-        res.status(500).json({ error: 'Failed to sync user' });
+        res.status(500).json({
+            error: 'Failed to sync user',
+            details: process.env.NODE_ENV !== 'production' ? error.message : undefined
+        });
     }
 }

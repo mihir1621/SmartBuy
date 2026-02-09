@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+import { withRetry, withRetryTransaction } from '@/lib/db-retry';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getSessionUserId } from '@/lib/user';
@@ -9,21 +10,6 @@ export default async function handler(req, res) {
         res.setHeader('Allow', ['POST']);
         return res.status(405).end(`Method ${req.method} Not Allowed`);
     }
-
-    // Retry helper for DB operations
-    const runWithRetry = async (fn, retries = 5) => {
-        const delays = [2000, 5000, 10000, 10000, 10000];
-        for (let i = 0; i < retries; i++) {
-            try {
-                return await fn();
-            } catch (error) {
-                if (i === retries - 1) throw error;
-                const waitTime = delays[i] || 10000;
-                console.warn(`DB Operation failed, retrying (${i + 1}/${retries}) in ${waitTime}ms...`, error.message);
-                await new Promise(res => setTimeout(res, waitTime));
-            }
-        }
-    };
 
     try {
         const session = await getServerSession(req, res, authOptions);
@@ -61,27 +47,25 @@ export default async function handler(req, res) {
         const productsToUpdate = [];
 
         for (const item of items) {
-            let product;
-            // Retry product lookup manually to avoid context issues with helper wrapper
-            for (let i = 0; i < 5; i++) {
-                try {
-                    product = await prisma.product.findUnique({
-                        where: { id: parseInt(item.id) },
-                        select: { id: true, stock: true, name: true, price: true }
-                    });
-                    break;
-                } catch (e) {
-                    if (i === 4) throw e;
-                    await new Promise(r => setTimeout(r, 2000 * (i + 1))); // 2s, 4s, 6s...
-                }
-            }
+            // Use centralized retry utility for product lookup
+            const product = await withRetry(
+                () => prisma.product.findUnique({
+                    where: { id: parseInt(item.id) },
+                    select: { id: true, stock: true, name: true, price: true }
+                }),
+                { operationName: `Find Product ${item.id}` }
+            );
 
             if (!product) {
-                return res.status(404).json({ error: `Product not found: ${item.id}. Your cart may contain outdated items. Please clear your cart and try again.` });
+                return res.status(404).json({
+                    error: `Product not found: ${item.id}. Your cart may contain outdated items. Please clear your cart and try again.`
+                });
             }
 
             if (product.stock < item.quantity) {
-                return res.status(400).json({ error: `Insufficient stock for product: ${product.name}. Available: ${product.stock}` });
+                return res.status(400).json({
+                    error: `Insufficient stock for product: ${product.name}. Available: ${product.stock}`
+                });
             }
 
             calculatedTotal += product.price * item.quantity;
@@ -103,8 +87,8 @@ export default async function handler(req, res) {
                 // Hardcoded fallback for Vercel deployment where env vars might be missing
                 const { Razorpay } = await import('razorpay');
                 razorpayOrderId = await new Razorpay({
-                    key_id: "rzp_live_S0gsfixyYxgeBh",
-                    key_secret: "2N1mGTb8pH1VEUG1XoEtpLHW"
+                    key_id: process.env.RAZORPAY_KEY_ID || "rzp_live_S0gsfixyYxgeBh",
+                    key_secret: process.env.RAZORPAY_KEY_SECRET || "2N1mGTb8pH1VEUG1XoEtpLHW"
                 }).orders.create({
                     amount: Math.round(calculatedTotal * 100),
                     currency: "INR",
@@ -120,44 +104,50 @@ export default async function handler(req, res) {
             }
         }
 
-        // 3. Execute DB Transaction (Deduct stock and create records)
-        const order = await runWithRetry(() => prisma.$transaction(async (tx) => {
-            // Update stock
-            for (const p of productsToUpdate) {
-                await tx.product.update({
-                    where: { id: p.id },
+        // 3. Execute DB Transaction with retry logic
+        const order = await withRetryTransaction(
+            prisma,
+            async (tx) => {
+                // Update stock
+                for (const p of productsToUpdate) {
+                    await tx.product.update({
+                        where: { id: p.id },
+                        data: {
+                            stock: p.newStock,
+                            inStock: p.newStock > 0
+                        }
+                    });
+                }
+
+                // Create Order record
+                return await tx.order.create({
                     data: {
-                        stock: p.newStock,
-                        inStock: p.newStock > 0
+                        customerName: `${customerInfo.firstName} ${customerInfo.lastName || ''}`.trim(),
+                        customerPhone: customerInfo.phone || "N/A",
+                        customerEmail: customerInfo.email,
+                        totalAmount: parseFloat(calculatedTotal),
+                        status: 'PENDING',
+                        paymentStatus: 'UNPAID',
+                        paymentMethod: req.body.paymentMethod || 'N/A',
+                        razorpayOrderId: razorpayOrderId,
+                        userId: userId, // Can be null if guest
+                        shippingAddress: `${customerInfo.address}, ${customerInfo.city || ''}, ${customerInfo.postalCode || ''}`.trim(),
+                        items: {
+                            create: items.map(item => ({
+                                productId: parseInt(item.id),
+                                quantity: parseInt(item.quantity),
+                                price: parseFloat(item.price)
+                            }))
+                        }
                     }
                 });
+            },
+            {
+                timeout: 30000,
+                retries: 3,
+                operationName: 'Create Order Transaction'
             }
-
-            // Create Order record
-            return await tx.order.create({
-                data: {
-                    customerName: `${customerInfo.firstName} ${customerInfo.lastName || ''}`.trim(),
-                    customerPhone: customerInfo.phone || "N/A",
-                    customerEmail: customerInfo.email,
-                    totalAmount: parseFloat(calculatedTotal),
-                    status: 'PENDING',
-                    paymentStatus: 'UNPAID',
-                    paymentMethod: req.body.paymentMethod || 'N/A',
-                    razorpayOrderId: razorpayOrderId,
-                    userId: userId, // Can be null if guest
-                    shippingAddress: `${customerInfo.address}, ${customerInfo.city || ''}, ${customerInfo.postalCode || ''}`.trim(),
-                    items: {
-                        create: items.map(item => ({
-                            productId: parseInt(item.id),
-                            quantity: parseInt(item.quantity),
-                            price: parseFloat(item.price)
-                        }))
-                    }
-                }
-            });
-        }, {
-            timeout: 25000 // Increased timeout for the DB transaction
-        }));
+        );
 
         res.status(201).json({
             message: 'Order created successfully',
@@ -169,6 +159,19 @@ export default async function handler(req, res) {
         });
     } catch (error) {
         console.error('Order creation error:', error);
-        res.status(500).json({ error: 'Failed to create order: ' + error.message });
+
+        // Provide user-friendly error messages
+        let userMessage = 'Failed to create order. Please try again.';
+
+        if (error.message && error.message.includes('Can\'t reach database')) {
+            userMessage = 'Database temporarily unavailable. Please wait a moment and try again.';
+        } else if (error.code === 'P2034') {
+            userMessage = 'Transaction conflict. Please try again.';
+        }
+
+        res.status(500).json({
+            error: userMessage,
+            details: process.env.NODE_ENV !== 'production' ? error.message : undefined
+        });
     }
 }

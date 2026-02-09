@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+import { withRetry } from '@/lib/db-retry';
 import crypto from 'crypto';
 
 export default async function handler(req, res) {
@@ -21,52 +22,48 @@ export default async function handler(req, res) {
     const event = req.body.event;
     const payload = req.body.payload.payment.entity;
 
-    // Retry helper
-    const runWithRetry = async (fn, retries = 3) => {
-        for (let i = 0; i < retries; i++) {
-            try {
-                return await fn();
-            } catch (error) {
-                if (i === retries - 1) throw error;
-                console.warn(`Webhook DB retry (${i + 1})...`);
-                await new Promise(res => setTimeout(res, 1000 * (i + 1)));
-            }
-        }
-    };
-
     try {
         if (event === 'payment.captured') {
             const razorpayOrderId = payload.order_id;
 
             // Update order status if not already updated by the frontend verification
-            const order = await runWithRetry(() => prisma.order.findUnique({
-                where: { razorpayOrderId: razorpayOrderId }
-            }));
+            const order = await withRetry(
+                () => prisma.order.findUnique({
+                    where: { razorpayOrderId: razorpayOrderId }
+                }),
+                { operationName: 'Find Order for Payment Capture' }
+            );
 
             if (order && order.paymentStatus !== 'PAID') {
-                await runWithRetry(() => prisma.order.update({
-                    where: { id: order.id },
-                    data: {
-                        status: 'PROCESSING',
-                        paymentStatus: 'PAID',
-                        razorpayPaymentId: payload.id
-                    }
-                }));
+                await withRetry(
+                    () => prisma.order.update({
+                        where: { id: order.id },
+                        data: {
+                            status: 'PROCESSING',
+                            paymentStatus: 'PAID',
+                            razorpayPaymentId: payload.id
+                        }
+                    }),
+                    { operationName: 'Update Order Payment Status' }
+                );
             }
         } else if (event === 'payment.failed') {
             const razorpayOrderId = payload.order_id;
-            await runWithRetry(() => prisma.order.updateMany({
-                where: { razorpayOrderId: razorpayOrderId },
-                data: {
-                    status: 'CANCELLED',
-                    paymentStatus: 'FAILED'
-                }
-            }));
+            await withRetry(
+                () => prisma.order.updateMany({
+                    where: { razorpayOrderId: razorpayOrderId },
+                    data: {
+                        status: 'CANCELLED',
+                        paymentStatus: 'FAILED'
+                    }
+                }),
+                { operationName: 'Mark Order as Failed' }
+            );
         }
 
         res.status(200).json({ status: 'ok' });
     } catch (error) {
-        console.error('Webhook retry failed:', error);
+        console.error('Webhook processing failed:', error);
         res.status(500).json({ error: error.message });
     }
 }
