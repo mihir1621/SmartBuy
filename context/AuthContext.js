@@ -22,26 +22,37 @@ export function AuthProvider({ children }) {
     const router = useRouter();
 
     const syncUserWithBackend = async (firebaseUser, role = null) => {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+
         try {
             const res = await fetch('/api/auth/sync', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                signal: controller.signal,
                 body: JSON.stringify({
                     uid: firebaseUser.uid,
                     email: firebaseUser.email,
                     name: firebaseUser.displayName,
                     image: firebaseUser.photoURL,
-                    role: role // Optional, mostly for new creations
+                    role: role?.toUpperCase() // Optional, mostly for new creations
                 })
             });
+            clearTimeout(timeoutId);
+
             if (res.ok) {
                 const dbUser = await res.json();
                 return { ...firebaseUser, ...dbUser };
             }
-            console.error("Failed to sync user with backend");
+            console.warn("Sync failed (Server Error): Proceeding with Firebase session only.");
             return firebaseUser;
         } catch (e) {
-            console.error("Auth Sync Error", e);
+            clearTimeout(timeoutId);
+            if (e.name === 'AbortError') {
+                console.warn("Sync timed out: Database might be cold starting. Proceeding with Firebase session.");
+            } else {
+                console.error("Auth Sync Error", e);
+            }
             return firebaseUser;
         }
     };
@@ -84,6 +95,7 @@ export function AuthProvider({ children }) {
         });
 
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+            setLoading(true); // Start loading during sync
             if (firebaseUser) {
                 // Sync with backend to get Role and ID
                 const syncedUser = await syncUserWithBackend(firebaseUser);

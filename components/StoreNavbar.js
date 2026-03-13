@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import { ShoppingBag, Search, X, User, Camera, Heart, MapPin, Loader2, Clock, Mic, HelpCircle, ChevronLeft, ChevronRight, LogOut, ChevronDown, Settings, Package } from 'lucide-react';
+import { ShoppingBag, Search, X, User, Camera, Heart, MapPin, Loader2, Clock, Mic, HelpCircle, ChevronLeft, ChevronRight, LogOut, ChevronDown, Settings, Package, ShieldAlert } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { useLocation } from '@/context/LocationContext';
@@ -321,6 +321,18 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
                                                             <p className="text-xs text-gray-500 truncate">{user.email}</p>
                                                         </div>
                                                         <div className="p-1">
+                                                            {(user.role === 'ADMIN' || user.role === 'admin') && (
+                                                                <Link href="/admin" className="flex items-center gap-3 px-3 py-2 text-sm text-white font-bold bg-black rounded-lg transition-all mb-1 hover:brightness-125" onClick={() => setIsProfileOpen(false)}>
+                                                                    <ShieldAlert className="w-4 h-4" />
+                                                                    Admin Dashboard
+                                                                </Link>
+                                                            )}
+                                                            {(user.role === 'SELLER' || user.role === 'seller') && (
+                                                                <Link href="/seller" className="flex items-center gap-3 px-3 py-2 text-sm text-white font-bold bg-black rounded-lg transition-all mb-1 hover:brightness-125" onClick={() => setIsProfileOpen(false)}>
+                                                                    <Settings className="w-4 h-4" />
+                                                                    Seller Dashboard
+                                                                </Link>
+                                                            )}
                                                             <Link href="/orders" className="flex items-center gap-3 px-3 py-2 text-sm text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" onClick={() => setIsProfileOpen(false)}>
                                                                 <Package className="w-4 h-4" />
                                                                 Track Orders

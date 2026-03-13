@@ -75,9 +75,10 @@ export default function Login() {
             return;
         }
 
-        if (role === 'admin' || role === 'ADMIN') {
+        const normalizedRole = role?.toUpperCase();
+        if (normalizedRole === 'ADMIN') {
             router.push('/admin');
-        } else if (role === 'seller' || role === 'SELLER') {
+        } else if (normalizedRole === 'SELLER') {
             router.push('/seller');
         } else {
             router.push('/');
@@ -90,6 +91,14 @@ export default function Login() {
             handleRedirect(user.role);
         }
     }, [user, justLoggedIn, handleRedirect]);
+
+    // AUTO-REDIRECT: If a user is ALREADY logged in and visits this page, send them to their dashboard
+    useEffect(() => {
+        if (!isLoading && user && !justLoggedIn) {
+            console.log("Already logged in as:", user.role, "- Redirecting...");
+            handleRedirect(user.role);
+        }
+    }, [user, isLoading, justLoggedIn, handleRedirect]);
 
     const handleGoogleSubmit = async (e) => {
         e.preventDefault();

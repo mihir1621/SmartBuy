@@ -13,15 +13,26 @@ export function WishlistProvider({ children }) {
     useEffect(() => {
         const initWishlist = async () => {
             if (user) {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 8000);
+
                 // Fetch from DB if logged in
                 try {
-                    const res = await fetch(`/api/wishlist?userId=${user.uid}&email=${encodeURIComponent(user.email)}`);
+                    const res = await fetch(`/api/wishlist?userId=${user.uid}&email=${encodeURIComponent(user.email)}`, {
+                        signal: controller.signal
+                    });
+                    clearTimeout(timeoutId);
                     if (res.ok) {
                         const data = await res.json();
                         setWishlist(data);
                     }
                 } catch (error) {
-                    console.error("Failed to fetch wishlist from DB", error);
+                    clearTimeout(timeoutId);
+                    if (error.name === 'AbortError') {
+                        console.warn("Wishlist fetch timed out.");
+                    } else {
+                        console.error("Failed to fetch wishlist from DB", error);
+                    }
                 }
             } else if (typeof window !== 'undefined') {
                 // Fetch from local storage if NOT logged in

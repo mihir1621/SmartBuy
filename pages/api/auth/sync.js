@@ -25,12 +25,14 @@ export default async function handler(req, res) {
 
         // 2. If exists, update role if needed and return user data
         if (user) {
-            // Update role if explicitly requested and different (e.g. user toggles logging in as Seller)
-            if (role && (role === 'SELLER' || role === 'ADMIN') && user.role !== role) {
+            const normalizedRole = role?.toUpperCase();
+            // Security: Only allow SELLER role to be requested via client input.
+            // ADMIN role cannot be granted from the frontend.
+            if (normalizedRole === 'SELLER' && user.role !== normalizedRole) {
                 user = await withRetry(
                     () => prisma.user.update({
                         where: { id: user.id },
-                        data: { role: role }
+                        data: { role: normalizedRole }
                     }),
                     { operationName: 'Update User Role' }
                 );
@@ -41,22 +43,22 @@ export default async function handler(req, res) {
                 name: user.name,
                 email: user.email,
                 role: user.role,
-                // image: user.image
             });
         }
 
         // 3. If not exists, create new user
-        // Ensure email is present for creation (or unique phone logic, but AuthContext mainly uses email)
         if (!email) {
             return res.status(400).json({ error: 'Email required for account creation' });
         }
 
-        // Determine Role: Security risk if client can claim ADMIN.
-        // We will allow SELLER or USER. ADMIN should be manually set in DB usually.
-        // But for this project's simplified flow (checkbox in signup):
+        const normalizedRole = role?.toUpperCase();
         let assignedRole = 'USER';
-        if (role === 'SELLER') assignedRole = 'SELLER';
-        if (role === 'ADMIN') assignedRole = 'ADMIN'; // Allowing for demo/dev purposes
+        
+        // Security: Only allow SELLER role to be requested via client input.
+        // ADMIN role must be assigned manually in the database.
+        if (normalizedRole === 'SELLER') {
+            assignedRole = 'SELLER';
+        }
 
         // Create user with retry and handle race conditions
         const newUser = await withRetry(
