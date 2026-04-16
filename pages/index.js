@@ -14,6 +14,8 @@ import { Filter, SlidersHorizontal, ChevronDown, X } from "lucide-react";
 import BannerCarousel from "@/components/BannerCarousel";
 import { prisma } from "@/lib/prisma";
 import AiChatbot from "@/components/AiChatbot";
+import { useRealtimeData } from "@/hooks/useRealtimeData";
+import { useNotifications } from "@/hooks/useNotifications";
 
 // Fetching data from our static source (matching /api/static-products)
 export async function getServerSideProps() {
@@ -33,6 +35,26 @@ export async function getServerSideProps() {
 
 export default function Home({ initialProducts }) {
   const productsToUse = initialProducts || staticProducts;
+  const { notify } = useNotifications();
+  
+  // 1. Live Updates: Setup real-time listener for products collection
+  const { data: realtimeProducts, loading: realtimeLoading } = useRealtimeData('products');
+
+  // React to data updates from other users
+  useEffect(() => {
+    if (!realtimeLoading && realtimeProducts.length > 0) {
+      // If initialProducts was set but realtimeProducts is different, notify
+      // (Simplified check: compare lengths or a timestamp if available)
+      if (initialProducts && initialProducts.length !== realtimeProducts.length) {
+        notify("Inventory updated in real-time!", "info");
+      }
+      console.log("Real-time products synced");
+    }
+  }, [realtimeProducts, realtimeLoading, initialProducts, notify]);
+
+  // Use real-time data if available, fallback to SSR/Static data
+  const activeProducts = (realtimeProducts && realtimeProducts.length > 0) ? realtimeProducts : productsToUse;
+
   // Initialize the Advanced Product System
   const {
     products: filteredProducts,
@@ -73,7 +95,7 @@ export default function Home({ initialProducts }) {
     availableBrands,
     availableGenders,
     globalMaxPrice
-  } = useProductSystem(productsToUse);
+  } = useProductSystem(activeProducts);
 
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const router = useRouter();
