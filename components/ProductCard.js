@@ -7,6 +7,7 @@ import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/router';
 import useRequireAuth from '@/hooks/useRequireAuth';
+import { useBehaviorTracking } from '@/hooks/useBehaviorTracking';
 
 export default function ProductCard({ product }) {
     const { addToCart } = useCart();
@@ -23,11 +24,19 @@ export default function ProductCard({ product }) {
     useRequireAuth();
     const { user } = useAuth();
     const router = useRouter();
+    const { trackAction } = useBehaviorTracking();
     const handleAddToCart = (productItem) => {
         if (!user) {
             router.replace(`/login?redirect=${encodeURIComponent(router.asPath)}`);
             return;
         }
+        trackAction(user.uid || user.id, 'CLICK', { 
+            productId: productItem.id, 
+            name: productItem.name,
+            category: productItem.category,
+            brand: productItem.brand,
+            type: 'ADD_TO_CART'
+        });
         addToCart(productItem);
     };
 

@@ -16,6 +16,8 @@ import { prisma } from "@/lib/prisma";
 import AiChatbot from "@/components/AiChatbot";
 import { useRealtimeData } from "@/hooks/useRealtimeData";
 import { useNotifications } from "@/hooks/useNotifications";
+import { usePersonalization } from "@/hooks/usePersonalization";
+import { useAuth } from "@/context/AuthContext";
 
 // Fetching data from our static source (matching /api/static-products)
 export async function getServerSideProps() {
@@ -36,9 +38,13 @@ export async function getServerSideProps() {
 export default function Home({ initialProducts }) {
   const productsToUse = initialProducts || staticProducts;
   const { notify } = useNotifications();
+  const { user } = useAuth();
   
   // 1. Live Updates: Setup real-time listener for products collection
   const { data: realtimeProducts, loading: realtimeLoading } = useRealtimeData('products');
+
+  // 2. Personalization Engine: Fetch recommendations and activity state
+  const { recommendations, isNewUser } = usePersonalization(user?.uid || user?.id, realtimeProducts.length > 0 ? realtimeProducts : productsToUse);
 
   // React to data updates from other users
   useEffect(() => {
@@ -206,6 +212,36 @@ export default function Home({ initialProducts }) {
                     {minRating}+ Stars <X size={10} className="sm:size-[12px]" />
                   </button>
                 )}
+              </div>
+            )}
+
+            {/* Personalized Recommendations Section */}
+            {!realtimeLoading && recommendations.length > 0 && (
+              <section className="mb-12">
+                <div className="flex items-center gap-2 sm:gap-4 mb-6">
+                  <h2 className="text-xl sm:text-2xl font-black text-foreground relative whitespace-nowrap uppercase tracking-tight">
+                    Picked for You
+                    <span className="absolute -bottom-1.5 sm:-bottom-2 left-0 w-2/3 h-1 bg-blue-500 rounded-full"></span>
+                  </h2>
+                  <div className="h-px bg-border flex-grow mt-1 sm:mt-1"></div>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  {recommendations.map(product => (
+                    <ProductCard key={`rec-${product.id}`} product={product} />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Onboarding for New Users */}
+            {isNewUser && user && (
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-8 mb-12 text-white shadow-xl">
+                <h3 className="text-2xl font-black mb-2 uppercase tracking-wide">Welcome to SmartBuy, {user.displayName || 'New Explorer'}!</h3>
+                <p className="text-blue-100 mb-6 max-w-lg">We&apos;re excited to have you. Start browsing products, and we&apos;ll begin personalizing your experience based on what you love.</p>
+                <div className="flex gap-4">
+                  <button onClick={() => setSelectedCategory(categories[1])} className="bg-white text-blue-700 px-6 py-2.5 rounded-xl font-bold hover:bg-blue-50 transition-all">Start Shopping</button>
+                  <button onClick={() => router.push('/wishlist')} className="bg-blue-800/50 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-blue-800 transition-all border border-blue-400/30">View Wishlist</button>
+                </div>
               </div>
             )}
 

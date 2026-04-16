@@ -6,12 +6,28 @@ import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useBehaviorTracking } from "@/hooks/useBehaviorTracking";
+import { useAuth } from "@/context/AuthContext";
+import { useEffect } from "react";
 
 export default function QuickViewModal({ product, isOpen, onClose }) {
     const modalRef = useRef(null);
     const { addToCart } = useCart();
     const { toggleWishlist, isInWishlist } = useWishlist();
     const router = useRouter();
+    const { trackAction } = useBehaviorTracking();
+    const { user } = useAuth();
+
+    useEffect(() => {
+        if (isOpen && product && user) {
+            trackAction(user.uid || user.id, 'VIEW', {
+                productId: product.id,
+                name: product.name,
+                category: product.category,
+                brand: product.brand
+            });
+        }
+    }, [isOpen, product, user, trackAction]);
 
     if (!isOpen || !product) return null;
 

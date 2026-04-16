@@ -10,6 +10,7 @@ import { useState, useEffect, useRef } from 'react';
 import { INDIAN_CITIES } from '@/data/indianCities';
 import { useRouter } from 'next/router';
 import ThemeToggle from './ThemeToggle';
+import { useBehaviorTracking } from '@/hooks/useBehaviorTracking';
 
 
 export default function StoreNavbar({ onSearch, categories = [], selectedCategory, setSelectedCategory }) {
@@ -73,9 +74,16 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
         // Placeholder for image upload logic
     };
 
+    const { trackAction } = useBehaviorTracking();
     const handleSearch = (e) => {
-        setSearchQuery(e.target.value);
-        if (onSearch) onSearch(e.target.value);
+        const query = e.target.value;
+        setSearchQuery(query);
+        if (onSearch) onSearch(query);
+        
+        // Debounced or simple track
+        if (query.length > 3 && user) {
+          trackAction(user.uid || user.id, 'SEARCH', { query });
+        }
     };
 
     const handleLogout = () => {
@@ -144,6 +152,9 @@ export default function StoreNavbar({ onSearch, categories = [], selectedCategor
 
             setSearchQuery(finalSearchTerm);
             if (onSearch) onSearch(finalSearchTerm);
+            if (user) {
+              trackAction(user.uid || user.id, 'SEARCH', { query: finalSearchTerm, method: 'VOICE' });
+            }
         };
 
         recognition.onerror = (event) => {

@@ -10,6 +10,8 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { OrderSkeleton } from '@/components/skeletons/PageSkeletons';
+import { usePersonalization } from '@/hooks/usePersonalization';
+import { products as staticProducts } from '@/data/products';
 
 // ... (keep statusIcons and statusClasses constants as they are unless they need to be moved down? No, they are outside the component, so I must start from line 1 if I want to be safe, or just targeted replacement)
 
@@ -40,6 +42,9 @@ export default function OrderHistory() {
     const [searchTerm, setSearchTerm] = useState('');
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    // Personalization Engine
+    const { recommendations, isNewUser } = usePersonalization(user?.uid || user?.id, staticProducts);
 
     const fetchOrders = useCallback(async () => {
         if (!user) return;
@@ -125,6 +130,66 @@ export default function OrderHistory() {
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-800 rounded-xl focus:ring-1 focus:ring-white outline-none text-sm transition-all"
                         />
+                    </div>
+                </div>
+                
+                {/* User Dashboard Section (Personalized) */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                    <div className="lg:col-span-2 space-y-6">
+                        <section className="bg-gray-900/40 p-6 sm:p-8 rounded-[2rem] border border-gray-800/60 backdrop-blur-md">
+                            <h2 className="text-xl font-black mb-6 uppercase tracking-tight flex items-center gap-3">
+                                <Clock className="w-5 h-5 text-blue-400" /> Recent Activity
+                            </h2>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="p-4 bg-black/40 rounded-2xl border border-gray-800">
+                                    <p className="text-[10px] uppercase font-black text-gray-500 mb-1">Total Orders</p>
+                                    <p className="text-2xl font-black text-white">{orders.length}</p>
+                                </div>
+                                <div className="p-4 bg-black/40 rounded-2xl border border-gray-800">
+                                    <p className="text-[10px] uppercase font-black text-gray-500 mb-1">Items in Wishlist</p>
+                                    <p className="text-2xl font-black text-white">Featured</p> {/* Placeholder for dynamic wishlist count if needed */}
+                                </div>
+                            </div>
+                        </section>
+
+                        {recommendations.length > 0 && (
+                            <section className="bg-gray-900/40 p-6 sm:p-8 rounded-[2rem] border border-gray-800/60 backdrop-blur-md">
+                                <h2 className="text-xl font-black mb-6 uppercase tracking-tight flex items-center gap-3">
+                                    <CheckCircle className="w-5 h-5 text-green-400" /> Recommended For You
+                                </h2>
+                                <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2">
+                                    {recommendations.slice(0, 4).map(product => (
+                                        <div key={product.id} className="w-40 flex-shrink-0 bg-black/60 p-3 rounded-xl border border-gray-800">
+                                            <div className="aspect-square relative rounded-lg overflow-hidden mb-2">
+                                                <Image src={product.image} alt={product.name} fill className="object-cover" />
+                                            </div>
+                                            <p className="text-[10px] font-bold text-white truncate">{product.name}</p>
+                                            <p className="text-[11px] font-black text-blue-400 mt-1">₹{product.price}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                    </div>
+                    
+                    <div className="space-y-6">
+                        <section className="bg-gradient-to-br from-gray-900 to-black p-6 rounded-[2rem] border border-gray-800 h-full relative overflow-hidden">
+                            <div className="relative z-10">
+                                <h3 className="font-black text-white mb-2 uppercase tracking-tight">Your Profile</h3>
+                                <p className="text-gray-400 text-xs mb-6">Experience curated for <b>{user?.displayName || user?.name}</b></p>
+                                <div className="space-y-4">
+                                  <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-500 font-black">1</div>
+                                    <p className="text-xs text-gray-300 font-medium">Personalized recommendations active</p>
+                                  </div>
+                                  <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center text-purple-500 font-black">2</div>
+                                    <p className="text-xs text-gray-300 font-medium">Tracking behavior for better deals</p>
+                                  </div>
+                                </div>
+                            </div>
+                            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-600/10 blur-[80px]" />
+                        </section>
                     </div>
                 </div>
 
