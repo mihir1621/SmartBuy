@@ -10,6 +10,7 @@ import StoreNavbar from '@/components/StoreNavbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { calculateTotalGST, getStateFromCity } from '@/utils/gstUtils';
+import { offlineQueue } from '@/utils/offlineQueue';
 
 const loadRazorpayScript = () => {
     return new Promise((resolve) => {
@@ -79,10 +80,35 @@ export default function Checkout() {
             return;
         }
 
-        setIsProcessing(true);
-        setPaymentStep('creating');
+        const isOnline = navigator.onLine;
 
         try {
+            // Offline Support: Handle COD orders by queuing them
+            if (!isOnline) {
+                if (selectedPaymentMethod === 'COD') {
+                    offlineQueue.add({
+                        url: '/api/orders/create',
+                        method: 'POST',
+                        body: {
+                            customerInfo: formData,
+                            items: cart,
+                            paymentMethod: 'COD',
+                            totalAmount: cartTotal,
+                            userId: user?.uid
+                        }
+                    });
+                    setPaymentStep('done');
+                    clearCart();
+                    alert('You are currently offline. Your order has been saved locally and will be placed automatically once you are back online.');
+                    router.push('/order-success?id=PENDING_SYNC');
+                    return;
+                } else {
+                    alert('Online payments require an active internet connection. Please check your network and try again.');
+                    setIsProcessing(false);
+                    return;
+                }
+            }
+
             // 1. Only load Razorpay Script if needed
             if (selectedPaymentMethod !== 'COD') {
                 const resScript = await loadRazorpayScript();

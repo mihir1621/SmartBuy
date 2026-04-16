@@ -12,6 +12,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { HomeSkeleton, ProductDetailSkeleton, GenericSkeleton, OrderSkeleton, WishlistSkeleton } from "@/components/skeletons/PageSkeletons";
+import OfflineIndicator from "@/components/OfflineIndicator";
+import { useOfflineSync } from "@/hooks/useOfflineSync";
 
 function ThemeWrapper({ children, loading, getSkeleton }) {
   const { theme } = useTheme();
@@ -45,6 +47,9 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [targetPath, setTargetPath] = useState(null);
+
+  // Initialize Offline Sync Engine
+  useOfflineSync();
 
   useEffect(() => {
     const handleStart = (url, { shallow }) => {
@@ -90,7 +95,19 @@ export default function App({ Component, pageProps }) {
               <ThemeWrapper loading={loading} getSkeleton={getSkeleton}>
                 <Component {...pageProps} />
               </ThemeWrapper>
-              <ToastContainer position="bottom-right" autoClose={3000} theme="colored" />
+              <ToastContainer 
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+              />
+              <OfflineIndicator />
             </CartProvider>
           </WishlistProvider>
         </LocationProvider>
