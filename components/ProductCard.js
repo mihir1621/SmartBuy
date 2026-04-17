@@ -6,8 +6,8 @@ import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/router';
-import useRequireAuth from '@/hooks/useRequireAuth';
 import { useBehaviorTracking } from '@/hooks/useBehaviorTracking';
+import { useEffect } from 'react';
 
 export default function ProductCard({ product }) {
     const { addToCart } = useCart();
@@ -20,11 +20,14 @@ export default function ProductCard({ product }) {
     const discountPercentage = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
 
     const [imgSrc, setImgSrc] = useState(product.image);
-
-    useRequireAuth();
     const { user } = useAuth();
     const router = useRouter();
     const { trackAction } = useBehaviorTracking();
+
+    // Sync imgSrc when product.image changes
+    useEffect(() => {
+        setImgSrc(product.image);
+    }, [product.image]);
     const handleAddToCart = (productItem) => {
         if (!user) {
             router.replace(`/login?redirect=${encodeURIComponent(router.asPath)}`);
@@ -42,9 +45,9 @@ export default function ProductCard({ product }) {
 
     return (
         <Link href={`/product/${product.id}`} className="group block h-full">
-            <div className="bg-surface rounded-xl overflow-hidden border border-border hover:shadow-lg hover:border-gray-400 dark:hover:border-gray-500 transition-all duration-300 relative h-full flex flex-col group">
+            <div className="bg-surface rounded-xl overflow-hidden border border-border hover:shadow-saas hover:border-accent transition-all duration-300 relative h-full flex flex-col group">
                 {/* Image Container */}
-                <div className="relative aspect-[4/5] overflow-hidden bg-gray-100 dark:bg-gray-800">
+                <div className="relative aspect-[4/5] overflow-hidden bg-secondary">
                     <Image
                         src={imgSrc}
                         alt={product.name}
@@ -61,9 +64,9 @@ export default function ProductCard({ product }) {
                             e.stopPropagation();
                             toggleWishlist(product);
                         }}
-                        className={`absolute top-2 right-2 p-1.5 rounded-full backdrop-blur-sm transition-all shadow-sm ${isWishlisted
-                            ? 'bg-red-500 text-white'
-                            : 'bg-black/20 text-white hover:bg-black/40'
+                        className={`absolute top-2 right-2 p-1.5 rounded-full backdrop-blur-md transition-all shadow-sm ${isWishlisted
+                            ? 'bg-error text-white'
+                            : 'bg-surface/80 text-foreground hover:bg-surface'
                             }`}
                     >
                         <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
@@ -87,7 +90,7 @@ export default function ProductCard({ product }) {
 
                     {/* Low Stock Badge */}
                     {isInStock && product.stock > 0 && product.stock < 10 && (
-                        <div className="absolute bottom-2 left-2 bg-red-100 text-red-600 text-[9px] font-black px-2 py-0.5 rounded shadow-lg animate-pulse">
+                        <div className="absolute bottom-2 left-2 bg-error/10 text-error text-[9px] font-black px-2 py-0.5 rounded shadow-lg animate-pulse">
                             ONLY {product.stock} LEFT!
                         </div>
                     )}
@@ -97,15 +100,15 @@ export default function ProductCard({ product }) {
                 <div className="p-2 sm:p-3 flex flex-col flex-1">
                     {/* Brand & Rating */}
                     <div className="flex justify-between items-start mb-1 sm:mb-1.5">
-                        <span className="text-[9px] sm:text-[10px] font-bold text-gray-500 uppercase tracking-wider truncate pr-1 sm:pr-2">{product.brand}</span>
-                        <div className="flex items-center gap-0.5 sm:gap-1 bg-surface-dark bg-gray-100 dark:bg-gray-800 px-1 sm:px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold text-gray-600 dark:text-gray-300 border border-border shrink-0">
+                        <span className="text-[9px] sm:text-[10px] font-bold text-secondary-text uppercase tracking-wider truncate pr-1 sm:pr-2">{product.brand}</span>
+                        <div className="flex items-center gap-0.5 sm:gap-1 bg-secondary px-1 sm:px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold text-secondary-text border border-border shrink-0">
                             <span>{product.rating}</span>
-                            <Star className="w-2 sm:w-2.5 h-2 sm:h-2.5 fill-current" />
+                            <Star className="w-2 sm:w-2.5 h-2 sm:h-2.5 fill-current text-yellow-500" />
                         </div>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xs sm:text-sm font-medium text-foreground line-clamp-2 mb-1.5 sm:mb-2 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors leading-snug">
+                    <h3 className="text-xs sm:text-sm font-bold text-foreground line-clamp-2 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors leading-snug">
                         {product.name}
                     </h3>
 
@@ -114,7 +117,7 @@ export default function ProductCard({ product }) {
                         <div className="flex items-baseline gap-1.5 sm:gap-2 mb-2 sm:mb-3">
                             <span className="text-sm sm:text-base font-bold text-foreground">₹{product.price.toLocaleString()}</span>
                             {product.originalPrice > product.price && (
-                                <span className="text-[10px] sm:text-xs text-gray-500 line-through">₹{product.originalPrice.toLocaleString()}</span>
+                                <span className="text-[10px] sm:text-xs text-secondary-text line-through">₹{product.originalPrice.toLocaleString()}</span>
                             )}
                         </div>
 
@@ -126,9 +129,9 @@ export default function ProductCard({ product }) {
                                 e.stopPropagation();
                                 handleAddToCart(product);
                             }}
-                            className={`w-full text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 rounded-lg transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 ${isInStock
-                                ? "bg-foreground text-background hover:opacity-90 shadow-lg shadow-black/5 dark:shadow-white/5"
-                                : "bg-gray-200 dark:bg-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed"
+                            className={`w-full text-[10px] sm:text-xs font-black uppercase tracking-widest py-1.5 sm:py-2.5 rounded-lg transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 ${isInStock
+                                ? "bg-accent text-white hover:bg-accent-hover shadow-saas"
+                                : "bg-secondary text-secondary-text cursor-not-allowed"
                                 }`}
                         >
                             <ShoppingCart className="w-3 sm:w-3.5 h-3 sm:h-3.5" />

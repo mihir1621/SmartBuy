@@ -62,31 +62,31 @@ export default function EMICalculatorModal({ isOpen, onClose, price }) {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="bg-gray-900 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-gray-800"
+                    className="bg-background rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-border"
                 >
                     {/* Header */}
-                    <div className="bg-gray-900 text-white p-4 flex items-center justify-between border-b border-gray-800">
+                    <div className="bg-surface text-foreground p-4 flex items-center justify-between border-b border-border">
                         <div className="flex items-center gap-2">
-                            <Calculator className="w-5 h-5" />
+                            <Calculator className="w-5 h-5 text-accent" />
                             <h2 className="text-lg font-bold">EMI Calculator</h2>
                         </div>
-                        <button onClick={onClose} className="p-1 hover:bg-gray-800 rounded-full transition-colors">
-                            <X className="w-5 h-5" />
+                        <button onClick={onClose} className="p-1 hover:bg-secondary rounded-full transition-colors">
+                            <X className="w-5 h-5 text-secondary-text" />
                         </button>
                     </div>
 
                     <div className="p-6 space-y-6">
                         {/* Product Value Display */}
-                        <div className="flex justify-between items-center text-sm font-medium text-gray-400">
+                        <div className="flex justify-between items-center text-sm font-medium text-secondary-text">
                             <span>Product Price</span>
-                            <span className="text-white font-bold text-base">₹{price.toLocaleString()}</span>
+                            <span className="text-foreground font-black text-base">₹{price.toLocaleString()}</span>
                         </div>
 
                         {/* Down Payment Input */}
                         <div>
                             <div className="flex justify-between mb-2">
-                                <label className="text-sm font-medium text-gray-300">Down Payment (₹)</label>
-                                <span className="text-sm font-bold text-blue-400">₹{downPayment.toLocaleString()}</span>
+                                <label className="text-sm font-medium text-secondary-text">Down Payment (₹)</label>
+                                <span className="text-sm font-bold text-accent">₹{downPayment.toLocaleString()}</span>
                             </div>
                             <input
                                 type="range"
@@ -95,19 +95,19 @@ export default function EMICalculatorModal({ isOpen, onClose, price }) {
                                 step="1000"
                                 value={downPayment}
                                 onChange={(e) => setDownPayment(Number(e.target.value))}
-                                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                                className="w-full h-2 bg-secondary rounded-lg appearance-none cursor-pointer accent-accent"
                             />
                         </div>
 
                         {/* Bank Selection */}
                         <div>
                             <div className="flex justify-between mb-2">
-                                <label className="text-sm font-medium text-gray-300">Select Bank</label>
+                                <label className="text-sm font-medium text-secondary-text">Select Bank</label>
                             </div>
                             <select
                                 value={bank}
                                 onChange={handleBankChange}
-                                className="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 outline-none"
+                                className="w-full bg-surface border border-border text-foreground text-sm rounded-lg focus:ring-accent focus:border-accent block p-2.5 outline-none shadow-sm"
                             >
                                 {banks.map((b) => (
                                     <option key={b.name} value={b.name}>
@@ -120,16 +120,16 @@ export default function EMICalculatorModal({ isOpen, onClose, price }) {
                         {/* Duration Slider */}
                         <div>
                             <div className="flex justify-between mb-2">
-                                <label className="text-sm font-medium text-gray-300">Duration</label>
-                                <span className="text-sm font-bold text-blue-400">{months} Months ({Math.floor(months / 12) > 0 ? `${(months / 12).toFixed(1)} Years` : "Months"})</span>
+                                <label className="text-sm font-medium text-secondary-text">Duration</label>
+                                <span className="text-sm font-bold text-accent">{months} Months ({Math.floor(months / 12) > 0 ? `${(months / 12).toFixed(1)} Years` : "Months"})</span>
                             </div>
                             <div className="relative h-10 mb-2 flex items-center select-none cursor-pointer group">
                                 {/* Track */}
-                                <div className="absolute left-0 right-0 h-1 bg-gray-800 rounded-full" />
+                                <div className="absolute left-0 right-0 h-1 bg-secondary rounded-full" />
 
                                 {/* Active Progress */}
                                 <div
-                                    className="absolute left-0 h-1 bg-blue-600 rounded-full transition-all duration-300 ease-out"
+                                    className="absolute left-0 h-1 bg-accent rounded-full transition-all duration-300 ease-out"
                                     style={{ width: `${((months - 3) / 33) * 100}%` }}
                                 />
 
@@ -148,10 +148,10 @@ export default function EMICalculatorModal({ isOpen, onClose, price }) {
                                                 {/* The Dot Visual */}
                                                 <div
                                                     className={`rounded-full transition-all duration-200 ${isSelected
-                                                        ? 'w-4 h-4 bg-white border-[3px] border-blue-600 shadow-lg scale-110'
+                                                        ? 'w-4 h-4 bg-white border-[3px] border-accent shadow-lg scale-110'
                                                         : isActive
-                                                            ? 'w-1 h-1 bg-blue-500'
-                                                            : 'w-1 h-1 bg-gray-700 hover:bg-gray-500'
+                                                            ? 'w-1 h-1 bg-accent'
+                                                            : 'w-1 h-1 bg-secondary hover:bg-gray-400'
                                                         }`}
                                                 />
                                             </div>
@@ -159,7 +159,7 @@ export default function EMICalculatorModal({ isOpen, onClose, price }) {
                                     })}
                                 </div>
                             </div>
-                            <div className="flex justify-between mt-1 text-xs text-gray-500 font-medium">
+                            <div className="flex justify-between mt-1 text-xs text-secondary-text font-medium">
                                 <span>3M</span>
                                 <span>6M</span>
                                 <span>9M</span>
@@ -172,29 +172,29 @@ export default function EMICalculatorModal({ isOpen, onClose, price }) {
 
                         {/* Interest Rate Input */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">Interest Rate (% p.a)</label>
+                            <label className="block text-sm font-medium text-secondary-text mb-1">Interest Rate (% p.a)</label>
                             <input
                                 type="number"
                                 value={interestRate}
                                 onChange={(e) => setInterestRate(Number(e.target.value))}
-                                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                                className="w-full bg-surface border border-border rounded-lg px-3 py-2 text-sm text-foreground focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none shadow-sm"
                             />
                         </div>
 
                         {/* Summary Card */}
-                        <div className="bg-blue-900/20 rounded-xl p-4 space-y-3 border border-blue-900/30">
-                            <div className="flex justify-between items-end pb-3 border-b border-blue-900/30">
-                                <span className="text-sm text-blue-300 font-medium">Monthly EMI</span>
-                                <span className="text-2xl font-bold text-blue-400">₹{monthlyEMI.toLocaleString()}</span>
+                        <div className="bg-accent/5 rounded-xl p-4 space-y-3 border border-accent/20">
+                            <div className="flex justify-between items-end pb-3 border-b border-accent/20">
+                                <span className="text-sm text-secondary-text font-medium">Monthly EMI</span>
+                                <span className="text-2xl font-black text-accent">₹{monthlyEMI.toLocaleString()}</span>
                             </div>
 
-                            <div className="flex justify-between text-xs text-blue-400">
+                            <div className="flex justify-between text-xs text-secondary-text">
                                 <span>Total Interest</span>
-                                <span className="font-medium">+ ₹{Math.max(0, totalInterest).toLocaleString()}</span>
+                                <span className="font-bold text-error">+ ₹{Math.max(0, totalInterest).toLocaleString()}</span>
                             </div>
-                            <div className="flex justify-between text-xs text-blue-400">
+                            <div className="flex justify-between text-xs text-foreground">
                                 <span>Total Payable</span>
-                                <span className="font-bold">₹{totalAmount.toLocaleString()}</span>
+                                <span className="font-black text-lg">₹{totalAmount.toLocaleString()}</span>
                             </div>
                         </div>
                     </div>

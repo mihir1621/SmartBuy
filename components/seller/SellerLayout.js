@@ -39,10 +39,10 @@ export default function SellerLayout({ children, title }) {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-black flex items-center justify-center">
+            <div className="min-h-screen bg-background flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
-                    <Loader2 className="text-white animate-spin" size={40} />
-                    <p className="text-gray-500 font-bold animate-pulse text-sm uppercase tracking-widest">Loading Seller Hub...</p>
+                    <Loader2 className="text-secondary-text animate-spin" size={40} />
+                    <p className="text-secondary-text font-black animate-pulse text-sm uppercase tracking-[0.2em]">Loading Seller Hub...</p>
                 </div>
             </div>
         );
@@ -50,23 +50,23 @@ export default function SellerLayout({ children, title }) {
 
     if (!user || (user.role !== 'SELLER' && user.role !== 'seller' && user.role !== 'ADMIN' && user.role !== 'admin')) {
         return (
-            <div className="min-h-screen bg-black flex items-center justify-center p-6 text-center">
+            <div className="min-h-screen bg-background flex items-center justify-center p-6 text-center">
                 <div className="max-w-md space-y-6">
-                    <div className="w-20 h-20 bg-gray-800 rounded-3xl flex items-center justify-center mx-auto border border-gray-700 text-gray-500">
+                    <div className="w-20 h-20 bg-surface rounded-3xl flex items-center justify-center mx-auto border border-border text-secondary-text">
                         <User size={40} />
                     </div>
-                    <h1 className="text-2xl font-bold text-white tracking-tight">Seller Access Only</h1>
-                    <p className="text-gray-500 font-medium italic">
+                    <h1 className="text-2xl font-black text-foreground tracking-tight">Seller Access Only</h1>
+                    <p className="text-secondary-text font-medium italic">
                         &quot;This area is exclusive to verified Sellers. Please log in with a Seller account.&quot;
                     </p>
                     <div className="flex flex-col gap-3 pt-4">
                         <button
                             onClick={() => router.push('/seller/login')}
-                            className="bg-white hover:bg-gray-200 text-black font-bold py-4 rounded-2xl transition-all"
+                            className="bg-accent text-white font-black py-4 rounded-2xl transition-all shadow-saas hover:bg-accent-hover"
                         >
                             Log in as Seller
                         </button>
-                        <Link href="/" className="text-gray-500 font-bold hover:text-white py-2">
+                        <Link href="/" className="text-secondary-text font-black uppercase tracking-widest text-xs hover:text-foreground py-2">
                             Back to Home
                         </Link>
                     </div>
@@ -76,7 +76,7 @@ export default function SellerLayout({ children, title }) {
     }
 
     return (
-        <div className="min-h-screen bg-black text-white">
+        <div className="min-h-screen bg-background text-foreground transition-colors">
             <Head>
                 <title>{title ? `${title} | Seller Hub` : 'SmartBuy Seller'}</title>
             </Head>
@@ -84,7 +84,7 @@ export default function SellerLayout({ children, title }) {
             {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
                 <div
-                    className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+                    className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
                     onClick={() => setIsMobileMenuOpen(false)}
                 />
             )}
@@ -92,43 +92,43 @@ export default function SellerLayout({ children, title }) {
             <SellerSidebar isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} />
 
             <div className="lg:ml-72 min-h-screen flex flex-col">
-                <header className="h-20 border-b border-gray-800 bg-gray-900/50 backdrop-blur-md sticky top-0 z-30 px-6 lg:px-10 flex items-center justify-between">
+                <header className="h-20 border-b border-border bg-surface/80 backdrop-blur-md sticky top-0 z-30 px-6 lg:px-10 flex items-center justify-between transition-colors">
                     <div className="flex items-center gap-4">
                         {/* Mobile Hamburger Menu */}
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="lg:hidden p-2 rounded-xl bg-gray-900 border border-gray-800 text-gray-400 hover:text-white hover:bg-gray-800 transition-all"
+                            className="lg:hidden p-2 rounded-xl bg-background border border-border text-secondary-text hover:text-foreground hover:bg-secondary transition-all"
                         >
                             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
-
+ 
                         <div>
-                            <h2 className="text-xl font-bold tracking-tight">{title || 'Dashboard'}</h2>
-                            <p className="text-xs text-gray-400 font-medium">Store: {user.name || 'My Store'}</p>
+                            <h2 className="text-xl font-black tracking-tight text-foreground">{title || 'Dashboard'}</h2>
+                            <p className="text-xs text-secondary-text font-bold uppercase tracking-widest">Store: {user.name || 'My Store'}</p>
                         </div>
                     </div>
-
+ 
                     <div className="flex items-center gap-4 sm:gap-6">
-                        <div className="hidden md:flex items-center bg-gray-900 border border-gray-800 rounded-xl px-4 py-2 gap-3 focus-within:ring-2 focus-within:ring-white/50 transition-all">
-                            <Search size={18} className="text-gray-500" />
+                        <div className="hidden md:flex items-center bg-background border border-border rounded-xl px-4 py-2 gap-3 focus-within:ring-2 focus-within:ring-accent/20 transition-all">
+                            <Search size={18} className="text-secondary-text" />
                             <input
                                 type="text"
                                 placeholder="Search inventory..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 onKeyDown={handleSearch}
-                                className="bg-transparent border-none outline-none text-sm w-48 text-gray-200 placeholder:text-gray-600"
+                                className="bg-transparent border-none outline-none text-sm w-48 text-foreground placeholder:text-secondary-text/50"
                             />
                         </div>
-
-                        <div className="flex items-center gap-2 sm:gap-3 border-l border-gray-800 pl-4 sm:pl-6">
-                            <button className="p-2.5 rounded-xl bg-gray-900 border border-gray-800 text-gray-400 hover:text-white hover:bg-gray-800 transition-all relative">
+ 
+                        <div className="flex items-center gap-2 sm:gap-3 border-l border-border pl-4 sm:pl-6">
+                            <button className="p-2.5 rounded-xl bg-background border border-border text-secondary-text hover:text-accent hover:bg-secondary transition-all relative">
                                 <Bell size={20} />
-                                <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-white rounded-full border-2 border-gray-900" />
+                                <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-accent rounded-full border-2 border-background" />
                             </button>
-
+ 
                             <div className="flex items-center gap-3 ml-2 group cursor-pointer">
-                                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-gray-800 to-gray-700 border border-gray-700 flex items-center justify-center text-gray-200 group-hover:scale-105 transition-transform overflow-hidden">
+                                <div className="w-10 h-10 rounded-xl bg-secondary border border-border flex items-center justify-center text-foreground group-hover:scale-105 transition-transform overflow-hidden">
                                     {user.image || user.photoURL ? (
                                         <Image src={user.image || user.photoURL} alt="Seller" fill className="object-cover" />
                                     ) : (
@@ -136,8 +136,8 @@ export default function SellerLayout({ children, title }) {
                                     )}
                                 </div>
                                 <div className="hidden sm:block">
-                                    <p className="text-sm font-bold leading-tight group-hover:text-white transition-colors capitalize">{user.name || user.displayName}</p>
-                                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">{user.role}</p>
+                                    <p className="text-sm font-black leading-tight group-hover:text-accent transition-colors capitalize">{user.name || user.displayName}</p>
+                                    <p className="text-[10px] text-secondary-text font-black uppercase tracking-wider">{user.role}</p>
                                 </div>
                             </div>
                         </div>

@@ -167,7 +167,7 @@ export default function BannerCarousel() {
     const currentBanner = activeBanners[currentIndex];
 
     return (
-        <div className="relative w-full h-[320px] sm:h-[400px] md:h-[450px] lg:h-[65vh] overflow-hidden bg-gray-900 mt-1 shadow-2xl">
+        <div className="relative w-full h-[320px] sm:h-[400px] md:h-[450px] lg:h-[65vh] overflow-hidden bg-secondary mt-1 shadow-saas">
             <AnimatePresence initial={false} custom={direction} mode="popLayout">
                 <motion.div
                     key={currentIndex}
@@ -219,7 +219,7 @@ export default function BannerCarousel() {
 
                             <button
                                 onClick={() => router.push(currentBanner.link)}
-                                className="px-6 py-2.5 md:px-10 md:py-4 bg-white text-gray-900 font-bold rounded-xl hover:bg-gray-100 transition-all shadow-xl hover:shadow-2xl active:scale-95 flex items-center gap-2 text-sm md:text-lg"
+                                className="px-6 py-2.5 md:px-10 md:py-4 bg-accent text-white font-bold rounded-xl hover:bg-accent-hover transition-all shadow-saas active:scale-95 flex items-center gap-2 text-sm md:text-lg"
                             >
                                 Explore Offers <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
                             </button>

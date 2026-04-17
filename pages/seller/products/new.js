@@ -109,27 +109,27 @@ export default function NewProduct() {
                 <div className="flex items-center justify-between mb-8">
                     <button
                         onClick={() => router.back()}
-                        className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+                        className="flex items-center gap-2 text-secondary-text hover:text-foreground transition-colors font-black text-xs uppercase tracking-widest"
                     >
                         <ChevronLeft size={20} />
-                        Back to Products
+                        Back
                     </button>
                     <div className="flex gap-3">
                         <button
                             onClick={() => router.back()}
-                            className="px-6 py-2.5 rounded-xl border border-gray-700 text-gray-300 font-medium hover:bg-gray-800 transition-all"
+                            className="px-6 py-2.5 rounded-xl border border-border text-secondary-text font-black text-[10px] uppercase tracking-widest hover:bg-secondary transition-all"
                         >
                             Cancel
                         </button>
                         <button
                             onClick={handleSubmit}
                             disabled={isLoading}
-                            className="bg-white hover:bg-gray-200 text-black font-bold px-8 py-2.5 rounded-xl shadow-lg shadow-white/10 flex items-center gap-2 transition-all disabled:opacity-50"
+                            className="bg-accent hover:bg-accent-hover text-white font-black px-8 py-2.5 rounded-xl shadow-saas flex items-center gap-2 transition-all disabled:opacity-50 uppercase tracking-widest text-[10px]"
                         >
                             {isLoading ? 'Publishing...' : (
                                 <>
                                     <Save size={18} />
-                                    Publish Product
+                                    Publish
                                 </>
                             )}
                         </button>
@@ -140,43 +140,43 @@ export default function NewProduct() {
                     {/* Main Form */}
                     <div className="lg:col-span-2 space-y-6">
                         {/* Basic Info */}
-                        <div className="bg-gray-900 border border-gray-800 rounded-3xl p-6 md:p-8">
-                            <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                                <Tag size={20} className="text-white" />
+                        <div className="bg-surface border border-border rounded-3xl p-6 md:p-8 shadow-sm">
+                            <h3 className="text-lg font-black text-foreground mb-6 flex items-center gap-2 tracking-tight">
+                                <Tag size={20} className="text-accent" />
                                 Basic Information
                             </h3>
 
                             <div className="space-y-5">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Product Name</label>
+                                    <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-2">Product Name</label>
                                     <input
                                         type="text"
                                         name="name"
                                         value={formData.name}
                                         onChange={handleInputChange}
-                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
+                                        className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-secondary-text/50 font-medium"
                                         placeholder="e.g. Wireless Noise Cancelling Headphones"
                                     />
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-400 mb-2">Brand</label>
+                                        <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-2">Brand</label>
                                         <input
                                             type="text"
                                             name="brand"
                                             value={formData.brand}
                                             onChange={handleInputChange}
-                                            className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none transition-all"
+                                            className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:border-accent outline-none transition-all placeholder:text-secondary-text/50 font-medium"
                                             placeholder="e.g. Sony"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-400 mb-2">Category</label>
+                                        <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-2">Category</label>
                                         <select
                                             name="category"
                                             value={formData.category}
                                             onChange={handleInputChange}
-                                            className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none transition-all"
+                                            className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:border-accent outline-none transition-all font-medium"
                                         >
                                             <option value="Electronics">Electronics</option>
                                             <option value="Fashion">Fashion</option>
@@ -187,13 +187,13 @@ export default function NewProduct() {
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Description</label>
+                                    <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-2">Description</label>
                                     <textarea
                                         name="description"
                                         value={formData.description}
                                         onChange={handleInputChange}
                                         rows={4}
-                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none transition-all"
+                                        className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:border-accent outline-none transition-all placeholder:text-secondary-text/50 font-medium resize-none shadow-sm"
                                         placeholder="Detailed description of the product..."
                                     />
                                 </div>
@@ -201,55 +201,55 @@ export default function NewProduct() {
                         </div>
 
                         {/* Pricing & Inventory */}
-                        <div className="bg-gray-900 border border-gray-800 rounded-3xl p-6 md:p-8">
-                            <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                                <DollarSign size={20} className="text-white" />
+                        <div className="bg-surface border border-border rounded-3xl p-6 md:p-8 shadow-sm">
+                            <h3 className="text-lg font-black text-foreground mb-6 flex items-center gap-2 tracking-tight">
+                                <DollarSign size={20} className="text-accent" />
                                 Pricing & Inventory
                             </h3>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Selling Price (₹)</label>
+                                    <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-2">Selling Price (₹)</label>
                                     <input
                                         type="number"
                                         name="price"
                                         value={formData.price}
                                         onChange={handleInputChange}
-                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white focus:ring-1 focus:ring-white outline-none transition-all font-mono"
+                                        className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all font-black text-lg shadow-sm"
                                         placeholder="0.00"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">MRP / Original Price (₹)</label>
+                                    <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-2">MRP (₹)</label>
                                     <input
                                         type="number"
                                         name="originalPrice"
                                         value={formData.originalPrice}
                                         onChange={handleInputChange}
-                                        className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-white outline-none transition-all font-mono"
+                                        className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:border-accent outline-none transition-all font-black text-lg shadow-sm"
                                         placeholder="0.00"
                                     />
                                 </div>
 
                                 {discount > 0 && (
                                     <div className="md:col-span-2">
-                                        <div className="bg-white/10 border border-white/20 rounded-xl p-4 flex items-center gap-3 text-white">
+                                        <div className="bg-success/5 border border-success/10 rounded-xl p-4 flex items-center gap-3 text-success">
                                             <Tag size={18} />
-                                            <span className="font-medium">Calculated Discount: <span className="font-bold text-white">{discount}% OFF</span></span>
+                                            <span className="text-xs font-black uppercase tracking-widest">Discount applied: <span className="text-lg">{discount}% OFF</span></span>
                                         </div>
                                     </div>
                                 )}
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Stock Quantity</label>
+                                    <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-2">Stock Quantity</label>
                                     <div className="relative">
-                                        <Box className="absolute left-4 top-3.5 w-5 h-5 text-gray-500" />
+                                        <Box className="absolute left-4 top-3.5 w-5 h-5 text-secondary-text" />
                                         <input
                                             type="number"
                                             name="stock"
                                             value={formData.stock}
                                             onChange={handleInputChange}
-                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-white outline-none transition-all font-mono"
+                                            className="w-full bg-background border border-border rounded-xl px-12 py-3 text-foreground focus:border-accent outline-none transition-all font-black text-lg shadow-sm"
                                             placeholder="100"
                                         />
                                     </div>
@@ -260,47 +260,47 @@ export default function NewProduct() {
 
                     {/* Sidebar: Media */}
                     <div className="space-y-6">
-                        <div className="bg-gray-900 border border-gray-800 rounded-3xl p-6">
-                            <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                                <Upload size={20} className="text-white" />
+                        <div className="bg-surface border border-border rounded-3xl p-6 shadow-sm">
+                            <h3 className="text-lg font-black text-foreground mb-6 flex items-center gap-2 tracking-tight">
+                                <Upload size={20} className="text-accent" />
                                 Product Image
                             </h3>
 
                             <div className="space-y-4">
-                                <div className="relative aspect-square bg-black border-2 border-dashed border-gray-700 rounded-2xl flex flex-col items-center justify-center p-4 overflow-hidden group">
+                                <div className="relative aspect-square bg-background border-2 border-dashed border-border rounded-2xl flex flex-col items-center justify-center p-4 overflow-hidden group">
                                     {previewImage ? (
                                         <Image src={previewImage} alt="Preview" fill className="object-cover" />
                                     ) : (
-                                        <div className="text-center text-gray-500">
-                                            <Upload className="mx-auto w-10 h-10 mb-2 opacity-50" />
-                                            <span className="text-xs font-medium">No image URL yet</span>
+                                        <div className="text-center text-secondary-text">
+                                            <Upload className="mx-auto w-10 h-10 mb-2 opacity-30" />
+                                            <span className="text-[10px] font-black uppercase tracking-widest">No URL provided</span>
                                         </div>
                                     )}
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Image URL</label>
+                                    <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-2">Image URL</label>
                                     <input
                                         type="text"
                                         value={formData.image}
                                         onChange={handleImageChange}
-                                        className="w-full bg-black border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:border-white outline-none"
+                                        className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground focus:border-accent outline-none font-medium shadow-sm transition-all"
                                         placeholder="https://..."
                                     />
-                                    <p className="text-[10px] text-gray-500 mt-2">
-                                        Supported hosting: Unsplash, Pexels, Samsung, Apple CDN, etc.
+                                    <p className="text-[10px] text-secondary-text mt-3 font-medium text-center">
+                                        Supports unsplash, cdn, direct links.
                                     </p>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+                        <div className="bg-accent/5 border border-accent/10 rounded-3xl p-6 shadow-sm">
                             <div className="flex items-start gap-3">
-                                <AlertCircle className="w-5 h-5 text-white mt-0.5" />
+                                <AlertCircle className="w-5 h-5 text-accent mt-0.5" />
                                 <div>
-                                    <h4 className="text-sm font-bold text-white mb-1">Seller Tip</h4>
-                                    <p className="text-xs text-gray-400 leading-relaxed">
-                                        Adding a discount (Original Price &gt; Selling Price) significantly increases conversion rates.
+                                    <h4 className="text-sm font-black text-foreground mb-1 tracking-tight">Seller Tip</h4>
+                                    <p className="text-xs text-secondary-text font-medium leading-relaxed">
+                                        Adding a discount significantly increases conversion rates. Set MRP higher than Price.
                                     </p>
                                 </div>
                             </div>

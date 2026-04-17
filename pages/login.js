@@ -278,7 +278,7 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen bg-white flex overflow-hidden">
+        <div className="min-h-screen bg-background flex overflow-hidden">
             <Head>
                 <title>{view === 'login' ? 'Sign In' : 'Join'} - SmartBuy</title>
             </Head>
@@ -288,7 +288,7 @@ export default function Login() {
                 initial={{ x: '-100%' }}
                 animate={{ x: 0 }}
                 transition={{ duration: 0.8 }}
-                className="hidden lg:relative lg:block w-full lg:w-1/2 bg-white overflow-hidden p-3"
+                className="hidden lg:relative lg:block w-full lg:w-1/2 bg-background overflow-hidden p-3"
             >
                 <div className="absolute inset-3 z-0 rounded-2xl overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-gray-900/40 to-black/60 mix-blend-multiply z-10" />
@@ -308,18 +308,18 @@ export default function Login() {
 
                 <div className="relative z-20 flex h-full flex-col justify-between p-12 text-white">
                     <Link href="/">
-                        <div className="flex items-center gap-3 cursor-pointer">
-                            <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/30">
-                                <span className="text-white font-bold text-xl">S</span>
+                        <div className="flex items-center gap-3 cursor-pointer group">
+                            <div className="w-10 h-10 bg-accent backdrop-blur-md rounded-xl flex items-center justify-center border border-white/30 transition-transform group-hover:scale-110">
+                                <span className="text-white font-black text-xl">S</span>
                             </div>
-                            <span className="font-bold text-2xl tracking-tight">SmartBuy</span>
+                            <span className="font-black text-2xl tracking-tight">SmartBuy</span>
                         </div>
                     </Link>
 
                     <div className="max-w-md">
-                        <h3 className="text-3xl font-medium leading-tight mb-4">&quot;{slides[currentSlide].text}&quot;</h3>
-                        <p className="font-bold text-lg">{slides[currentSlide].author}</p>
-                        <p className="text-white/70">{slides[currentSlide].role}</p>
+                        <h3 className="text-3xl font-bold leading-tight mb-4">&quot;{slides[currentSlide].text}&quot;</h3>
+                        <p className="font-black text-lg">{slides[currentSlide].author}</p>
+                        <p className="text-white/70 font-medium">{slides[currentSlide].role}</p>
                     </div>
                 </div>
             </motion.div>
@@ -329,32 +329,32 @@ export default function Login() {
                 initial={{ x: '100%' }}
                 animate={{ x: 0 }}
                 transition={{ duration: 0.8 }}
-                className="w-full lg:w-1/2 flex flex-col justify-center py-6 px-4 sm:px-6 lg:px-16 xl:px-20 bg-white relative z-10"
+                className="w-full lg:w-1/2 flex flex-col justify-center py-6 px-4 sm:px-6 lg:px-16 xl:px-20 bg-background relative z-10"
             >
                 <button
                     onClick={() => router.push('/')}
-                    className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 rounded-full transition-colors z-20"
+                    className="absolute top-4 right-4 p-2 text-secondary-text hover:text-foreground rounded-full transition-colors z-20"
                 >
                     <X className="w-5 h-5" />
                 </button>
 
                 <div className="mx-auto w-full max-w-sm lg:w-96">
                     <div className="mb-6 text-center">
-                        <h2 className="text-3xl font-black text-gray-900 uppercase">
+                        <h2 className="text-3xl font-black text-foreground uppercase tracking-tighter">
                             {view === 'login' ? 'Welcome' : view === 'signup' ? 'Create Account' : 'Reset Password'}
                         </h2>
-                        <p className="mt-2 text-sm text-gray-500 font-bold uppercase tracking-wider">
+                        <p className="mt-2 text-sm text-secondary-text font-black uppercase tracking-widest">
                             {view === 'login' ? (
-                                <>New here? <button onClick={() => setView('signup')} className="text-black hover:text-gray-700 underline">Join Now</button></>
+                                <>New here? <button onClick={() => setView('signup')} className="text-accent hover:text-accent-hover underline decoration-dotted underline-offset-4">Join Now</button></>
                             ) : (
-                                <>Have an account? <button onClick={() => setView('login')} className="text-black hover:text-gray-700 underline">Log in</button></>
+                                <>Have an account? <button onClick={() => setView('login')} className="text-accent hover:text-accent-hover underline decoration-dotted underline-offset-4">Log in</button></>
                             )}
                         </p>
                     </div>
 
                     {/* Role Selector */}
                     <div className="mb-4">
-                        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 text-center">Login As</p>
+                        <p className="text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] mb-3 text-center">Login As</p>
                         <div className="grid grid-cols-3 gap-2">
                             {['customer', 'admin', 'seller'].map((role) => (
                                 <button
@@ -362,48 +362,48 @@ export default function Login() {
                                     type="button"
                                     onClick={() => setSelectedRole(role)}
                                     className={`flex items-center justify-center p-2 rounded-xl border-2 transition-all ${selectedRole === role
-                                        ? 'border-black bg-gray-100 shadow-sm text-black'
-                                        : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-600'
+                                        ? 'border-accent bg-accent/5 shadow-sm text-accent'
+                                        : 'border-border hover:border-accent/30 hover:bg-secondary text-secondary-text'
                                         }`}
                                 >
-                                    <span className="text-xs font-bold capitalize">{role}</span>
+                                    <span className="text-xs font-black uppercase tracking-wider capitalize">{role}</span>
                                 </button>
                             ))}
                         </div>
                     </div>
 
                     {/* Method Toggle */}
-                    <div className="grid grid-cols-2 gap-2 p-1 bg-gray-50 rounded-xl border border-gray-200 mb-6">
+                    <div className="grid grid-cols-2 gap-2 p-1 bg-secondary rounded-xl border border-border mb-6">
                         <button
                             onClick={() => setMethod('email')}
-                            className={`py-2 rounded-lg text-xs font-bold transition-all ${method === 'email' ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                            className={`py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${method === 'email' ? 'bg-background text-foreground shadow-sm' : 'text-secondary-text hover:text-foreground'}`}
                         >
                             Email
                         </button>
                         <button
                             onClick={() => setMethod('mobile')}
-                            className={`py-2 rounded-lg text-xs font-bold transition-all ${method === 'mobile' ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                            className={`py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${method === 'mobile' ? 'bg-background text-foreground shadow-sm' : 'text-secondary-text hover:text-foreground'}`}
                         >
-                            Phone Number
+                            Phone
                         </button>
                     </div>
-
+ 
                     <div className="mt-4">
                         <button
                             onClick={handleGoogleSubmit}
                             disabled={isLoading}
-                            className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-all duration-200"
+                            className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-background px-3 py-2.5 text-xs font-black uppercase tracking-widest text-foreground shadow-sm hover:bg-secondary transition-all duration-200"
                         >
-                            <FcGoogle className="h-4 w-4" />
+                            <FcGoogle className="h-5 w-5" />
                             <span>Continue with Google</span>
                         </button>
 
                         <div className="relative mt-8">
                             <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                                <div className="w-full border-t border-gray-100" />
+                                <div className="w-full border-t border-border" />
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="bg-white px-4 text-gray-400 font-medium">Or continue with email</span>
+                                <span className="bg-background px-4 text-secondary-text font-black uppercase tracking-widest text-[10px]">Or continue with email</span>
                             </div>
                         </div>
                     </div>
@@ -424,7 +424,7 @@ export default function Login() {
                                         <div>
                                             <div className="relative">
                                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                    <Smartphone className="h-5 w-5 text-gray-400" />
+                                                    <Smartphone className="h-5 w-5 text-secondary-text" />
                                                 </div>
                                                 <input
                                                     type="tel"
@@ -432,7 +432,7 @@ export default function Login() {
                                                     onChange={(e) => setMobile(e.target.value)}
                                                     maxLength={10}
                                                     required
-                                                    className="block w-full rounded-xl border-gray-300 pl-10 py-2.5 shadow-sm focus:border-black focus:ring-black sm:text-sm bg-gray-50/50"
+                                                    className="block w-full rounded-xl border-border pl-10 py-3 shadow-sm focus:border-accent focus:ring-accent sm:text-sm bg-secondary/50 font-bold placeholder:text-secondary-text/30"
                                                     placeholder="10-digit Mobile Number"
                                                 />
                                             </div>
@@ -514,7 +514,7 @@ export default function Login() {
 
                                         {view === 'login' && (
                                             <div className="flex items-center justify-end">
-                                                <button type="button" onClick={() => setView('forgot')} className="text-sm font-medium text-black hover:text-gray-700">
+                                                <button type="button" onClick={() => setView('forgot')} className="text-sm font-black text-accent hover:text-accent-hover uppercase tracking-widest text-[10px]">
                                                     Forgot password?
                                                 </button>
                                             </div>
@@ -525,7 +525,7 @@ export default function Login() {
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="flex w-full justify-center rounded-xl bg-black py-2.5 px-3 text-sm font-semibold text-white shadow-lg shadow-gray-500/30 hover:shadow-gray-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black transition-all duration-200"
+                                    className="flex w-full justify-center rounded-xl bg-accent py-3.5 px-3 text-sm font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-accent/20 hover:shadow-accent/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-all duration-300 active:scale-95 disabled:bg-secondary disabled:text-secondary-text"
                                 >
                                     {isLoading ? 'Processing...' : (
                                         <div className="flex items-center gap-2">
@@ -546,18 +546,18 @@ export default function Login() {
                         </AnimatePresence>
 
                         {/* Trust Badges */}
-                        <div className="mt-6 pt-4 border-t border-gray-100 grid grid-cols-3 gap-4 text-center">
+                        <div className="mt-6 pt-4 border-t border-border grid grid-cols-3 gap-4 text-center">
                             <div className="flex flex-col items-center">
-                                <ShieldCheck className="h-6 w-6 text-gray-400 mb-2" />
-                                <span className="text-xs text-gray-500">Secure Payment</span>
+                                <ShieldCheck className="h-6 w-6 text-accent mb-2" />
+                                <span className="text-[10px] font-black text-secondary-text uppercase tracking-widest">Secure Payment</span>
                             </div>
                             <div className="flex flex-col items-center">
-                                <Truck className="h-6 w-6 text-gray-400 mb-2" />
-                                <span className="text-xs text-gray-500">Fast Delivery</span>
+                                <Truck className="h-6 w-6 text-accent mb-2" />
+                                <span className="text-[10px] font-black text-secondary-text uppercase tracking-widest">Fast Delivery</span>
                             </div>
                             <div className="flex flex-col items-center">
-                                <ShoppingBag className="h-6 w-6 text-gray-400 mb-2" />
-                                <span className="text-xs text-gray-500">Easy Returns</span>
+                                <ShoppingBag className="h-6 w-6 text-accent mb-2" />
+                                <span className="text-[10px] font-black text-secondary-text uppercase tracking-widest">Easy Returns</span>
                             </div>
                         </div>
                     </div>

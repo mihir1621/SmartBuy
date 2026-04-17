@@ -39,57 +39,57 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={onClose}
-                    className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                    className="absolute inset-0 bg-background/60 backdrop-blur-sm"
                 />
 
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                    className="relative bg-gray-900 rounded-3xl overflow-hidden shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col md:flex-row border border-gray-800"
+                    className="relative bg-background rounded-3xl overflow-hidden shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col md:flex-row border border-border"
                     onClick={(e) => e.stopPropagation()}
                 >
                     <button
                         onClick={onClose}
-                        className="absolute top-4 right-4 z-10 p-2 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black transition-colors"
+                        className="absolute top-4 right-4 z-10 p-2 bg-background/50 backdrop-blur-sm rounded-full hover:bg-background transition-colors border border-border"
                     >
-                        <X className="w-5 h-5 text-white" />
+                        <X className="w-5 h-5 text-foreground" />
                     </button>
 
                     {/* Image Side */}
-                    <div className="md:w-1/2 relative h-64 md:h-auto bg-gray-800">
+                    <div className="md:w-1/2 relative h-64 md:h-auto bg-secondary-bg">
                         <Image src={product.image} alt={product.name} fill className="object-cover" />
                     </div>
 
                     {/* Content Side */}
-                    <div className="md:w-1/2 p-6 md:p-10 overflow-y-auto">
-                        <div className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2">{product.category}</div>
-                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">{product.name}</h2>
+                    <div className="md:w-1/2 p-6 md:p-10 overflow-y-auto bg-background">
+                        <div className="text-xs font-bold text-accent uppercase tracking-widest mb-2">{product.category}</div>
+                        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">{product.name}</h2>
 
                         <div className="flex items-center gap-2 mb-4">
-                            <div className="flex text-yellow-400">
+                            <div className="flex text-yellow-500">
                                 <Star className="w-4 h-4 fill-current" />
-                                <span className="text-gray-200 font-bold ml-1">{product.rating}</span>
+                                <span className="text-foreground font-bold ml-1">{product.rating}</span>
                             </div>
-                            <span className="text-gray-600 text-sm">•</span>
-                            <span className="text-gray-400 text-sm">{product.reviews} reviews</span>
+                            <span className="text-border text-sm">•</span>
+                            <span className="text-secondary-text text-sm">{product.reviews} reviews</span>
                         </div>
 
-                        <div className="text-3xl font-bold text-white mb-6">₹{product.price}</div>
+                        <div className="text-3xl font-bold text-foreground mb-6">₹{product.price}</div>
 
-                        <p className="text-gray-300 leading-relaxed mb-6">
+                        <p className="text-secondary-text leading-relaxed mb-6">
                             {product.description}
                         </p>
 
                         <div className="space-y-3 mb-8">
-                            <div className="flex items-center gap-3 text-sm text-gray-400">
-                                <div className="w-8 h-8 rounded-full bg-green-900/30 flex items-center justify-center text-green-400">
+                            <div className="flex items-center gap-3 text-sm text-secondary-text">
+                                <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent">
                                     <Check className="w-4 h-4" />
                                 </div>
                                 In Stock & Ready to Ship
                             </div>
-                            <div className="flex items-center gap-3 text-sm text-gray-400">
-                                <div className="w-8 h-8 rounded-full bg-blue-900/30 flex items-center justify-center text-blue-400">
+                            <div className="flex items-center gap-3 text-sm text-secondary-text">
+                                <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent">
                                     <Check className="w-4 h-4" />
                                 </div>
                                 Free Shipping & Returns
@@ -102,7 +102,7 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
                                     addToCart(product);
                                     onClose();
                                 }}
-                                className="flex-1 bg-white text-black font-bold py-4 rounded-xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
+                                className="flex-1 bg-accent text-white font-bold py-4 rounded-xl hover:bg-accent/90 transition-all flex items-center justify-center gap-2 shadow-saas active:scale-95"
                             >
                                 <ShoppingCart className="w-5 h-5" /> Add to Cart
                             </button>
@@ -110,7 +110,7 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
                                 onClick={() => {
                                     router.push(`/product/${product.id}`);
                                 }}
-                                className="px-6 py-4 border border-gray-700 text-white rounded-xl hover:bg-gray-800 transition-colors"
+                                className="px-6 py-4 border border-border text-foreground rounded-xl hover:bg-secondary-bg transition-all"
                                 title="View Full Details"
                             >
                                 <ArrowRight className="w-5 h-5" />

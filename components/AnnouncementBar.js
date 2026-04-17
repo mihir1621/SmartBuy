@@ -7,7 +7,7 @@ export default function AnnouncementBar() {
     if (!isVisible) return null;
 
     return (
-        <div className="bg-gray-900 text-white px-4 py-1.5 text-xs font-semibold relative z-40">
+        <div className="bg-accent text-white px-4 py-1.5 text-xs font-semibold relative z-40 shadow-saas">
             <div className="max-w-7xl mx-auto flex items-center justify-between sm:justify-center">
                 <p className="text-center pr-8 sm:pr-0 tracking-wide uppercase">
                     🎉 Free Shipping on Orders Over ₹300! Use Code: <span className="font-black text-white">SMARTBUY</span>

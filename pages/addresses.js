@@ -73,10 +73,10 @@ export default function Addresses() {
 
     if (authLoading || !user) {
         return (
-            <div className="min-h-screen bg-black flex flex-col">
+            <div className="min-h-screen bg-background flex flex-col font-sans">
                 <StoreNavbar />
                 <div className="flex-grow flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent"></div>
                 </div>
                 <Footer />
             </div>
@@ -84,29 +84,29 @@ export default function Addresses() {
     }
 
     return (
-        <div className="min-h-screen bg-black flex flex-col text-white">
+        <div className="min-h-screen bg-background flex flex-col text-foreground font-sans">
             <Head>
                 <title>My Addresses | SmartBuy</title>
             </Head>
             <StoreNavbar />
 
             <main className="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
-                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8 sm:mb-10">
-                    <div className="flex items-center gap-3 sm:gap-4">
-                        <div className="p-3 sm:p-4 bg-white/10 rounded-2xl border border-white/20">
-                            <MapPin className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-8 mb-10 sm:mb-14">
+                    <div className="flex items-center gap-4 sm:gap-6">
+                        <div className="p-4 bg-surface rounded-[1.5rem] border border-border shadow-sm">
+                            <MapPin className="w-6 h-6 sm:w-8 sm:h-8 text-accent" />
                         </div>
                         <div>
-                            <h1 className="text-2xl sm:text-3xl font-black tracking-tight underline decoration-white/30 decoration-4 underline-offset-8">My Addresses</h1>
-                            <p className="text-gray-500 mt-1 sm:mt-2 font-medium text-xs sm:text-base">Manage your saved delivery addresses</p>
+                            <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-foreground uppercase">My Addresses</h1>
+                            <p className="text-secondary-text mt-1 font-medium text-xs sm:text-sm uppercase tracking-widest">Manage your saved delivery locations</p>
                         </div>
                     </div>
 
                     <button
                         onClick={() => setIsAdding(!isAdding)}
-                        className="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-xl text-sm font-bold hover:bg-gray-200 transition-all shadow-lg shadow-white/5 active:scale-95"
+                        className={`flex items-center gap-2 px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-saas active:scale-95 ${isAdding ? 'bg-secondary text-foreground' : 'bg-accent text-white hover:bg-accent-hover'}`}
                     >
-                        <Plus className="w-4 h-4" />
+                        {isAdding ? <XCircle className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                         {isAdding ? 'Cancel' : 'Add New Address'}
                     </button>
                 </div>
@@ -114,104 +114,78 @@ export default function Addresses() {
                 <AnimatePresence>
                     {isAdding && (
                         <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="overflow-hidden mb-8"
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            className="mb-10"
                         >
-                            <form onSubmit={handleAddAddress} className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 sm:p-8 backdrop-blur-sm">
-                                <h3 className="text-lg font-bold mb-6">Add New Address</h3>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                            <form onSubmit={handleAddAddress} className="bg-surface border border-border rounded-[2.5rem] p-8 sm:p-12 shadow-saas">
+                                <h3 className="text-xl font-black mb-10 text-foreground uppercase tracking-tight">Add New Address</h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                                     <div className="space-y-2">
-                                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Full Name</label>
+                                        <label className="text-[10px] font-black text-secondary-text uppercase tracking-[0.2em]">Full Name</label>
                                         <input
                                             required
                                             type="text"
                                             value={newAddress.name}
                                             onChange={(e) => setNewAddress({ ...newAddress, name: e.target.value })}
-                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
-                                            placeholder="John Doe"
+                                            className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:border-accent focus:ring-2 focus:ring-accent/10 outline-none transition-all"
+                                            placeholder="Enter your full name"
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Phone Number</label>
+                                        <label className="text-[10px] font-black text-secondary-text uppercase tracking-[0.2em]">Phone Number</label>
                                         <input
                                             required
                                             type="tel"
                                             value={newAddress.phone}
                                             onChange={(e) => setNewAddress({ ...newAddress, phone: e.target.value })}
-                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
+                                            className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:border-accent focus:ring-2 focus:ring-accent/10 outline-none transition-all"
                                             placeholder="+91 98765 43210"
                                         />
                                     </div>
                                     <div className="space-y-2 sm:col-span-2">
-                                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Address Line</label>
+                                        <label className="text-[10px] font-black text-secondary-text uppercase tracking-[0.2em]">Address Details</label>
                                         <input
                                             required
                                             type="text"
                                             value={newAddress.street}
                                             onChange={(e) => setNewAddress({ ...newAddress, street: e.target.value })}
-                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
-                                            placeholder="Flat, House no., Building, Company, Apartment"
+                                            className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:border-accent focus:ring-2 focus:ring-accent/10 outline-none transition-all"
+                                            placeholder="Apt, Suite, Street name, Building info"
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">City</label>
+                                        <label className="text-[10px] font-black text-secondary-text uppercase tracking-[0.2em]">City</label>
                                         <input
                                             required
                                             type="text"
                                             value={newAddress.city}
                                             onChange={(e) => setNewAddress({ ...newAddress, city: e.target.value })}
-                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
-                                            placeholder="Mumbai"
+                                            className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:border-accent focus:ring-2 focus:ring-accent/10 outline-none transition-all"
+                                            placeholder="City"
                                         />
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">State</label>
-                                        <input
-                                            required
-                                            type="text"
-                                            value={newAddress.state}
-                                            onChange={(e) => setNewAddress({ ...newAddress, state: e.target.value })}
-                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
-                                            placeholder="Maharashtra"
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">ZIP Code</label>
-                                        <input
-                                            required
-                                            type="text"
-                                            value={newAddress.zip}
-                                            onChange={(e) => setNewAddress({ ...newAddress, zip: e.target.value })}
-                                            className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-sm focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
-                                            placeholder="400001"
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Address Type</label>
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] font-black text-secondary-text uppercase tracking-[0.2em]">Address Type</label>
                                         <div className="flex gap-4">
-                                            <button
-                                                type="button"
-                                                onClick={() => setNewAddress({ ...newAddress, type: 'Home' })}
-                                                className={`flex-1 py-2.5 rounded-lg text-sm font-bold border transition-all ${newAddress.type === 'Home' ? 'bg-white/10 border-white text-white' : 'bg-gray-950 border-gray-800 text-gray-400 hover:border-gray-700'}`}
-                                            >
-                                                Home
-                                            </button>
-                                            <button
-                                                type="button"
-                                                onClick={() => setNewAddress({ ...newAddress, type: 'Work' })}
-                                                className={`flex-1 py-2.5 rounded-lg text-sm font-bold border transition-all ${newAddress.type === 'Work' ? 'bg-white/10 border-white text-white' : 'bg-gray-950 border-gray-800 text-gray-400 hover:border-gray-700'}`}
-                                            >
-                                                Work
-                                            </button>
+                                            {['Home', 'Work'].map(type => (
+                                                <button
+                                                    key={type}
+                                                    type="button"
+                                                    onClick={() => setNewAddress({ ...newAddress, type })}
+                                                    className={`flex-1 py-3 rounded-xl text-xs font-black uppercase tracking-widest border transition-all ${newAddress.type === type ? 'bg-accent text-white border-accent shadow-md' : 'bg-background border-border text-secondary-text hover:border-accent/30'}`}
+                                                >
+                                                    {type}
+                                                </button>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>
-                                <div className="mt-8 flex justify-end">
+                                <div className="mt-12 flex justify-end gap-4">
                                     <button
                                         type="submit"
-                                        className="bg-white text-black px-8 py-3 rounded-xl font-bold hover:bg-gray-200 transition-all shadow-lg shadow-white/20 active:scale-95"
+                                        className="bg-accent text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-accent-hover transition-all shadow-saas active:scale-95"
                                     >
                                         Save Address
                                     </button>
@@ -221,38 +195,40 @@ export default function Addresses() {
                     )}
                 </AnimatePresence>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                     {addresses.map((addr) => (
                         <motion.div
                             layout
                             key={addr.id}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className={`relative p-6 rounded-2xl border transition-all group ${addr.isDefault ? 'bg-white/5 border-white/30' : 'bg-gray-900/50 border-gray-800 hover:border-gray-700'}`}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className={`relative p-8 rounded-[2rem] border transition-all group ${addr.isDefault ? 'bg-surface border-accent/20 shadow-saas' : 'bg-surface border-border hover:border-accent/20'}`}
                         >
-                            <div className="flex justify-between items-start mb-4">
-                                <div className="flex items-center gap-2">
-                                    <span className={`p-2 rounded-lg ${addr.type === 'Home' ? 'bg-white/10 text-white' : 'bg-white/10 text-white'}`}>
-                                        {addr.type === 'Home' ? <Home className="w-4 h-4" /> : <Briefcase className="w-4 h-4" />}
-                                    </span>
-                                    <span className="font-bold text-sm bg-gray-800 px-2 py-1 rounded text-gray-300">{addr.type}</span>
-                                    {addr.isDefault && (
-                                        <span className="text-[10px] font-black uppercase tracking-widest bg-white text-black px-2 py-1 rounded">Default</span>
-                                    )}
+                            <div className="flex justify-between items-start mb-6">
+                                <div className="flex items-center gap-3">
+                                    <div className={`p-3 rounded-xl ${addr.isDefault ? 'bg-accent/10 text-accent' : 'bg-secondary text-secondary-text'}`}>
+                                        {addr.type === 'Home' ? <Home className="w-5 h-5" /> : <Briefcase className="w-5 h-5" />}
+                                    </div>
+                                    <div>
+                                        <span className="font-black text-[10px] uppercase tracking-widest text-secondary-text block mb-0.5">{addr.type}</span>
+                                        {addr.isDefault && (
+                                            <span className="text-[9px] font-black uppercase tracking-widest bg-success text-white px-2 py-0.5 rounded-full">Default</span>
+                                        )}
+                                    </div>
                                 </div>
                                 <div className="flex gap-2">
                                     {!addr.isDefault && (
                                         <button
                                             onClick={() => handleSetDefault(addr.id)}
-                                            className="p-2 text-gray-500 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+                                            className="p-2.5 text-secondary-text hover:text-accent hover:bg-accent/5 rounded-xl transition-colors border border-transparent hover:border-accent/10"
                                             title="Set as Default"
                                         >
-                                            <Check className="w-4 h-4" />
+                                            <Check className="w-4 h-4 font-bold" />
                                         </button>
                                     )}
                                     <button
                                         onClick={() => handleRemoveAddress(addr.id)}
-                                        className="p-2 text-gray-500 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                                        className="p-2.5 text-secondary-text hover:text-error hover:bg-error/5 rounded-xl transition-colors border border-transparent hover:border-error/10"
                                         title="Remove Address"
                                     >
                                         <Trash2 className="w-4 h-4" />
@@ -260,18 +236,17 @@ export default function Addresses() {
                                 </div>
                             </div>
 
-                            <div className="space-y-3">
-                                <div className="flex items-center gap-2 text-white font-bold">
-                                    <User className="w-4 h-4 text-gray-500" />
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-3 text-foreground font-black tracking-tight text-lg">
                                     {addr.name}
                                 </div>
-                                <div className="flex items-start gap-2 text-gray-400 text-sm">
-                                    <MapPin className="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" />
-                                    <p>{addr.street}, {addr.city}, {addr.state} - {addr.zip}</p>
+                                <div className="flex items-start gap-3 text-secondary-text text-sm leading-relaxed">
+                                    <MapPin className="w-4 h-4 text-accent/50 mt-1 flex-shrink-0" />
+                                    <p className="font-medium">{addr.street}<br />{addr.city}, {addr.state} - {addr.zip}</p>
                                 </div>
-                                <div className="flex items-center gap-2 text-gray-400 text-sm">
-                                    <Phone className="w-4 h-4 text-gray-500" />
-                                    {addr.phone}
+                                <div className="flex items-center gap-3 text-secondary-text text-sm h-10 px-4 bg-background rounded-xl border border-border/50 w-fit">
+                                    <Phone className="w-3.5 h-3.5 text-accent/50" />
+                                    <span className="font-bold">{addr.phone}</span>
                                 </div>
                             </div>
                         </motion.div>

@@ -17,11 +17,11 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 
 const statusColors = {
-    'PENDING': 'text-white bg-white/10',
-    'PROCESSING': 'text-white bg-white/10',
-    'SHIPPED': 'text-white bg-white/10',
-    'DELIVERED': 'text-white bg-white/10',
-    'CANCELLED': 'text-white bg-white/10',
+    'PENDING': 'text-warning bg-warning/10 border-warning/20',
+    'PROCESSING': 'text-accent bg-accent/10 border-accent/20',
+    'SHIPPED': 'text-accent bg-accent/10 border-accent/20',
+    'DELIVERED': 'text-success bg-success/10 border-success/20',
+    'CANCELLED': 'text-error bg-error/10 border-error/20',
 };
 
 export default function AdminOrders() {
@@ -55,75 +55,75 @@ export default function AdminOrders() {
     return (
         <AdminLayout title="Order Management">
             <div className="space-y-6">
-                <div className="flex flex-col sm:row justify-between items-center gap-4 bg-gray-900/50 p-6 rounded-3xl border border-gray-800">
+                <div className="flex flex-col sm:row justify-between items-center gap-4 bg-surface p-6 rounded-3xl border border-border shadow-sm">
                     <div className="relative w-full sm:w-96 group">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-white transition-colors" size={18} />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-secondary-text group-focus-within:text-accent transition-colors" size={18} />
                         <input
                             type="text"
-                            placeholder="Search by ID or customer name..."
+                            placeholder="Find orders..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-white/50 transition-all text-gray-200"
+                            className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all text-foreground font-medium"
                         />
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <button className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 font-bold py-3 px-6 rounded-2xl border border-gray-700 transition-all">
+                        <button className="flex items-center gap-2 bg-background hover:bg-secondary text-foreground font-black py-3 px-6 rounded-2xl border border-border transition-all uppercase tracking-widest text-xs">
                             <Filter size={18} />
                             Filter
                         </button>
                     </div>
                 </div>
 
-                <div className="bg-gray-900 border border-gray-800 rounded-3xl overflow-hidden">
+                <div className="bg-surface border border-border rounded-3xl overflow-hidden shadow-sm">
                     <table className="w-full text-left">
                         <thead>
-                            <tr className="bg-gray-950/50 border-b border-gray-800">
-                                <th className="px-6 py-5 text-xs font-bold uppercase text-gray-500">Order ID</th>
-                                <th className="px-6 py-5 text-xs font-bold uppercase text-gray-500">Customer</th>
-                                <th className="px-6 py-5 text-xs font-bold uppercase text-gray-500">Items</th>
-                                <th className="px-6 py-5 text-xs font-bold uppercase text-gray-500">Total</th>
-                                <th className="px-6 py-5 text-xs font-bold uppercase text-gray-500">Status</th>
-                                <th className="px-6 py-5 text-xs font-bold uppercase text-gray-500">Date</th>
-                                <th className="px-6 py-5 text-xs font-bold uppercase text-gray-500 text-right">Action</th>
+                            <tr className="bg-background border-b border-border">
+                                <th className="px-6 py-5 text-[10px] font-black uppercase text-secondary-text tracking-widest">Order ID</th>
+                                <th className="px-6 py-5 text-[10px] font-black uppercase text-secondary-text tracking-widest">Customer</th>
+                                <th className="px-6 py-5 text-[10px] font-black uppercase text-secondary-text tracking-widest">Items</th>
+                                <th className="px-6 py-5 text-[10px] font-black uppercase text-secondary-text tracking-widest">Total</th>
+                                <th className="px-6 py-5 text-[10px] font-black uppercase text-secondary-text tracking-widest">Status</th>
+                                <th className="px-6 py-5 text-[10px] font-black uppercase text-secondary-text tracking-widest">Date</th>
+                                <th className="px-6 py-5 text-[10px] font-black uppercase text-secondary-text tracking-widest text-right">Action</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-800">
+                        <tbody className="divide-y divide-border">
                             {loading ? (
                                 <tr>
                                     <td colSpan="7" className="px-6 py-20 text-center">
                                         <div className="flex flex-col items-center gap-3">
-                                            <Clock className="animate-spin text-white" size={32} />
-                                            <p className="text-gray-500 font-bold">Loading Orders...</p>
+                                            <Clock className="animate-spin text-accent" size={32} />
+                                            <p className="text-secondary-text font-bold">Loading Orders...</p>
                                         </div>
                                     </td>
                                 </tr>
                             ) : filteredOrders.length === 0 ? (
                                 <tr>
                                     <td colSpan="7" className="px-6 py-20 text-center">
-                                        <p className="text-gray-500 font-bold">No orders found.</p>
+                                        <p className="text-secondary-text font-bold">No orders found.</p>
                                     </td>
                                 </tr>
                             ) : (
                                 filteredOrders.map((order) => (
-                                    <tr key={order.id} className="hover:bg-gray-800/30 transition-colors group">
-                                        <td className="px-6 py-5 font-bold text-white">#ORD-{order.id}</td>
+                                    <tr key={order.id} className="hover:bg-secondary/20 transition-colors group">
+                                        <td className="px-6 py-5 font-black text-foreground text-sm tracking-tight capitalize"># {order.id.slice(-8)}</td>
                                         <td className="px-6 py-5">
-                                            <p className="font-bold text-white">{order.customerName}</p>
-                                            <p className="text-xs text-gray-500">{order.customerPhone}</p>
+                                            <p className="font-black text-foreground group-hover:text-accent transition-colors">{order.customerName}</p>
+                                            <p className="text-[10px] text-secondary-text font-black uppercase tracking-widest">{order.customerPhone}</p>
                                         </td>
-                                        <td className="px-6 py-5 text-white font-medium">{order.items?.length || 0} items</td>
-                                        <td className="px-6 py-5 font-bold text-white">₹{order.totalAmount.toLocaleString()}</td>
+                                        <td className="px-6 py-5 text-foreground font-medium">{order.items?.length || 0} items</td>
+                                        <td className="px-6 py-5 font-black text-foreground">₹{order.totalAmount.toLocaleString()}</td>
                                         <td className="px-6 py-5">
-                                            <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border border-transparent ${statusColors[order.status] || 'text-gray-400 bg-gray-400/10'}`}>
+                                            <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${statusColors[order.status] || 'text-secondary-text bg-secondary border-border'}`}>
                                                 {order.status}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-5 text-gray-400 text-sm">{new Date(order.createdAt).toLocaleDateString()}</td>
+                                        <td className="px-6 py-5 text-secondary-text text-sm font-medium">{new Date(order.createdAt).toLocaleDateString()}</td>
                                         <td className="px-6 py-5 text-right">
                                             <button
                                                 onClick={() => router.push(`/admin/orders/${order.id}`)}
-                                                className="p-2.5 rounded-xl bg-gray-800 text-gray-400 hover:text-white transition-all hover:bg-white/10 border border-transparent hover:border-white/30"
+                                                className="p-2.5 rounded-xl bg-background text-secondary-text hover:text-accent transition-all hover:bg-secondary border border-border hover:border-accent/40 shadow-sm"
                                             >
                                                 <Eye size={18} />
                                             </button>

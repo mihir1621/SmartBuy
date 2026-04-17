@@ -8,9 +8,9 @@ export default function TermsModal({ isOpen, onClose, policy }) {
     // Map icons based on policy type
     const getIcon = () => {
         switch (policy.type) {
-            case 'delivery': return <Truck className="w-6 h-6 text-blue-400" />;
-            case 'warranty': return <ShieldCheck className="w-6 h-6 text-green-400" />;
-            case 'return': return <RotateCcw className="w-6 h-6 text-orange-400" />;
+            case 'delivery': return <Truck className="w-6 h-6 text-accent" />;
+            case 'warranty': return <ShieldCheck className="w-6 h-6 text-success" />;
+            case 'return': return <RotateCcw className="w-6 h-6 text-warning" />;
             default: return null;
         }
     };
@@ -23,30 +23,30 @@ export default function TermsModal({ isOpen, onClose, policy }) {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     onClick={(e) => e.stopPropagation()}
-                    className="bg-gray-900 rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden border border-gray-800"
+                    className="bg-background rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden border border-border"
                 >
                     {/* Header */}
-                    <div className="bg-gray-900 text-white p-4 flex items-center justify-between border-b border-gray-800">
+                    <div className="bg-surface text-foreground p-4 flex items-center justify-between border-b border-border">
                         <div className="flex items-center gap-2">
                             {getIcon()}
                             <h2 className="text-lg font-bold">{policy.title}</h2>
                         </div>
-                        <button onClick={onClose} className="p-1 hover:bg-gray-800 rounded-full transition-colors">
-                            <X className="w-5 h-5" />
+                        <button onClick={onClose} className="p-1 hover:bg-secondary rounded-full transition-colors">
+                            <X className="w-5 h-5 text-secondary-text" />
                         </button>
                     </div>
 
                     <div className="p-6">
-                        <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">Terms & Conditions</h3>
-                        <p className="text-gray-300 leading-relaxed text-sm">
+                        <h3 className="text-sm font-bold text-secondary-text uppercase tracking-wider mb-2">Terms & Conditions</h3>
+                        <p className="text-foreground leading-relaxed text-sm">
                             {policy.content}
                         </p>
                     </div>
 
-                    <div className="p-4 bg-gray-800/50 border-t border-gray-800">
+                    <div className="p-4 bg-surface border-t border-border">
                         <button
                             onClick={onClose}
-                            className="w-full bg-white text-black font-bold py-2.5 rounded-lg hover:bg-gray-200 transition-colors text-sm"
+                            className="w-full bg-accent text-white font-bold py-2.5 rounded-lg hover:bg-accent-hover transition-all text-sm shadow-saas"
                         >
                             Got it
                         </button>

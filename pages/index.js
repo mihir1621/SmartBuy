@@ -163,7 +163,7 @@ export default function Home({ initialProducts }) {
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="text-gray-500 hover:text-foreground transition-colors p-1"
+                    className="text-secondary-text hover:text-foreground transition-colors p-1"
                     title="Clear Search"
                   >
                     <X size={20} />
@@ -171,7 +171,7 @@ export default function Home({ initialProducts }) {
                 )}
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
-                <span className="text-sm text-gray-500 hidden sm:inline">Sort by:</span>
+                <span className="text-sm text-secondary-text hidden sm:inline">Sort by:</span>
                 <div className="relative">
                   <select
                     value={sortOption}
@@ -184,7 +184,7 @@ export default function Home({ initialProducts }) {
                     <option value="price-desc">Price: High to Low</option>
                     <option value="rating">Rating</option>
                   </select>
-                  <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500 absolute right-2 sm:right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-secondary-text absolute right-2 sm:right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
             </div>
@@ -221,7 +221,7 @@ export default function Home({ initialProducts }) {
                 <div className="flex items-center gap-2 sm:gap-4 mb-6">
                   <h2 className="text-xl sm:text-2xl font-black text-foreground relative whitespace-nowrap uppercase tracking-tight">
                     Picked for You
-                    <span className="absolute -bottom-1.5 sm:-bottom-2 left-0 w-2/3 h-1 bg-blue-500 rounded-full"></span>
+                    <span className="absolute -bottom-1.5 sm:-bottom-2 left-0 w-2/3 h-1 bg-accent rounded-full"></span>
                   </h2>
                   <div className="h-px bg-border flex-grow mt-1 sm:mt-1"></div>
                 </div>
@@ -235,12 +235,12 @@ export default function Home({ initialProducts }) {
 
             {/* Onboarding for New Users */}
             {isNewUser && user && (
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-8 mb-12 text-white shadow-xl">
+              <div className="bg-accent rounded-2xl p-8 mb-12 text-white shadow-saas">
                 <h3 className="text-2xl font-black mb-2 uppercase tracking-wide">Welcome to SmartBuy, {user.displayName || 'New Explorer'}!</h3>
-                <p className="text-blue-100 mb-6 max-w-lg">We&apos;re excited to have you. Start browsing products, and we&apos;ll begin personalizing your experience based on what you love.</p>
+                <p className="text-white/80 mb-6 max-w-lg">We&apos;re excited to have you. Start browsing products, and we&apos;ll begin personalizing your experience based on what you love.</p>
                 <div className="flex gap-4">
-                  <button onClick={() => setSelectedCategory(categories[1])} className="bg-white text-blue-700 px-6 py-2.5 rounded-xl font-bold hover:bg-blue-50 transition-all">Start Shopping</button>
-                  <button onClick={() => router.push('/wishlist')} className="bg-blue-800/50 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-blue-800 transition-all border border-blue-400/30">View Wishlist</button>
+                  <button onClick={() => setSelectedCategory(categories[1])} className="bg-white text-accent px-6 py-2.5 rounded-xl font-bold hover:bg-white/90 transition-all">Start Shopping</button>
+                  <button onClick={() => router.push('/wishlist')} className="bg-accent-hover text-white px-6 py-2.5 rounded-xl font-bold hover:brightness-110 transition-all border border-white/20">View Wishlist</button>
                 </div>
               </div>
             )}
@@ -255,11 +255,12 @@ export default function Home({ initialProducts }) {
                         {category}
                         <span className="absolute -bottom-1.5 sm:-bottom-2 left-0 w-1/3 h-0.5 sm:h-1 bg-foreground rounded-full"></span>
                       </h2>
-                      <div className="h-px bg-border flex-grow mt-1 sm:mt-1"></div>
+                      <div className="h-px bg-border flex-grow mt-1"></div>
                     </div>
 
                     <motion.div
-                      layout
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
                       className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4"
                     >
                       {groupedProducts[category].map((product) => (
@@ -273,7 +274,7 @@ export default function Home({ initialProducts }) {
               <div className="text-center py-12 sm:py-20 bg-surface rounded-xl border border-border px-4 transition-colors duration-300">
                 <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🔍</div>
                 <h3 className="text-lg sm:text-xl font-bold text-foreground mb-1 sm:mb-2">No results found</h3>
-                <p className="text-gray-500 text-base sm:text-lg mb-4 sm:mb-6">Try adjusting your filters or search terms.</p>
+                <p className="text-secondary-text text-base sm:text-lg mb-4 sm:mb-6">Try adjusting your filters or search terms.</p>
                 <button
                   onClick={() => {
                     setSelectedCategory("All");
@@ -282,7 +283,7 @@ export default function Home({ initialProducts }) {
                     setPriceRange([0, globalMaxPrice]);
                     setSelectedGender("All");
                   }}
-                  className="px-5 sm:px-6 py-2 bg-foreground text-background rounded-lg hover:opacity-90 font-medium transition-all text-sm sm:text-base border border-border"
+                  className="px-5 sm:px-6 py-2 bg-accent text-white rounded-lg hover:bg-accent-hover font-medium transition-all text-sm sm:text-base border border-transparent shadow-saas"
                 >
                   Clear all filters
                 </button>

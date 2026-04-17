@@ -1,7 +1,7 @@
 import Skeleton from "../Skeleton";
 
 export const NavbarSkeleton = () => (
-    <div className="sticky top-0 z-30 bg-black/90 backdrop-blur-md shadow-sm border-b border-gray-800 h-14 flex items-center px-4 sm:px-6 lg:px-8 gap-4">
+    <div className="sticky top-0 z-30 bg-background/90 backdrop-blur-md shadow-sm border-b border-gray-800 h-14 flex items-center px-4 sm:px-6 lg:px-8 gap-4">
         <Skeleton className="w-8 h-8 rounded-lg" />
         <Skeleton className="w-24 h-6 hidden sm:block" />
         <div className="flex-1 max-w-xl hidden md:block mx-auto">
@@ -16,10 +16,10 @@ export const NavbarSkeleton = () => (
 );
 
 export const HomeSkeleton = () => (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground">
         <NavbarSkeleton />
         {/* Banner Skeleton */}
-        <div className="relative w-full h-[200px] sm:h-[300px] md:h-[400px] bg-gray-900 animate-pulse" />
+        <div className="relative w-full h-[200px] sm:h-[300px] md:h-[400px] bg-surface animate-pulse" />
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {/* Filter/Sort Bar Skeleton */}
@@ -34,11 +34,11 @@ export const HomeSkeleton = () => (
                     <section key={section} className="space-y-4">
                         <div className="flex items-center gap-4">
                             <Skeleton className="w-32 h-8" />
-                            <div className="h-px bg-gray-800 flex-grow" />
+                            <div className="h-px bg-border flex-grow" />
                         </div>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                             {[...Array(5)].map((_, i) => (
-                                <div key={i} className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 p-2 space-y-3">
+                                <div key={i} className="bg-surface rounded-xl overflow-hidden border border-gray-800 p-2 space-y-3">
                                     <Skeleton className="w-full aspect-[3/4] rounded-lg" />
                                     <div className="space-y-2 px-1">
                                         <Skeleton className="w-3/4 h-4" />
@@ -59,10 +59,10 @@ export const HomeSkeleton = () => (
 );
 
 export const ProductDetailSkeleton = () => (
-    <div className="min-h-screen bg-black text-white flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
         <NavbarSkeleton />
         <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-            <div className="bg-gray-900 rounded-2xl shadow-sm border border-gray-800 overflow-hidden mb-12">
+            <div className="bg-surface rounded-2xl shadow-sm border border-gray-800 overflow-hidden mb-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
                     {/* Image Gallery Skeleton */}
                     <div className="space-y-4">
@@ -108,7 +108,7 @@ export const ProductDetailSkeleton = () => (
 );
 
 export const OrderSkeleton = () => (
-    <div className="min-h-screen bg-black text-white flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
         <NavbarSkeleton />
         <main className="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
@@ -130,7 +130,7 @@ export const OrderSkeleton = () => (
 
             <div className="space-y-8">
                 {[...Array(3)].map((_, i) => (
-                    <div key={i} className="bg-gray-900/50 border border-gray-800 rounded-[2rem] p-8 space-y-8">
+                    <div key={i} className="bg-surface/50 border border-gray-800 rounded-[2rem] p-8 space-y-8">
                         <div className="flex flex-col lg:flex-row justify-between gap-6">
                             <div className="flex gap-10">
                                 {[...Array(4)].map((_, j) => (
@@ -165,7 +165,7 @@ export const OrderSkeleton = () => (
 );
 
 export const WishlistSkeleton = () => (
-    <div className="min-h-screen bg-black text-white flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
         <NavbarSkeleton />
         <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
             <div className="flex items-center gap-4 mb-8">
@@ -178,7 +178,7 @@ export const WishlistSkeleton = () => (
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 {[...Array(10)].map((_, i) => (
-                    <div key={i} className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 p-2 space-y-3">
+                    <div key={i} className="bg-surface rounded-xl overflow-hidden border border-gray-800 p-2 space-y-3">
                         <Skeleton className="w-full aspect-[3/4] rounded-lg" />
                         <div className="space-y-2 px-1">
                             <Skeleton className="w-3/4 h-4" />
@@ -196,7 +196,7 @@ export const WishlistSkeleton = () => (
 );
 
 export const GenericSkeleton = () => (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground">
         <NavbarSkeleton />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <Skeleton className="w-1/3 h-10 mb-8" />

@@ -80,7 +80,7 @@ export default function HeroSection() {
                                     </p>
                                     <button
                                         onClick={() => router.push(slide.link)}
-                                        className="bg-white text-gray-900 px-6 py-2 md:px-8 md:py-3 rounded-full font-bold hover:bg-gray-100 transition-colors shadow-lg mt-2 md:mt-4 text-sm md:text-base"
+                                        className="bg-accent text-white px-6 py-2 md:px-8 md:py-3 rounded-full font-bold hover:bg-accent-hover transition-all shadow-saas mt-2 md:mt-4 text-sm md:text-base active:scale-95"
                                     >
                                         {slide.cta}
                                     </button>

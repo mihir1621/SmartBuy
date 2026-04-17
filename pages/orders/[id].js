@@ -238,10 +238,10 @@ export default function UserOrderDetails() {
     };
 
     if (loading) return (
-        <div className="min-h-screen bg-black flex flex-col">
+        <div className="min-h-screen bg-background flex flex-col">
             <StoreNavbar />
             <div className="flex-grow flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent"></div>
             </div>
             <Footer />
         </div>
@@ -261,7 +261,7 @@ export default function UserOrderDetails() {
     const progressWidth = isCancelled ? 0 : (displayStatusIdx / deliveredIdx) * 100;
 
     return (
-        <div className="min-h-screen bg-black flex flex-col text-white">
+        <div className="min-h-screen bg-background flex flex-col text-foreground selection:bg-accent/10">
             <Head>
                 <title>Order Detail #ORD-{order.id} | SmartBuy</title>
             </Head>
@@ -271,62 +271,63 @@ export default function UserOrderDetails() {
                 {/* Breadcrumbs */}
                 <button
                     onClick={() => router.push('/orders')}
-                    className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors mb-8 group"
+                    className="flex items-center gap-2 text-secondary-text hover:text-foreground transition-colors mb-8 group"
                 >
                     <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-                    <span className="font-bold text-sm tracking-widest uppercase">My Orders</span>
+                    <span className="font-black text-xs tracking-widest uppercase">My Orders</span>
                 </button>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Left: Order Info */}
                     <div className="lg:col-span-2 space-y-8">
-                        <section className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-xl">
+                        <section className="bg-surface border border-border rounded-3xl p-8 shadow-saas">
                             <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-10">
                                 <div>
-                                    <h1 className="text-3xl font-black mb-1 leading-tight tracking-tight">Order #ORD-{order.id}</h1>
-                                    <p className="text-gray-500 font-medium">Placed on {new Date(order.createdAt).toLocaleDateString(undefined, { dateStyle: 'long' })}</p>
+                                    <h1 className="text-3xl font-black text-foreground mb-1 leading-tight tracking-tight">Order #ORD-{order.id}</h1>
+                                    <p className="text-secondary-text font-medium text-sm">Placed on {new Date(order.createdAt).toLocaleDateString(undefined, { dateStyle: 'long' })}</p>
                                 </div>
                                 <div className="sm:text-right">
-                                    <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Total Amount</p>
-                                    <p className="text-3xl font-black text-blue-500">₹{order.totalAmount.toLocaleString()}</p>
+                                    <p className="text-[10px] font-black text-secondary-text uppercase tracking-widest mb-1">Total Amount</p>
+                                    <p className="text-3xl font-black text-accent">₹{order.totalAmount.toLocaleString()}</p>
                                 </div>
                             </div>
 
                             {/* Tracking Progress */}
                             {isCancelled ? (
-                                <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-5 sm:p-6 flex items-center gap-3 sm:gap-4">
-                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-red-500/20 shrink-0">
-                                        <ArrowRight size={20} className="rotate-45 sm:size-24" />
+                                <div className="bg-error/10 border border-error/20 rounded-2xl p-5 sm:p-6 flex items-center gap-3 sm:gap-4">
+                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-error rounded-full flex items-center justify-center text-white shadow-lg shadow-error/20 shrink-0">
+                                        <X size={20} className="sm:size-24" />
                                     </div>
                                     <div>
-                                        <h3 className="text-red-500 font-black uppercase tracking-widest text-xs sm:text-sm">Order Cancelled</h3>
-                                        <p className="text-gray-500 text-[10px] sm:text-xs mt-1">This order was cancelled and is no longer being processed.</p>
+                                        <h3 className="text-error font-black uppercase tracking-widest text-xs sm:text-sm">Order Cancelled</h3>
+                                        <p className="text-secondary-text text-[10px] sm:text-xs mt-1">This order was cancelled and is no longer being processed.</p>
                                     </div>
                                 </div>
                             ) : (
                                 <div className="relative pt-2 sm:pt-4 pb-6 sm:pb-8 px-2 sm:px-0">
-                                    <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-800 -translate-y-1/2 rounded-full" />
+                                    <div className="absolute top-1/2 left-0 w-full h-1 bg-secondary -translate-y-1/2 rounded-full" />
                                     <motion.div
                                         initial={{ width: 0 }}
                                         animate={{ width: `${progressWidth}%` }}
                                         transition={{ duration: 1.5, ease: "circOut" }}
-                                        className="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-blue-600 to-blue-400 -translate-y-1/2 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"
+                                        className="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-accent to-accent/60 -translate-y-1/2 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.3)]"
                                     />
                                     <div className="relative flex justify-between items-center">
-                                        {statusSteps.slice(0, 4).map((step, idx) => {
-                                            const StepIcon = step.icon;
-                                            const isStepCompleted = idx <= displayStatusIdx;
-                                            const isStepActive = idx === displayStatusIdx;
+                                        {statusSteps.slice(0, 4).map((idx, step) => {
+                                            const stepItem = statusSteps[step];
+                                            const StepIcon = stepItem.icon;
+                                            const isStepCompleted = step <= displayStatusIdx;
+                                            const isStepActive = step === displayStatusIdx;
 
                                             return (
-                                                <div key={step.status} className="flex flex-col items-center">
-                                                    <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center z-10 border-2 sm:border-4 ${isStepActive ? 'bg-blue-600 border-blue-400 scale-110 sm:scale-125 shadow-xl shadow-blue-500/40' :
-                                                        isStepCompleted ? 'bg-blue-500 border-gray-900 shadow-lg' : 'bg-gray-800 border-gray-900'
+                                                <div key={stepItem.status} className="flex flex-col items-center">
+                                                    <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center z-10 border-2 sm:border-4 ${isStepActive ? 'bg-accent border-accent/20 scale-110 sm:scale-125 shadow-xl shadow-accent/40' :
+                                                        isStepCompleted ? 'bg-accent border-surface shadow-lg' : 'bg-secondary border-surface'
                                                         } transition-all duration-700`}>
-                                                        <StepIcon size={14} className={`${isStepCompleted ? 'text-white' : 'text-gray-500'} sm:size-20`} />
+                                                        <StepIcon size={14} className={`${isStepCompleted ? 'text-white' : 'text-secondary-text'} sm:size-20`} />
                                                     </div>
-                                                    <p className={`mt-3 sm:mt-6 text-[8px] sm:text-[10px] font-black uppercase tracking-tighter sm:tracking-widest text-center max-w-[60px] sm:max-w-[80px] ${isStepCompleted ? 'text-blue-400' : 'text-gray-600'
-                                                        }`}>{step.label}</p>
+                                                    <p className={`mt-3 sm:mt-6 text-[8px] sm:text-[10px] font-black uppercase tracking-tighter sm:tracking-widest text-center max-w-[60px] sm:max-w-[80px] ${isStepCompleted ? 'text-accent' : 'text-secondary-text'
+                                                        }`}>{stepItem.label}</p>
                                                 </div>
                                             );
                                         })}
@@ -334,15 +335,15 @@ export default function UserOrderDetails() {
 
                                     {/* Post-Delivery Status Badge if applicable */}
                                     {(isReturned || isRefunded) && (
-                                        <div className="mt-8 sm:mt-12 p-4 sm:p-6 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center gap-3 sm:gap-4">
-                                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-blue-500/20 shrink-0">
+                                        <div className="mt-8 sm:mt-12 p-4 sm:p-6 bg-accent/10 border border-accent/20 rounded-2xl flex items-center gap-3 sm:gap-4">
+                                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent rounded-full flex items-center justify-center text-white shadow-lg shadow-accent/20 shrink-0">
                                                 {isReturned ? <RefreshCcw size={20} className="sm:size-24" /> : <RotateCcw size={20} className="sm:size-24" />}
                                             </div>
                                             <div>
-                                                <h3 className="text-blue-500 font-black uppercase tracking-widest text-xs sm:text-sm">
+                                                <h3 className="text-accent font-black uppercase tracking-widest text-xs sm:text-sm">
                                                     {order.status.replace('_', ' ')}
                                                 </h3>
-                                                <p className="text-gray-500 text-[10px] sm:text-xs mt-1">
+                                                <p className="text-secondary-text text-[10px] sm:text-xs mt-1 font-medium">
                                                     Your {order.returnType?.toLowerCase()} request is being reviewed by our team.
                                                 </p>
                                             </div>
@@ -353,33 +354,33 @@ export default function UserOrderDetails() {
                         </section>
 
                         {/* Items */}
-                        <section className="bg-gray-900 border border-gray-800 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
-                            <div className="p-5 sm:p-8 border-b border-gray-800 bg-gray-950/20">
-                                <h2 className="text-lg sm:text-xl font-bold flex items-center gap-2 sm:gap-3">
-                                    <Box size={20} className="text-blue-500 sm:size-24" />
+                        <section className="bg-surface border border-border rounded-2xl sm:rounded-3xl overflow-hidden shadow-saas">
+                            <div className="p-5 sm:p-8 border-b border-border bg-secondary/20">
+                                <h2 className="text-lg sm:text-xl font-bold flex items-center gap-2 sm:gap-3 text-foreground">
+                                    <Box size={20} className="text-accent sm:size-24" />
                                     Package Contents
                                 </h2>
                             </div>
-                            <div className="divide-y divide-gray-800">
+                            <div className="divide-y divide-border">
                                 {order.items.map((item) => (
-                                    <div key={item.id} className="p-5 sm:p-8 flex flex-col sm:flex-row gap-4 sm:gap-6 hover:bg-gray-800/10 transition-colors group">
-                                        <div className="w-20 h-20 sm:w-24 sm:h-24 relative rounded-xl sm:rounded-2xl overflow-hidden bg-gray-950 flex-shrink-0 border border-gray-800 shadow-lg group-hover:border-blue-500/30 transition-colors">
+                                    <div key={item.id} className="p-5 sm:p-8 flex flex-col sm:flex-row gap-4 sm:gap-6 hover:bg-secondary/10 transition-colors group">
+                                        <div className="w-20 h-20 sm:w-24 sm:h-24 relative rounded-xl sm:rounded-2xl overflow-hidden bg-background flex-shrink-0 border border-border shadow-sm group-hover:border-accent/30 transition-colors">
                                             <Image src={item.product?.image} alt={item.product?.name} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                                         </div>
                                         <div className="flex-grow min-w-0 py-0.5 sm:py-1">
                                             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-2 mb-2 sm:mb-2 text-left">
-                                                <h3 className="font-bold text-base sm:text-lg text-white truncate pr-0 sm:pr-4 group-hover:text-blue-400 transition-colors">{item.product?.name}</h3>
-                                                <p className="font-black text-base sm:text-lg text-white">₹{(item.price * item.quantity).toLocaleString()}</p>
+                                                <h3 className="font-bold text-base sm:text-lg text-foreground truncate pr-0 sm:pr-4 group-hover:text-accent transition-colors">{item.product?.name}</h3>
+                                                <p className="font-black text-base sm:text-lg text-foreground">₹{(item.price * item.quantity).toLocaleString()}</p>
                                             </div>
-                                            <p className="text-[10px] sm:text-sm text-gray-500 mb-3 sm:mb-4 font-bold uppercase tracking-widest">{item.product?.category}</p>
+                                            <p className="text-[10px] sm:text-sm text-secondary-text mb-3 sm:mb-4 font-bold uppercase tracking-widest">{item.product?.category}</p>
                                             <div className="flex items-center gap-6 sm:gap-8 text-[10px] sm:text-sm">
-                                                <div className="flex items-center gap-1.5 sm:gap-2 text-gray-400">
-                                                    <span className="font-bold text-[8px] sm:text-[10px] uppercase tracking-widest text-gray-600">Qty</span>
-                                                    <span className="text-white font-mono">{item.quantity}</span>
+                                                <div className="flex items-center gap-1.5 sm:gap-2 text-secondary-text">
+                                                    <span className="font-black text-[8px] sm:text-[10px] uppercase tracking-widest opacity-50">Qty</span>
+                                                    <span className="text-foreground font-black">{item.quantity}</span>
                                                 </div>
-                                                <div className="flex items-center gap-1.5 sm:gap-2 text-gray-400">
-                                                    <span className="font-bold text-[8px] sm:text-[10px] uppercase tracking-widest text-gray-600">Unit</span>
-                                                    <span className="text-white font-mono">₹{item.price.toLocaleString()}</span>
+                                                <div className="flex items-center gap-1.5 sm:gap-2 text-secondary-text">
+                                                    <span className="font-black text-[8px] sm:text-[10px] uppercase tracking-widest opacity-50">Unit</span>
+                                                    <span className="text-foreground font-black">₹{item.price.toLocaleString()}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -392,15 +393,12 @@ export default function UserOrderDetails() {
                     {/* Right: Shipping & Payment */}
                     <div className="space-y-6 sm:space-y-8">
                         {/* Summary */}
-                        <section className="bg-gray-900 border border-gray-800 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl space-y-4 sm:space-y-6">
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">Order Summary</h2>
+                        <section className="bg-surface border border-border rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-saas space-y-4 sm:space-y-6">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary-text">Order Summary</h2>
                             {(() => {
                                 // Extract state from shipping address
                                 let shippingState = null;
                                 const addressLower = order.shippingAddress.toLowerCase();
-                                // We don't have INDIAN_CITIES here directly, but we can use the helper if we pass it correctly
-                                // For now, let's assume if it contains 'KA' or 'Karnataka' it's intra-state. 
-                                // Actually, I should use the same logic as invoice.
                                 if (addressLower.includes('karnataka') || addressLower.includes('bangalore')) shippingState = 'Karnataka';
 
                                 const gstDetails = calculateTotalGST(order.items.map(item => ({
@@ -411,35 +409,35 @@ export default function UserOrderDetails() {
 
                                 return (
                                     <div className="space-y-3 sm:space-y-4">
-                                        <div className="flex justify-between text-gray-400 text-xs sm:text-sm">
+                                        <div className="flex justify-between text-secondary-text text-xs sm:text-sm">
                                             <span>Subtotal</span>
-                                            <span className="text-white font-bold">₹{gstDetails.taxableValue.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
+                                            <span className="text-foreground font-bold">₹{gstDetails.taxableValue.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
                                         </div>
                                         {gstDetails.cgst > 0 && (
                                             <>
-                                                <div className="flex justify-between text-gray-500 text-[10px] sm:text-xs">
+                                                <div className="flex justify-between text-secondary-text text-[10px] sm:text-xs opacity-75">
                                                     <span>CGST</span>
-                                                    <span className="text-gray-400 font-medium">₹{gstDetails.cgst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
+                                                    <span className="text-foreground font-medium">₹{gstDetails.cgst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
                                                 </div>
-                                                <div className="flex justify-between text-gray-500 text-[10px] sm:text-xs">
+                                                <div className="flex justify-between text-secondary-text text-[10px] sm:text-xs opacity-75">
                                                     <span>SGST</span>
-                                                    <span className="text-gray-400 font-medium">₹{gstDetails.sgst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
+                                                    <span className="text-foreground font-medium">₹{gstDetails.sgst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
                                                 </div>
                                             </>
                                         )}
                                         {gstDetails.igst > 0 && (
-                                            <div className="flex justify-between text-gray-500 text-[10px] sm:text-xs">
+                                            <div className="flex justify-between text-secondary-text text-[10px] sm:text-xs opacity-75">
                                                 <span>IGST</span>
-                                                <span className="text-gray-400 font-medium">₹{gstDetails.igst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
+                                                <span className="text-foreground font-medium">₹{gstDetails.igst.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
                                             </div>
                                         )}
-                                        <div className="flex justify-between text-gray-400 text-xs sm:text-sm">
+                                        <div className="flex justify-between text-secondary-text text-xs sm:text-sm">
                                             <span>Shipping</span>
-                                            <span className="text-emerald-500 font-bold uppercase text-[9px] sm:text-[10px] tracking-widest">Free Delivery</span>
+                                            <span className="text-success font-black uppercase text-[9px] sm:text-[10px] tracking-widest">Free Delivery</span>
                                         </div>
-                                        <div className="pt-3 sm:pt-4 border-t border-gray-800/50 flex justify-between items-center">
-                                            <span className="text-sm sm:text-base font-bold text-gray-300">Total (Inclusive of GST)</span>
-                                            <span className="text-xl sm:text-2xl font-black text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.3)]">₹{order.totalAmount.toLocaleString()}</span>
+                                        <div className="pt-3 sm:pt-4 border-t border-border flex justify-between items-center">
+                                            <span className="text-sm sm:text-base font-black text-foreground">Total</span>
+                                            <span className="text-xl sm:text-2xl font-black text-accent">₹{order.totalAmount.toLocaleString()}</span>
                                         </div>
                                     </div>
                                 );
@@ -447,32 +445,32 @@ export default function UserOrderDetails() {
                         </section>
 
                         {/* Shipping */}
-                        <section className="bg-gray-900 border border-gray-800 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl space-y-4 sm:space-y-6">
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 flex items-center gap-2">
-                                <MapPin size={12} className="text-blue-500 sm:size-14" /> Delivery Address
+                        <section className="bg-surface border border-border rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-saas space-y-4 sm:space-y-6">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary-text flex items-center gap-2">
+                                <MapPin size={12} className="text-accent sm:size-14" /> Delivery Address
                             </h2>
-                            <div className="p-4 sm:p-5 bg-gray-950/40 rounded-xl sm:rounded-2xl border border-gray-800 text-xs sm:text-sm leading-relaxed text-gray-400 font-medium">
+                            <div className="p-4 sm:p-5 bg-background rounded-xl sm:rounded-2xl border border-border text-xs sm:text-sm leading-relaxed text-secondary-text font-medium">
                                 {order.shippingAddress || 'Address details unavailable'}
                             </div>
                         </section>
 
                         {/* Payment */}
-                        <section className="bg-gray-900 border border-gray-800 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl space-y-4 sm:space-y-6">
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 flex items-center gap-2">
-                                <CreditCard className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500" /> Payment Information
+                        <section className="bg-surface border border-border rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-saas space-y-4 sm:space-y-6">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary-text flex items-center gap-2">
+                                <CreditCard className="w-3 h-3 sm:w-4 sm:h-4 text-accent" /> Payment Information
                             </h2>
-                            <div className="flex items-center gap-3 sm:gap-4 p-3.5 sm:p-4 bg-gray-950/40 rounded-xl sm:rounded-2xl border border-gray-800">
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20 shrink-0">
-                                    <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
+                            <div className="flex items-center gap-3 sm:gap-4 p-3.5 sm:p-4 bg-background rounded-xl sm:rounded-2xl border border-border">
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent/5 rounded-xl flex items-center justify-center border border-accent/20 shrink-0">
+                                    <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
                                 </div>
                                 <div className="min-w-0">
-                                    <p className="font-bold text-xs sm:text-sm text-white truncate">
+                                    <p className="font-black text-xs sm:text-sm text-foreground truncate">
                                         {order.paymentMethod === 'RAZORPAY' ? 'Online Payment' :
                                             order.paymentMethod === 'EMI' ? 'EMI / Pay Later' :
                                                 order.paymentMethod === 'COD' ? 'Cash on Delivery' :
                                                     order.paymentMethod}
                                     </p>
-                                    <p className={`text-[9px] sm:text-[10px] font-black uppercase tracking-widest mt-0.5 ${order.paymentStatus === 'PAID' ? 'text-emerald-500' : 'text-amber-500'}`}>
+                                    <p className={`text-[9px] sm:text-[10px] font-black uppercase tracking-widest mt-0.5 ${order.paymentStatus === 'PAID' ? 'text-success' : 'text-warning'}`}>
                                         {order.paymentStatus}
                                     </p>
                                 </div>
@@ -481,7 +479,7 @@ export default function UserOrderDetails() {
 
                         <button
                             onClick={handleDownloadInvoice}
-                            className="w-full bg-white text-black font-black py-4 rounded-xl sm:rounded-2xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] shadow-lg hover:shadow-xl active:scale-95 duration-200"
+                            className="w-full bg-foreground text-surface font-black py-4 rounded-xl sm:rounded-2xl hover:bg-foreground/90 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] shadow-saas active:scale-95 duration-200"
                         >
                             Download Invoice <ArrowRight className="w-3.5 h-3.5" />
                         </button>
@@ -493,7 +491,7 @@ export default function UserOrderDetails() {
                                         setReturnForm(prev => ({ ...prev, type: 'RETURN' }));
                                         setIsReturnModalOpen(true);
                                     }}
-                                    className="bg-gray-900 border border-gray-800 text-white font-black py-4 rounded-xl sm:rounded-2xl hover:bg-gray-800 transition-all flex items-center justify-center gap-1.5 sm:gap-2 uppercase tracking-widest text-[9px] sm:text-[10px] active:scale-95 duration-200"
+                                    className="bg-surface border border-border text-foreground font-black py-4 rounded-xl sm:rounded-2xl hover:bg-secondary transition-all flex items-center justify-center gap-1.5 sm:gap-2 uppercase tracking-widest text-[9px] sm:text-[10px] active:scale-95 duration-200"
                                 >
                                     <RefreshCcw className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> Return
                                 </button>
@@ -502,7 +500,7 @@ export default function UserOrderDetails() {
                                         setReturnForm(prev => ({ ...prev, type: 'REFUND' }));
                                         setIsReturnModalOpen(true);
                                     }}
-                                    className="bg-gray-900 border border-gray-800 text-white font-black py-4 rounded-xl sm:rounded-2xl hover:bg-gray-800 transition-all flex items-center justify-center gap-1.5 sm:gap-2 uppercase tracking-widest text-[9px] sm:text-[10px] active:scale-95 duration-200"
+                                    className="bg-surface border border-border text-foreground font-black py-4 rounded-xl sm:rounded-2xl hover:bg-secondary transition-all flex items-center justify-center gap-1.5 sm:gap-2 uppercase tracking-widest text-[9px] sm:text-[10px] active:scale-95 duration-200"
                                 >
                                     <RotateCcw className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> Refund
                                 </button>
@@ -526,59 +524,59 @@ export default function UserOrderDetails() {
                                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
                                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                                className="relative bg-gray-900 border border-gray-800 rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-2xl"
+                                className="relative bg-surface border border-border rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-saas"
                             >
-                                <div className="p-8 border-b border-gray-800 flex justify-between items-center bg-gray-950/20">
+                                <div className="p-8 border-b border-border flex justify-between items-center bg-secondary/20">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
-                                            {returnForm.type === 'RETURN' ? <RefreshCcw className="text-blue-500" size={20} /> : <RotateCcw className="text-blue-500" size={20} />}
+                                        <div className="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center">
+                                            {returnForm.type === 'RETURN' ? <RefreshCcw className="text-accent" size={20} /> : <RotateCcw className="text-accent" size={20} />}
                                         </div>
                                         <div>
-                                            <h2 className="text-xl font-bold">Request {returnForm.type === 'RETURN' ? 'Return' : 'Refund'}</h2>
-                                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Order #ORD-{order.id}</p>
+                                            <h2 className="text-xl font-black text-foreground">Request {returnForm.type === 'RETURN' ? 'Return' : 'Refund'}</h2>
+                                            <p className="text-[10px] text-secondary-text font-black uppercase tracking-widest">Order #ORD-{order.id}</p>
                                         </div>
                                     </div>
-                                    <button onClick={() => setIsReturnModalOpen(false)} className="text-gray-500 hover:text-white p-2">
+                                    <button onClick={() => setIsReturnModalOpen(false)} className="text-secondary-text hover:text-foreground p-2">
                                         <X size={24} />
                                     </button>
                                 </div>
 
                                 <form onSubmit={handleSubmitReturn} className="p-8 space-y-6 max-h-[70vh] overflow-y-auto no-scrollbar">
                                     <div className="space-y-4">
-                                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest">Reason for {returnForm.type.toLowerCase()}</label>
+                                        <label className="block text-xs font-black text-secondary-text uppercase tracking-widest">Reason for {returnForm.type.toLowerCase()}</label>
                                         <div className="grid grid-cols-1 gap-2">
                                             {returnReasonOptions.map((reason) => (
                                                 <button
                                                     key={reason}
                                                     type="button"
                                                     onClick={() => setReturnForm(prev => ({ ...prev, reason }))}
-                                                    className={`text-left px-5 py-4 rounded-2xl border transition-all text-sm font-medium flex items-center justify-between group ${returnForm.reason === reason
-                                                        ? 'bg-blue-600/10 border-blue-500 text-white shadow-lg shadow-blue-500/10'
-                                                        : 'bg-gray-800/40 border-gray-800 text-gray-400 hover:border-gray-700'
+                                                    className={`text-left px-5 py-4 rounded-2xl border transition-all text-sm font-black flex items-center justify-between group ${returnForm.reason === reason
+                                                        ? 'bg-accent/5 border-accent text-foreground shadow-sm'
+                                                        : 'bg-background border-border text-secondary-text hover:border-gray-300'
                                                         }`}
                                                 >
                                                     {reason}
-                                                    {returnForm.reason === reason && <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]" />}
+                                                    {returnForm.reason === reason && <div className="w-2 h-2 rounded-full bg-accent" />}
                                                 </button>
                                             ))}
                                         </div>
                                     </div>
 
                                     <div className="space-y-4">
-                                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest">Additional Comments</label>
+                                        <label className="block text-xs font-black text-secondary-text uppercase tracking-widest">Additional Comments</label>
                                         <textarea
                                             value={returnForm.comments}
                                             onChange={(e) => setReturnForm(prev => ({ ...prev, comments: e.target.value }))}
                                             placeholder="Tell us more about the issue..."
-                                            className="w-full bg-gray-800/40 border border-gray-800 rounded-2xl p-5 text-sm focus:border-blue-500 outline-none min-h-[120px] transition-colors resize-none"
+                                            className="w-full bg-background border border-border rounded-2xl p-5 text-sm focus:border-accent outline-none min-h-[120px] transition-colors resize-none text-foreground"
                                         />
                                     </div>
 
                                     {(returnForm.reason === 'Damaged Product' || returnForm.reason === 'Wrong Item Received') && (
-                                        <div className="p-5 bg-amber-500/5 border border-amber-500/10 rounded-2xl">
+                                        <div className="p-5 bg-warning/5 border border-warning/10 rounded-2xl">
                                             <div className="flex gap-3">
-                                                <AlertCircle size={18} className="text-amber-500 shrink-0" />
-                                                <p className="text-xs text-amber-500/80 leading-relaxed font-medium">To speed up your request, please ensure you have photos of the product and its original packaging ready for inspection.</p>
+                                                <AlertCircle size={18} className="text-warning shrink-0" />
+                                                <p className="text-xs text-warning/80 leading-relaxed font-black">To speed up your request, please ensure you have photos of the product ready.</p>
                                             </div>
                                         </div>
                                     )}
@@ -586,7 +584,7 @@ export default function UserOrderDetails() {
                                     <button
                                         type="submit"
                                         disabled={isSubmitting || !returnForm.reason}
-                                        className="w-full bg-blue-600 text-white font-black py-5 rounded-2xl hover:bg-blue-500 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] shadow-lg shadow-blue-600/20 active:scale-95 disabled:opacity-50 disabled:active:scale-100"
+                                        className="w-full bg-accent text-white font-black py-5 rounded-2xl hover:bg-accent/90 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] shadow-saas active:scale-95 disabled:opacity-50 disabled:active:scale-100"
                                     >
                                         {isSubmitting ? 'Submitting Request...' : `Submit ${returnForm.type} Request`}
                                     </button>

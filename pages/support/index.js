@@ -111,15 +111,15 @@ export default function SupportPage() {
 
     const getStatusColor = (status) => {
         switch (status.toLowerCase()) {
-            case 'open': return 'bg-white/10 text-white border-white/20';
-            case 'in progress': return 'bg-white/10 text-white border-white/20';
-            case 'resolved': return 'bg-white/10 text-white border-white/20';
-            default: return 'bg-gray-500/10 text-gray-400 border-gray-500/20';
+            case 'open': return 'bg-accent/10 text-accent border-accent/20';
+            case 'in progress': return 'bg-warning/10 text-warning border-warning/20';
+            case 'resolved': return 'bg-success/10 text-success border-success/20';
+            default: return 'bg-secondary text-secondary-text border-border';
         }
     };
 
     return (
-        <div className="min-h-screen bg-black text-gray-100 flex flex-col">
+        <div className="min-h-screen bg-background text-foreground flex flex-col selection:bg-accent/10">
             <Head>
                 <title>Help Desk | SmartBuy</title>
             </Head>
@@ -131,24 +131,24 @@ export default function SupportPage() {
 
                     {/* Sidebar / Navigation */}
                     <div className="w-full md:w-64 flex-shrink-0 space-y-2">
-                        <h1 className="text-2xl font-bold mb-6 text-white">Help Center</h1>
+                        <h1 className="text-2xl font-black mb-6 text-foreground tracking-tight">Help Center</h1>
 
                         <button
                             onClick={() => setActiveTab('create')}
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'create' ? 'bg-white text-black shadow-lg shadow-white/20' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-black text-sm uppercase tracking-widest ${activeTab === 'create' ? 'bg-accent text-white shadow-saas' : 'bg-surface text-secondary-text hover:bg-secondary border border-border/50'}`}
                         >
                             <MessageSquare size={18} />
-                            <span className="font-medium">Raise a Ticket</span>
+                            <span>Raise a Ticket</span>
                         </button>
 
                         <button
                             onClick={() => setActiveTab('history')}
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'history' ? 'bg-white text-black shadow-lg shadow-white/20' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-black text-sm uppercase tracking-widest ${activeTab === 'history' ? 'bg-accent text-white shadow-saas' : 'bg-surface text-secondary-text hover:bg-secondary border border-border/50'}`}
                         >
                             <FileText size={18} />
-                            <span className="font-medium">My Tickets</span>
+                            <span>My Tickets</span>
                             {tickets.length > 0 && (
-                                <span className="ml-auto bg-gray-800 text-xs py-0.5 px-2 rounded-full text-gray-300">
+                                <span className={`ml-auto text-[10px] py-0.5 px-2 rounded-full font-black ${activeTab === 'history' ? 'bg-white/20 text-white' : 'bg-secondary text-secondary-text'}`}>
                                     {tickets.length}
                                 </span>
                             )}
@@ -156,7 +156,7 @@ export default function SupportPage() {
                     </div>
 
                     {/* Main Content Area */}
-                    <div className="flex-1 w-full bg-gray-900/50 border border-gray-800 rounded-2xl p-6 md:p-8 backdrop-blur-sm">
+                    <div className="flex-1 w-full bg-surface border border-border rounded-2xl p-6 md:p-8 shadow-saas relative">
 
                         {/* CREATE TICKET FLOW */}
                         {activeTab === 'create' && (
@@ -172,8 +172,8 @@ export default function SupportPage() {
                                         className="space-y-6"
                                     >
                                         <div className="mb-6">
-                                            <h2 className="text-xl font-bold text-white mb-2">What can we help you with?</h2>
-                                            <p className="text-gray-400 text-sm">Select a category to get started.</p>
+                                            <h2 className="text-xl font-black text-foreground mb-2">What can we help you with?</h2>
+                                            <p className="text-secondary-text text-sm font-medium">Select a category to get started.</p>
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -181,14 +181,14 @@ export default function SupportPage() {
                                                 <button
                                                     key={cat.id}
                                                     onClick={() => handleCategorySelect(cat)}
-                                                    className="flex items-start gap-4 p-4 rounded-xl bg-gray-800/50 border border-gray-700 hover:border-white/50 hover:bg-gray-800 transition-all text-left group"
+                                                    className="flex items-start gap-4 p-4 rounded-xl bg-background border border-border hover:border-accent hover:bg-accent/5 transition-all text-left group"
                                                 >
-                                                    <div className="p-2.5 bg-gray-700/50 rounded-lg group-hover:bg-white/20 group-hover:text-white transition-colors">
+                                                    <div className="p-2.5 bg-secondary text-secondary-text rounded-lg group-hover:bg-accent group-hover:text-white transition-all">
                                                         <cat.icon size={20} />
                                                     </div>
                                                     <div>
-                                                        <h3 className="font-semibold text-gray-200 group-hover:text-white">{cat.label}</h3>
-                                                        <p className="text-xs text-gray-500 mt-1">{cat.description}</p>
+                                                        <h3 className="font-bold text-foreground group-hover:text-accent transition-colors">{cat.label}</h3>
+                                                        <p className="text-xs text-secondary-text mt-1 font-medium">{cat.description}</p>
                                                     </div>
                                                 </button>
                                             ))}
@@ -207,54 +207,54 @@ export default function SupportPage() {
                                     >
                                         <button
                                             onClick={() => setStep(1)}
-                                            className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors mb-4"
+                                            className="flex items-center gap-2 text-sm text-secondary-text font-black uppercase tracking-widest hover:text-foreground transition-colors mb-4"
                                         >
-                                            <ArrowLeft size={16} /> Back to Categories
+                                            <ArrowLeft size={16} /> Back
                                         </button>
 
-                                        <div className="flex items-center gap-3 mb-6 p-4 bg-white/10 border border-white/20 rounded-xl">
-                                            <selectedCategory.icon className="text-white" size={24} />
+                                        <div className="flex items-center gap-3 mb-6 p-4 bg-accent/5 border border-accent/10 rounded-xl">
+                                            <selectedCategory.icon className="text-accent" size={24} />
                                             <div>
-                                                <span className="text-xs text-gray-300 uppercase font-bold tracking-wider">Selected Category</span>
-                                                <h2 className="text-lg font-bold text-white">{selectedCategory.label}</h2>
+                                                <span className="text-[10px] text-accent font-black uppercase tracking-wider block">Selected Category</span>
+                                                <h2 className="text-lg font-black text-foreground">{selectedCategory.label}</h2>
                                             </div>
                                         </div>
 
                                         <form onSubmit={handleSubmit} className="space-y-5">
                                             <div>
-                                                <label className="block text-sm font-medium text-gray-300 mb-1.5">Issue Subject</label>
+                                                <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-1.5">Issue Subject</label>
                                                 <input
                                                     type="text"
                                                     required
                                                     value={formData.subject}
                                                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                                                     placeholder="Brief summary of the issue"
-                                                    className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-white focus:border-transparent outline-none transition-all"
+                                                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all placeholder:text-secondary-text/50 font-medium"
                                                 />
                                             </div>
 
                                             {(selectedCategory.id === 'orders' || selectedCategory.id === 'returns' || selectedCategory.id === 'refunds') && (
                                                 <div>
-                                                    <label className="block text-sm font-medium text-gray-300 mb-1.5">Order ID (Optional)</label>
+                                                    <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-1.5">Order ID (Optional)</label>
                                                     <input
                                                         type="text"
                                                         value={formData.orderId}
                                                         onChange={(e) => setFormData({ ...formData, orderId: e.target.value })}
                                                         placeholder="e.g., ORD-123456"
-                                                        className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-white focus:border-transparent outline-none transition-all"
+                                                        className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all placeholder:text-secondary-text/50 font-medium"
                                                     />
                                                 </div>
                                             )}
 
                                             <div>
-                                                <label className="block text-sm font-medium text-gray-300 mb-1.5">Description</label>
+                                                <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-1.5">Description</label>
                                                 <textarea
                                                     required
                                                     rows={5}
                                                     value={formData.description}
                                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                                     placeholder="Please describe your issue in detail..."
-                                                    className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-white focus:border-transparent outline-none transition-all resize-none"
+                                                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all resize-none placeholder:text-secondary-text/50 font-medium"
                                                 />
                                             </div>
 
@@ -262,7 +262,7 @@ export default function SupportPage() {
                                                 <button
                                                     type="submit"
                                                     disabled={isLoading}
-                                                    className="w-full bg-white hover:bg-gray-200 text-black font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-white/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    className="w-full bg-accent hover:bg-accent-hover text-white font-black py-4 rounded-xl transition-all shadow-saas flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-widest text-xs"
                                                 >
                                                     {isLoading ? (
                                                         <>
@@ -288,27 +288,27 @@ export default function SupportPage() {
                                         animate={{ opacity: 1, scale: 1 }}
                                         className="flex flex-col items-center text-center py-8"
                                     >
-                                        <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mb-6">
-                                            <CheckCircle className="text-white w-10 h-10" />
+                                        <div className="w-20 h-20 bg-success/10 rounded-full flex items-center justify-center mb-6">
+                                            <CheckCircle className="text-success w-10 h-10" />
                                         </div>
-                                        <h2 className="text-2xl font-bold text-white mb-2">Ticket Created Successfully!</h2>
-                                        <p className="text-gray-400 max-w-md mb-8">
+                                        <h2 className="text-2xl font-black text-foreground mb-2 tracking-tight">Ticket Created!</h2>
+                                        <p className="text-secondary-text max-w-md mb-8 font-medium">
                                             Your ticket has been raised. Our support team will review it and get back to you shortly.
                                         </p>
 
-                                        <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6 w-full max-w-md mb-8 text-left">
-                                            <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-700">
-                                                <span className="text-gray-400 text-sm">Ticket ID</span>
-                                                <span className="font-mono font-bold text-white">{createdTicket.id}</span>
+                                        <div className="bg-background border border-border rounded-xl p-6 w-full max-w-md mb-8 text-left">
+                                            <div className="flex justify-between items-center mb-4 pb-4 border-b border-border">
+                                                <span className="text-secondary-text font-black uppercase text-[10px] tracking-widest">Ticket ID</span>
+                                                <span className="font-mono font-black text-foreground">#{createdTicket.id}</span>
                                             </div>
-                                            <div className="space-y-3">
+                                            <div className="space-y-4">
                                                 <div>
-                                                    <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">Subject</span>
-                                                    <p className="text-gray-200 font-medium">{createdTicket.subject}</p>
+                                                    <span className="text-[10px] text-secondary-text uppercase tracking-widest block mb-1 font-black">Subject</span>
+                                                    <p className="text-foreground font-bold">{createdTicket.subject}</p>
                                                 </div>
                                                 <div>
-                                                    <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">Category</span>
-                                                    <p className="text-gray-200">{createdTicket.category}</p>
+                                                    <span className="text-[10px] text-secondary-text uppercase tracking-widest block mb-1 font-black">Category</span>
+                                                    <p className="text-foreground font-medium">{createdTicket.category}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -316,13 +316,13 @@ export default function SupportPage() {
                                         <div className="flex gap-4">
                                             <button
                                                 onClick={() => setActiveTab('history')}
-                                                className="px-6 py-2.5 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors font-medium border border-gray-700"
+                                                className="px-6 py-3 bg-secondary hover:bg-secondary/70 text-foreground rounded-xl transition-all font-black uppercase tracking-widest text-[10px] border border-border"
                                             >
-                                                View My Tickets
+                                                View Tickets
                                             </button>
                                             <button
                                                 onClick={resetForm}
-                                                className="px-6 py-2.5 bg-white hover:bg-gray-200 text-black rounded-lg transition-colors font-medium shadow-lg shadow-white/20"
+                                                className="px-6 py-3 bg-accent hover:bg-accent-hover text-white rounded-xl transition-all font-black uppercase tracking-widest text-[10px] shadow-saas"
                                             >
                                                 Raise Another
                                             </button>
@@ -341,22 +341,22 @@ export default function SupportPage() {
                                 className="space-y-6"
                             >
                                 <div className="flex justify-between items-center mb-6">
-                                    <h2 className="text-xl font-bold text-white">My Support Tickets</h2>
-                                    <button onClick={fetchTickets} className="p-2 hover:bg-gray-800 rounded-lg text-gray-400 hover:text-white transition-colors">
+                                    <h2 className="text-xl font-black text-foreground tracking-tight">My Support Tickets</h2>
+                                    <button onClick={fetchTickets} className="p-2 hover:bg-secondary rounded-lg text-secondary-text hover:text-foreground transition-all">
                                         <RefreshCcw size={18} />
                                     </button>
                                 </div>
 
                                 {tickets.length === 0 ? (
-                                    <div className="text-center py-12 bg-gray-800/30 rounded-2xl border border-gray-800 border-dashed">
-                                        <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
-                                            <FileText className="text-gray-500 w-8 h-8" />
+                                    <div className="text-center py-16 bg-background rounded-2xl border-2 border-secondary border-dashed">
+                                        <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <FileText className="text-secondary-text w-8 h-8" />
                                         </div>
-                                        <h3 className="text-lg font-medium text-gray-300 mb-2">No tickets found</h3>
-                                        <p className="text-gray-500 text-sm mb-6">You haven&apos;t raised any support tickets yet.</p>
+                                        <h3 className="text-lg font-black text-foreground mb-2">No tickets found</h3>
+                                        <p className="text-secondary-text text-sm mb-6 font-medium">You haven&apos;t raised any support tickets yet.</p>
                                         <button
                                             onClick={() => setActiveTab('create')}
-                                            className="px-5 py-2 bg-white hover:bg-gray-200 text-black rounded-lg transition-colors text-sm font-medium"
+                                            className="px-6 py-3 bg-accent hover:bg-accent-hover text-white rounded-xl transition-all text-xs font-black uppercase tracking-widest shadow-saas"
                                         >
                                             Raise a Ticket
                                         </button>
@@ -364,31 +364,31 @@ export default function SupportPage() {
                                 ) : (
                                     <div className="space-y-4">
                                         {tickets.map((ticket) => (
-                                            <div key={ticket.id} className="bg-gray-800/40 border border-gray-700/50 rounded-xl p-5 hover:border-gray-600 transition-all">
+                                            <div key={ticket.id} className="bg-background border border-border rounded-xl p-5 hover:border-accent/30 hover:shadow-sm transition-all group">
                                                 <div className="flex justify-between items-start mb-3">
                                                     <div className="flex items-center gap-3">
-                                                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border ${getStatusColor(ticket.status)}`}>
+                                                        <span className={`px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${getStatusColor(ticket.status)}`}>
                                                             {ticket.status}
                                                         </span>
-                                                        <span className="text-xs text-gray-500 font-mono">{ticket.id}</span>
+                                                        <span className="text-[10px] text-secondary-text font-mono font-bold">#{ticket.id}</span>
                                                     </div>
-                                                    <span className="text-xs text-gray-500 flex items-center gap-1">
+                                                    <span className="text-[10px] text-secondary-text flex items-center gap-1 font-bold uppercase tracking-wider">
                                                         <Clock size={12} />
                                                         {new Date(ticket.createdAt).toLocaleDateString()}
                                                     </span>
                                                 </div>
 
-                                                <h3 className="font-bold text-white mb-1">{ticket.subject}</h3>
-                                                <p className="text-sm text-gray-400 line-clamp-2 mb-3">{ticket.description}</p>
+                                                <h3 className="font-black text-foreground mb-1 group-hover:text-accent transition-colors">{ticket.subject}</h3>
+                                                <p className="text-sm text-secondary-text line-clamp-2 mb-4 font-medium opacity-80">{ticket.description}</p>
 
-                                                <div className="flex items-center gap-4 text-xs text-gray-500 pt-3 border-t border-gray-700/50">
-                                                    <span className="flex items-center gap-1.5">
-                                                        <Package size={12} />
+                                                <div className="flex items-center gap-4 text-[10px] text-secondary-text pt-4 border-t border-secondary font-black uppercase tracking-widest">
+                                                    <span className="flex items-center gap-1.5 bg-secondary/50 px-2 py-1 rounded-md">
+                                                        <Package size={12} className="text-accent" />
                                                         {ticket.category}
                                                     </span>
                                                     {ticket.orderId && (
-                                                        <span className="flex items-center gap-1.5">
-                                                            <Paperclip size={12} />
+                                                        <span className="flex items-center gap-1.5 bg-secondary/50 px-2 py-1 rounded-md">
+                                                            <Paperclip size={12} className="text-accent" />
                                                             Order: {ticket.orderId}
                                                         </span>
                                                     )}

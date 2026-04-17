@@ -148,7 +148,7 @@ export default function AiChatbot({
     useEffect(() => {
         const interval = setInterval(() => {
             setTypingKey(prev => prev + 1);
-        }, 4000);
+        }, 8000);
         return () => clearInterval(interval);
     }, []);
 
@@ -280,19 +280,18 @@ export default function AiChatbot({
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                        className="pointer-events-auto w-72 sm:w-80 rounded-3xl shadow-2xl mb-4 overflow-hidden flex flex-col bg-slate-900/95 backdrop-blur-xl border border-white/10"
-                        style={{ maxHeight: '450px', boxShadow: '0 20px 50px -12px rgba(0, 0, 0, 0.5)' }}
+                        className="pointer-events-auto w-72 sm:w-80 rounded-3xl shadow-2xl mb-4 overflow-hidden flex flex-col bg-surface backdrop-blur-xl border border-border"
+                        style={{ maxHeight: '450px', boxShadow: 'var(--shadow-saas)' }}
                     >
                         {/* Header */}
-                        <div className="bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 p-4 flex items-center justify-between shadow-lg relative overflow-hidden">
-                            <div className="absolute inset-0 bg-white/10 opacity-20 pointer-events-none" />
+                        <div className="bg-accent p-4 flex items-center justify-between shadow-lg relative overflow-hidden">
                             <div className="flex items-center gap-3 text-white relative z-10">
                                 <div className="p-1.5 bg-white/20 rounded-lg backdrop-blur-sm">
-                                    <Sparkles size={18} className="text-yellow-300" />
+                                    <Sparkles size={18} className="text-white" />
                                 </div>
                                 <div>
                                     <span className="font-bold text-base tracking-wide block">SmartBuy AI</span>
-                                    <span className="text-[10px] text-blue-100 uppercase tracking-wider font-medium opacity-80">Assistant</span>
+                                    <span className="text-[10px] text-white/80 uppercase tracking-wider font-medium opacity-80">Assistant</span>
                                 </div>
                             </div>
                             <button
@@ -314,9 +313,9 @@ export default function AiChatbot({
                                     className={`flex ${msg.isBot ? 'justify-start' : 'justify-end'}`}
                                 >
                                     <div
-                                        className={`max-w-[85%] p-3.5 rounded-2xl text-sm leading-relaxed shadow-md backdrop-blur-sm ${msg.isBot
-                                            ? 'bg-slate-800/80 text-slate-100 rounded-tl-none border border-white/5'
-                                            : 'bg-gradient-to-br from-blue-600 to-violet-600 text-white rounded-tr-none'
+                                        className={`max-w-[85%] p-3.5 rounded-2xl text-sm leading-relaxed shadow-sm ${msg.isBot
+                                            ? 'bg-secondary text-foreground rounded-tl-none border border-border'
+                                            : 'bg-accent text-white rounded-tr-none'
                                             }`}
                                     >
                                         {msg.text}
@@ -344,23 +343,23 @@ export default function AiChatbot({
                         </div>
 
                         {/* Input Area */}
-                        <form onSubmit={handleSend} className="p-3 bg-slate-950/30 border-t border-white/5 flex gap-2 backdrop-blur-md">
+                        <form onSubmit={handleSend} className="p-3 bg-background border-t border-border flex gap-2 backdrop-blur-md">
                             <div className="flex-1 relative">
                                 <input
                                     type="text"
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
                                     placeholder="Ask anything..."
-                                    className="w-full bg-slate-900/50 border border-white/10 rounded-xl pl-4 pr-10 py-2.5 text-sm text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 outline-none transition-all shadow-inner"
+                                    className="w-full bg-surface border border-border rounded-xl pl-4 pr-10 py-2.5 text-sm text-foreground placeholder-secondary-text focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all"
                                 />
                                 <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-50">
-                                    <Bot size={16} className="text-slate-400" />
+                                    <Bot size={16} className="text-secondary-text" />
                                 </div>
                             </div>
                             <button
                                 type="submit"
                                 disabled={!input.trim()}
-                                className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white p-2.5 rounded-xl transition-all shadow-lg hover:shadow-blue-500/25 active:scale-95"
+                                className="bg-accent hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed text-white p-2.5 rounded-xl transition-all shadow-saas active:scale-95"
                             >
                                 <Send size={18} />
                             </button>
@@ -382,9 +381,9 @@ export default function AiChatbot({
                             exit={{ opacity: 0, x: 5, scale: 0.9 }}
                             transition={{ type: "spring", stiffness: 400, damping: 25 }}
                             style={{ transformOrigin: "right center" }}
-                            className="absolute right-full mr-4 bg-slate-900/90 backdrop-blur-md text-white px-5 py-3 rounded-2xl shadow-2xl whitespace-nowrap font-medium text-sm border border-white/10 flex items-center gap-2"
+                            className="absolute right-full mr-4 bg-surface backdrop-blur-md text-foreground px-5 py-3 rounded-2xl shadow-saas whitespace-nowrap font-medium text-sm border border-border flex items-center gap-2"
                         >
-                            <span className="text-blue-400">
+                            <span className="text-accent">
                                 <Sparkles size={14} />
                             </span>
                             <div className="flex">
@@ -399,7 +398,7 @@ export default function AiChatbot({
                                     </motion.span>
                                 ))}
                             </div>
-                            <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-slate-900/90 transform rotate-45 border-r border-t border-white/10"></div>
+                            <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-surface transform rotate-45 border-r border-t border-border"></div>
                         </motion.div>
                     )}
                 </AnimatePresence>

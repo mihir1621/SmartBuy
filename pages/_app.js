@@ -1,90 +1,22 @@
-import { ThemeProvider, useTheme } from "next-themes";
+import { ThemeProvider } from "next-themes";
 import "../styles/globals.css";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import Head from "next/head";
+import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { LocationProvider } from "@/context/LocationContext";
-import { AuthProvider } from "@/context/AuthContext";
-import { motion, AnimatePresence } from "framer-motion";
-
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { HomeSkeleton, ProductDetailSkeleton, GenericSkeleton, OrderSkeleton, WishlistSkeleton } from "@/components/skeletons/PageSkeletons";
-import OfflineIndicator from "@/components/OfflineIndicator";
 import { useOfflineSync } from "@/hooks/useOfflineSync";
-
-function ThemeWrapper({ children, loading, getSkeleton }) {
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  return (
-    <div className="relative min-h-screen flex flex-col font-sans text-gray-900 dark:text-gray-100 bg-background overflow-hidden">
-      <AnimatePresence mode="popLayout" initial={false}>
-        <motion.div
-          key={mounted ? theme : 'initial'}
-          initial={{ clipPath: 'circle(0% at 50% 50%)' }}
-          animate={{ clipPath: 'circle(150% at 50% 50%)' }}
-          transition={{
-            duration: 0.6,
-            ease: [0.19, 1, 0.22, 1] // Custom snappy expo ease
-          }}
-          className="flex-grow flex flex-col w-full"
-        >
-          {loading ? getSkeleton() : children}
-        </motion.div>
-      </AnimatePresence>
-    </div>
-  );
-}
+import OfflineIndicator from "@/components/OfflineIndicator";
+import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [targetPath, setTargetPath] = useState(null);
-
+  
   // Initialize Offline Sync Engine
   useOfflineSync();
-
-  useEffect(() => {
-    const handleStart = (url, { shallow }) => {
-      if (shallow) return;
-      setTargetPath(url);
-      setLoading(true);
-    };
-    const handleComplete = () => {
-      setLoading(false);
-      setTargetPath(null);
-    };
-
-    router.events.on('routeChangeStart', handleStart);
-    router.events.on('routeChangeComplete', handleComplete);
-    router.events.on('routeChangeError', handleComplete);
-
-    return () => {
-      router.events.off('routeChangeStart', handleStart);
-      router.events.off('routeChangeComplete', handleComplete);
-      router.events.off('routeChangeError', handleComplete);
-    };
-  }, [router]);
-
-  const getSkeleton = () => {
-    if (!targetPath) return <GenericSkeleton />;
-    const path = targetPath.split('?')[0];
-
-    if (path === '/') return <HomeSkeleton />;
-    if (path.startsWith('/product/')) return <ProductDetailSkeleton />;
-    if (path.startsWith('/orders')) return <OrderSkeleton />;
-    if (path === '/wishlist') return <WishlistSkeleton />;
-    if (path === '/login' || path === '/signup') return null;
-
-    return <GenericSkeleton />;
-  };
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -92,21 +24,22 @@ export default function App({ Component, pageProps }) {
         <LocationProvider>
           <WishlistProvider>
             <CartProvider>
-              <ThemeWrapper loading={loading} getSkeleton={getSkeleton}>
-                <Component {...pageProps} />
-              </ThemeWrapper>
-              <ToastContainer 
-                position="top-right"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-              />
+              <Head>
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+              </Head>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={router.route}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="min-h-screen flex flex-col"
+                >
+                  <Component {...pageProps} />
+                </motion.div>
+              </AnimatePresence>
+              <ToastContainer theme="colored" position="bottom-right" />
               <OfflineIndicator />
             </CartProvider>
           </WishlistProvider>

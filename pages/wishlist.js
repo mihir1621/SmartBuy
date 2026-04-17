@@ -20,7 +20,7 @@ export default function Wishlist() {
     if (!isInitialized) return <WishlistSkeleton />;
 
     return (
-        <div className="min-h-screen bg-black flex flex-col text-white">
+        <div className="min-h-screen bg-background flex flex-col text-foreground">
             <Head>
                 <title>My Wishlist | SmartBuy</title>
             </Head>
@@ -30,11 +30,11 @@ export default function Wishlist() {
 
             <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full">
                 <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-12">
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.1)]">
-                        <Heart className="w-6 h-6 sm:w-7 sm:h-7 text-white fill-white" />
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-accent/10 rounded-2xl flex items-center justify-center border border-accent/20 shadow-saas">
+                        <Heart className="w-6 h-6 sm:w-7 sm:h-7 text-accent fill-accent" />
                     </div>
                     <div>
-                        <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight uppercase">My Wishlist</h1>
+                        <h1 className="text-2xl sm:text-4xl font-black text-foreground tracking-tight uppercase">My Wishlist</h1>
                         <p className="text-[10px] sm:text-xs font-black text-gray-500 uppercase tracking-[0.2em] mt-1">
                             {wishlist.length} {wishlist.length === 1 ? 'Product' : 'Products'} Saved
                         </p>
@@ -42,17 +42,17 @@ export default function Wishlist() {
                 </div>
 
                 {wishlist.length === 0 ? (
-                    <div className="text-center py-20 sm:py-32 bg-gray-900/40 rounded-[2.5rem] border border-gray-800/50 backdrop-blur-md">
-                        <div className="bg-gray-800/50 w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto mb-6 border border-gray-700">
-                            <Heart className="w-10 h-10 sm:w-12 sm:h-12 text-gray-600" />
+                    <div className="text-center py-20 sm:py-32 bg-surface rounded-[2.5rem] border border-border shadow-saas backdrop-blur-md">
+                        <div className="bg-background w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto mb-6 border border-border">
+                            <Heart className="w-10 h-10 sm:w-12 sm:h-12 text-secondary-text" />
                         </div>
-                        <h2 className="text-xl sm:text-2xl font-black text-white mb-2 sm:mb-3 uppercase tracking-tight">Your wishlist is empty</h2>
-                        <p className="text-gray-500 text-sm sm:text-base max-w-xs sm:max-w-md mx-auto mb-8 sm:mb-10 font-medium">
+                        <h2 className="text-xl sm:text-2xl font-black text-foreground mb-2 sm:mb-3 uppercase tracking-tight">Your wishlist is empty</h2>
+                        <p className="text-secondary-text text-sm sm:text-base max-w-xs sm:max-w-md mx-auto mb-8 sm:mb-10 font-medium">
                             Explore our premium collection and save your favorites for later.
                         </p>
                         <Link
                             href="/"
-                            className="inline-flex items-center justify-center px-8 sm:px-10 py-3.5 sm:py-4 border border-transparent text-xs sm:text-sm font-black rounded-xl sm:rounded-2xl text-black bg-white hover:bg-gray-200 transition-all shadow-[0_10px_30px_rgba(255,255,255,0.1)] active:scale-95 uppercase tracking-widest"
+                            className="inline-flex items-center justify-center px-8 sm:px-10 py-3.5 sm:py-4 border border-transparent text-xs sm:text-sm font-black rounded-xl sm:rounded-2xl text-white bg-accent hover:bg-accent-hover transition-all shadow-saas active:scale-95 uppercase tracking-widest"
                         >
                             Explore Shop
                         </Link>
@@ -67,9 +67,9 @@ export default function Wishlist() {
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.95 }}
-                                    className="bg-gray-900/40 rounded-3xl border border-gray-800/50 overflow-hidden flex flex-col group relative hover:border-white/30 transition-all duration-500 hover:shadow-2xl hover:shadow-white/5"
+                                    className="bg-surface rounded-3xl border border-border overflow-hidden flex flex-col group relative hover:border-accent/30 transition-all duration-500 hover:shadow-saas"
                                 >
-                                    <div className="relative aspect-[4/5] bg-gray-950 overflow-hidden">
+                                    <div className="relative aspect-[4/5] bg-background overflow-hidden">
                                         <Image
                                             src={product.image}
                                             alt={product.name}
@@ -91,21 +91,21 @@ export default function Wishlist() {
 
                                     <div className="p-4 sm:p-6 flex flex-col flex-1">
                                         <div className="flex justify-between items-start mb-2 gap-2">
-                                            <div className="text-[9px] sm:text-[10px] font-black text-white uppercase tracking-[0.2em] truncate">{product.category}</div>
+                                            <div className="text-[9px] sm:text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] truncate">{product.category}</div>
                                         </div>
                                         <Link href={`/product/${product.id}`} className="block">
-                                            <h3 className="text-sm sm:text-base font-bold text-gray-100 mb-2 line-clamp-1 hover:text-white transition-colors tracking-tight">
+                                            <h3 className="text-sm sm:text-base font-bold text-foreground mb-2 line-clamp-1 hover:text-accent transition-colors tracking-tight">
                                                 {product.name}
                                             </h3>
                                         </Link>
                                         <div className="flex items-center gap-2 mb-5 sm:mb-6">
-                                            <span className="text-lg sm:text-xl font-black text-white tracking-tighter">₹{product.price.toLocaleString()}</span>
-                                            <span className="text-[10px] sm:text-xs text-gray-600 line-through font-bold">₹{(product.price * 1.2).toLocaleString()}</span>
+                                            <span className="text-lg sm:text-xl font-black text-foreground tracking-tighter">₹{product.price.toLocaleString()}</span>
+                                            <span className="text-[10px] sm:text-xs text-secondary-text line-through font-bold">₹{(product.price * 1.2).toLocaleString()}</span>
                                         </div>
 
                                         <button
                                             onClick={() => addToCart(product)}
-                                            className="mt-auto w-full bg-white text-black font-black py-3 sm:py-3.5 rounded-xl sm:rounded-2xl hover:bg-gray-200 transition-all shadow-lg flex items-center justify-center gap-2 group/btn text-[10px] sm:text-xs uppercase tracking-widest active:scale-[0.98]"
+                                            className="mt-auto w-full bg-accent text-white font-black py-3 sm:py-3.5 rounded-xl sm:rounded-2xl hover:bg-accent-hover transition-all shadow-saas flex items-center justify-center gap-2 group/btn text-[10px] sm:text-xs uppercase tracking-widest active:scale-[0.98]"
                                         >
                                             <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/btn:scale-110 transition-transform" />
                                             Move to Cart

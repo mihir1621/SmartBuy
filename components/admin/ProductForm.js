@@ -99,119 +99,118 @@ export default function ProductForm({ initialData = null, isEditing = false }) {
     return (
         <form onSubmit={handleSubmit} className="space-y-8">
             {error && (
-                <div className="bg-white/10 border border-white/20 p-4 rounded-2xl flex items-center gap-3 text-white">
+                <div className="bg-error/10 border border-error/20 p-4 rounded-2xl flex items-center gap-3 text-error">
                     <AlertCircle size={20} />
-                    <p className="text-sm font-bold">{error}</p>
+                    <p className="text-sm font-black">{error}</p>
                 </div>
             )}
-
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Left Col: Main Details */}
                 <div className="lg:col-span-2 space-y-6">
-                    <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-sm space-y-6">
-                        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                            <span className="w-1.5 h-6 bg-white rounded-full" />
+                    <div className="bg-surface border border-border rounded-3xl p-8 shadow-sm space-y-6">
+                        <h3 className="text-lg font-black text-foreground mb-4 flex items-center gap-2 tracking-tight">
+                            <span className="w-1.5 h-6 bg-accent rounded-full" />
                             Basic Information
                         </h3>
 
                         <div className="space-y-2">
-                            <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1">Product Name</label>
+                            <label className="text-[10px] font-black text-secondary-text uppercase tracking-widest ml-1">Product Name</label>
                             <input
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
-                                className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-4 px-5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all font-medium"
+                                className="w-full bg-background border border-border rounded-2xl py-4 px-5 text-foreground focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all font-medium"
                                 placeholder="e.g. MacBook Pro M3"
                             />
                         </div>
 
                         <div className="grid grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1">Brand</label>
+                                <label className="text-[10px] font-black text-secondary-text uppercase tracking-widest ml-1">Brand</label>
                                 <input
                                     name="brand"
                                     value={formData.brand}
                                     onChange={handleChange}
                                     required
-                                    className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-4 px-5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all font-medium"
+                                    className="w-full bg-background border border-border rounded-2xl py-4 px-5 text-foreground focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all font-medium"
                                     placeholder="e.g. Apple"
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1">Category</label>
+                                <label className="text-[10px] font-black text-secondary-text uppercase tracking-widest ml-1">Category</label>
                                 <input
                                     name="category"
                                     value={formData.category}
                                     onChange={handleChange}
                                     required
-                                    className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-4 px-5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all font-medium"
+                                    className="w-full bg-background border border-border rounded-2xl py-4 px-5 text-foreground focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all font-medium"
                                     placeholder="e.g. Electronics"
                                 />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1">Description</label>
+                            <label className="text-[10px] font-black text-secondary-text uppercase tracking-widest ml-1">Description</label>
                             <textarea
                                 name="description"
                                 value={formData.description}
                                 onChange={handleChange}
                                 required
                                 rows={6}
-                                className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-4 px-5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all font-medium resize-none"
+                                className="w-full bg-background border border-border rounded-2xl py-4 px-5 text-foreground focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all font-medium resize-none shadow-sm"
                                 placeholder="Write a clear product description..."
                             />
                         </div>
                     </div>
 
-                    <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-sm space-y-6">
-                        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                            <span className="w-1.5 h-6 bg-white rounded-full" />
+                    <div className="bg-surface border border-border rounded-3xl p-8 shadow-sm space-y-6">
+                        <h3 className="text-lg font-black text-foreground mb-4 flex items-center gap-2 tracking-tight">
+                            <span className="w-1.5 h-6 bg-accent rounded-full" />
                             Pricing & Inventory
                         </h3>
 
                         <div className="grid grid-cols-3 gap-6">
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1 text-white/80">Selling Price (₹)</label>
+                                <label className="text-[10px] font-black text-secondary-text uppercase tracking-widest ml-1">Selling Price (₹)</label>
                                 <input
                                     name="price"
                                     type="number"
                                     value={formData.price}
                                     onChange={handleChange}
                                     required
-                                    className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-4 px-5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all font-bold text-lg"
+                                    className="w-full bg-background border border-border rounded-2xl py-4 px-5 text-foreground focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all font-black text-2xl tracking-tight"
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1">Original Price (₹)</label>
+                                <label className="text-[10px] font-black text-secondary-text uppercase tracking-widest ml-1">Original Price (₹)</label>
                                 <input
                                     name="originalPrice"
                                     type="number"
                                     value={formData.originalPrice}
                                     onChange={handleChange}
-                                    className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-4 px-5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all font-medium"
+                                    className="w-full bg-background border border-border rounded-2xl py-4 px-5 text-foreground focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all font-medium"
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1">Discount (%)</label>
+                                <label className="text-[10px] font-black text-secondary-text uppercase tracking-widest ml-1">Discount (%)</label>
                                 <input
                                     name="discount"
                                     type="number"
                                     value={formData.discount}
                                     onChange={handleChange}
-                                    className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-4 px-5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all font-medium"
+                                    className="w-full bg-background border border-border rounded-2xl py-4 px-5 text-foreground focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all font-medium"
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1 text-white">Inventory Stock</label>
+                                <label className="text-[10px] font-black text-secondary-text uppercase tracking-widest ml-1">Inventory Level</label>
                                 <input
                                     name="stock"
                                     type="number"
                                     value={formData.stock}
                                     onChange={handleChange}
                                     required
-                                    className="w-full bg-gray-950 border border-gray-800 rounded-2xl py-4 px-5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all font-bold text-lg"
+                                    className="w-full bg-background border border-border rounded-2xl py-4 px-5 text-foreground focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all font-black text-xl tracking-tight"
                                 />
                             </div>
                         </div>
@@ -226,10 +225,10 @@ export default function ProductForm({ initialData = null, isEditing = false }) {
                                         onChange={handleChange}
                                         className="sr-only peer"
                                     />
-                                    <div className="w-12 h-6 bg-gray-800 rounded-full peer peer-checked:bg-white transition-all" />
-                                    <div className="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-all peer-checked:left-7" />
+                                    <div className="w-12 h-6 bg-secondary border border-border rounded-full peer peer-checked:bg-accent transition-all" />
+                                    <div className="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-all peer-checked:left-7 shadow-sm" />
                                 </div>
-                                <span className="text-sm font-bold text-gray-300 group-hover:text-white transition-colors">In Stock</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest text-secondary-text group-hover:text-foreground transition-colors">In Stock</span>
                             </label>
 
                             <label className="flex items-center gap-3 cursor-pointer group">
@@ -241,10 +240,10 @@ export default function ProductForm({ initialData = null, isEditing = false }) {
                                         onChange={handleChange}
                                         className="sr-only peer"
                                     />
-                                    <div className="w-12 h-6 bg-gray-800 rounded-full peer peer-checked:bg-white transition-all" />
-                                    <div className="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-all peer-checked:left-7" />
+                                    <div className="w-12 h-6 bg-secondary border border-border rounded-full peer peer-checked:bg-accent transition-all" />
+                                    <div className="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-all peer-checked:left-7 shadow-sm" />
                                 </div>
-                                <span className="text-sm font-bold text-gray-300 group-hover:text-white transition-colors">New Arrival</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest text-secondary-text group-hover:text-foreground transition-colors">New Arrival</span>
                             </label>
                         </div>
                     </div>
@@ -252,10 +251,10 @@ export default function ProductForm({ initialData = null, isEditing = false }) {
 
                 {/* Right Col: Images & Status */}
                 <div className="space-y-6">
-                    <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-sm space-y-6">
+                    <div className="bg-surface border border-border rounded-3xl p-8 shadow-sm space-y-6">
                         <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                                <span className="w-1.5 h-6 bg-white rounded-full" />
+                            <h3 className="text-lg font-black text-foreground flex items-center gap-2 tracking-tight">
+                                <span className="w-1.5 h-6 bg-accent rounded-full" />
                                 Product Media
                             </h3>
                         </div>
@@ -288,28 +287,28 @@ export default function ProductForm({ initialData = null, isEditing = false }) {
                                 </div>
                             )}
 
-                            <div className="space-y-4 pt-4 border-t border-gray-800">
+                            <div className="space-y-4 pt-6 border-t border-border">
                                 <div className="flex justify-between items-center">
-                                    <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1">Gallery Images ({formData.images.length}/10)</label>
+                                    <label className="text-[10px] font-black text-secondary-text uppercase tracking-widest ml-1">Catalogue Gallery ({formData.images.length}/10)</label>
                                     <button
                                         type="button"
                                         onClick={handleImageAdd}
-                                        className="text-gray-400 hover:text-white text-xs font-bold flex items-center gap-1"
+                                        className="text-accent hover:text-accent-hover text-[10px] font-black uppercase tracking-widest flex items-center gap-1 transition-colors"
                                     >
-                                        <Plus size={14} /> Add
+                                        <Plus size={14} /> Add View
                                     </button>
                                 </div>
 
                                 <div className="grid grid-cols-4 gap-3">
                                     {formData.images.map((img, idx) => (
-                                        <div key={idx} className="relative aspect-square rounded-lg overflow-hidden border border-gray-800 group bg-gray-950">
+                                        <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-border group bg-background shadow-sm">
                                             <Image src={img} alt={`Gallery ${idx}`} fill className="object-cover group-hover:scale-125 transition-transform" />
                                             <button
                                                 type="button"
                                                 onClick={() => removeImage(idx)}
-                                                className="absolute inset-0 bg-black/80 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                                                className="absolute inset-0 bg-error/90 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all"
                                             >
-                                                <Trash2 size={12} />
+                                                <Trash2 size={14} />
                                             </button>
                                         </div>
                                     ))}
@@ -317,7 +316,7 @@ export default function ProductForm({ initialData = null, isEditing = false }) {
                                         <button
                                             type="button"
                                             onClick={handleImageAdd}
-                                            className="aspect-square rounded-lg border border-dashed border-gray-800 flex items-center justify-center text-gray-700 hover:text-white hover:border-white/30 transition-all"
+                                            className="aspect-square rounded-xl border border-dashed border-border flex items-center justify-center text-secondary-text hover:text-accent hover:border-accent/40 hover:bg-accent/5 transition-all shadow-sm"
                                         >
                                             <Plus size={20} />
                                         </button>
@@ -327,27 +326,25 @@ export default function ProductForm({ initialData = null, isEditing = false }) {
                         </div>
                     </div>
 
-                    <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-sm space-y-6 sticky top-28">
-                        <div className="space-y-4">
-                            <p className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1">Publish Settings</p>
-                            <button
-                                disabled={loading}
-                                type="submit"
-                                className="w-full bg-white hover:bg-gray-200 disabled:bg-gray-700 disabled:opacity-50 text-black font-bold py-4 rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-white/10 transition-all active:scale-95"
-                            >
-                                {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                                {isEditing ? 'Update Product' : 'Create Product'}
-                            </button>
+                    <div className="bg-surface border border-border rounded-3xl p-8 shadow-sm space-y-4 sticky top-28">
+                        <p className="text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] ml-1">Catalogue Controls</p>
+                        <button
+                            disabled={loading}
+                            type="submit"
+                            className="w-full bg-accent hover:bg-accent-hover disabled:bg-secondary disabled:text-secondary-text text-white font-black py-4 rounded-2xl flex items-center justify-center gap-3 shadow-saas transition-all active:scale-95 uppercase tracking-widest text-xs"
+                        >
+                            {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
+                            {isEditing ? 'Sync Changes' : 'Launch Product'}
+                        </button>
 
-                            <button
-                                type="button"
-                                onClick={() => router.push('/admin/products')}
-                                className="w-full bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold py-4 rounded-2xl flex items-center justify-center gap-2 border border-gray-700 transition-all"
-                            >
-                                <X size={20} />
-                                Cancel
-                            </button>
-                        </div>
+                        <button
+                            type="button"
+                            onClick={() => router.push('/admin/products')}
+                            className="w-full bg-background hover:bg-secondary text-secondary-text hover:text-foreground font-black py-4 rounded-2xl flex items-center justify-center gap-2 border border-border transition-all uppercase tracking-widest text-xs"
+                        >
+                            <X size={20} />
+                            Discard
+                        </button>
                     </div>
                 </div>
             </div>

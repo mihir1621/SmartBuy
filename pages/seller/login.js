@@ -151,14 +151,14 @@ export default function SellerLogin() {
     };
 
     return (
-        <div className="min-h-screen bg-black flex overflow-hidden">
+        <div className="min-h-screen bg-background flex overflow-hidden selection:bg-accent/10">
             <Head>
                 <title>Seller Login - SmartBuy</title>
             </Head>
 
             {/* Left Side - Hero */}
-            <div className="hidden lg:flex w-1/2 relative bg-gray-900 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black z-10" />
+            <div className="hidden lg:flex w-1/2 relative bg-secondary overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent z-10" />
                 <Image
                     src="https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?auto=format&fit=crop&q=80&w=1287"
                     className="object-cover"
@@ -166,92 +166,92 @@ export default function SellerLogin() {
                     fill
                     priority
                 />
-                <div className="relative z-20 flex flex-col justify-between p-16 h-full text-white">
+                <div className="relative z-20 flex flex-col justify-between p-16 h-full text-foreground font-black">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center font-bold text-xl text-black">S</div>
-                        <span className="text-2xl font-bold">SmartBuy Seller</span>
+                        <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center font-black text-xl text-white">S</div>
+                        <span className="text-2xl font-black tracking-tight">SmartBuy Seller</span>
                     </div>
                     <div>
-                        <h1 className="text-5xl font-black mb-6 leading-tight">Grow your business <br />with SmartBuy.</h1>
-                        <p className="text-xl text-gray-300 max-w-md">Join thousands of sellers who maximize their sales with our powerful platform.</p>
+                        <h1 className="text-5xl font-black mb-6 leading-tight text-foreground">Grow your business <br />with SmartBuy.</h1>
+                        <p className="text-xl text-secondary-text max-w-md font-medium">Join thousands of sellers who maximize their sales with our powerful platform.</p>
                     </div>
-                    <div className="flex gap-8 text-sm font-medium text-gray-400">
+                    <div className="flex gap-8 text-xs font-black text-secondary-text uppercase tracking-widest">
                         <span>© 2025 SmartBuy</span>
-                        <Link href="/terms">Terms</Link>
-                        <Link href="/privacy">Privacy</Link>
+                        <Link href="/terms" className="hover:text-accent transition-colors">Terms</Link>
+                        <Link href="/privacy" className="hover:text-accent transition-colors">Privacy</Link>
                     </div>
                 </div>
             </div>
 
             {/* Right Side - Form */}
-            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-black relative">
-                <Link href="/" className="absolute top-8 right-8 text-gray-500 hover:text-white transition-colors">Return Home</Link>
+            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background relative">
+                <Link href="/" className="absolute top-8 right-8 text-secondary-text hover:text-foreground transition-colors font-black text-xs uppercase tracking-widest">Return Home</Link>
 
                 <div className="w-full max-w-md space-y-8">
                     <div className="text-center">
-                        <div className="w-16 h-16 bg-gradient-to-tr from-gray-800 to-black rounded-2xl mx-auto flex items-center justify-center shadow-2xl shadow-white/5 mb-6 border border-gray-700">
-                            <Store className="w-8 h-8 text-white" />
+                        <div className="w-16 h-16 bg-surface rounded-2xl mx-auto flex items-center justify-center shadow-saas mb-6 border border-border">
+                            <Store className="w-8 h-8 text-accent" />
                         </div>
-                        <h2 className="text-3xl font-black text-white mb-2">Seller Portal</h2>
-                        <p className="text-gray-400">Log in to manage your products and orders</p>
+                        <h2 className="text-3xl font-black text-foreground mb-2 tracking-tight">Seller Portal</h2>
+                        <p className="text-secondary-text font-medium">Log in to manage your products and orders</p>
                     </div>
 
-                    <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8 space-y-6 shadow-xl">
+                    <div className="bg-surface border border-border rounded-3xl p-8 space-y-6 shadow-saas relative">
                         {/* Method Toggle */}
-                        <div className="grid grid-cols-2 gap-2 p-1 bg-gray-950 rounded-xl border border-gray-800">
+                        <div className="grid grid-cols-2 gap-2 p-1 bg-secondary rounded-xl border border-border">
                             <button
                                 onClick={() => setMethod('email')}
-                                className={`py-2 rounded-lg text-sm font-bold transition-all ${method === 'email' ? 'bg-gray-800 text-white shadow' : 'text-gray-500 hover:text-gray-300'}`}
+                                className={`py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${method === 'email' ? 'bg-surface text-accent shadow-sm' : 'text-secondary-text hover:text-foreground'}`}
                             >
                                 Email
                             </button>
                             <button
                                 onClick={() => setMethod('phone')}
-                                className={`py-2 rounded-lg text-sm font-bold transition-all ${method === 'phone' ? 'bg-gray-800 text-white shadow' : 'text-gray-500 hover:text-gray-300'}`}
+                                className={`py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${method === 'phone' ? 'bg-surface text-accent shadow-sm' : 'text-secondary-text hover:text-foreground'}`}
                             >
-                                Phone Number
+                                Phone
                             </button>
                         </div>
 
                         {method === 'phone' ? (
                             <form onSubmit={handleMobileSubmit} className="space-y-5">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Mobile Number</label>
+                                    <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-2">Mobile Number</label>
                                     <div className="relative">
-                                        <Smartphone className="absolute left-4 top-3.5 w-5 h-5 text-gray-500" />
+                                        <Smartphone className="absolute left-4 top-3.5 w-5 h-5 text-secondary-text" />
                                         <input
                                             type="tel"
                                             value={mobile}
                                             onChange={(e) => setMobile(e.target.value)}
                                             maxLength={10}
                                             required
-                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-white focus:ring-1 focus:ring-white outline-none transition-all placeholder:text-gray-600 tracking-wider"
+                                            className="w-full bg-background border border-border rounded-xl px-12 py-3 text-foreground focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-secondary-text/50 tracking-wider font-medium"
                                             placeholder="Enter 10-digit number"
                                         />
                                     </div>
                                 </div>
                                 {showOtp && (
                                     <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
-                                        <label className="block text-sm font-medium text-gray-400 mb-2">OTP Code</label>
+                                        <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-2">OTP Code</label>
                                         <div className="relative">
-                                            <ShieldCheck className="absolute left-4 top-3.5 w-5 h-5 text-gray-500" />
+                                            <ShieldCheck className="absolute left-4 top-3.5 w-5 h-5 text-secondary-text" />
                                             <input
                                                 type="text"
                                                 value={otp}
                                                 onChange={(e) => setOtp(e.target.value)}
                                                 maxLength={4}
                                                 required
-                                                className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-white focus:ring-1 focus:ring-white outline-none transition-all placeholder:text-gray-600 tracking-[0.5em] font-bold text-center"
+                                                className="w-full bg-background border border-border rounded-xl px-12 py-3 text-foreground focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-secondary-text/50 tracking-[0.5em] font-black text-center"
                                                 placeholder="••••"
                                             />
                                         </div>
-                                        <p className="text-xs text-gray-500 mt-2 text-center">Demo OTP: 1234</p>
+                                        <p className="text-[10px] text-accent/70 mt-2 text-center font-black uppercase tracking-widest">Demo OTP: 1234</p>
                                     </motion.div>
                                 )}
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="w-full bg-white hover:bg-gray-200 text-black font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-white/10 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                    className="w-full bg-accent hover:bg-accent-hover text-white font-black py-4 rounded-xl transition-all shadow-saas disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 uppercase tracking-widest text-xs"
                                 >
                                     {isLoading ? 'Verifying...' : (
                                         <>
@@ -264,29 +264,29 @@ export default function SellerLogin() {
                         ) : (
                             <form onSubmit={handleEmailSubmit} className="space-y-5">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
+                                    <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-2">Email Address</label>
                                     <div className="relative">
-                                        <Mail className="absolute left-4 top-3.5 w-5 h-5 text-gray-500" />
+                                        <Mail className="absolute left-4 top-3.5 w-5 h-5 text-secondary-text" />
                                         <input
                                             type="email"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             required
-                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-white outline-none transition-all placeholder:text-gray-600"
+                                            className="w-full bg-background border border-border rounded-xl px-12 py-3 text-foreground focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-secondary-text/50 font-medium"
                                             placeholder="seller@smartbuy.com"
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Password</label>
+                                    <label className="block text-[10px] font-black text-secondary-text uppercase tracking-widest mb-2">Password</label>
                                     <div className="relative">
-                                        <Lock className="absolute left-4 top-3.5 w-5 h-5 text-gray-500" />
+                                        <Lock className="absolute left-4 top-3.5 w-5 h-5 text-secondary-text" />
                                         <input
                                             type="password"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             required
-                                            className="w-full bg-black border border-gray-700 rounded-xl px-12 py-3 text-white focus:border-white outline-none transition-all"
+                                            className="w-full bg-background border border-border rounded-xl px-12 py-3 text-foreground focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all font-medium"
                                             placeholder="••••••••"
                                         />
                                     </div>
@@ -294,7 +294,7 @@ export default function SellerLogin() {
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="w-full bg-white hover:bg-gray-200 text-black font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-white/10 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                    className="w-full bg-accent hover:bg-accent-hover text-white font-black py-4 rounded-xl transition-all shadow-saas disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 uppercase tracking-widest text-xs"
                                 >
                                     {isLoading ? 'Logging in...' : (
                                         <>
@@ -308,8 +308,8 @@ export default function SellerLogin() {
                     </div>
 
                     <div className="text-center">
-                        <p className="text-gray-500 text-sm">
-                            New Seller? <Link href="/register-seller" className="text-white font-bold hover:underline">Apply here</Link>
+                        <p className="text-secondary-text text-xs uppercase tracking-widest font-black">
+                            New Seller? <Link href="/register-seller" className="text-accent hover:underline">Apply here</Link>
                         </p>
                     </div>
                 </div>

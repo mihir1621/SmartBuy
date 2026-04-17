@@ -11,6 +11,10 @@ const nextConfig = {
       { protocol: 'https', hostname: 'via.placeholder.com' },
       { protocol: 'https', hostname: 'img.bbystatic.com' },
       { protocol: 'https', hostname: 'images.bestbuy.com' },
+      { protocol: 'https', hostname: 'm.media-amazon.com' },
+      { protocol: 'https', hostname: 'images-na.ssl-images-amazon.com' },
+      { protocol: 'https', hostname: 'i.pcmag.com' },
+      { protocol: 'https', hostname: 'img.youtube.com' },
     ],
   },
 };
