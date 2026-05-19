@@ -1,9 +1,9 @@
 import { ThemeProvider } from "next-themes";
 import "../styles/globals.css";
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import Head from "next/head";
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { LocationProvider } from "@/context/LocationContext";
@@ -11,6 +11,24 @@ import { useOfflineSync } from "@/hooks/useOfflineSync";
 import OfflineIndicator from "@/components/OfflineIndicator";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { requestNotificationPermission, onForegroundMessage } from "@/lib/notifications";
+
+function NotificationHandler() {
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      // Request permission and sync token
+      requestNotificationPermission(user.uid);
+      
+      // Setup foreground listener
+      onForegroundMessage();
+    }
+  }, [user]);
+
+  return null;
+}
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -24,6 +42,7 @@ export default function App({ Component, pageProps }) {
         <LocationProvider>
           <WishlistProvider>
             <CartProvider>
+              <NotificationHandler />
               <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
               </Head>
